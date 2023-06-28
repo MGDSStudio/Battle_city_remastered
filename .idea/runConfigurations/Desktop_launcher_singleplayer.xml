@@ -1,0 +1,10 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Desktop launcher singleplayer" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="io.itch.mgdsstudio.battlecity.desktop.X64Launcher" />
+    <module name="Battle_city_remastered" />
+    <option name="PROGRAM_PARAMETERS" value="-1" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
