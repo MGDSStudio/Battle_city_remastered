@@ -1,5 +1,6 @@
 package io.itch.mgdsstudio.battlecity.game.hud;
 
+import com.mgdsstudio.engine.nesgui.EightPartsFrameImage;
 import io.itch.mgdsstudio.battlecity.game.*;
 import io.itch.mgdsstudio.battlecity.game.gameobjects.PlayerTank;
 import io.itch.mgdsstudio.battlecity.mainpackage.GlobalConstants;
@@ -14,6 +15,8 @@ public class InGameHud extends Hud{
 
     private UpperPanel upperPanel;
     private LowerPanel lowerPanel;
+
+
 
     public InGameHud(GamePartWithGameWorldAbstractController gameController, IEngine engine, int playerNumberInMultiplayerMode, boolean singleplayer ) {
         this.engine = engine;

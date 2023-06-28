@@ -14,6 +14,7 @@ import java.util.Enumeration;
 import java.util.Properties;
 
 public abstract class GuiElement {
+    public final static int NES_SCREEN_X_RESOLUTION = 254;
     private Object userData;
     protected float effectiveHeightCoef = 1.5f;
     public final static int PRESSED = 1, RELEASED = 2, ACTIVE = 0, BLOCKED = 4, HIDDEN = 3;

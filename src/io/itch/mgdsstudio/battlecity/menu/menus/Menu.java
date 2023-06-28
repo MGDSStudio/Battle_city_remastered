@@ -127,6 +127,20 @@ public abstract class Menu  {
         return guiElement;
     }
 
+    protected GuiElement createTextLabelFromZone(int r, int g, int b, String name){
+        if (daraEncryptor == null){
+            daraEncryptor = new MenuGuiDataEncryptor(engine.getEngine(), maskImage.getImage());
+        }
+        RectGuiZone campaignButtonZone =  daraEncryptor.getZone(r,g,b);
+        int x = campaignButtonZone.getCenterX();
+        int y = campaignButtonZone.getCenterY();
+        int w = campaignButtonZone.getW();
+        int h = campaignButtonZone.getH();
+        TextLabel guiElement = new TextLabel(engine, x, y, w, h, name, graphics);
+        guiElements.add(guiElement);
+        return guiElement;
+    }
+
     protected GuiElement createButtonInFrameFromZone(int r, int g, int b, String name){
         if (daraEncryptor == null){
             daraEncryptor = new MenuGuiDataEncryptor(engine.getEngine(), maskImage.getImage());
