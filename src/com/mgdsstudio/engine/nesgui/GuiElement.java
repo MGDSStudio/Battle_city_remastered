@@ -81,11 +81,12 @@ public abstract class GuiElement {
             engineInterface = engine;
         }
         font = engine.getEngine().loadFont(engine.getPathToObjectInAssets("Font1.vlw"));
-        //GraphicManager.getManager(engine).getFont();
+
+        //GraphicManage r.getManager(engine).getFont();
 
         this.height = height;
         graphics.textFont(font);
-
+        //graphics.textSize(height);
         this.x = centerX;
         this.y = centerY;
         this.leftX = (int) (x-width/2f);

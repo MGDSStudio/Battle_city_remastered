@@ -1,4 +1,5 @@
 package io.itch.mgdsstudio.battlecity.game;
+import io.itch.mgdsstudio.battlecity.game.camera.GameCamera;
 import io.itch.mgdsstudio.battlecity.game.connectingcontrol.ConnectingController;
 
 import io.itch.mgdsstudio.battlecity.game.control.GameProcessController;
@@ -134,5 +135,11 @@ public class GameController extends GamePartWithGameWorldAbstractController {
     @Override
     public int getGraphicHeight() {
         return (int) InGameGraphicData.fullGraphicHeight;
+    }
+
+    @Override
+    public GameCamera createCamera(GameRound gameRound) {
+        GameCamera gameCamera = new GameCamera(gameRound.getPlayer(), getHud());
+        return gameCamera;
     }
 }

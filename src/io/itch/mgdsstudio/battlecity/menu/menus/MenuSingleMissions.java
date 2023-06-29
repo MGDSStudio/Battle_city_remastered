@@ -19,7 +19,7 @@ import java.util.ArrayList;
 
 public class MenuSingleMissions extends Menu{
 
-    private ArrayList <File> textesInRenderZone;
+    private ArrayList <File> fullTextesInRenderZone;
     private final int maxButtonsAlongY = 7;
     private int actualPage = 1, pages = -1;
 
@@ -41,13 +41,14 @@ public class MenuSingleMissions extends Menu{
 
     private void loadFilesList() {
         SingleMissionsLoadingMaster singleMissionsLoadingMaster = new SingleMissionsLoadingMaster(engine, engine.getPathToObjectInUserFolder(""));
-        textesInRenderZone = singleMissionsLoadingMaster.getFiles();
+        fullTextesInRenderZone = singleMissionsLoadingMaster.getFiles();
         guiElements.remove(getGuiByName(ButtonNames.ZONE));
         createButtonsInZoneForActualPage();
 
     }
 
     private void createButtonsInZoneForActualPage() {
+        removeAllExistingButtonsInZone();
         int zoneHeight = rectGuiZoneForCursorButtons.getH();
         int zoneWidth = rectGuiZoneForCursorButtons.getW();
         float relativeGapBetweenButtons = 0.6f; //from buttonHeight
@@ -58,27 +59,54 @@ public class MenuSingleMissions extends Menu{
         Logger.debug("Zone has dims: " + zoneWidth + "x" + zoneHeight + "; Button height: " + buttonHeight + "; Y: " + firstButtonY);
 
         int lastText = maxButtonsAlongY;
-        if (textesInRenderZone.size()<=maxButtonsAlongY){
-            lastText = textesInRenderZone.size();
+        if (fullTextesInRenderZone.size()<=maxButtonsAlongY){
+            lastText = fullTextesInRenderZone.size();
             if (pages <= 0) pages = 1;
             hidePrevAndNextButtons();
+            Logger.debug("There is only one page");
         }
         else {
-            if (pages <= 0) pages = PApplet.ceil(textesInRenderZone.size()/maxButtonsAlongY);
-            Logger.correct("Not implemented for more than 7 levels");
+            if (pages <= 0) pages = PApplet.floor(fullTextesInRenderZone.size()/maxButtonsAlongY)+1;
+            updatePrevAndNextButtonsVisibility();
+            //Logger.correct("Not implemented for more than 7 levels");
         }
         for (int i = 0; i < lastText; i++){
             int realNumber = getNumberInArrayInAccordingToActualPage(i);
-            int number = StringLibrary.getDigitFromString(textesInRenderZone.get(realNumber).getName());
-            String name = textesInRenderZone.get(realNumber).getName();
-            int y = (int) (firstButtonY+i*buttonHeight*(1+relativeGapBetweenButtons));
-            GuiElement button = new ButtonWithCursor(engine, x, y, buttonWidth, buttonHeight, name, graphics);
-            button.setUserData(new Integer(number));
-            guiElements.add(button);
-            Logger.debug("button " + i +  " was created with param: " + x + "x" + y + "; WxH: " + buttonWidth + "x" + buttonHeight + " and name: " + name);
+            if (realNumber < fullTextesInRenderZone.size()) {
+                int number = StringLibrary.getDigitFromString(fullTextesInRenderZone.get(realNumber).getName());
+                String name = fullTextesInRenderZone.get(realNumber).getName();
+                int y = (int) (firstButtonY + i * buttonHeight * (1 + relativeGapBetweenButtons));
+                GuiElement button = new ButtonWithCursor(engine, x, y, buttonWidth, buttonHeight, name, graphics);
+                ButtonsInZoneData userData = new ButtonsInZoneData(number);
+                button.setUserData(userData);
+                guiElements.add(button);
+                Logger.debug("button " + i + " was created with param: " + x + "x" + y + "; WxH: " + buttonWidth + "x" + buttonHeight + " and name: " + name);
+            }
         }
 
         setTextForPageNumbers();
+
+    }
+
+    private void updatePrevAndNextButtonsVisibility() {
+        if (actualPage<=1) getGuiByName(ButtonNames.PREV).setActualStatement(GuiElement.BLOCKED);
+        else getGuiByName(ButtonNames.PREV).setActualStatement(GuiElement.ACTIVE);
+        if (actualPage >= pages) getGuiByName(ButtonNames.NEXT).setActualStatement(GuiElement.BLOCKED);
+        else getGuiByName(ButtonNames.NEXT).setActualStatement(GuiElement.ACTIVE);
+    }
+
+    private void removeAllExistingButtonsInZone() {
+        int count = 0;
+            for (int i = (guiElements.size()-1); i >= 0; i--){
+                if (guiElements.get(i).getUserData() != null){
+                    Object obj = guiElements.get(i).getUserData();
+                    if (obj instanceof ButtonsInZoneData){
+                        guiElements.remove(guiElements.get(i));
+                        count++;
+                    }
+                }
+            }
+            Logger.debug(count + " elements were deleted from gui array");
     }
 
     protected int getNumberInArrayInAccordingToActualPage(int i){
@@ -113,16 +141,13 @@ public class MenuSingleMissions extends Menu{
     public void update(MenuController menuController) {
         super.update(menuController);
         if (isGuiReleased(ButtonNames.PREV)){
-            transferToNextPage();
-            // menuController.setNextMenu(MenuType.SINGLE_MISSIONS);
+            transferToPrevPage();
         }
         else if (isGuiReleased(ButtonNames.NEXT)){
-            transferToPrevPage();
-            // menuController.setNextMenu(MenuType.SINGLE_MISSIONS);
+            transferToNextPage();
         }
         else if (isGuiReleased(ButtonNames.BACK)){
             menuController.setNextMenu(MenuType.MAIN);
-
         }
         else {
             GuiElement guiElement = getReleasedButton();
@@ -139,7 +164,9 @@ public class MenuSingleMissions extends Menu{
 
     protected void transferToPrevPage() {
         actualPage--;
+        if (actualPage < 1) actualPage = 1;
         updateDataForActualPage();
+
     }
 
     private void updateDataForActualPage() {
@@ -149,6 +176,7 @@ public class MenuSingleMissions extends Menu{
 
     protected void transferToNextPage() {
         actualPage++;
+        if (actualPage > pages) actualPage = pages;
         updateDataForActualPage();
     }
 
@@ -176,5 +204,17 @@ public class MenuSingleMissions extends Menu{
     }
 
 
+    private class ButtonsInZoneData{
+        private int nextLevelNumber;
+
+        public int getNextLevelNumber() {
+            return nextLevelNumber;
+        }
+
+        public ButtonsInZoneData(int nextLevelNumber) {
+
+            this.nextLevelNumber = nextLevelNumber;
+        }
+    }
 
 }

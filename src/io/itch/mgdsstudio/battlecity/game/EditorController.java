@@ -1,11 +1,13 @@
 package io.itch.mgdsstudio.battlecity.game;
 
+import io.itch.mgdsstudio.battlecity.game.camera.GameCamera;
 import io.itch.mgdsstudio.battlecity.game.control.GameProcessController;
 import io.itch.mgdsstudio.battlecity.game.hud.Hud;
 import io.itch.mgdsstudio.battlecity.game.hud.InEditorHud;
 import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
 import io.itch.mgdsstudio.battlecity.mainpackage.MainController;
 import io.itch.mgdsstudio.battlecity.menu.MenuDataStruct;
+import io.itch.mgdsstudio.engine.libs.Coordinate;
 
 public class EditorController extends GamePartWithGameWorldAbstractController {
 
@@ -43,9 +45,9 @@ public class EditorController extends GamePartWithGameWorldAbstractController {
                 hud.getGraphicLeftPixel(), hud.getGraphicUpperPixel(), hud.getGraphicRightPixel(), hud.getGraphicLowerPixel());
     }
 
+    @Override
     public void draw(){
-
-
+        hud.draw();
     }
 
     public Hud getHud() {
@@ -68,5 +70,11 @@ public class EditorController extends GamePartWithGameWorldAbstractController {
     @Override
     public int getGraphicHeight() {
         return (int) InEditorGraphicData.fullGraphicHeight;
+    }
+
+    @Override
+    public GameCamera createCamera(GameRound gameRound) {
+        GameCamera gameCamera = new GameCamera(new Coordinate(0,0));
+        return gameCamera;
     }
 }

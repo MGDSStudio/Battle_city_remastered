@@ -1,6 +1,5 @@
 package io.itch.mgdsstudio.battlecity.game.hud;
 
-import com.mgdsstudio.engine.nesgui.EightPartsFrameImage;
 import io.itch.mgdsstudio.battlecity.game.*;
 import io.itch.mgdsstudio.battlecity.game.gameobjects.PlayerTank;
 import io.itch.mgdsstudio.battlecity.mainpackage.GlobalConstants;
@@ -13,8 +12,8 @@ import processing.core.PGraphics;
 
 public class InGameHud extends Hud{
 
-    private UpperPanel upperPanel;
-    private LowerPanel lowerPanel;
+    private UpperPanelInGame upperPanel;
+    private LowerPanelInGame lowerPanel;
 
 
 
@@ -32,8 +31,8 @@ public class InGameHud extends Hud{
     }
 
     private void appendPlayerToHud(PlayerTank playerTank){
-        upperPanel = new UpperPanel(engine, this, (int)upperHeight, graphics, image, playerTank);
-        lowerPanel = new LowerPanel(engine, this, (int)lowerHeight, image, playerTank);
+        upperPanel = new UpperPanelInGame(engine, this, (int)upperHeight, graphics, image, playerTank);
+        lowerPanel = new LowerPanelInGame(engine, this, (int)lowerHeight, image, playerTank);
     }
 
     private void initFont() {
@@ -64,13 +63,12 @@ public class InGameHud extends Hud{
         PlayerTank playerTank = gameRound.getPlayer();
         int angle = (int) playerTank.getAngle();
         int turretAngle = (int) playerTank.getTurretAbsoluteAngle();
-        getLowerPanel().setAngleForMovementStick(angle);
-        getLowerPanel().setAngleForAimStick(turretAngle);
+        LowerPanelInGame lowerPanelInGame = (LowerPanelInGame) lowerPanel;
+        lowerPanelInGame.setAngleForMovementStick(angle);
+        lowerPanelInGame.setAngleForAimStick(turretAngle);
     }
 
-    public LowerPanel getLowerPanel() {
-        return lowerPanel;
-    }
+
 
     private void appendMainGraphic(PGraphics graphics) {
         float restHeightForScreen = (engine.getEngine().height-upperHeight-lowerHeight);
@@ -85,6 +83,11 @@ public class InGameHud extends Hud{
     public void appendGameRoundData(GameRound gameRound) {
         appendPlayerToHud(gameRound.getPlayer());
         appendMainGraphic(gameRound.getGraphics());
+    }
+
+    @Override
+    public Panel getLowerPanel() {
+        return null;
     }
 
     public void setLevelEnded(MenuDataStruct dataStruct) {

@@ -1,5 +1,6 @@
 package io.itch.mgdsstudio.battlecity.game;
 
+import com.mgdsstudio.engine.nesgui.GuiElement;
 import io.itch.mgdsstudio.battlecity.mainpackage.GlobalConstants;
 import io.itch.mgdsstudio.battlecity.mainpackage.GlobalVariables;
 import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
@@ -19,6 +20,8 @@ public class InEditorGraphicData {
     public static float rightBoardLineWidth;
     public static String renderer;
 
+    public static int theoreticalWidthOfFramesWithNoZomming;
+
     public static int graphicCenterX, graphicCenterY;
 
     private InEditorGraphicData(IEngine eng){
@@ -27,6 +30,7 @@ public class InEditorGraphicData {
         rightBoardLineWidth = singleTextLineHeight *0.5f;
         lowerHeight = eng.getEngine().height*0.35f;
         upperHeight = leftBoardLineWidth;
+        theoreticalWidthOfFramesWithNoZomming= (int) (0.8f*(eng.getEngine().width * GuiElement.NES_SCREEN_X_RESOLUTION)/eng.getEngine().width);
     }
 
 

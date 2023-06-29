@@ -8,12 +8,12 @@ import io.itch.mgdsstudio.engine.graphic.Image;
 import io.itch.mgdsstudio.engine.libs.Coordinate;
 import processing.core.PGraphics;
 
-public class LowerPanel extends Panel{
+public class LowerPanelInGame extends Panel{
     private MovementStick movementStick;
     private AimingStick aimingStick;
 
-    public LowerPanel(IEngine engine, InGameHud inGameHud, int height, Image image, PlayerTank playerTank) {
-        super(engine, inGameHud, height, image, playerTank);
+    public LowerPanelInGame(IEngine engine, InGameHud inGameHud, int height, Image image, PlayerTank playerTank) {
+        super(engine, inGameHud, height, image, playerTank.getId());
         init();
     }
 
@@ -21,7 +21,6 @@ public class LowerPanel extends Panel{
     protected void init() {
         leftUpper = new Coordinate(0,engine.getEngine().height-height);
         initSticks();
-
     }
 
     private void initSticks() {

@@ -40,11 +40,11 @@ public class GameRound {
 
     private PlayerProgressControllerSingleton playerProgressControllerSingleton;
 
-    public GameRound(GamePartWithGameWorldAbstractController  gameController, int number, int difficulty, int playersConnected, int playerNumberInMUltiplayerMOde) {
+    public GameRound(GamePartWithGameWorldAbstractController  gamePartController, int number, int difficulty, int playersConnected, int playerNumberInMUltiplayerMOde) {
 
-        if (gameController instanceof GameController ) editor = false;
+        if (gamePartController instanceof GameController ) editor = false;
         else editor = true;
-        this.gameController = gameController;
+        this.gameController = gamePartController;
         this.playerProgressControllerSingleton = PlayerProgressControllerSingleton.getInstance();
         this.difficulty = difficulty;
         this.controllers = new ArrayList<>();
@@ -53,7 +53,8 @@ public class GameRound {
         this.playerNumberInMultiplayerMode = playerNumberInMUltiplayerMOde;
         loadGraphic();
         loadLevel(number, playersConnected, playerNumberInMUltiplayerMOde, playerProgressControllerSingleton);
-        gameCamera = new GameCamera(getPlayer(), gameController.getHud());
+        gameCamera = gamePartController.createCamera(this);
+
         deleteBodiesWithoutEntities();
     }
 

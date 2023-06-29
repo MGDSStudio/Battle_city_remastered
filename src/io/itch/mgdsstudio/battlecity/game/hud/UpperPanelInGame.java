@@ -13,17 +13,16 @@ import io.itch.mgdsstudio.engine.graphic.Image;
 import io.itch.mgdsstudio.engine.libs.Coordinate;
 import processing.core.PGraphics;
 
-public class UpperPanel extends Panel implements GlobalListener {
+public class UpperPanelInGame extends Panel implements GlobalListener {
 
     private boolean levelEnded;
-    //private int levelEndCode;
 
     private RectButton backButton;
     private MenuDataStruct menuDataStruct;
 
 
-    public UpperPanel(IEngine engine, InGameHud inGameHud, int restHeight, PGraphics graphics, Image image, PlayerTank playerTank) {
-        super(engine, inGameHud, restHeight, image, playerTank);
+    public UpperPanelInGame(IEngine engine, InGameHud inGameHud, int restHeight, PGraphics graphics, Image image, PlayerTank playerTank) {
+        super(engine, inGameHud, restHeight, image, playerTank.getId());
         init();
     }
 

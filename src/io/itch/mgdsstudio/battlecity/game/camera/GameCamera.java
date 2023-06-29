@@ -18,11 +18,13 @@ public class GameCamera extends Camera{
     public GameCamera() {
         pos = new Coordinate(0,0);
         magnetTo = Magneting.TO_COORDINATE;
+        firstInit = true;
     }
 
     public GameCamera(Coordinate pos) {
         this.pos = new Coordinate(pos.x,pos.y);
         magnetTo = Magneting.TO_COORDINATE;
+        firstInit = true;
     }
 
     public GameCamera(Entity entity, Hud inGameHud) {

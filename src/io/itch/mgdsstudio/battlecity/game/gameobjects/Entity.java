@@ -18,6 +18,7 @@ public abstract class Entity extends GameElement{
 
 
     public final static int ENTITY_NORMAL_DIM = 32;
+    public static final int NO_ID = -9999;
     protected final static int IMMORTAL_LIFE = 9999;
     protected int life = IMMORTAL_LIFE;
     protected int maxLife = IMMORTAL_LIFE;

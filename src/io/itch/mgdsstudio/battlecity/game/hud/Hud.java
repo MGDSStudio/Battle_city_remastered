@@ -78,7 +78,7 @@ public abstract class Hud {
     public void appendGameRoundData(GameRound gameRound) {
     }
 
-    public abstract LowerPanel getLowerPanel();
+    public abstract Panel getLowerPanel();
 
     public abstract void update(GameRound gameRound);
 

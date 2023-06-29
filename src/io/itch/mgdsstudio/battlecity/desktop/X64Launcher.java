@@ -46,7 +46,7 @@ public class X64Launcher extends PApplet implements ContactListener , IEngine {
     }
 
     public void settings() {
-        size(780,  1080, P2D);
+        size(680,  1080, P2D);
         //size(480,  1080, P2D);
         //size(480,  1080, P2D);
         smooth(0);

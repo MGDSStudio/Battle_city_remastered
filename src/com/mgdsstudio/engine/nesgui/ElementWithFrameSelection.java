@@ -22,7 +22,7 @@ abstract class ElementWithFrameSelection extends ElementWithCursor {
         int frameWidth = (int) (width*CURSOR_DIMENSIONS_COEF);
         int frameHeight = (int) (height*CURSOR_DIMENSIONS_COEF);
         activeFrame = new EightPartsFrameImage(graphicFile, cursorImageZoneSimpleDataForActiveFrame, basicWidth, basicWidth, frameWidth, frameHeight, new PVector(centerX-frameWidth/2, centerY-frameHeight/2));
-        closedFrame= new EightPartsFrameImage(graphicFile, cursorImageZoneSimpleDataForActiveFrame, basicWidth, basicWidth, frameWidth, frameHeight, new PVector(centerX-frameWidth/2, centerY-frameHeight/2));
+        closedFrame= new EightPartsFrameImage(graphicFile, cursorImageZoneSimpleDataForBlockedFrame, basicWidth, basicWidth, frameWidth, frameHeight, new PVector(centerX-frameWidth/2, centerY-frameHeight/2));
     }
 
     @Override

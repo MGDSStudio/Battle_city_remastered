@@ -16,16 +16,16 @@ public abstract class Panel {
     protected IEngine engine;
     protected final int width, height;
     protected final Image image;
-    protected InGameHud inGameHud;
+    protected Hud inGameHud;
     protected int controlableObjectId;
 
-    public Panel(IEngine engine, InGameHud inGameHud, int height, Image image, PlayerTank playerTank) {
+    protected Panel(IEngine engine, Hud inGameHud, int height, Image image, int controlableObjectId) {
         this.engine = engine;
         this.height = height;
         this.width = engine.getEngine().width;
         this.image = image;
         this.inGameHud = inGameHud;
-        this.controlableObjectId = playerTank.getId();
+        this.controlableObjectId = controlableObjectId;
     }
 
     protected abstract void init();
