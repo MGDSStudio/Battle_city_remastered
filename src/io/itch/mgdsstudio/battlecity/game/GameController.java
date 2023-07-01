@@ -1,4 +1,5 @@
 package io.itch.mgdsstudio.battlecity.game;
+import io.itch.mgdsstudio.battlecity.game.camera.Camera;
 import io.itch.mgdsstudio.battlecity.game.camera.GameCamera;
 import io.itch.mgdsstudio.battlecity.game.connectingcontrol.ConnectingController;
 
@@ -138,8 +139,8 @@ public class GameController extends GamePartWithGameWorldAbstractController {
     }
 
     @Override
-    public GameCamera createCamera(GameRound gameRound) {
-        GameCamera gameCamera = new GameCamera(gameRound.getPlayer(), getHud());
+    public Camera createCamera(GameRound gameRound) {
+        GameCamera gameCamera = new GameCamera(engine, gameRound.getPlayer(), getHud());
         return gameCamera;
     }
 }

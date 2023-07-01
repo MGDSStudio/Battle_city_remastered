@@ -4,7 +4,9 @@ import io.itch.mgdsstudio.battlecity.game.Logger;
 import io.itch.mgdsstudio.battlecity.game.gameobjects.Entity;
 import io.itch.mgdsstudio.battlecity.game.hud.Hud;
 import io.itch.mgdsstudio.battlecity.game.hud.InGameHud;
+import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
 import io.itch.mgdsstudio.engine.libs.Coordinate;
+import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
 
 public class GameCamera extends Camera{
@@ -15,20 +17,21 @@ public class GameCamera extends Camera{
     private int magnetTo = Magneting.TO_COORDINATE;
 
 
-    public GameCamera() {
+    public GameCamera(IEngine engine) {
         pos = new Coordinate(0,0);
         magnetTo = Magneting.TO_COORDINATE;
         firstInit = true;
+        this.engine = engine;
     }
 
-    public GameCamera(Coordinate pos) {
+    public GameCamera(IEngine engine, Coordinate pos) {
         this.pos = new Coordinate(pos.x,pos.y);
         magnetTo = Magneting.TO_COORDINATE;
         firstInit = true;
+        this.engine = engine;
     }
 
-    public GameCamera(Entity entity, Hud inGameHud) {
-        //world = new World(new Vec2(0,0));
+    public GameCamera(IEngine engine, Entity entity, Hud inGameHud) {
         if (entity == null) {
             Logger.error("Trouble. Entity is null");
             pos = new Coordinate(0,0);
@@ -40,14 +43,9 @@ public class GameCamera extends Camera{
             magnetTo = Magneting.TO_ENTITY_WITHOUT_SPRING;
         }
         this.inGameHud = inGameHud;
-
-        //initGraphicCenter(gameRound.getGraphics());
+        this.engine = engine;
     }
 
-
-    public Coordinate getPos() {
-        return pos;
-    }
 
     public void update(){
         if (!firstInit){
@@ -66,6 +64,12 @@ public class GameCamera extends Camera{
                 //do nothing
             }
         }
+    }
+
+    @Override
+    public void shiftCameraPos(Vec2 distance) {
+        pos.x+=distance.x;
+        pos.y+=distance.y;
     }
 
     public void resetEntity(){

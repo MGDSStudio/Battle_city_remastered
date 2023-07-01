@@ -1,8 +1,7 @@
 package io.itch.mgdsstudio.battlecity.game;
 
-import io.itch.mgdsstudio.battlecity.datatransfer.GlobalListenersManagerSingleton;
 import io.itch.mgdsstudio.battlecity.datatransfer.listeners.GlobalListener;
-import io.itch.mgdsstudio.battlecity.game.camera.GameCamera;
+import io.itch.mgdsstudio.battlecity.game.camera.Camera;
 import io.itch.mgdsstudio.battlecity.game.dataloading.LevelLoadingMaster;
 import io.itch.mgdsstudio.battlecity.game.dataloading.PlayerProgressControllerSingleton;
 import io.itch.mgdsstudio.battlecity.game.gameobjects.*;
@@ -25,7 +24,7 @@ public class GameRound {
     private ArrayList <Entity> gameObjects;
     private final ArrayList <Entity> objectToBeDeleted  = new ArrayList<>();
     private PGraphics graphics;
-    private GameCamera gameCamera;
+    private Camera camera;
     private GamePartWithGameWorldAbstractController  gameController;
     private PhysicWorld physicWorld;
     private ArrayList <Controller> controllers;
@@ -53,7 +52,7 @@ public class GameRound {
         this.playerNumberInMultiplayerMode = playerNumberInMUltiplayerMOde;
         loadGraphic();
         loadLevel(number, playersConnected, playerNumberInMUltiplayerMOde, playerProgressControllerSingleton);
-        gameCamera = gamePartController.createCamera(this);
+        camera = gamePartController.createCamera(this);
 
         deleteBodiesWithoutEntities();
     }
@@ -111,7 +110,7 @@ public class GameRound {
     }
 
     public void update(long deltaTime){
-        gameCamera.update();
+        camera.update();
         if (startTime <0) startTime = gameController.getEngine().getEngine().millis();
         physicWorld.update(deltaTime);
         for (int i = (gameObjects.size())-1; i >= 0; i--) gameObjects.get(i).update(this, deltaTime);
@@ -143,7 +142,7 @@ public class GameRound {
         graphics.beginDraw();
         graphics.background(50);
         for (Entity entity : gameObjects) {
-            entity.draw(graphics, gameCamera);
+            entity.draw(graphics, camera);
         }
         graphics.endDraw();
     }
@@ -342,5 +341,8 @@ public class GameRound {
     }
 
 
+    public Camera getCamera() {
+        return camera;
+    }
 }
 

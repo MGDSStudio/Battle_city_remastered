@@ -1,5 +1,6 @@
 package io.itch.mgdsstudio.battlecity.game.gameobjects;
 
+import io.itch.mgdsstudio.battlecity.game.camera.Camera;
 import io.itch.mgdsstudio.battlecity.game.camera.GameCamera;
 import io.itch.mgdsstudio.battlecity.game.graphic.VfxsPool;
 import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
@@ -40,7 +41,7 @@ public abstract class GraphicObject extends Entity{
     }
 
     @Override
-    public void draw(PGraphics graphics, GameCamera gameCamera) {
+    public void draw(PGraphics graphics, Camera gameCamera) {
         if (graphicObject != null) graphicObject.drawWithTransformations(graphics, gameCamera, this);
 
     }

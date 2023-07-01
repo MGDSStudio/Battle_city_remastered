@@ -1,5 +1,6 @@
 package io.itch.mgdsstudio.battlecity.game;
 
+import io.itch.mgdsstudio.battlecity.game.camera.Camera;
 import io.itch.mgdsstudio.battlecity.game.camera.GameCamera;
 import io.itch.mgdsstudio.battlecity.game.control.GameProcessController;
 import io.itch.mgdsstudio.battlecity.game.dataloading.PlayerProgressControllerSingleton;
@@ -83,7 +84,7 @@ public abstract class GamePartWithGameWorldAbstractController extends GamePart{
 
     public abstract int getGraphicHeight();
 
-    public abstract GameCamera createCamera(GameRound gameRound);
+    public abstract Camera createCamera(GameRound gameRound);
 
     protected class DrawingGraphicPlaces{
         float centerX, centerY, width, height;

@@ -1,6 +1,7 @@
 package io.itch.mgdsstudio.battlecity.game.gameobjects;
 
 import io.itch.mgdsstudio.battlecity.game.GameRound;
+import io.itch.mgdsstudio.battlecity.game.camera.Camera;
 import io.itch.mgdsstudio.battlecity.game.camera.GameCamera;
 import io.itch.mgdsstudio.battlecity.mainpackage.GlobalConstants;
 import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
@@ -46,7 +47,7 @@ public class ShotDustEffect extends GraphicObject{
     }
 
     @Override
-    public void draw(PGraphics graphics, GameCamera gameCamera) {
+    public void draw(PGraphics graphics, Camera gameCamera) {
         if (active) {
 
             graphicObject.setWidth(tintController.actualSize);

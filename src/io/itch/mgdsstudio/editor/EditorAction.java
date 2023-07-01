@@ -18,13 +18,13 @@ public class EditorAction {
         this.prefix = prefix;
     }
 
-    public void addParameter(int param){
+    public void addIntParameter(int param){
         if (intParameters == null) intParameters = new IntList();
         intParameters.append(param);
     }
 
-    public void addParameter(float param){
-        if (intParameters == null) floatParameters = new FloatList();
+    public void addFloatParameter(float param){
+        if (floatParameters == null) floatParameters = new FloatList();
         floatParameters.append(param);
     }
 

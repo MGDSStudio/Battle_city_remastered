@@ -1,5 +1,6 @@
 package io.itch.mgdsstudio.engine.graphic.debuggraphic;
 
+import io.itch.mgdsstudio.battlecity.game.camera.Camera;
 import io.itch.mgdsstudio.battlecity.game.camera.GameCamera;
 import io.itch.mgdsstudio.battlecity.game.gameobjects.*;
 import io.itch.mgdsstudio.battlecity.mainpackage.GlobalVariables;
@@ -65,7 +66,7 @@ public abstract class DebugGraphic {
 		
 	}
 	
-	private void startRender(PGraphics graphics, GameCamera gameCamera){
+	private void startRender(PGraphics graphics, Camera gameCamera){
 		graphics.pushMatrix();
 		graphics.pushStyle();
 		graphics.translate(gameCamera.getDrawPosX(entity.getPos().x), gameCamera.getDrawPosY(entity.getPos().y));
@@ -79,14 +80,14 @@ public abstract class DebugGraphic {
 	
 	
 	
-	protected abstract void drawElement(PGraphics graphics, GameCamera gameCamera);
+	protected abstract void drawElement(PGraphics graphics, Camera gameCamera);
 	    
 	    
 	
 	
 	
 
-    public void draw(PGraphics graphics, GameCamera gameCamera){
+    public void draw(PGraphics graphics, Camera gameCamera){
          startRender(graphics, gameCamera);
          drawElement(graphics, gameCamera);
          endRender(graphics);

@@ -1,5 +1,6 @@
 package io.itch.mgdsstudio.engine.graphic;
 
+import io.itch.mgdsstudio.battlecity.game.camera.Camera;
 import io.itch.mgdsstudio.battlecity.game.camera.GameCamera;
 import io.itch.mgdsstudio.battlecity.game.gameobjects.Entity;
 import processing.core.PApplet;
@@ -33,7 +34,7 @@ public abstract class GraphicElementInGame {
         graphics.image(image.getImage(), gameCamera.getDrawPosX(x),gameCamera.getDrawPosY(y) ,width, height, imageZoneSimpleData.leftX, imageZoneSimpleData.upperY, imageZoneSimpleData.rightX, imageZoneSimpleData.lowerY);
     }*/
 
-    public void drawWithTransformations(PGraphics graphics, GameCamera gameCamera, Entity entity) {
+    public void drawWithTransformations(PGraphics graphics, Camera gameCamera, Entity entity) {
         if (active) {
             startRender(graphics, gameCamera, entity);
             if (withSpecificFeatures) renderSpecific(graphics);
@@ -42,7 +43,7 @@ public abstract class GraphicElementInGame {
         }
     }
 
-    public void drawWithoutTransformations(PGraphics graphics, GameCamera gameCamera) {
+    public void drawWithoutTransformations(PGraphics graphics, Camera gameCamera) {
         if (active) {
             //startRender(graphics, gameCamera);
             if (withSpecificFeatures) renderSpecific(graphics);
@@ -64,7 +65,7 @@ public abstract class GraphicElementInGame {
         graphics.popMatrix();
     }
 
-    private void startRender(PGraphics graphics, GameCamera gameCamera, Entity entity){
+    private void startRender(PGraphics graphics, Camera gameCamera, Entity entity){
         graphics.pushMatrix();
         graphics.translate(gameCamera.getDrawPosX(entity.getPos().x), gameCamera.getDrawPosY(entity.getPos().y));
         graphics.rotate(PApplet.radians(entity.getAngle()));

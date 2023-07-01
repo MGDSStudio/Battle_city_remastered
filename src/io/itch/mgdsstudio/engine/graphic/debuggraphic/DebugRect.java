@@ -1,5 +1,6 @@
 package io.itch.mgdsstudio.engine.graphic.debuggraphic;
 
+import io.itch.mgdsstudio.battlecity.game.camera.Camera;
 import io.itch.mgdsstudio.battlecity.game.camera.GameCamera;
 import io.itch.mgdsstudio.battlecity.game.gameobjects.Entity;
 import processing.core.PApplet;
@@ -17,7 +18,7 @@ public DebugRect(Entity entity, PApplet engine)
     
     
     
-    protected void drawElement(PGraphics graphics, GameCamera gameCamera){
+    protected void drawElement(PGraphics graphics, Camera gameCamera){
 		graphics.rect(0,0,entity.getWidth(), entity.getHeight());
 		
 	}

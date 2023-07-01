@@ -1,5 +1,6 @@
 package io.itch.mgdsstudio.engine.graphic.debuggraphic;
 
+import io.itch.mgdsstudio.battlecity.game.camera.Camera;
 import io.itch.mgdsstudio.battlecity.game.camera.GameCamera;
 import io.itch.mgdsstudio.battlecity.game.gameobjects.Entity;
 import io.itch.mgdsstudio.battlecity.game.gameobjects.Tank;
@@ -56,7 +57,7 @@ protected void initVertecies(){
    
    
    
-protected void drawElement(PGraphics graphics, GameCamera gameCamera){
+protected void drawElement(PGraphics graphics, Camera gameCamera){
     for (int i = 0; i < vertecies.size(); i+=2){
         if (i!=0) graphics.stroke(25,100,100);
 			graphics.line(vertecies.get(i).x, vertecies.get(i).y, vertecies.get(i+1).x, vertecies.get(i+1).y);
