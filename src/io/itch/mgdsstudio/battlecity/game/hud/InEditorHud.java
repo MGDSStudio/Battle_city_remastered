@@ -46,6 +46,9 @@ public class InEditorHud extends Hud{
     }
 
 
+    public InEditorGameWorldFrame getInEditorGameWorldFrame() {
+        return inEditorGameWorldFrame;
+    }
 
     private void appendPlayerToHud(PlayerTank playerTank){
 
@@ -121,5 +124,9 @@ public class InEditorHud extends Hud{
         int turretAngle = (int) playerTank.getTurretAbsoluteAngle();
         getLowerPanel().setAngleForMovementStick(angle);
         getLowerPanel().setAngleForAimStick(turretAngle);*/
+    }
+
+    public void setTextForConsole(String newText){
+        upperPanel.setConsoleText(newText);
     }
 }

@@ -44,7 +44,9 @@ public class EditorController extends GamePartWithGameWorldAbstractController im
         graphicZone.y = hud.getGraphicUpperPixel();
         graphicZone.width = hud.getGraphicRightPixel()-graphicZone.x;
         graphicZone.height = hud.getGraphicLowerPixel()-graphicZone.y;
-        worldZoneScrollingController = new WorldZoneScrollingController(engine, graphicZone);
+        InEditorHud inEditorHud = (InEditorHud) hud;
+
+        worldZoneScrollingController = new WorldZoneScrollingController(engine, inEditorHud.getInEditorGameWorldFrame());
         actions = new ArrayList<>();
         EditorListenersManagerSingleton.getInstance().addAsListener(this);
 
@@ -62,10 +64,9 @@ public class EditorController extends GamePartWithGameWorldAbstractController im
         hud = new InEditorHud(this, engine, playerNumberInMultiplayerMode, singleplayer);
     }
 
-
     public void update(){
             if (!startDataInit) initStartData();
-            worldZoneScrollingController.update(engine.getEngine().millis());
+            worldZoneScrollingController.update( engine.getEngine().millis());
             updateActions();
             deltaTime = engine.getEngine().millis() - lastFrameTime;
             gameRound.update(deltaTime);
@@ -86,6 +87,7 @@ public class EditorController extends GamePartWithGameWorldAbstractController im
                     editorCamera.appendCommand(actions.get(i));
                     actions.remove(i);
                 }
+                else actions.remove(i);
             }
         }
         if (actions.size()>20){
@@ -96,16 +98,11 @@ public class EditorController extends GamePartWithGameWorldAbstractController im
     @Override
     public void draw(){
         hud.draw();
-        //gameRound.getGraphics().cl
-       // cross.draw((EditorCamera) gameRound.getCamera(), gameRound.getGraphics());
     }
 
     public Hud getHud() {
         return hud;
     }
-
-
-
 
     @Override
     public void backToMenu(MenuDataStruct dataStruct) {

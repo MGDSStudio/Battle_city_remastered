@@ -1,6 +1,7 @@
 package io.itch.mgdsstudio.battlecity.game.camera;
 
 import com.mgdsstudio.engine.nesgui.Frame;
+import io.itch.mgdsstudio.battlecity.editor.EditorListenersManagerSingleton;
 import io.itch.mgdsstudio.battlecity.game.Logger;
 import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
 import io.itch.mgdsstudio.battlecity.editor.EditorAction;
@@ -51,13 +52,10 @@ public class EditorCamera extends Camera implements EditorActionsListener {
             if (actions.get(i).getPrefix() == EditorCommandPrefix.WORLD_SCROLLING){
                 FloatList floats = actions.get(i).getFloatParameters();
                 IntList integers = actions.get(i).getIntParameters();
-                /*Logger.debug("Data size: " + floats.size());
-                for (int j = 0; j < floats.size(); j++){
-                    Logger.debug("Num: " + j + "; Value: " + floats.get(j));
-                }*/
                 cameraMovementController.appendVelocity(floats.get(0), floats.get(1), integers.get(0));
                 actions.remove(i);
             }
+            else actions.remove(i);
         }
         if (actions.size()>20){
             Logger.error("Too many actions " + actions.size());
@@ -106,6 +104,8 @@ public class EditorCamera extends Camera implements EditorActionsListener {
             mutableVelocity.y = dY;
 
             appendVelocity(mutableVelocity);
+            EditorAction editorAction = new EditorAction(EditorCommandPrefix.WORLD_SCROLLING_STARTED);
+            EditorListenersManagerSingleton.getInstance().notify(editorAction);
         }
 
         private void update(){
@@ -122,6 +122,10 @@ public class EditorCamera extends Camera implements EditorActionsListener {
                 velocity.x = 0;
                 velocity.y = 0;
                 stopped = true;
+                Logger.editor("Movement ended!");
+                EditorAction editorAction = new EditorAction(EditorCommandPrefix.WORLD_SCROLLING_ENDED);
+                EditorListenersManagerSingleton.getInstance().notify(editorAction);
+
             }
             else {
                 velocity.x*=brakingCoef;

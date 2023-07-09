@@ -1,5 +1,8 @@
 package io.itch.mgdsstudio.battlecity.editor;
 
+import io.itch.mgdsstudio.battlecity.game.EditorController;
+import io.itch.mgdsstudio.battlecity.game.Logger;
+import io.itch.mgdsstudio.battlecity.game.hud.InEditorGameWorldFrame;
 import io.itch.mgdsstudio.battlecity.mainpackage.GlobalConstants;
 import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
 import org.jbox2d.common.Vec2;
@@ -16,9 +19,9 @@ public class WorldZoneScrollingController {
     private IEngine engine;
     private Rectangle rectangle;
 
-    public WorldZoneScrollingController(IEngine engine, Rectangle rectangle) {
+    public WorldZoneScrollingController(IEngine engine, InEditorGameWorldFrame rectangle) {
         this.engine = engine;
-        this.rectangle = rectangle;
+        this.rectangle = rectangle.getGameWorldZone();
     }
 
     public void update(int millis){
@@ -56,6 +59,7 @@ public class WorldZoneScrollingController {
             if (engine.getEngine().mouseX<(rectangle.x+rectangle.width)){
                 if (GlobalConstants.Y_AXIS_DOWN) {
                     if (engine.getEngine().mouseY > rectangle.y) {
+                        //Logger.debug("Rect Y: " + rectangle.y );
                         if (engine.getEngine().mouseY < (rectangle.y + rectangle.height)) {
                             return true;
                         }

@@ -15,6 +15,7 @@ import io.itch.mgdsstudio.battlecity.menu.MenuDataStruct;
 import io.itch.mgdsstudio.engine.graphic.Image;
 import io.itch.mgdsstudio.engine.libs.Coordinate;
 import processing.core.PGraphics;
+import sun.rmi.runtime.Log;
 
 import java.awt.*;
 
@@ -42,11 +43,13 @@ public class UpperPanelInEditor extends Panel implements GlobalListener {
         leftUpper = new Coordinate(0, 0);
         center = new Coordinate(width / 2, height / 2);
         float gapBetweenPanels = lowerPanelInEditor.leftUpper.y-(worldZone.y+worldZone.height);
-        float consoleHeight = gapBetweenPanels;
+        float consoleHeight = gapBetweenPanels/2;
+
         float gapToRightSide = engine.getEngine().width-(worldZone.x+worldZone.width);
         float width = engine.getEngine().width-2*gapToRightSide;
+        Logger.debug("Upper height: " + height);
         //public FrameWithMoveableText(IEngine engine, int centerX, int centerY, int width, int height, String name, PGraphics graphics, String text) {
-        console = new FrameWithMoveableText(engine, (int) center.x, (int) center.y, (int) width, (int) consoleHeight, "Console", engine.getEngine().g, "WELCOME TO THE EDITOR");
+        console = new FrameWithMoveableText(engine, (int) center.x, (int) worldZone.y/2, (int) width, (int) consoleHeight, "Console", engine.getEngine().g, "WELCOME TO THE EDITOR");
     }
 
     public void setLevelEnded(MenuDataStruct dataStruct) {
@@ -63,5 +66,9 @@ public class UpperPanelInEditor extends Panel implements GlobalListener {
     public void draw(PGraphics graphics){
         super.draw(graphics);
         console.draw(graphics);
+    }
+
+    public void setConsoleText(String newText) {
+        console.setAnotherTextToBeDrawnAsName(newText);
     }
 }
