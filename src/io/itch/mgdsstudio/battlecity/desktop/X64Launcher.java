@@ -147,7 +147,7 @@ public class X64Launcher extends PApplet implements ContactListener , IEngine {
     }
 
     @Override
-    public String getPathToObjectInUserFolder(String dir) {
-        return getPathToObjectInAssets(dir);
+    public String getPathToObjectInUserFolder(String fileName) {
+        return getPathToObjectInAssets(fileName);
     }
 }

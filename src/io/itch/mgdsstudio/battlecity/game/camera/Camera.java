@@ -50,6 +50,21 @@ public abstract class Camera {
         return (y-pos.y+graphicCenterY);
     }
 
+
+
+
+    public final float getObjectXPosForDrawPlace(float xOnScreen){
+        return xOnScreen+pos.x-graphicCenterX;
+        //return (x-pos.x+graphicCenterX) = xOnScreen;
+    }
+
+    public final float getObjectYPosForDrawPlace(float yOnScreen){
+        return yOnScreen+pos.y-graphicCenterY;
+
+
+    }
+
+
     public final Coordinate getPos() {
         return pos;
     }

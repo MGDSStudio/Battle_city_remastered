@@ -34,6 +34,7 @@ public class InEditorGameWorldFrame extends InEditorFrame{
         zoneFrame = new EightPartsFrameImage(GuiElement.getGraphicFile(), zoneForGameWorld, basicWidth, basicWidth, frameWidth, frameHeight, leftUpperCorner);
     }
 
-
-
+    public Rectangle getGameWorldZone() {
+        return gameWorldZone;
+    }
 }

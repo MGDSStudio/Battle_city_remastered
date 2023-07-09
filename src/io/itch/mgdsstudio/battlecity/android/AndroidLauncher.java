@@ -118,8 +118,8 @@ public class AndroidLauncher extends PApplet implements ContactListener, IEngine
     }
 
     @Override
-    public String getPathToObjectInUserFolder(String dir) {
+    public String getPathToObjectInUserFolder(String fileName) {
         Logger.correct("This function must get files from the internal storage");
-        return getPathToObjectInAssets(dir);
+        return getPathToObjectInAssets(fileName);
     }
 }

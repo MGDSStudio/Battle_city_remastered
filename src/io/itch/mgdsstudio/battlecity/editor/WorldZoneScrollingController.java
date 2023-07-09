@@ -1,6 +1,5 @@
-package io.itch.mgdsstudio.editor;
+package io.itch.mgdsstudio.battlecity.editor;
 
-import io.itch.mgdsstudio.battlecity.game.Logger;
 import io.itch.mgdsstudio.battlecity.mainpackage.GlobalConstants;
 import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
 import org.jbox2d.common.Vec2;

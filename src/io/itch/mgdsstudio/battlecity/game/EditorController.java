@@ -1,13 +1,16 @@
 package io.itch.mgdsstudio.battlecity.game;
 
+import io.itch.mgdsstudio.battlecity.editor.data.EditorPreferences;
+import io.itch.mgdsstudio.battlecity.editor.data.EditorPreferencesSingleton;
 import io.itch.mgdsstudio.battlecity.game.camera.EditorCamera;
 import io.itch.mgdsstudio.battlecity.game.control.GameProcessController;
+import io.itch.mgdsstudio.battlecity.game.gameobjects.Grid;
 import io.itch.mgdsstudio.battlecity.game.hud.Hud;
 import io.itch.mgdsstudio.battlecity.game.hud.InEditorHud;
 import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
 import io.itch.mgdsstudio.battlecity.mainpackage.MainController;
 import io.itch.mgdsstudio.battlecity.menu.MenuDataStruct;
-import io.itch.mgdsstudio.editor.*;
+import io.itch.mgdsstudio.battlecity.editor.*;
 import io.itch.mgdsstudio.engine.libs.Coordinate;
 
 import java.awt.*;
@@ -18,10 +21,14 @@ public class EditorController extends GamePartWithGameWorldAbstractController im
     //private ConnectingController connectingController;
     private ArrayList <EditorAction> actions;
     private WorldZoneScrollingController worldZoneScrollingController;
+    private Cross cross;
 
 
     public EditorController(IEngine engine, MainController mainController, int level, int dif, int playersConnected, int playerNumber, int playerNumberInMultiplayerMode) {
         super(engine, mainController, dif, level, playerNumberInMultiplayerMode,playersConnected);
+        EditorPreferencesSingleton editorPreferencesSingleton = EditorPreferencesSingleton.getInstance(engine);
+
+        Logger.editor("Grid step: " + editorPreferencesSingleton.getIntegerValue(EditorPreferences.GRID_STEP.name()));
         drawingGraphicPlaces = new DrawingGraphicPlaces(InEditorGraphicData.graphicCenterX, InEditorGraphicData.graphicCenterY, InEditorGraphicData.fullGraphicWidth, InEditorGraphicData.fullGraphicHeight);
         singleplayer = true;
         hud.appendGameRoundData(gameRound);
@@ -40,6 +47,15 @@ public class EditorController extends GamePartWithGameWorldAbstractController im
         worldZoneScrollingController = new WorldZoneScrollingController(engine, graphicZone);
         actions = new ArrayList<>();
         EditorListenersManagerSingleton.getInstance().addAsListener(this);
+
+        createOnMapZoneGraphic();
+    }
+
+    private void createOnMapZoneGraphic() {
+        cross = new Cross(this);
+        Grid grid = new Grid(this);
+        gameRound.addEntityToEnd(cross);
+        gameRound.addEntityToEnd(grid);
     }
 
     protected void initHud(int playerNumberInMultiplayerMode){
@@ -59,6 +75,7 @@ public class EditorController extends GamePartWithGameWorldAbstractController im
             engine.getEngine().image(gameRound.getGraphics(), drawingGraphicPlaces.centerX, drawingGraphicPlaces.centerY,
                 drawingGraphicPlaces.getWidth(), drawingGraphicPlaces.getHeight(),
                 hud.getGraphicLeftPixel(), hud.getGraphicUpperPixel(), hud.getGraphicRightPixel(), hud.getGraphicLowerPixel());
+        hud.update(gameRound);
     }
 
     private void updateActions() {
@@ -79,6 +96,8 @@ public class EditorController extends GamePartWithGameWorldAbstractController im
     @Override
     public void draw(){
         hud.draw();
+        //gameRound.getGraphics().cl
+       // cross.draw((EditorCamera) gameRound.getCamera(), gameRound.getGraphics());
     }
 
     public Hud getHud() {

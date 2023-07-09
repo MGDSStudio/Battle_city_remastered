@@ -34,7 +34,7 @@ public interface IEngine {
 
     String getPathToSpriteInAssets(int spritesheetNumber);
 
-    String getPathToObjectInUserFolder(String dir);
+    String getPathToObjectInUserFolder(String fileName);
 
 
 }

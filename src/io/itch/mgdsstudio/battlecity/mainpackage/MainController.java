@@ -74,7 +74,6 @@ public class MainController implements GameStatements{
         if (!mustBeReloaded) {
             if (globalStatement == GAME || globalStatement == EDITOR) {
                 gamePart.draw();
-
             }
             else gamePart.draw();
         }

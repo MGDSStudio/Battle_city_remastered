@@ -222,6 +222,17 @@ public class GameRound {
 
     public void addEntityToEnd(Entity entity){
         gameObjects.add(gameObjects.size()-1,entity);
+        if (gameObjects.size()>1) {
+            for (int i = 0; i < gameObjects.size() - 1; i++) {
+                if (gameObjects.get(i).mustBeAlwaysAbove()) {
+                    Logger.editor("Remember: cross must be always above");
+                    Entity toBeSaved = gameObjects.get(i);
+                    gameObjects.remove(i);
+                    gameObjects.add(gameObjects.size()-1, toBeSaved);
+                }
+            }
+
+        }
         //gameObjects.add(entity);
     }
 

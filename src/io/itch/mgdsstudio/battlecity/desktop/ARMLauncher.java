@@ -152,7 +152,7 @@ public class ARMLauncher extends PApplet implements ContactListener , IEngine {
     }
 
     @Override
-    public String getPathToObjectInUserFolder(String dir) {
-        return getPathToObjectInAssets(dir);
+    public String getPathToObjectInUserFolder(String fileName) {
+        return getPathToObjectInAssets(fileName);
     }
 }

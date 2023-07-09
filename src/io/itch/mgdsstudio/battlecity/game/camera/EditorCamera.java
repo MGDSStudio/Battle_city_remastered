@@ -1,12 +1,11 @@
 package io.itch.mgdsstudio.battlecity.game.camera;
 
+import com.mgdsstudio.engine.nesgui.Frame;
 import io.itch.mgdsstudio.battlecity.game.Logger;
-import io.itch.mgdsstudio.battlecity.game.gameobjects.Entity;
-import io.itch.mgdsstudio.battlecity.game.hud.Hud;
 import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
-import io.itch.mgdsstudio.editor.EditorAction;
-import io.itch.mgdsstudio.editor.EditorActionsListener;
-import io.itch.mgdsstudio.editor.EditorCommandPrefix;
+import io.itch.mgdsstudio.battlecity.editor.EditorAction;
+import io.itch.mgdsstudio.battlecity.editor.EditorActionsListener;
+import io.itch.mgdsstudio.battlecity.editor.EditorCommandPrefix;
 import io.itch.mgdsstudio.engine.libs.Coordinate;
 import io.itch.mgdsstudio.engine.libs.DeltaTimeController;
 import org.jbox2d.common.Vec2;
@@ -21,6 +20,7 @@ public class EditorCamera extends Camera implements EditorActionsListener {
 
     private ArrayList <EditorAction> actions;
     private CameraMovementController cameraMovementController;
+    private final Vec2 screenCenter = new Vec2();
     public  EditorCamera(IEngine engine) {
         init(engine, new Coordinate(0,0));
 
@@ -41,7 +41,10 @@ public class EditorCamera extends Camera implements EditorActionsListener {
     public void update() {
         updateActions();
         cameraMovementController.update();
+
     }
+
+
 
     private void updateActions() {
         for (int i = (actions.size()-1); i >= 0; i--){
@@ -73,6 +76,8 @@ public class EditorCamera extends Camera implements EditorActionsListener {
         actions.add(action);
         //Logger.debug("Camera got action");
     }
+
+
 
 
     private class CameraMovementController{

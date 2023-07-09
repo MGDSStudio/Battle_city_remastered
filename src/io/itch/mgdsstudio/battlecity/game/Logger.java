@@ -13,9 +13,11 @@ public abstract class Logger {
     }
 
     public final static void error(String data){
-
         log("ERROR: " + data);
+    }
 
+    public final static void editor(String data){
+        log("EDITOR: " + data);
     }
 
     public final static void net(String data){

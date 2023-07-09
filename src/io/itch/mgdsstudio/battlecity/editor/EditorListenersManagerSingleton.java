@@ -1,7 +1,4 @@
-package io.itch.mgdsstudio.editor;
-
-import io.itch.mgdsstudio.battlecity.datatransfer.LocalListenersManagerSingleton;
-import io.itch.mgdsstudio.battlecity.datatransfer.listeners.LocalListener;
+package io.itch.mgdsstudio.battlecity.editor;
 
 import java.util.ArrayList;
 

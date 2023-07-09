@@ -2,6 +2,7 @@ package com.mgdsstudio.engine.nesgui;
 
 
 
+import io.itch.mgdsstudio.battlecity.game.Logger;
 import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
 import io.itch.mgdsstudio.engine.graphic.GraphicManager;
 import io.itch.mgdsstudio.engine.graphic.Image;
@@ -574,7 +575,12 @@ public abstract class GuiElement {
         //float whitespaceWidth
         //float charWidth = font.width('W');
 
-        int maxChars = PApplet.floor(maxWidth/ PApplet.ceil(charWidth)) - 3;
+        float underLineValue = PApplet.ceil(charWidth);
+        if (underLineValue == 0){
+            Logger.error("can not calculate char width for this gui");
+            charWidth++;
+        }
+        int maxChars = PApplet.floor(maxWidth/ underLineValue) - 3;
         //System.out.println("Single char width for " + this.getClass() + " is " + charWidth + " by frame width: " + maxWidth + " and max chars: " + maxChars) ;
         return maxChars;
     }

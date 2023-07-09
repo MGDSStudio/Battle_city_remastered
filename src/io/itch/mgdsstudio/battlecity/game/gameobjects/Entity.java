@@ -113,4 +113,8 @@ public abstract class Entity extends GameElement{
     public int getLife() {
         return life;
     }
+
+    public boolean mustBeAlwaysAbove() {
+        return false;
+    }
 }

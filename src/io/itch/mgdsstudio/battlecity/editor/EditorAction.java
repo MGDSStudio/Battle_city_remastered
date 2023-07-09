@@ -1,4 +1,4 @@
-package io.itch.mgdsstudio.editor;
+package io.itch.mgdsstudio.battlecity.editor;
 
 import processing.data.FloatList;
 import processing.data.IntList;

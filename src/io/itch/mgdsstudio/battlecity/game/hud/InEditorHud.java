@@ -2,6 +2,7 @@ package io.itch.mgdsstudio.battlecity.game.hud;
 
 import io.itch.mgdsstudio.battlecity.game.*;
 import io.itch.mgdsstudio.battlecity.game.gameobjects.PlayerTank;
+import io.itch.mgdsstudio.battlecity.game.hud.editor.GridCoordinates;
 import io.itch.mgdsstudio.battlecity.mainpackage.GlobalConstants;
 import io.itch.mgdsstudio.battlecity.mainpackage.GlobalVariables;
 import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
@@ -17,6 +18,7 @@ public class InEditorHud extends Hud{
     private LowerPanelInEditor lowerPanel;
     private InEditorGameWorldFrame inEditorGameWorldFrame;
     private Rectangle worldZone;
+    private GridCoordinates gridCoordinates;
 
     public InEditorHud(GamePartWithGameWorldAbstractController gameController, IEngine engine, int playerNumberInMultiplayerMode, boolean singleplayer ) {
         this.engine = engine;
@@ -40,13 +42,15 @@ public class InEditorHud extends Hud{
         inEditorGameWorldFrame = new InEditorGameWorldFrame(engine, worldZone);
         //IEngine engine, InGameHud inGameHud, int restHeight, PGraphics graphics, Image image
 
+        gridCoordinates = new GridCoordinates(this, engine, inEditorGameWorldFrame);
     }
 
 
 
     private void appendPlayerToHud(PlayerTank playerTank){
-        upperPanel = new UpperPanelInEditor(engine, this, (int)upperHeight, graphics, image);
+
         lowerPanel = new LowerPanelInEditor(engine, this, (int)lowerHeight, image, playerTank, inEditorGameWorldFrame.zoneFrame);
+        upperPanel = new UpperPanelInEditor(engine, this, (int)upperHeight, graphics, image, lowerPanel, worldZone);
     }
 
 
@@ -65,14 +69,16 @@ public class InEditorHud extends Hud{
 
     protected void drawPanels(){
         upperPanel.draw(graphics);
+        gridCoordinates.draw(graphics);
         lowerPanel.draw(graphics);
         inEditorGameWorldFrame.draw(graphics);
     }
 
-    public void update(PlayerTank playerTank) {
+    /*public void update(PlayerTank playerTank) {
+
         upperPanel.update(playerTank);
         lowerPanel.update(playerTank);
-    }
+    }*/
 
     public Panel getLowerPanel() {
         return lowerPanel;
@@ -80,6 +86,7 @@ public class InEditorHud extends Hud{
 
     @Override
     public void update(GameRound gameRound) {
+        gridCoordinates.update(gameRound);
         upperPanel.update(null);
         lowerPanel.update(null);
     }
