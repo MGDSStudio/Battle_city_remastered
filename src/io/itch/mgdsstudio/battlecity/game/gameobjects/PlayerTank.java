@@ -39,6 +39,7 @@ public class PlayerTank extends Tank{
         this.engineUpgrade = controllerSingleton.getIntegerValue(Keys.CHASSIS_UPGRADE);
         this.turretType = controllerSingleton.getIntegerValue(Keys.TOWER_UPGRADE);
         ammoForActualWeapon = controllerSingleton.getIntegerValue(Keys.AMMO_FOR_ACTUAL_WEAPON);
+        Logger.debug("Player tank was created at: " + (int)pos.x + "x" + (int)pos.y);
     }
 
     private static int getChassisTypeFromSavedFile() {

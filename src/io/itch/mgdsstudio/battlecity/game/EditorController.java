@@ -2,11 +2,14 @@ package io.itch.mgdsstudio.battlecity.game;
 
 import io.itch.mgdsstudio.battlecity.editor.data.EditorPreferences;
 import io.itch.mgdsstudio.battlecity.editor.data.EditorPreferencesSingleton;
+import io.itch.mgdsstudio.battlecity.editor.menus.AbstractEditorMenu;
+import io.itch.mgdsstudio.battlecity.editor.menus.Main;
 import io.itch.mgdsstudio.battlecity.game.camera.EditorCamera;
 import io.itch.mgdsstudio.battlecity.game.control.GameProcessController;
 import io.itch.mgdsstudio.battlecity.game.gameobjects.Grid;
 import io.itch.mgdsstudio.battlecity.game.hud.Hud;
 import io.itch.mgdsstudio.battlecity.game.hud.InEditorHud;
+import io.itch.mgdsstudio.battlecity.game.hud.LowerPanelInEditor;
 import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
 import io.itch.mgdsstudio.battlecity.mainpackage.MainController;
 import io.itch.mgdsstudio.battlecity.menu.MenuDataStruct;
@@ -18,16 +21,14 @@ import java.util.ArrayList;
 
 public class EditorController extends GamePartWithGameWorldAbstractController implements EditorActionsListener {
 
-    //private ConnectingController connectingController;
     private ArrayList <EditorAction> actions;
     private WorldZoneScrollingController worldZoneScrollingController;
     private Cross cross;
-
+    private AbstractEditorMenu menu;
 
     public EditorController(IEngine engine, MainController mainController, int level, int dif, int playersConnected, int playerNumber, int playerNumberInMultiplayerMode) {
         super(engine, mainController, dif, level, playerNumberInMultiplayerMode,playersConnected);
         EditorPreferencesSingleton editorPreferencesSingleton = EditorPreferencesSingleton.getInstance(engine);
-
         Logger.editor("Grid step: " + editorPreferencesSingleton.getIntegerValue(EditorPreferences.GRID_STEP.name()));
         drawingGraphicPlaces = new DrawingGraphicPlaces(InEditorGraphicData.graphicCenterX, InEditorGraphicData.graphicCenterY, InEditorGraphicData.fullGraphicWidth, InEditorGraphicData.fullGraphicHeight);
         singleplayer = true;
@@ -35,22 +36,24 @@ public class EditorController extends GamePartWithGameWorldAbstractController im
         gameProcessController = new GameProcessController(gameRound, hud, singleplayer, playerNumber, playerNumberInMultiplayerMode);
         gameRound.appendButtonsListenerToControllers(gameProcessController);
         hud.appendButtonsListener(gameProcessController);
-
         initDeltaTime();
-        Logger.debug("Editor launched");
-
-        Rectangle graphicZone = new Rectangle();
-        graphicZone.x = hud.getGraphicLeftPixel();
-        graphicZone.y = hud.getGraphicUpperPixel();
-        graphicZone.width = hud.getGraphicRightPixel()-graphicZone.x;
-        graphicZone.height = hud.getGraphicLowerPixel()-graphicZone.y;
+        initGraphicZone();
         InEditorHud inEditorHud = (InEditorHud) hud;
-
         worldZoneScrollingController = new WorldZoneScrollingController(engine, inEditorHud.getInEditorGameWorldFrame());
         actions = new ArrayList<>();
         EditorListenersManagerSingleton.getInstance().addAsListener(this);
 
         createOnMapZoneGraphic();
+        menu = new Main(this, (LowerPanelInEditor) hud.getLowerPanel());
+    }
+
+    private void initGraphicZone(){
+        Rectangle graphicZone = new Rectangle();
+        graphicZone.x = hud.getGraphicLeftPixel();
+        graphicZone.y = hud.getGraphicUpperPixel();
+        graphicZone.width = hud.getGraphicRightPixel()-graphicZone.x;
+        graphicZone.height = hud.getGraphicLowerPixel()-graphicZone.y;
+
     }
 
     private void createOnMapZoneGraphic() {
@@ -65,17 +68,18 @@ public class EditorController extends GamePartWithGameWorldAbstractController im
     }
 
     public void update(){
-            if (!startDataInit) initStartData();
-            worldZoneScrollingController.update( engine.getEngine().millis());
-            updateActions();
-            deltaTime = engine.getEngine().millis() - lastFrameTime;
-            gameRound.update(deltaTime);
-            gameProcessController.update(deltaTime);
-            gameRound.draw();
-            lastFrameTime = engine.getEngine().millis();
-            engine.getEngine().image(gameRound.getGraphics(), drawingGraphicPlaces.centerX, drawingGraphicPlaces.centerY,
-                drawingGraphicPlaces.getWidth(), drawingGraphicPlaces.getHeight(),
-                hud.getGraphicLeftPixel(), hud.getGraphicUpperPixel(), hud.getGraphicRightPixel(), hud.getGraphicLowerPixel());
+        if (!startDataInit) initStartData();
+        worldZoneScrollingController.update( engine.getEngine().millis());
+        updateActions();
+        deltaTime = engine.getEngine().millis() - lastFrameTime;
+        gameRound.update(deltaTime);
+        gameProcessController.update(deltaTime);
+        gameRound.draw();
+        lastFrameTime = engine.getEngine().millis();
+        engine.getEngine().image(gameRound.getGraphics(), drawingGraphicPlaces.centerX, drawingGraphicPlaces.centerY,
+            drawingGraphicPlaces.getWidth(), drawingGraphicPlaces.getHeight(),
+            hud.getGraphicLeftPixel(), hud.getGraphicUpperPixel(), hud.getGraphicRightPixel(), hud.getGraphicLowerPixel());
+        menu.update();
         hud.update(gameRound);
     }
 
