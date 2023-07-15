@@ -102,6 +102,7 @@ public class EditorController extends GamePartWithGameWorldAbstractController im
     @Override
     public void draw(){
         hud.draw();
+        menu.draw();
     }
 
     public Hud getHud() {

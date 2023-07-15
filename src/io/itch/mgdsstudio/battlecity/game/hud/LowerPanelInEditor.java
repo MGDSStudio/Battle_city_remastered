@@ -25,6 +25,7 @@ public class LowerPanelInEditor extends Panel{
     @Override
     protected void init() {
         leftUpper = new Coordinate(0,engine.getEngine().height-height);
+        center = new Coordinate(leftUpper.x+width/2, leftUpper.y+height/2);
         lowerTab = new InEditorLowerTab(engine, inEditorGameWorldFrame, (int) InEditorGraphicData.rightBoardLineWidth);
 
     }

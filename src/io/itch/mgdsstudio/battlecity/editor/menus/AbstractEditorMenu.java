@@ -11,6 +11,8 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public abstract class AbstractEditorMenu {
+
+
     protected enum AlignmentType {
         DEFAULT, FOUR_COLUMNS,  TWO_COLUMNS, ONE_COLUMN;
     }
@@ -28,6 +30,7 @@ public abstract class AbstractEditorMenu {
         this.lowerPanelInEditor = lowerPanelInEditor;
         this.endStatement = endStatement;
         guiElements = new ArrayList<>();
+        //if (lowerPanelInEditor == null) Logger.error("Lower panel is null: " );
         initGui();
     }
 
@@ -49,6 +52,12 @@ public abstract class AbstractEditorMenu {
                     guiPressed(element);
                 }
             }
+        }
+    }
+
+    public void draw() {
+        for (GuiElement guiElement : guiElements){
+            guiElement.draw(editorController.getEngine().getEngine().g);
         }
     }
 

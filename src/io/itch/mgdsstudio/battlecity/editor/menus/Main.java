@@ -2,7 +2,7 @@ package io.itch.mgdsstudio.battlecity.editor.menus;
 
 import com.mgdsstudio.engine.nesgui.ButtonInFrameWithGraphic;
 import com.mgdsstudio.engine.nesgui.GuiElement;
-import io.itch.mgdsstudio.battlecity.editor.MainButtonsNames;
+
 import io.itch.mgdsstudio.battlecity.game.EditorController;
 import io.itch.mgdsstudio.battlecity.game.hud.LowerPanelInEditor;
 import io.itch.mgdsstudio.engine.graphic.ImageZoneSimpleData;
@@ -58,9 +58,9 @@ public class Main extends AbstractEditorMenu {
         return name;
     }
 
-    private String getImageZoneForPos(int i) {
-        String name;
-        switch(i) {
+    private ImageZoneSimpleData getImageZoneForPos(int i) {
+
+       /* switch(i) {
             case (0): name =  ImageZones.FILE.name(); break;
             case (1): name =  ImageZones.EDIT.name(); break;
             case (2): name =  ImageZones.PREFERENCES.name(); break;
@@ -73,8 +73,9 @@ public class Main extends AbstractEditorMenu {
             case (9): name =  ImageZones.STAFF.name(); break;
             case (10): name =  ImageZones.WATER.name(); break;
             default:  name = ImageZones.FOREST.name(); break;
-        }
-        return name;
+        }*/
+        return ImageZones.WALL;
+        //return name;
     }
 
     @Override

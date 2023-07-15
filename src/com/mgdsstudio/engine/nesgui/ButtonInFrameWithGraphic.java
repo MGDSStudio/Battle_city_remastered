@@ -34,9 +34,11 @@ public class ButtonInFrameWithGraphic extends ButtonInFrameWithText{
             graphic.pushMatrix();
             graphic.rotate(graphicAngleInRad);
             graphic.image(graphicFile.getImage(), 0,0, width, height, insideImage.leftX, insideImage.upperY, insideImage.rightX, insideImage.lowerY);
-            graphic.popStyle();
+            graphic.popMatrix();
         }
     }
+
+
 
 
 }

@@ -26,6 +26,7 @@ public abstract class Panel {
         this.image = image;
         this.inGameHud = inGameHud;
         this.controlableObjectId = controlableObjectId;
+
     }
 
     protected abstract void init();
