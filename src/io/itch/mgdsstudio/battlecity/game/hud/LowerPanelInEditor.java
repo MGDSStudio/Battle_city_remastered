@@ -13,6 +13,7 @@ import processing.core.PGraphics;
 import java.awt.*;
 
 public class LowerPanelInEditor extends Panel{
+
     private InEditorLowerTab lowerTab;
     private final EightPartsFrameImage inEditorGameWorldFrame;
     //private final Rectangle worldZone;
@@ -41,5 +42,8 @@ public class LowerPanelInEditor extends Panel{
         lowerTab.draw(graphics);
     }
 
+    public InEditorLowerTab getLowerTab() {
+        return lowerTab;
+    }
 
 }

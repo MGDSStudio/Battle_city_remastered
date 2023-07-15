@@ -15,12 +15,12 @@ public class InEditorLowerTab extends InEditorFrame{
     // private final static ImageZoneSimpleData zoneForGameWorld = new ImageZoneSimpleData(0,66, 153, 219);
     //
     private int width, height;
-
+    private int left, upper;
     public InEditorLowerTab(IEngine engine, EightPartsFrameImage inEditorGameWorldFrame, int yFreeZone) {
         super(engine);
         //this.yFreeZone = yFreeZone;
-        float left = inEditorGameWorldFrame.getLeftUpperCorner().x;
-        float upper = inEditorGameWorldFrame.getLeftUpperCorner().y+inEditorGameWorldFrame.getHeight()+yFreeZone;
+        left = (int) inEditorGameWorldFrame.getLeftUpperCorner().x;
+        upper = (int) (inEditorGameWorldFrame.getLeftUpperCorner().y+inEditorGameWorldFrame.getHeight()+yFreeZone);
         this.width = inEditorGameWorldFrame.getWidth();
 
         float lowerPoint = engine.getEngine().height-yFreeZone;
@@ -33,7 +33,22 @@ public class InEditorLowerTab extends InEditorFrame{
     @Override
     protected void initZoneFrame(PVector leftUpperCorner, float yFreeZone) {
         int basicWidth = InEditorGraphicData.theoreticalWidthOfFramesWithNoZomming/2;
-
         zoneFrame = new EightPartsFrameImage(GuiElement.getGraphicFile(), zoneForGameWorld, basicWidth, basicWidth, width, height, leftUpperCorner);
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public int getLeft() {
+        return left;
+    }
+
+    public int getUpper() {
+        return upper;
     }
 }

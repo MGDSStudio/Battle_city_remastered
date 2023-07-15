@@ -4,6 +4,7 @@ import com.mgdsstudio.engine.nesgui.ButtonInFrameWithGraphic;
 import com.mgdsstudio.engine.nesgui.GuiElement;
 
 import io.itch.mgdsstudio.battlecity.game.EditorController;
+import io.itch.mgdsstudio.battlecity.game.Logger;
 import io.itch.mgdsstudio.battlecity.game.hud.LowerPanelInEditor;
 import io.itch.mgdsstudio.engine.graphic.ImageZoneSimpleData;
 
@@ -23,18 +24,18 @@ public class Main extends AbstractEditorMenu {
         ImageZoneSimpleData WATER = new ImageZoneSimpleData(84,291, 118,325);
         ImageZoneSimpleData PLAYER_TANK = new ImageZoneSimpleData(84,361, 118,393);
 // not Set up
-        ImageZoneSimpleData ENEMY_TANK = new ImageZoneSimpleData(119,429, 153,363);
-        ImageZoneSimpleData COLLECTABLE = new ImageZoneSimpleData(84,395, 118,29);
+        ImageZoneSimpleData ENEMY_TANK = new ImageZoneSimpleData(119,429, 153,463);
+        ImageZoneSimpleData COLLECTABLE = new ImageZoneSimpleData(84,395, 118,429);
         ImageZoneSimpleData STAFF = new ImageZoneSimpleData(84,463, 118,497);
-        ImageZoneSimpleData FOREST = new ImageZoneSimpleData(84,429, 118,363);
+        ImageZoneSimpleData FOREST = new ImageZoneSimpleData(84,429, 118,463);
         ImageZoneSimpleData FILE = new ImageZoneSimpleData(119,361, 153,393);
         ImageZoneSimpleData EDIT = new ImageZoneSimpleData(119,463, 153,497);
-        ImageZoneSimpleData EXIT = new ImageZoneSimpleData(119,395, 153,29);
+        ImageZoneSimpleData EXIT = new ImageZoneSimpleData(119,395, 153,429);
         
 
     }
 
-    private GuiElement lastPressed = null;
+
 
     public Main(EditorController editorController, LowerPanelInEditor lowerPanelInEditor) {
         super(editorController, lowerPanelInEditor, NO_END);
@@ -43,11 +44,14 @@ public class Main extends AbstractEditorMenu {
     @Override
     protected void initGui() {
         Rectangle [] zones = getCoordinatesForFrameButtons(12, AlignmentType.FOUR_COLUMNS);
-        for (int i = 0; i < 5; i++){
-            GuiElement gui = new ButtonInFrameWithGraphic(editorController.getEngine(), zones[i].x, zones[i].y, zones[i].width, zones[i].height, getNameForPos(i), getImageZoneForPos(i),0,editorController.getEngine().getEngine().g);
+        for (int i = 0; i < 12; i++){
+            GuiElement gui = new ButtonInFrameWithGraphic(editorController.getEngine(), zones[i].x-zones[i].width/2, zones[i].y-zones[i].height/2, zones[i].width, zones[i].height, getNameForPos(i), getImageZoneForPos(i),0,editorController.getEngine().getEngine().g);
             guiElements.add(gui);
         }
+        //Logger.debug("Gui sizes: " + zones[0].width + "x" + zones[0].height);
     }
+
+
 
     private String getNameForPos(int i) {
         String name;
@@ -112,35 +116,27 @@ public class Main extends AbstractEditorMenu {
 
     @Override
     protected void guiPressed(GuiElement element) {
-        if (!wasGuiPressedAlsoOnPrevFrame(element)){
-             setConsoleText(getTextForConsoleByPressedGui(element));
-        }
+
+
     }
 
     //transfer in parent
-    protected boolean wasGuiPressedAlsoOnPrevFrame(GuiElement element){
-        boolean wasLastButtonChanged = false;
-        if (lastPressed == null){
-             wasLastButtonChanged = true;
-             lastPressed = element;
-        }
-        else {
-             if (!lastPressed.equals(element)){
-                 wasLastButtonChanged = true;
-                 lastPressed = element;
-             }
-        }
-        return !wasLastButtonChanged;
+    @Override
+    protected void setConsoleTextForFirstButtonPressing(GuiElement element) {
+        editorController.setTextInConcole(getTextForConsoleByPressedGui(element));
     }
 
-    protected void setConsoleText(String text){
-        editorController.setTextInConcole(text);
-    }
+
 
 
 
     @Override
     protected void guiReleased(GuiElement element) {
 
+    }
+
+    @Override
+    protected void initDataForStatement(int actualStatement) {
+        Logger.debug("This menu has no statements");
     }
 }
