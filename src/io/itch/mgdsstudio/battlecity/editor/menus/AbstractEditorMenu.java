@@ -121,7 +121,8 @@ public abstract class AbstractEditorMenu {
                 int centerX = gapX+guiWidth/2+i*(guiWidth+gapX);
                 int centerY = gapY+guiHeight/2+j*(guiHeight+gapY);
                 Rectangle rect = new Rectangle(centerX+left, centerY+upper, guiWidth, guiHeight);
-                positions[fullCount] = rect;
+                int number = i+j*alongX;
+                positions[number] = rect;
                 fullCount++;
             }
         }
