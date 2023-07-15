@@ -5,13 +5,14 @@ import io.itch.mgdsstudio.battlecity.game.EditorController;
 import io.itch.mgdsstudio.battlecity.game.Logger;
 import io.itch.mgdsstudio.battlecity.game.hud.LowerPanelInEditor;
 import io.itch.mgdsstudio.engine.libs.Coordinate;
+import processing.core.PApplet;
 
 import java.awt.*;
 import java.util.ArrayList;
 
 public abstract class AbstractEditorMenu {
     protected enum AlignmentType {
-        DEFAULT, TWO_COLUMNS, ONE_COLUMN;
+        DEFAULT, FOUR_COLUMNS,  TWO_COLUMNS, ONE_COLUMN;
     }
     protected final LowerPanelInEditor lowerPanelInEditor;
     protected final static int NO_END = 9999;
@@ -65,14 +66,56 @@ public abstract class AbstractEditorMenu {
 
 
     protected Rectangle[] getCoordinatesForFrameButtons(int fullCount, AlignmentType alignment){
-        Rectangle [] pos = new Rectangle[fullCount];
+
         int fullWidth = lowerPanelInEditor.getWidth();
         int fullHeight = lowerPanelInEditor.getHeight();
         int left = (int) (lowerPanelInEditor.getCenter().x-fullWidth/2);
         int upper = (int) (lowerPanelInEditor.getCenter().y-fullHeight/2);
-        if (alignment == AlignmentType.TWO_COLUMNS){
-
+        //final float xGapCoef = 0.1f;
+        int alongX = 1;
+        int alongY = 1;
+        if (alignment == AlignmentType.FOUR_COLUMNS){
+            alongX = 4;
+            alongY = PApplet.ceil(fullCount/alongX);
         }
-        return pos;
+        float relativeGap = 0.05f;
+        float fullRelativeGapX = (alongX+2)*relativeGap;
+        float fullRelativeGapY = (alongY+2)*relativeGap;
+        float fullGapX = fullWidth*fullRelativeGapX;
+        float fullGapY = fullHeight*fullRelativeGapY;
+
+        int singleGap;
+        float minimalFullGap;
+        int guiWidth;
+        if (fullGapY<fullGapX) {
+            minimalFullGap = fullGapY;
+            singleGap = (int)(minimalFullGap/alongY);
+            guiWidth = (int) ((fullWidth-minimalFullGap)/alongX);
+        }
+        else{
+            minimalFullGap = fullGapX;
+            singleGap = (int)(minimalFullGap/alongX);
+            guiWidth = (int) ((fullHeight-minimalFullGap)/alongY);
+        }
+        int guiHeight = guiWidth;
+
+        //Buttons are squares
+        Rectangle [] positions = calculatePositionsForParams(guiWidth, guiHeight, alongX, alongY, left, upper, singleGap, singleGap);
+        return positions;
+    }
+
+    private Rectangle [] calculatePositionsForParams(int guiWidth, int guiHeight, int alongX, int alongY, int left, int upper, int gapX, int gapY){
+        Rectangle [] positions = new Rectangle[alongX*alongY];
+        int fullCount = 0;
+        for (int i = 0; i < alongX; i++){
+            for (int j = 0; j < alongY; j++){
+                int centerX = gapX+guiWidth/2+i*(guiWidth+gapX);
+                int centerY = gapY+guiHeight/2+j*(guiHeight+gapY);
+                Rectangle rect = new Rectangle(centerX+left, centerY+upper, guiWidth, guiHeight);
+                positions[fullCount] = rect;
+                fullCount++;
+            }
+        }
+        return positions;
     }
 }
