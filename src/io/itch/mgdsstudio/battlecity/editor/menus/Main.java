@@ -23,13 +23,13 @@ public class Main extends AbstractEditorMenu {
         ImageZoneSimpleData WATER = new ImageZoneSimpleData(84,291, 118,325);
         ImageZoneSimpleData PLAYER_TANK = new ImageZoneSimpleData(84,361, 118,393);
 // not Set up
-        ImageZoneSimpleData ENEMY_TANK = new ImageZoneSimpleData(84,326, 118,360);
-        ImageZoneSimpleData COLLECTABLE = new ImageZoneSimpleData(84,326, 118,360);
-        ImageZoneSimpleData STAFF = new ImageZoneSimpleData(84,326, 118,360);
-        ImageZoneSimpleData FOREST = new ImageZoneSimpleData(84,326, 118,360);
-        ImageZoneSimpleData FILE = new ImageZoneSimpleData(84,326, 118,360);
-        ImageZoneSimpleData EDIT = new ImageZoneSimpleData(84,326, 118,360);
-        ImageZoneSimpleData EXIT = new ImageZoneSimpleData(84,326, 118,360);
+        ImageZoneSimpleData ENEMY_TANK = new ImageZoneSimpleData(119,429, 153,363);
+        ImageZoneSimpleData COLLECTABLE = new ImageZoneSimpleData(84,395, 118,29);
+        ImageZoneSimpleData STAFF = new ImageZoneSimpleData(84,463, 118,497);
+        ImageZoneSimpleData FOREST = new ImageZoneSimpleData(84,429, 118,363);
+        ImageZoneSimpleData FILE = new ImageZoneSimpleData(119,361, 153,393);
+        ImageZoneSimpleData EDIT = new ImageZoneSimpleData(119,463, 153,497);
+        ImageZoneSimpleData EXIT = new ImageZoneSimpleData(119,395, 153,29);
         
 
     }
@@ -68,6 +68,28 @@ public class Main extends AbstractEditorMenu {
         return name;
     }
 
+    protected String getTextForConsoleByPressedGui(GuiElement element){
+        int ENGLISH = 0;
+        int language = ENGLISH;
+        //set specific language
+        if (element.getName() == MainButtonsNames.FILE.name()){
+            return "CATEGORY: FILE";
+        }
+        else if (element.getName() == MainButtonsNames.EDIT.name()){
+            return "CATEGORY: EDIT";
+        }
+        else if (element.getName() == MainButtonsNames.EDIT.name()){
+            return "CATEGORY: EDIT";
+        }
+        else if (element.getName() == MainButtonsNames.EDIT.name()){
+            return "CATEGORY: EDIT";
+        }
+        else if (element.getName() == MainButtonsNames.EDIT.name()){
+            return "CATEGORY: EDIT";
+        }
+        else return "NO DATA";
+    }
+
     private ImageZoneSimpleData getImageZoneForPos(int i) {
        ImageZoneSimpleData name = null;
        switch(i) {
@@ -90,7 +112,7 @@ public class Main extends AbstractEditorMenu {
 
     @Override
     protected void guiPressed(GuiElement element) {
-        if (!wasGuiPressedAlsoOnPrevFrame(GuiElement)){
+        if (!wasGuiPressedAlsoOnPrevFrame(element)){
              setConsoleText(getTextForConsoleByPressedGui(element));
         }
     }
@@ -112,15 +134,10 @@ public class Main extends AbstractEditorMenu {
     }
 
     protected void setConsoleText(String text){
-         //to implement
+        editorController.setTextInConcole(text);
     }
 
-    protected String getTextForConsoleByPressedGui(GuiElement element){
-          if (element.getName() == MainButtonsNames.FILE.name()){
-                //set specific language
-              return 
-          }
-    }
+
 
     @Override
     protected void guiReleased(GuiElement element) {

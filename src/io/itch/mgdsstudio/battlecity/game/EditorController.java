@@ -134,4 +134,9 @@ public class EditorController extends GamePartWithGameWorldAbstractController im
     public void appendCommand(EditorAction action) {
         actions.add(action);
     }
+
+    public void setTextInConcole(String text) {
+        InEditorHud editorHud = (InEditorHud)hud;
+        editorHud.setTextForConsole(text);
+    }
 }

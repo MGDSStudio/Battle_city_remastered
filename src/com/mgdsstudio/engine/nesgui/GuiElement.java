@@ -159,7 +159,7 @@ public abstract class GuiElement {
 
     protected void initGraphic(){
         if (graphicFile == null) {
-            graphicFile = GraphicManager.getManager(engine).getImage(engineInterface.getPathToObjectInAssets("Menu graphic.gif"));
+            graphicFile = GraphicManager.getManager(engine).getImage(engineInterface.getPathToObjectInAssets("Gui.gif"));
         }
     }
 

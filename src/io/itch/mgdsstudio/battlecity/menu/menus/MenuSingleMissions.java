@@ -83,9 +83,7 @@ public class MenuSingleMissions extends Menu{
                 Logger.debug("button " + i + " was created with param: " + x + "x" + y + "; WxH: " + buttonWidth + "x" + buttonHeight + " and name: " + name);
             }
         }
-
         setTextForPageNumbers();
-
     }
 
     private void updatePrevAndNextButtonsVisibility() {
