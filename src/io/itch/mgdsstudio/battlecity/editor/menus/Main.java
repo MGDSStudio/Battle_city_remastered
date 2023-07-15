@@ -22,9 +22,19 @@ public class Main extends AbstractEditorMenu {
         ImageZoneSimpleData GRAPHIC = new ImageZoneSimpleData(119,291, 153,325);
         ImageZoneSimpleData WATER = new ImageZoneSimpleData(84,291, 118,325);
         ImageZoneSimpleData PLAYER_TANK = new ImageZoneSimpleData(84,361, 118,393);
+// not Set up
+        ImageZoneSimpleData ENEMY_TANK = new ImageZoneSimpleData(84,326, 118,360);
+        ImageZoneSimpleData COLLECTABLE = new ImageZoneSimpleData(84,326, 118,360);
+        ImageZoneSimpleData STAFF = new ImageZoneSimpleData(84,326, 118,360);
+        ImageZoneSimpleData FOREST = new ImageZoneSimpleData(84,326, 118,360);
+        ImageZoneSimpleData FILE = new ImageZoneSimpleData(84,326, 118,360);
+        ImageZoneSimpleData EDIT = new ImageZoneSimpleData(84,326, 118,360);
+        ImageZoneSimpleData EXIT = new ImageZoneSimpleData(84,326, 118,360);
+        
 
     }
 
+    private GuiElement lastPressed = null;
 
     public Main(EditorController editorController, LowerPanelInEditor lowerPanelInEditor) {
         super(editorController, lowerPanelInEditor, NO_END);
@@ -59,28 +69,57 @@ public class Main extends AbstractEditorMenu {
     }
 
     private ImageZoneSimpleData getImageZoneForPos(int i) {
-
-       /* switch(i) {
-            case (0): name =  ImageZones.FILE.name(); break;
-            case (1): name =  ImageZones.EDIT.name(); break;
-            case (2): name =  ImageZones.PREFERENCES.name(); break;
-            case (3): name =  ImageZones.EXIT.name(); break;
-            case (4): name =  ImageZones.PLAYER_TANK.name(); break;
-            case (5): name =  ImageZones.WALL.name(); break;
-            case (6): name =  ImageZones.COLLECTABLE.name(); break;
-            case (7): name =  ImageZones.ENEMY_TANK.name(); break;
-            case (8): name =  ImageZones.GRAPHIC.name(); break;
-            case (9): name =  ImageZones.STAFF.name(); break;
-            case (10): name =  ImageZones.WATER.name(); break;
-            default:  name = ImageZones.FOREST.name(); break;
-        }*/
-        return ImageZones.WALL;
+       ImageZoneSimpleData name = null;
+       switch(i) {
+            case (0): name =  ImageZones.FILE; break;
+            case (1): name =  ImageZones.EDIT; break;
+            case (2): name =  ImageZones.PREFERENCES; break;
+            case (3): name =  ImageZones.EXIT; break;
+            case (4): name =  ImageZones.PLAYER_TANK; break;
+            case (5): name =  ImageZones.WALL; break;
+            case (6): name =  ImageZones.COLLECTABLE; break;
+            case (7): name =  ImageZones.ENEMY_TANK; break;
+            case (8): name =  ImageZones.GRAPHIC; break;
+            case (9): name =  ImageZones.STAFF; break;
+            case (10): name =  ImageZones.WATER; break;
+            default:  name = ImageZones.FOREST; break;
+        }
+        return name;
         //return name;
     }
 
     @Override
     protected void guiPressed(GuiElement element) {
+        if (!wasGuiPressedAlsoOnPrevFrame(GuiElement)){
+             setConsoleText(getTextForConsoleByPressedGui(element));
+        }
+    }
 
+    //transfer in parent
+    protected boolean wasGuiPressedAlsoOnPrevFrame(GuiElement element){
+        boolean wasLastButtonChanged = false;
+        if (lastPressed == null){
+             wasLastButtonChanged = true;
+             lastPressed = element;
+        }
+        else {
+             if (!lastPressed.equals(element)){
+                 wasLastButtonChanged = true;
+                 lastPressed = element;
+             }
+        }
+        return !wasLastButtonChanged;
+    }
+
+    protected void setConsoleText(String text){
+         //to implement
+    }
+
+    protected String getTextForConsoleByPressedGui(GuiElement element){
+          if (element.getName() == MainButtonsNames.FILE.name()){
+                //set specific language
+              return 
+          }
     }
 
     @Override
