@@ -24,7 +24,7 @@ import java.util.ArrayList;
 public class GridCoordinates implements EditorActionsListener {
     private TextLabel upperX, upperY, lowerY, rightX;
     private InEditorHud hud;
-    private final static String clearName = "_____";
+    private final static String clearName = "     ";
     private final static int MAX_VALUE = 99999;
     private final static int MIN_VALUE = -9999;
     private Grid grid;
@@ -125,7 +125,13 @@ public class GridCoordinates implements EditorActionsListener {
         if (this.grid == null) {
             Logger.error("Can not save instance for grid");
         }
+        hideValuesOnAllLabels();
         firstInit = true;
+    }
+
+    private void hideValuesOnAllLabels() {
+        //upperX.setName(" ");
+       // upperY.setName lowerY, rightX;
     }
 
     @Override

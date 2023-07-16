@@ -25,18 +25,26 @@ public class Cross extends Entity {
 
     private float mapZoneCenterX, mapZoneCenterY;
 
+    public enum Statement{
+        INVISIBLE_AS_CROSS, INVISIBLE_AS_CELL_CENTER, CROSS, CELL_CENTER, TRIANGLE_RIGHT_UP, TRIANGLE_RIGHT_DOWN, TRIANGLE_LEFT_UP, TRIANGLE_LEFT_DOWN;
+    }
+
+    private Statement statement;
+
 
     public Cross(EditorController editorController) {
         super(editorController.getEngine(), new Coordinate(0,0), 0, IMMORTAL_LIFE, getSize(editorController), getSize(editorController));
        this.editorController = editorController;
         theoreticalCoordinate = new Vec2(0,0);
-
-
-
         linesThickness = (int) (6f*((float) this.editorController.getEngine().getEngine().width)/((float)(500f)));
         mapZoneCenterX = this.editorController.getHud().getGraphicLeftPixel()+ this.editorController.getGraphicWidth()/2;
         mapZoneCenterY = this.editorController.getHud().getGraphicUpperPixel()+ this.editorController.getGraphicHeight()/2;
         initGridStartParameters(editorController);
+        statement = Statement.CROSS;
+    }
+
+    public void setStatement(Statement statement) {
+        this.statement = statement;
     }
 
     private void initGridStartParameters(EditorController editorController) {
