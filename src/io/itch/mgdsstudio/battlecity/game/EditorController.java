@@ -1,5 +1,6 @@
 package io.itch.mgdsstudio.battlecity.game;
 
+import io.itch.mgdsstudio.battlecity.editor.changessaving.ChangesController;
 import io.itch.mgdsstudio.battlecity.editor.data.EditorPreferences;
 import io.itch.mgdsstudio.battlecity.editor.data.EditorPreferencesSingleton;
 import io.itch.mgdsstudio.battlecity.editor.menus.AbstractEditorMenu;
@@ -14,6 +15,7 @@ import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
 import io.itch.mgdsstudio.battlecity.mainpackage.MainController;
 import io.itch.mgdsstudio.battlecity.menu.MenuDataStruct;
 import io.itch.mgdsstudio.battlecity.editor.*;
+import io.itch.mgdsstudio.battlecity.menu.MenuType;
 import io.itch.mgdsstudio.engine.libs.Coordinate;
 
 import java.awt.*;
@@ -25,9 +27,11 @@ public class EditorController extends GamePartWithGameWorldAbstractController im
     private WorldZoneScrollingController worldZoneScrollingController;
     private Cross cross;
     private AbstractEditorMenu menu;
+    private ChangesController changesController;
 
     public EditorController(IEngine engine, MainController mainController, int level, int dif, int playersConnected, int playerNumber, int playerNumberInMultiplayerMode) {
         super(engine, mainController, dif, level, playerNumberInMultiplayerMode,playersConnected);
+        changesController = new ChangesController();
         EditorPreferencesSingleton editorPreferencesSingleton = EditorPreferencesSingleton.getInstance(engine);
         Logger.editor("Grid step: " + editorPreferencesSingleton.getIntegerValue(EditorPreferences.GRID_STEP.name()));
         drawingGraphicPlaces = new DrawingGraphicPlaces(InEditorGraphicData.graphicCenterX, InEditorGraphicData.graphicCenterY, InEditorGraphicData.fullGraphicWidth, InEditorGraphicData.fullGraphicHeight);
@@ -139,4 +143,16 @@ public class EditorController extends GamePartWithGameWorldAbstractController im
         InEditorHud editorHud = (InEditorHud)hud;
         editorHud.setTextForConsole(text);
     }
+
+    public void exitFromEditor() {
+        MenuDataStruct dataStruct = new MenuDataStruct();
+        dataStruct.setNextMenu(MenuType.EDITOR_PRELOADING_WINDOW);
+        mainController.backToMenu(dataStruct);
+    }
+
+    public boolean areThereUnsavedData() {
+        return changesController.areThereUnsavedData();
+    }
+
+    public
 }

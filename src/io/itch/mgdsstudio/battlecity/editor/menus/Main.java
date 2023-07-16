@@ -151,21 +151,16 @@ else if (element.getName() == MainButtonsNames.FOREST.name()){
 
     }
 
-    //transfer in parent
     @Override
     protected void setConsoleTextForFirstButtonPressing(GuiElement element) {
         editorController.setTextInConcole(getTextForConsoleByPressedGui(element));
     }
 
 
-
-
-
     @Override
     protected void guiReleased(GuiElement element) {
-    if (element.getName().equals(MainButtonsNames.EXIT)){
+    if (element.getName().equals(MainButtonsNames.EXIT))
          onBackPressed();
-    
     }
 
     @Override
@@ -178,12 +173,12 @@ else if (element.getName() == MainButtonsNames.FOREST.name()){
     protected void onBackPressed(){
         if (!editorController.areThereUnsavedData()){
           editorController.exitFromEditor();
-}
+        }
         else if (userKnowsAboutUnsavedData){
-editorController.exitFromEditor();
+            editorController.exitFromEditor();
         }
         else {
-tellAboutUnsavedData();
+            tellAboutUnsavedData();
         }
     }
 
