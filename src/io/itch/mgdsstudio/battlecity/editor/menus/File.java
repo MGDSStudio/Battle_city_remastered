@@ -24,7 +24,7 @@ public class File extends AbstractEditorMenu {
     @Override
     protected void initGui() 
     initButtonNames();
-        int buttons = ;
+        int buttons = 4;
         Rectangle [] zones = getCoordinatesForFrameButtons(buttons, AlignmentType.ONE_COLUMN);
         for (int i = 0; i < buttons; i++){
             GuiElement gui = new ButtonInFrameWithGraphic(editorController.getEngine(), zones[i].x-zones[i].width/2, zones[i].y-zones[i].height/2, zones[i].width, zones[i].height, getNameForPos(i), getImageZoneForPos(i),0,editorController.getEngine().getEngine().g);
