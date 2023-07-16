@@ -30,6 +30,8 @@ public class Cross extends Entity {
     }
 
     private Statement statement;
+    private boolean visible;
+    private boolean toCellCenter;
 
 
     public Cross(EditorController editorController) {
@@ -40,11 +42,17 @@ public class Cross extends Entity {
         mapZoneCenterX = this.editorController.getHud().getGraphicLeftPixel()+ this.editorController.getGraphicWidth()/2;
         mapZoneCenterY = this.editorController.getHud().getGraphicUpperPixel()+ this.editorController.getGraphicHeight()/2;
         initGridStartParameters(editorController);
-        statement = Statement.CROSS;
+        setStatement(Statement.CROSS);
     }
 
     public void setStatement(Statement statement) {
         this.statement = statement;
+        if (!statement.equals(Statement.INVISIBLE_AS_CROSS) && !statement.equals(Statement.INVISIBLE_AS_CELL_CENTER)){
+             visible = true;
+        }
+        else visible = false;
+        if (statement.equals(Statements.INVISIBLE_AS_CROSS) || (statement.equals(Statements.CROSS) toCellCenter = false;
+        else toCellCenter = true;
     }
 
     private void initGridStartParameters(EditorController editorController) {
@@ -61,16 +69,28 @@ public class Cross extends Entity {
 
     private void update(Camera editorCamera){
         if (visible){
-
             theoreticalCoordinate.x = mapZoneCenterX+editorCamera.getPos().x;
             theoreticalCoordinate.y = mapZoneCenterY+editorCamera.getPos().y;
-            updateRealCoordinate();
+            if (toCellCenter) updateRealCoordinateForCellCenter();
+ else updateRealCoordinateForCorner();
+
             pos.x = realCoordinate.x;
             pos.y = realCoordinate.y;
         }
     }
 
-    private void updateRealCoordinate() {
+    private void updateRealCoordinateForCellCenter(){
+        float x = theoreticalCoordinate.x-gridStartX;
+        float y = theoreticalCoordinate.y-gridStartY;
+        float restAfterDivisionX = x%gridStep;
+        float deltaX = (gridStep/2)-restAfterDivisionX;
+        realCoordinate.x = x+deltaX;
+        float restAfterDivisionY = y%gridStep;
+        float deltaY = (gridStep/2) - restAfterDivisionY;
+        realCoordinate.y = y+deltaY;
+    }
+
+    private void updateRealCoordinateForCorner() {
         float x = theoreticalCoordinate.x-gridStartX;
         float y = theoreticalCoordinate.y-gridStartY;
         float restAfterDivisionX = x%gridStep;
@@ -97,7 +117,9 @@ public class Cross extends Entity {
     public void draw(PGraphics graphic, Camera editorCamera){
         if (visible){
             update(editorCamera);
-            drawRealPos(editorCamera,graphic);
+            if (visible){
+                 drawRealPos(editorCamera,graphic)
+            }
         }
     }
 
@@ -107,14 +129,38 @@ public class Cross extends Entity {
         graphic.pushStyle();
         graphic.noFill();
         graphic.translate(editorCamera.getDrawPosX(realCoordinate.x), editorCamera.getDrawPosY(realCoordinate.y));
-        //Logger.debug("Drawn for: " + (int)(realCoordinate.x) + "x" + (int)(realCoordinate.y) + " at: " + editorCamera.getDrawPosX(realCoordinate.x) + "x" + editorCamera.getDrawPosY(realCoordinate.y));
-        graphic.strokeWeight(linesThickness);
-        graphic.stroke(0,255,0);
-        graphic.line(-width/2, 0,width/2,0);
-        graphic.line(0, -width/2, 0,width/2);
-
+        if (statement.equals(Statement.CROSS)){
+             renderCross();
+        }
+        else if (statement.equals(Statement.CELL_CENTER)){
+             renderCellConture();
+        }
+        else renderTriangle();
         graphic.popStyle();
         graphic.popMatrix();
+    }
+
+    private void renderCross(){
+graphic.strokeWeight(linesThickness);
+        graphic.stroke(0,255,0);
+        graphic.line(-width/2, 0, width/2,0);
+        graphic.line(0, -width/2, 0, width/2);
+    }
+
+    private void renderCellConture(){
+graphic.strokeWeight(linesThickness);
+        graphic.stroke(0,255,0);
+        float halfW = /2;
+        graphic.line(-halfW, -halfW, halfW, -halfW);
+graphic.line(-halfW, halfW, halfW, halfW); 
+        graphic.line(-halfW, -halfW, -halfW, halfW);
+graphic.line(halfW, -halfW, halfW, halfW);
+        
+    }
+
+    private void renderTriangle(){
+ Logger.debug("Triangle must be implementted");
+        
     }
 
 
