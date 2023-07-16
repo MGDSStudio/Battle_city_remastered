@@ -163,7 +163,9 @@ else if (element.getName() == MainButtonsNames.FOREST.name()){
 
     @Override
     protected void guiReleased(GuiElement element) {
-
+    if (element.getName().equals(MainButtonsNames.EXIT)){
+         onBackPressed();
+    
     }
 
     @Override
