@@ -31,7 +31,7 @@ public class EditorController extends GamePartWithGameWorldAbstractController im
 
     public EditorController(IEngine engine, MainController mainController, int level, int dif, int playersConnected, int playerNumber, int playerNumberInMultiplayerMode) {
         super(engine, mainController, dif, level, playerNumberInMultiplayerMode,playersConnected);
-        changesController = new ChangesController();
+        changesController = new ChangesController(this);
         EditorPreferencesSingleton editorPreferencesSingleton = EditorPreferencesSingleton.getInstance(engine);
         Logger.editor("Grid step: " + editorPreferencesSingleton.getIntegerValue(EditorPreferences.GRID_STEP.name()));
         drawingGraphicPlaces = new DrawingGraphicPlaces(InEditorGraphicData.graphicCenterX, InEditorGraphicData.graphicCenterY, InEditorGraphicData.fullGraphicWidth, InEditorGraphicData.fullGraphicHeight);
@@ -154,5 +154,8 @@ public class EditorController extends GamePartWithGameWorldAbstractController im
         return changesController.areThereUnsavedData();
     }
 
-    public
+    public void addNewUnsavedData(String dataString){
+        changesController.addNewUnsavedData(dataString);
+
+    }
 }

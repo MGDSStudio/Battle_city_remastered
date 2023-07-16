@@ -14,7 +14,7 @@ public class Main extends AbstractEditorMenu {
     private enum MainButtonsNames {
         WALL, PLAYER_TANK, ENEMY_TANK, COLLECTABLE,
         GRAPHIC, STAFF, WATER, FOREST,
-        FILE, EDIT , PREFERENCES, EXIT;
+        FILE, EDIT , PREFERENCES, TEST;
     }
 
     private interface ImageZones{
@@ -30,7 +30,7 @@ public class Main extends AbstractEditorMenu {
         ImageZoneSimpleData FOREST = new ImageZoneSimpleData(84,429, 118,463);
         ImageZoneSimpleData FILE = new ImageZoneSimpleData(119,361, 153,393);
         ImageZoneSimpleData EDIT = new ImageZoneSimpleData(119,463, 153,497);
-        ImageZoneSimpleData EXIT = new ImageZoneSimpleData(119,395, 153,429);
+        ImageZoneSimpleData TEST = new ImageZoneSimpleData(119,395, 153,429);
     }
 
     private boolean userKnowsAboutUnsavedData;
@@ -56,7 +56,7 @@ public class Main extends AbstractEditorMenu {
             case (0): name =  MainButtonsNames.FILE.name(); break;
             case (1): name =  MainButtonsNames.EDIT.name(); break;
             case (2): name =  MainButtonsNames.PREFERENCES.name(); break;
-            case (3): name =  MainButtonsNames.EXIT.name(); break;
+            case (3): name =  MainButtonsNames.TEST.name(); break;
             case (4): name =  MainButtonsNames.PLAYER_TANK.name(); break;
             case (5): name =  MainButtonsNames.WALL.name(); break;
             case (6): name =  MainButtonsNames.COLLECTABLE.name(); break;
@@ -82,8 +82,8 @@ public class Main extends AbstractEditorMenu {
         else if (element.getName() == MainButtonsNames.PREFERENCES.name()){
             return "CATEGORY: PREFERENCES";
         }
-        else if (element.getName() == MainButtonsNames.EXIT.name()){
-            return "CATEGORY: EXIT";
+        else if (element.getName() == MainButtonsNames.TEST.name()){
+            return "TEST THE LEVEL";
         }
         else if (element.getName() == MainButtonsNames.PLAYER_TANK.name()){
             return "CATEGORY: PLAYER TANK";
@@ -131,7 +131,7 @@ else if (element.getName() == MainButtonsNames.FOREST.name()){
             case (0): name =  ImageZones.FILE; break;
             case (1): name =  ImageZones.EDIT; break;
             case (2): name =  ImageZones.PREFERENCES; break;
-            case (3): name =  ImageZones.EXIT; break;
+            case (3): name =  ImageZones.TEST; break;
             case (4): name =  ImageZones.PLAYER_TANK; break;
             case (5): name =  ImageZones.WALL; break;
             case (6): name =  ImageZones.COLLECTABLE; break;
@@ -159,7 +159,7 @@ else if (element.getName() == MainButtonsNames.FOREST.name()){
 
     @Override
     protected void guiReleased(GuiElement element) {
-    if (element.getName().equals(MainButtonsNames.EXIT))
+    if (element.getName().equals(MainButtonsNames.TEST))
          onBackPressed();
     }
 
