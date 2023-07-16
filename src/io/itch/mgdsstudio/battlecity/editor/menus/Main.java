@@ -31,11 +31,7 @@ public class Main extends AbstractEditorMenu {
         ImageZoneSimpleData FILE = new ImageZoneSimpleData(119,361, 153,393);
         ImageZoneSimpleData EDIT = new ImageZoneSimpleData(119,463, 153,497);
         ImageZoneSimpleData EXIT = new ImageZoneSimpleData(119,395, 153,429);
-        
-
     }
-
-
 
     public Main(EditorController editorController, LowerPanelInEditor lowerPanelInEditor) {
         super(editorController, lowerPanelInEditor, NO_END);
@@ -82,15 +78,49 @@ public class Main extends AbstractEditorMenu {
         else if (element.getName() == MainButtonsNames.EDIT.name()){
             return "CATEGORY: EDIT";
         }
-        else if (element.getName() == MainButtonsNames.EDIT.name()){
-            return "CATEGORY: EDIT";
+        else if (element.getName() == MainButtonsNames.PREFERENCES.name()){
+            return "CATEGORY: PREFERENCES";
         }
-        else if (element.getName() == MainButtonsNames.EDIT.name()){
-            return "CATEGORY: EDIT";
+        else if (element.getName() == MainButtonsNames.EXIT.name()){
+            return "CATEGORY: EXIT";
         }
-        else if (element.getName() == MainButtonsNames.EDIT.name()){
-            return "CATEGORY: EDIT";
+        else if (element.getName() == MainButtonsNames.PLAYER_TANK.name()){
+            return "CATEGORY: PLAYER TANK";
         }
+else if (element.getName() == MainButtonsNames.WALL.name()){
+            return "CATEGORY: WALL PART";
+        }
+else if (element.getName() == MainButtonsNames.COLLECTABLE.name()){
+            return "CATEGORY: COLLECTABLE OBJECT";
+        }
+else if (element.getName() == MainButtonsNames.ENEMY_TANK.name()){
+            return "CATEGORY: ENEMY";
+        }
+else if (element.getName() == MainButtonsNames.GRAPHIC.name()){
+            return "CATEGORY: GRAPHIC ELEMENT";
+        }
+else if (element.getName() == MainButtonsNames.STAFF.name()){
+            return "CATEGORY: STAFF";
+        }
+else if (element.getName() == MainButtonsNames.WATER.name()){
+            return "CATEGORY: WATER";
+}
+
+else if (element.getName() == MainButtonsNames.FOREST.name()){
+            return "CATEGORY: FOREST";
+        }
+
+
+
+
+
+        
+
+
+
+
+
+
         else return "NO DATA";
     }
 
