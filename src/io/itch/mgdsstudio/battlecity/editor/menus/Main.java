@@ -33,6 +33,8 @@ public class Main extends AbstractEditorMenu {
         ImageZoneSimpleData EXIT = new ImageZoneSimpleData(119,395, 153,429);
     }
 
+    private boolean userKnowsAboutUnsavedData;
+
     public Main(EditorController editorController, LowerPanelInEditor lowerPanelInEditor) {
         super(editorController, lowerPanelInEditor, NO_END);
     }
@@ -44,7 +46,6 @@ public class Main extends AbstractEditorMenu {
             GuiElement gui = new ButtonInFrameWithGraphic(editorController.getEngine(), zones[i].x-zones[i].width/2, zones[i].y-zones[i].height/2, zones[i].width, zones[i].height, getNameForPos(i), getImageZoneForPos(i),0,editorController.getEngine().getEngine().g);
             guiElements.add(gui);
         }
-        //Logger.debug("Gui sizes: " + zones[0].width + "x" + zones[0].height);
     }
 
 
@@ -168,5 +169,24 @@ else if (element.getName() == MainButtonsNames.FOREST.name()){
     @Override
     protected void initDataForStatement(int actualStatement) {
         Logger.debug("This menu has no statements");
+    }
+
+
+    @Override
+    protected void onBackPressed(){
+        if (!editorController.areThereUnsavedData()){
+          editorController.exitFromEditor();
+}
+        else if (userKnowsAboutUnsavedData){
+editorController.exitFromEditor();
+        }
+        else {
+tellAboutUnsavedData();
+        }
+    }
+
+    private void tellAboutUnsavedData() {
+       editorController.setTextInConcole("You have unsaved data that will be lost after transfer in the menu. If you need to save the data - select EDIT button and choose punct - SAVE. If you need to leave the editor without saving - press back button again" );
+       userKnowsAboutUnsavedData = true;
     }
 }
