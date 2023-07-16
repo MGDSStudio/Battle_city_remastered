@@ -13,8 +13,14 @@ import java.awt.*;
 public class File extends AbstractEditorMenu {
 
     private String save, clear, back, exit;
-   private interface Statements{
 
+
+   private interface Statements{
+         int REALLY_WANT_TO_SAVE = 11;
+         int SAVED = 12;
+int REALLY_WANT_TO_CLEAR = 21;
+         int CLEARING = 22;
+       
    }
 
     public File(EditorController editorController, LowerPanelInEditor lowerPanelInEditor) {
