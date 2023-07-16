@@ -26,6 +26,7 @@ public abstract class AbstractEditorMenu {
     protected final int endStatement;  // must be overwritten
     protected EditorController editorController;
     private GuiElement lastPressed = null;
+    private boolean backCommand;
     //private boolean firstTouchFrame;
 
     protected AbstractEditorMenu(EditorController editorController, LowerPanelInEditor lowerPanelInEditor, int endStatement) {
@@ -37,9 +38,19 @@ public abstract class AbstractEditorMenu {
         initGui();
     }
 
+public void backPressed(){
+ backCommand = true;
+}
+
+
+    protected abstract void onBackPressed();
+    
     protected abstract void initGui();
 
     public void update(){
+        if (backCommand = true){
+            onBackPressed();
+        }
         if (actualStatement != nextStatement){
             changeStatement();
         }
@@ -167,20 +178,7 @@ public abstract class AbstractEditorMenu {
         }
         return positions;
 
-        /*
-        int fullCount = 0;
-        for (int i = 0; i < alongX; i++){
-            for (int j = 0; j < alongY; j++){
-                int centerX = gapX+guiWidth/2+i*(guiWidth+gapX);
-                int centerY = gapY+guiHeight/2+j*(guiHeight+gapY);
-                Rectangle rect = new Rectangle(centerX+left, centerY+upper, guiWidth, guiHeight);
-                int number = i+j*alongX;
-                positions[number] = rect;
-                fullCount++;
-            }
-        }
-        return positions;
-         */
+   
 
     }
 }
