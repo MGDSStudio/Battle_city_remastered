@@ -210,6 +210,7 @@ public abstract class GuiElement {
 
             }
             else {
+                graphic.textAlign(PConstants.CENTER, PConstants.CENTER);
                 graphic.text(getTextToBeDrawn(), x, y+textYShifting);
             }
         }

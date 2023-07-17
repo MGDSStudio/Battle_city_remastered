@@ -1,6 +1,7 @@
 package io.itch.mgdsstudio.battlecity.editor.changessaving;
 
 import io.itch.mgdsstudio.battlecity.game.EditorController;
+import io.itch.mgdsstudio.battlecity.game.GameRound;
 
 import java.util.ArrayList;
 

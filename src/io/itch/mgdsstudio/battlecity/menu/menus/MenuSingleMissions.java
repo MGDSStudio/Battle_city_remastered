@@ -44,7 +44,6 @@ public class MenuSingleMissions extends Menu{
         fullTextesInRenderZone = singleMissionsLoadingMaster.getFiles();
         guiElements.remove(getGuiByName(ButtonNames.ZONE));
         createButtonsInZoneForActualPage();
-
     }
 
     private void createButtonsInZoneForActualPage() {
@@ -80,7 +79,7 @@ public class MenuSingleMissions extends Menu{
                 ButtonsInZoneData userData = new ButtonsInZoneData(number);
                 button.setUserData(userData);
                 guiElements.add(button);
-                Logger.debug("button " + i + " was created with param: " + x + "x" + y + "; WxH: " + buttonWidth + "x" + buttonHeight + " and name: " + name);
+                Logger.debug("button " + i + " was created with param: " + x + "x" + y + "; WxH: " + buttonWidth + "x" + buttonHeight + " and name: " + name + " and usr data: " );
             }
         }
         setTextForPageNumbers();
@@ -180,11 +179,13 @@ public class MenuSingleMissions extends Menu{
 
     private int getLevelNumberFromGui(GuiElement guiElement) {
         try {
-            int number = (Integer) guiElement.getUserData();
+            ButtonsInZoneData data = (ButtonsInZoneData) guiElement.getUserData();
+            int number = data.nextLevelNumber ;
             return number;
         }
         catch (Exception e){
-            Logger.error("Can not get data in gui " + guiElement.getName());
+            if (guiElement.getUserData() == null) Logger.error("User data is null");
+            Logger.error("Can not get data in gui " + guiElement.getName() + " and type: " + guiElement.getClass());
             return GlobalConstants.ERROR_CODE;
         }
 

@@ -30,7 +30,6 @@ public class Cross extends Entity {
     }
 
     private Statement statement;
-    private boolean visible;
     private boolean toCellCenter;
 
 
@@ -51,7 +50,7 @@ public class Cross extends Entity {
              visible = true;
         }
         else visible = false;
-        if (statement.equals(Statements.INVISIBLE_AS_CROSS) || (statement.equals(Statements.CROSS) toCellCenter = false;
+        if (statement.equals(Statement.INVISIBLE_AS_CROSS) || (statement.equals(Statement.CROSS))) toCellCenter = false;
         else toCellCenter = true;
     }
 
@@ -118,7 +117,7 @@ public class Cross extends Entity {
         if (visible){
             update(editorCamera);
             if (visible){
-                 drawRealPos(editorCamera,graphic)
+                 drawRealPos(editorCamera,graphic);
             }
         }
     }
@@ -130,36 +129,35 @@ public class Cross extends Entity {
         graphic.noFill();
         graphic.translate(editorCamera.getDrawPosX(realCoordinate.x), editorCamera.getDrawPosY(realCoordinate.y));
         if (statement.equals(Statement.CROSS)){
-             renderCross();
+             renderCross(graphic);
         }
         else if (statement.equals(Statement.CELL_CENTER)){
-             renderCellConture();
+             renderCellConture(graphic);
         }
         else renderTriangle();
         graphic.popStyle();
         graphic.popMatrix();
     }
 
-    private void renderCross(){
-graphic.strokeWeight(linesThickness);
+    private void renderCross(PGraphics graphic){
+        graphic.strokeWeight(linesThickness);
         graphic.stroke(0,255,0);
         graphic.line(-width/2, 0, width/2,0);
         graphic.line(0, -width/2, 0, width/2);
     }
 
-    private void renderCellConture(){
-graphic.strokeWeight(linesThickness);
+    private void renderCellConture(PGraphics graphic){
+        graphic.strokeWeight(linesThickness);
         graphic.stroke(0,255,0);
-        float halfW = /2;
+        float halfW = width/2;
         graphic.line(-halfW, -halfW, halfW, -halfW);
-graphic.line(-halfW, halfW, halfW, halfW); 
+        graphic.line(-halfW, halfW, halfW, halfW);
         graphic.line(-halfW, -halfW, -halfW, halfW);
-graphic.line(halfW, -halfW, halfW, halfW);
-        
+        graphic.line(halfW, -halfW, halfW, halfW);
     }
 
     private void renderTriangle(){
- Logger.debug("Triangle must be implementted");
+        Logger.debug("Triangle must be implementted");
         
     }
 

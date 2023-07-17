@@ -321,7 +321,6 @@ public class GameRound {
         Logger.debug("Level ends with code: " + levelEndCode);
         MenuDataStruct dataStruct = new MenuDataStruct();
         dataStruct.setLevelEndCode(levelEndCode);
-
         gameController.setGameEnded(dataStruct);
     }
 

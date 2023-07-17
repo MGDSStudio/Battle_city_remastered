@@ -5,6 +5,7 @@ import io.itch.mgdsstudio.battlecity.editor.data.EditorPreferences;
 import io.itch.mgdsstudio.battlecity.editor.data.EditorPreferencesSingleton;
 import io.itch.mgdsstudio.battlecity.editor.menus.AbstractEditorMenu;
 import io.itch.mgdsstudio.battlecity.editor.menus.Main;
+import io.itch.mgdsstudio.battlecity.editor.menus.MenuType;
 import io.itch.mgdsstudio.battlecity.game.camera.EditorCamera;
 import io.itch.mgdsstudio.battlecity.game.control.GameProcessController;
 import io.itch.mgdsstudio.battlecity.game.gameobjects.Grid;
@@ -15,7 +16,6 @@ import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
 import io.itch.mgdsstudio.battlecity.mainpackage.MainController;
 import io.itch.mgdsstudio.battlecity.menu.MenuDataStruct;
 import io.itch.mgdsstudio.battlecity.editor.*;
-import io.itch.mgdsstudio.battlecity.menu.MenuType;
 import io.itch.mgdsstudio.engine.libs.Coordinate;
 
 import java.awt.*;
@@ -27,6 +27,8 @@ public class EditorController extends GamePartWithGameWorldAbstractController im
     private WorldZoneScrollingController worldZoneScrollingController;
     private Cross cross;
     private AbstractEditorMenu menu;
+    private MenuType actualMenuType, nextMenuType;
+
     private ChangesController changesController;
 
     public EditorController(IEngine engine, MainController mainController, int level, int dif, int playersConnected, int playerNumber, int playerNumberInMultiplayerMode) {
@@ -48,7 +50,15 @@ public class EditorController extends GamePartWithGameWorldAbstractController im
         EditorListenersManagerSingleton.getInstance().addAsListener(this);
 
         createOnMapZoneGraphic();
-        menu = new Main(this, (LowerPanelInEditor) hud.getLowerPanel());
+        nextMenuType = MenuType.MAIN;
+        createMenu();
+        //new Main(this, (LowerPanelInEditor) hud.getLowerPanel());
+
+    }
+
+    private void createMenu(){
+        menu = AbstractEditorMenu.createMenuForType(nextMenuType, this, (LowerPanelInEditor) hud.getLowerPanel());
+        actualMenuType = nextMenuType;
     }
 
     private void initGraphicZone(){
@@ -73,6 +83,10 @@ public class EditorController extends GamePartWithGameWorldAbstractController im
 
     public void update(){
         if (!startDataInit) initStartData();
+        if (nextMenuType!= actualMenuType){
+            createMenu();
+        }
+
         worldZoneScrollingController.update( engine.getEngine().millis());
         updateActions();
         deltaTime = engine.getEngine().millis() - lastFrameTime;
@@ -146,7 +160,7 @@ public class EditorController extends GamePartWithGameWorldAbstractController im
 
     public void exitFromEditor() {
         MenuDataStruct dataStruct = new MenuDataStruct();
-        dataStruct.setNextMenu(MenuType.EDITOR_PRELOADING_WINDOW);
+        dataStruct.setNextMenu(io.itch.mgdsstudio.battlecity.menu.MenuType.EDITOR_PRELOADING_WINDOW);
         mainController.backToMenu(dataStruct);
     }
 
@@ -157,5 +171,11 @@ public class EditorController extends GamePartWithGameWorldAbstractController im
     public void addNewUnsavedData(String dataString){
         changesController.addNewUnsavedData(dataString);
 
+    }
+
+
+    public void transferToMenu(MenuType from , MenuType to) {
+        nextMenuType = to;
+        Logger.debug("transfer to menu: " + to.name());
     }
 }

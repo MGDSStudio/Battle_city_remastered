@@ -1,12 +1,13 @@
 package io.itch.mgdsstudio.battlecity.editor.menus;
 
 import com.mgdsstudio.engine.nesgui.ButtonInFrameWithGraphic;
+import com.mgdsstudio.engine.nesgui.ButtonWithFrameSelection;
 import com.mgdsstudio.engine.nesgui.GuiElement;
 
+import com.mgdsstudio.engine.nesgui.NoTextButtonWithFrameSelection;
 import io.itch.mgdsstudio.battlecity.game.EditorController;
 import io.itch.mgdsstudio.battlecity.game.Logger;
 import io.itch.mgdsstudio.battlecity.game.hud.LowerPanelInEditor;
-import io.itch.mgdsstudio.engine.graphic.ImageZoneSimpleData;
 
 import java.awt.*;
 
@@ -28,23 +29,26 @@ int REALLY_WANT_TO_CLEAR = 21;
     }
 
     @Override
-    protected void initGui() 
-    initButtonNames();
+    protected void initGui(){
+        initButtonNames();
         int buttons = 4;
-        Rectangle [] zones = getCoordinatesForDefaultAlignment(buttons);
+        Rectangle [] zones = getCoordinatesForDefaultButtonsAlignment(buttons);
         for (int i = 0; i < buttons; i++){
-            GuiElement gui = new ButtonInFrameWithGraphic(editorController.getEngine(), zones[i].x-zones[i].width/2, zones[i].y-zones[i].height/2, zones[i].width, zones[i].height, getNameForPos(i), getImageZoneForPos(i),0,editorController.getEngine().getEngine().g);
+            GuiElement gui = new ButtonWithFrameSelection(editorController.getEngine(), zones[i].x, zones[i].y, zones[i].width, zones[i].height, getNameForPos(i), editorController.getEngine().getEngine().g, true);
+            //GuiElement gui = new ButtonWithFrameSelection(editorController.getEngine(), zones[i].x-zones[i].width/2, zones[i].y-zones[i].height/2, zones[i].width, zones[i].height, getNameForPos(i), editorController.getEngine().getEngine().g);
+            //
+            //new NoTextButtonWithFrameSelection(engine, x, y, w, h, name, graphics);
             guiElements.add(gui);
         }
     }
 
-private void initButtonNames(){
-    save = "SAVE";
-   clear = "CLEAR"; 
-    back = "BACK";
- exit = "EXIT";
+    private void initButtonNames(){
+        save = "SAVE";
+       clear = "CLEAR";
+        back = "BACK";
+         exit = "EXIT";
 
-}
+    }
 
     private String getNameForPos(int i) {
         String name;
@@ -52,7 +56,7 @@ private void initButtonNames(){
             case (0): name =  save; break;
             case (1): name =  clear; break;
             case (2): name =  back; break;
-            case (2): name =  exit; break;
+            case (3): name =  exit; break;
             default:  name = "No name"; break;
         }
         return name;
@@ -71,8 +75,8 @@ private void initButtonNames(){
         else if (element.getName() == back){
             return "BACK IN PREVIOUS MENU";
         }
-        else if (element.getName() == MainButtonsNames.EXIT.name()){
-            return "CATEGORY: EXIT";
+        else if (element.getName() == exit){
+            return "LEAVE THE EDITOR";
         }
         else return "NO DATA";
     }
@@ -81,7 +85,6 @@ private void initButtonNames(){
 
     @Override
     protected void guiPressed(GuiElement element) {
-
 
     }
 
@@ -93,9 +96,9 @@ private void initButtonNames(){
 
     @Override
     protected void guiReleased(GuiElement element) {
-    if (element.getName().equals(MainButtonsNames.EXIT)){
-         onBackPressed();
-    
+        if (element.getName().equals(back)) {
+            onBackPressed();
+        }
     }
 
     @Override
@@ -106,8 +109,7 @@ private void initButtonNames(){
 
     @Override
     protected void onBackPressed(){
-          editorController.transferToPrevMenu();
+          editorController.transferToMenu(MenuType.FILE, MenuType.MAIN);
     }
-
     
 }

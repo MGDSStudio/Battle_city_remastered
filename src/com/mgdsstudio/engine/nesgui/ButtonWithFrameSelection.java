@@ -5,12 +5,18 @@ import processing.core.PApplet;
 import processing.core.PGraphics;
 
 public class ButtonWithFrameSelection extends ElementWithFrameSelection {
-
+    private boolean centerAlignment;
     public ButtonWithFrameSelection(IEngine engine, int centerX, int centerY, int width, int height, String name, PGraphics graphics) {
         super(engine, centerX, centerY, width, height, name, graphics, CURSOR_DIMENSIONS_COEF);
         init(centerX, centerY);
     }
 
+    public ButtonWithFrameSelection(IEngine engine, int centerX, int centerY, int width, int height, String name, PGraphics graphics, boolean centerAlignment) {
+        super(engine, centerX, centerY, width, height, name, graphics, CURSOR_DIMENSIONS_COEF);
+        init(centerX, centerY);
+        this.centerAlignment = centerAlignment;
+
+    }
 
     @Override
     public void draw(PGraphics graphics){
@@ -21,7 +27,8 @@ public class ButtonWithFrameSelection extends ElementWithFrameSelection {
             drawCursor(graphics);
             graphics.popStyle();
         }
-        drawName(graphics);
+        if (centerAlignment) drawName(graphics, -1);
+        else drawName(graphics);
     }
 
     @Override

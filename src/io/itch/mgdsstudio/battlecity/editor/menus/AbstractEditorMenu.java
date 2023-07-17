@@ -24,7 +24,7 @@ public abstract class AbstractEditorMenu {
     protected final int endStatement;  // must be overwritten
     protected EditorController editorController;
     private GuiElement lastPressed = null;
-    private boolean backCommand;
+    private boolean backCommand = false;
     //private boolean firstTouchFrame;
 
     protected AbstractEditorMenu(EditorController editorController, LowerPanelInEditor lowerPanelInEditor, int endStatement) {
@@ -36,9 +36,18 @@ public abstract class AbstractEditorMenu {
         initGui();
     }
 
-public void backPressed(){
- backCommand = true;
-}
+    public static AbstractEditorMenu createMenuForType(MenuType actualMenuType, EditorController editorController, LowerPanelInEditor lowerPanel) {
+        if (actualMenuType == MenuType.MAIN) return new Main(editorController, lowerPanel);
+        else if (actualMenuType == MenuType.FILE) return new File(editorController, lowerPanel);
+        else {
+            Logger.error("No menu fot this type: " + actualMenuType);
+            return new Main(editorController, lowerPanel);
+        }
+    }
+
+    public void backPressed(){
+        backCommand = true;
+    }
 
 
     protected abstract void onBackPressed();
@@ -46,8 +55,9 @@ public void backPressed(){
     protected abstract void initGui();
 
     public void update(){
-        if (backCommand = true){
+        if (backCommand == true){
             onBackPressed();
+            backCommand = false;
         }
         if (actualStatement != nextStatement){
             changeStatement();
@@ -59,9 +69,12 @@ public void backPressed(){
             for (GuiElement element: guiElements){
                 element.update(editorController.getEngine().getEngine().mouseX, editorController.getEngine().getEngine().mouseY);
                 if (element.getActualStatement() == GuiElement.RELEASED){
+                    Logger.debug("Button " + element.getName() + " was released");
                     guiReleased(element);
+
                 }
                 else if (element.getActualStatement() == GuiElement.PRESSED){
+                    Logger.debug("Button " + element.getName() + " was pressed");
                     if (!wasGuiPressedAlsoOnPrevFrame(element)){
                         setConsoleTextForFirstButtonPressing(element);
                     }
@@ -114,17 +127,17 @@ protected Rectangle[] getCoordinatesForDefaultButtonsAlignment(int frameButtonsC
         int fullHeight = lowerPanelInEditor.getLowerTab().getHeight();
         int left = lowerPanelInEditor.getLowerTab().getLeft();
         int upper = lowerPanelInEditor.getLowerTab().getUpper();
-        float buttonRelativeWidth = 0.8f;
-        int guiWidth = fullWidth*buttonRelativeWidth;
-        float relativeGap = 0.1f;
+        float buttonRelativeWidth = 0.7f;
+        int guiWidth = (int) ((float)fullWidth*buttonRelativeWidth);
+        float relativeGap = 0.12f;
         float fullRelativeGapY = (frameButtonsCount+1f)*relativeGap;
         float fullGapY = (float) (fullHeight*fullRelativeGapY);
-        
+        int yGap = (int) (fullGapY/(frameButtonsCount+1));
         int guiHeight;
         
-        guiHeight = (int) ((fullHeight-((frameButtonsCount+1f)*singleGap))/(frameButtonsCount);
-        xGap = (fullWidth-guiWidth)/2;
-        Rectangle [] positions = calculatePositionsForParams(guiWidth, guiHeight, 1, frameButtonsCount, left, upper, xGap, singleGap);
+        guiHeight = (int) ((fullHeight-((frameButtonsCount+1f)*yGap))/frameButtonsCount);
+        int xGap = (int) ((fullWidth-guiWidth)/2f);
+        Rectangle [] positions = calculatePositionsForParams(guiWidth, guiHeight, 1, frameButtonsCount, left, upper, xGap, yGap);
         return positions;
     }
 
@@ -136,7 +149,8 @@ protected Rectangle[] getCoordinatesForDefaultButtonsAlignment(int frameButtonsC
         int upper = lowerPanelInEditor.getLowerTab().getUpper();
         //final float xGapCoef = 0.1f;
         
-        int alongY = 1;
+        int alongY = PApplet.ceil(fullCount/alongX);
+
        
         float relativeGap = 0.1f;
         float fullRelativeGapX = (alongX+1f)*relativeGap;
@@ -167,10 +181,7 @@ protected Rectangle[] getCoordinatesForDefaultButtonsAlignment(int frameButtonsC
 
         }
         guiHeight = (int) ((fullHeight-((alongY+1f)*singleGap))/alongY);
-        //int guiHeight = guiWidth;
-        //Logger.debug("Full height: " + fullHeight + "; minimalFullGap: " + minimalFullGap + "; guiHeight: " + guiHeight + "; singleGap: " + singleGap);
         Logger.debug("Full width x height: " + fullWidth + "x" + fullHeight + " gap: " +  singleGap + "; gui width: "  + guiWidth);
-
         //Buttons are squares
         Rectangle [] positions = calculatePositionsForParams(guiWidth, guiHeight, alongX, alongY, left, upper, singleGap, singleGap);
         return positions;

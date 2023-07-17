@@ -41,8 +41,9 @@ public class Main extends AbstractEditorMenu {
 
     @Override
     protected void initGui() {
-        Rectangle [] zones = getCoordinatesForSquareButtonsAndColumnAlignment(12, 4);
-        for (int i = 0; i < 12; i++){
+        int guiCount = 12;
+        Rectangle [] zones = getCoordinatesForSquareButtonsAndColumnAlignment(guiCount, 4);
+        for (int i = 0; i < guiCount; i++){
             GuiElement gui = new ButtonInFrameWithGraphic(editorController.getEngine(), zones[i].x-zones[i].width/2, zones[i].y-zones[i].height/2, zones[i].width, zones[i].height, getNameForPos(i), getImageZoneForPos(i),0,editorController.getEngine().getEngine().g);
             guiElements.add(gui);
         }
@@ -159,8 +160,12 @@ else if (element.getName() == MainButtonsNames.FOREST.name()){
 
     @Override
     protected void guiReleased(GuiElement element) {
-    if (element.getName().equals(MainButtonsNames.TEST))
-         onBackPressed();
+        if (element.getName() == MainButtonsNames.TEST.name()) {
+            onBackPressed();
+        }
+        else if (element.getName() == MainButtonsNames.FILE.name()) {
+            editorController.transferToMenu(MenuType.MAIN, MenuType.FILE);
+        }
     }
 
     @Override
