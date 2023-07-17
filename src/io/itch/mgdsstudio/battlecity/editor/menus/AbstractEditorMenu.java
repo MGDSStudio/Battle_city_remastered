@@ -13,9 +13,7 @@ import java.util.ArrayList;
 public abstract class AbstractEditorMenu {
 
 
-    protected enum AlignmentType {
-        FOUR_COLUMNS,  TWO_COLUMNS, THREE_COLUMNS;
-    }
+    
     protected final LowerPanelInEditor lowerPanelInEditor;
     protected final static int NO_END = 9999;
 
@@ -111,7 +109,7 @@ public void backPressed(){
 
     protected abstract void initDataForStatement(int actualStatement);
 
-protected Rectangle[] getCoordinatesForDefaultButtonsAlignment(int frameButtonsCount, AlignmentType alignment){
+protected Rectangle[] getCoordinatesForDefaultButtonsAlignment(int frameButtonsCount){
         int fullWidth = lowerPanelInEditor.getLowerTab().getWidth();
         int fullHeight = lowerPanelInEditor.getLowerTab().getHeight();
         int left = lowerPanelInEditor.getLowerTab().getLeft();
@@ -139,9 +137,7 @@ protected Rectangle[] getCoordinatesForDefaultButtonsAlignment(int frameButtonsC
         //final float xGapCoef = 0.1f;
         
         int alongY = 1;
-        
-
-
+       
         float relativeGap = 0.1f;
         float fullRelativeGapX = (alongX+1f)*relativeGap;
         float fullRelativeGapY = (alongY+1f)*relativeGap;
