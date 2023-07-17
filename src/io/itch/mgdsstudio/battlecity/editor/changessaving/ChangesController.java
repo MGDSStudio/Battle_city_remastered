@@ -22,4 +22,12 @@ public class ChangesController {
         Change change = new Change(dataString, ChangingType.OBJECT_ADDED);
         changes.add(change);
     }
+
+    public void clearLevel(GameRound gr){
+
+    }
+
+    public void saveChanges(){
+
+    }
 }
