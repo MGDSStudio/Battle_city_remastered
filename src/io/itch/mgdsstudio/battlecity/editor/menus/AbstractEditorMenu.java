@@ -14,7 +14,7 @@ public abstract class AbstractEditorMenu {
 
 
     protected enum AlignmentType {
-        DEFAULT, FOUR_COLUMNS,  TWO_COLUMNS, ONE_COLUMN;
+        FOUR_COLUMNS,  TWO_COLUMNS, THREE_COLUMNS;
     }
     protected final LowerPanelInEditor lowerPanelInEditor;
     protected final static int NO_END = 9999;
@@ -111,20 +111,37 @@ public void backPressed(){
 
     protected abstract void initDataForStatement(int actualStatement);
 
+protected Rectangle[] getCoordinatesForDefaultButtonsAlignment(int frameButtonsCount, AlignmentType alignment){
+        int fullWidth = lowerPanelInEditor.getLowerTab().getWidth();
+        int fullHeight = lowerPanelInEditor.getLowerTab().getHeight();
+        int left = lowerPanelInEditor.getLowerTab().getLeft();
+        int upper = lowerPanelInEditor.getLowerTab().getUpper();
+        float buttonRelativeWidth = 0.8f;
+        int guiWidth = fullWidth*buttonRelativeWidth;
+        float relativeGap = 0.1f;
+        float fullRelativeGapY = (frameButtonsCount+1f)*relativeGap;
+        float fullGapY = (float) (fullHeight*fullRelativeGapY);
+        
+        int guiHeight;
+        
+        guiHeight = (int) ((fullHeight-((frameButtonsCount+1f)*singleGap))/(frameButtonsCount);
+        xGap = (fullWidth-guiWidth)/2;
+        Rectangle [] positions = calculatePositionsForParams(guiWidth, guiHeight, 1, frameButtonsCount, left, upper, xGap, singleGap);
+        return positions;
+    }
 
-    protected Rectangle[] getCoordinatesForFrameButtons(int fullCount, AlignmentType alignment){
-
+    
+    protected Rectangle[] getCoordinatesForSquareButtonsAndColumnAlignment(int fullCount, int alongX){
         int fullWidth = lowerPanelInEditor.getLowerTab().getWidth();
         int fullHeight = lowerPanelInEditor.getLowerTab().getHeight();
         int left = lowerPanelInEditor.getLowerTab().getLeft();
         int upper = lowerPanelInEditor.getLowerTab().getUpper();
         //final float xGapCoef = 0.1f;
-        int alongX = 1;
+        
         int alongY = 1;
-        if (alignment == AlignmentType.FOUR_COLUMNS){
-            alongX = 4;
-            alongY = PApplet.ceil(fullCount/alongX);
-        }
+        
+
+
         float relativeGap = 0.1f;
         float fullRelativeGapX = (alongX+1f)*relativeGap;
         float fullRelativeGapY = (alongY+1f)*relativeGap;
@@ -165,6 +182,8 @@ public void backPressed(){
 
     private Rectangle [] calculatePositionsForParams(int guiWidth, int guiHeight, int alongX, int alongY, int left, int upper, int gapX, int gapY){
         Rectangle [] positions = new Rectangle[alongX*alongY];
+       
+
         int fullCount = 0;
         for (int i = 0; i < alongY; i++){
             for (int j = 0; j < alongX; j++){
