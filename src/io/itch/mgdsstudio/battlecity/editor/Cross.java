@@ -7,6 +7,7 @@ import io.itch.mgdsstudio.battlecity.game.Logger;
 import io.itch.mgdsstudio.battlecity.game.camera.Camera;
 
 import io.itch.mgdsstudio.battlecity.game.gameobjects.Entity;
+import io.itch.mgdsstudio.engine.graphic.ImageZoneSimpleData;
 import io.itch.mgdsstudio.engine.libs.Coordinate;
 import org.jbox2d.common.Vec2;
 import processing.core.PApplet;
@@ -15,6 +16,13 @@ import processing.core.PGraphics;
 public class Cross extends Entity {
     private boolean visible = true;
     private Vec2 theoreticalCoordinate;
+    private final ImageZoneSimpleData RECT = new ImageZoneSimpleData(35,362,35+16,362+16);
+    private final ImageZoneSimpleData LU = new ImageZoneSimpleData(34,497,34+16,497+16);
+    private final ImageZoneSimpleData RU = new ImageZoneSimpleData(51,497,51+16,497+16);
+    private final ImageZoneSimpleData LD = new ImageZoneSimpleData(34,514,34+16,514+16);
+    private final ImageZoneSimpleData RD = new ImageZoneSimpleData(51,514,51+16,514+16);
+    private final ImageZoneSimpleData ARROW = new ImageZoneSimpleData(65,289, 78,307+18);
+
 
     private final Coordinate realCoordinate = new Coordinate(0,0);
 
