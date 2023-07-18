@@ -1,0 +1,56 @@
+package com.mgdsstudio.engine.nesgui;
+
+import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
+import io.itch.mgdsstudio.engine.graphic.ImageZoneSimpleData;
+import processing.core.PConstants;
+import processing.core.PGraphics;
+import processing.core.PVector;
+
+public class DigitKeyboard extends Frame{
+    protected final static ImageZoneSimpleData frameImageZoneSimpleDataWithoutBackground = new ImageZoneSimpleData(0, 462, 33, 495);
+    protected EightPartsFrameImage frame;
+private ArrayList <ButtonWithFrameSelection> buttons;
+    
+
+    public DigitKeyboard(IEngine engine, int centerX, int centerY, int width, int height, String name, PGraphics graphics) {
+        super(engine, centerX, centerY, width, (height), name, graphics);
+        buttons = new ArrayList<>();
+        initButtons();
+    }
+
+    void initButtons(){
+/*
+1 2 3 BACKSPACE
+4 6 7 CLEAR
+8 9 0 ENTER
+*/
+
+//WIDTHES
+// x x x 4x
+
+
+}
+
+    protected void drawButtons(PGraphics graphics) {
+        if (actualStatement != HIDDEN) {
+            if (graphics != null) {
+                graphics.resetMatrix();
+                for (ButtonWithFrameSelection button : buttons){
+button.draw(graphic);
+}
+            }
+        }
+    }
+
+    @Override
+    public void draw(PGraphics graphic) {
+        super.draw(graphic);
+    }
+
+    @Override
+    protected void updateFunction() {
+
+    }
+
+
+}
