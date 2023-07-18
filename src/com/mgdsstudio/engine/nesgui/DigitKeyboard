@@ -26,9 +26,12 @@ private ArrayList <ButtonWithFrameSelection> buttons;
 */
 
 //WIDTHES
-// x x x 4x
+// x x x 3x
 
-
+Rectangle[] zones = getCoordinatesForSquareButtonsAndColumnAlignment(12,4);
+for (int i = 0; i < zones.length; i++){
+     ButtonWithFrameSelection button = new ButtonWithFrameSelection(
+}
 }
 
     protected void drawButtons(PGraphics graphics) {
@@ -36,8 +39,8 @@ private ArrayList <ButtonWithFrameSelection> buttons;
             if (graphics != null) {
                 graphics.resetMatrix();
                 for (ButtonWithFrameSelection button : buttons){
-button.draw(graphic);
-}
+                     button.draw(graphic);
+                }
             }
         }
     }
@@ -52,5 +55,69 @@ button.draw(graphic);
 
     }
 
+
+protected Rectangle[] getCoordinatesForSquareButtonsAndColumnAlignment(int fullCount, int alongX){
+        int fullWidth = lowerPanelInEditor.getLowerTab().getWidth();
+        int fullHeight = lowerPanelInEditor.getLowerTab().getHeight();
+        int left = lowerPanelInEditor.getLowerTab().getLeft();
+        int upper = lowerPanelInEditor.getLowerTab().getUpper();
+        int alongY = PApplet.ceil(fullCount/alongX);
+        float relativeGap = 0.1f;
+        float fullRelativeGapX = (alongX+1f)*relativeGap;
+        float fullRelativeGapY = (alongY+1f)*relativeGap;
+        float fullGapX =  (float) fullWidth*fullRelativeGapX;
+        float fullGapY = (float) fullHeight*fullRelativeGapY;
+
+        float sizesRelationship = (float)fullWidth/fullHeight;
+        float countRelationship = (float)alongX/alongY;
+    
+        int singleGap;
+        float minimalFullGap;
+        int guiWidth;
+        int guiHeight;
+        int theoreticalGuisAlongX = alongX+3;
+         
+            minimalFullGap = fullGapY;
+            xGap = (int)(minimalFullGap/(alongX+1f));
+            guiWidth = (int) ((fullWidth-minimalFullGap)/theoreticalGuisAlongX);
+           
+        
+        
+            minimalFullGap = fullGapX;
+            yGap = (int)(minimalFullGap/(alongY+1f));
+            guiHeight = (int) ((fullHeight-minimalFullGap)/alongY);
+        Rectangle [] positions = calculatePositionsForParams(guiWidth, guiHeight, alongX, alongY, left, upper, xGap, yGap, 3);
+        return positions;
+    }
+
+    private Rectangle [] calculatePositionsForParams(int guiWidth, int guiHeight, int alongX, int alongY, int left, int upper, int gapX, int gapY, int lastColumnCoef){
+        Rectangle [] positions = new Rectangle[alongX*alongY];
+        int lastColumnGuiWidth = guiWidth*lastColumnCoef;
+        int fullCount = 0;
+        for (int i = 0; i < alongY; i++){
+            for (int j = 0; j < alongX; j++){
+                 Rectangle rect ;
+                if (j != (alongX-1)){
+                      int centerX = gapX+guiWidth/2+j*(guiWidth+gapX);
+                      int centerY = gapY+guiHeight/2+i*(guiHeight+gapY);
+                     rect = new Rectangle(centerX+left, centerY+upper, guiWidth, guiHeight);
+                }
+                else {
+                      int leftCorner = gapX+(j*gapX+guiWidth);
+                      int centerX = leftCorner+lastColumnGuiWidth/2;
+                      int centerY = gapY+guiHeight/2+i*(guiHeight+gapY);
+                      rect = new Rectangle(centerX+left, centerY+upper, guiWidth, guiHeight);
+   
+                }
+                int number = j+i*alongX;
+                positions[number] = rect;
+                fullCount++;
+            }
+        }
+        return positions;
+
+   
+
+    }
 
 }
