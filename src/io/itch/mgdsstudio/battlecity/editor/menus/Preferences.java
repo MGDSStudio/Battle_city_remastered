@@ -33,8 +33,13 @@ public class Preferences extends AbstractEditorMenu {
         initButtonNames();
         int buttons = 4;
         Rectangle [] zones = getCoordinatesForDefaultButtonsAlignment(buttons);
+        
         for (int i = 0; i < buttons; i++){
-            GuiElement gui = new ButtonWithFrameSelection(editorController.getEngine(), zones[i].x, zones[i].y, zones[i].width, zones[i].height, getNameForPos(i), editorController.getEngine().getEngine().g, true);
+
+            GuiElement gui ;
+            if (i == 0) gui = new CheckBox(editorController.getEngine(), zones[i].x, zones[i].y, zones[i].width, zones[i].height, getNameForPos(i), editorController.getEngine().getEngine().g, true);
+            
+            else gui = new ButtonWithFrameSelection(editorController.getEngine(), zones[i].x, zones[i].y, zones[i].width, zones[i].height, getNameForPos(i), editorController.getEngine().getEngine().g, true);
             //GuiElement gui = new ButtonWithFrameSelection(editorController.getEngine(), zones[i].x-zones[i].width/2, zones[i].y-zones[i].height/2, zones[i].width, zones[i].height, getNameForPos(i), editorController.getEngine().getEngine().g);
             //
             //new NoTextButtonWithFrameSelection(engine, x, y, w, h, name, graphics);
@@ -44,20 +49,20 @@ public class Preferences extends AbstractEditorMenu {
 
     private void initButtonNames(){
       //grid, gridStep, gridShifting, back;
-        save = "SAVE";
-       clear = "CLEAR";
-        back = "BACK";
-         exit = "EXIT";
+        grid = "GRID VISIBLE";
+       gridStep = "GRID STEP";
+        gridShifting = "GRID SHIFTING";
+         back = "BACK";
 
     }
 
     private String getNameForPos(int i) {
         String name;
         switch(i) {
-            case (0): name =  save; break;
-            case (1): name =  clear; break;
-            case (2): name =  back; break;
-            case (3): name =  exit; break;
+            case (0): name =  grid; break;
+            case (1): name =  gridStep; break;
+            case (2): name =  gridShifting; break;
+            case (3): name =  back; break;
             default:  name = "No name"; break;
         }
         return name;
@@ -67,17 +72,17 @@ public class Preferences extends AbstractEditorMenu {
         int ENGLISH = 0;
         int language = ENGLISH;
         //set specific language
-        if (element.getName() == save){
-            return "SAVE CHANGES IN THE ACTUAL LEVEL";
+        if (element.getName() == grid){
+            return "MAKE GRID VISIBLE OR INVISIBLE";
         }
-        else if (element.getName() == clear){
-            return "CLEAR ALL THE LEVEL DATA";
+        else if (element.getName() == gridStep){
+            return "CHANGE GRID CELLS SIZES";
+        }
+        else if (element.getName() == gridShifting){
+            return "SHIFT GRID START POINT";
         }
         else if (element.getName() == back){
-            return "BACK IN PREVIOUS MENU";
-        }
-        else if (element.getName() == exit){
-            return "LEAVE THE EDITOR";
+            return "BACK TO EDITOR MAIN PAGE";
         }
         else return "NO DATA";
     }
@@ -110,7 +115,7 @@ public class Preferences extends AbstractEditorMenu {
 
     @Override
     protected void onBackPressed(){
-          editorController.transferToMenu(MenuType.FILE, MenuType.MAIN);
+          editorController.transferToMenu(MenuType.PREFERENCES, MenuType.MAIN);
     }
     
 }
