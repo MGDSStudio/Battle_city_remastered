@@ -3,6 +3,7 @@ package io.itch.mgdsstudio.battlecity.editor;
 import io.itch.mgdsstudio.battlecity.editor.data.EditorPreferences;
 import io.itch.mgdsstudio.battlecity.editor.data.EditorPreferencesSingleton;
 import io.itch.mgdsstudio.battlecity.game.EditorController;
+import io.itch.mgdsstudio.battlecity.game.GameRound;
 import io.itch.mgdsstudio.battlecity.game.Logger;
 import io.itch.mgdsstudio.battlecity.game.camera.Camera;
 
@@ -13,7 +14,11 @@ import org.jbox2d.common.Vec2;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 
+import java.awt.*;
+import java.util.ArrayList;
+
 public class Cross extends Entity {
+    public final static int POINT_SIZE = 2;
     private boolean visible = true;
     private Vec2 theoreticalCoordinate;
     private final ImageZoneSimpleData RECT = new ImageZoneSimpleData(35,362,35+16,362+16);
@@ -41,7 +46,7 @@ public class Cross extends Entity {
     private boolean toCellCenter;
 
     private GameRound gameRound;
-    private final ArrayList <ISelectable> mutObjects = new ArrayList<>()
+    private final ArrayList<ISelectable> mutObjects = new ArrayList<>();
 
     public Cross(EditorController editorController) {
         super(editorController.getEngine(), new Coordinate(0,0), 0, IMMORTAL_LIFE, getSize(editorController), getSize(editorController));
@@ -174,26 +179,27 @@ public class Cross extends Entity {
 
     public ArrayList <ISelectable> getObjectsUnder(){
          ArrayList <Entity> entities = gameRound.getEntities();
-         Rect testArea = new Rect();
+         Rectangle testArea = new Rectangle();
         float x = realCoordinate.x;
         float y = realCoordinate.y;
-        if (statement == Statements.CROSS  ){
-           testArea.width = 1;
+        if (statement == Statement.CROSS  ){
+           testArea.width = POINT_SIZE;
             testArea.height = testArea.width;
         }
-        else if (statement != Statements.INVISIBLE_AS_CROSS){
+        else if (statement != Statement.INVISIBLE_AS_CROSS){
             testArea.width = gridStep;
             testArea.height = testArea.width;
         }
-        testArea.x = realCoordinate.x - testArea.width/2f;
-        testArea.y = realCoordinate.y - testArea.height/2f;
+        testArea.x = (int) (realCoordinate.x - testArea.width/2f);
+        testArea.y = (int) (realCoordinate.y - testArea.height/2f);
         mutObjects.clear();
-         for (Entity entity : entityes){
-              boolean inZone = entity.inZone(testZone);
+         for (Entity entity : entities){
+              boolean inZone = entity.inZone(testArea);
              if (entity instanceof ISelectable && inZone){
                     mutObjects.add((ISelectable)entity);
              }
          }
+         return mutObjects;
     }
 
     public Coordinate getActualCrossPos(){

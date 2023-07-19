@@ -39,6 +39,7 @@ public abstract class AbstractEditorMenu {
     public static AbstractEditorMenu createMenuForType(MenuType actualMenuType, EditorController editorController, LowerPanelInEditor lowerPanel) {
         if (actualMenuType == MenuType.MAIN) return new Main(editorController, lowerPanel);
         else if (actualMenuType == MenuType.FILE) return new File(editorController, lowerPanel);
+        else if (actualMenuType == MenuType.EDIT) return new Edit(editorController, lowerPanel);
         else {
             Logger.error("No menu fot this type: " + actualMenuType);
             return new Main(editorController, lowerPanel);
@@ -129,7 +130,7 @@ protected Rectangle[] getCoordinatesForDefaultButtonsAlignment(int frameButtonsC
         int upper = lowerPanelInEditor.getLowerTab().getUpper();
         float buttonRelativeWidth = 0.7f;
         int guiWidth = (int) ((float)fullWidth*buttonRelativeWidth);
-        float relativeGap = 0.12f;
+        float relativeGap = 0.075f;
         float fullRelativeGapY = (frameButtonsCount+1f)*relativeGap;
         float fullGapY = (float) (fullHeight*fullRelativeGapY);
         int yGap = (int) (fullGapY/(frameButtonsCount+1));

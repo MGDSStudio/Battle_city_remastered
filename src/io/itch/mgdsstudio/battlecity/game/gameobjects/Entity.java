@@ -1,6 +1,7 @@
 package io.itch.mgdsstudio.battlecity.game.gameobjects;
 
 import io.itch.mgdsstudio.battlecity.datatransfer.data.GLobalSerialAction;
+import io.itch.mgdsstudio.battlecity.game.Logger;
 import io.itch.mgdsstudio.battlecity.game.camera.Camera;
 import io.itch.mgdsstudio.battlecity.game.camera.GameCamera;
 import io.itch.mgdsstudio.battlecity.game.GameRound;
@@ -10,7 +11,10 @@ import io.itch.mgdsstudio.engine.graphic.GraphicElementInGame;
 import io.itch.mgdsstudio.engine.graphic.debuggraphic.DebugGraphic;
 import io.itch.mgdsstudio.engine.graphic.debuggraphic.DebugRect;
 import io.itch.mgdsstudio.engine.libs.Coordinate;
+import processing.core.PApplet;
 import processing.core.PGraphics;
+
+import java.awt.*;
 
 public abstract class Entity extends GameElement{
 
@@ -116,5 +120,14 @@ public abstract class Entity extends GameElement{
 
     public boolean mustBeAlwaysAbove() {
         return false;
+    }
+
+    public boolean inZone(Rectangle testArea) {
+        Logger.correct("This InZone function test only simple tests");
+        if ( PApplet.dist(pos.x, pos.y, (testArea.x+testArea.width/2), (testArea.x+testArea.height/2)) <= (PApplet.min(width, height)+PApplet.min(testArea.width, testArea.height))){
+            return true;
+        }
+        else return  false;
+
     }
 }

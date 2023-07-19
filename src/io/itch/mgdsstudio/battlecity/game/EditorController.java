@@ -1,4 +1,5 @@
-ublpackage io.itch.mgdsstudio.battlecity.game;
+package io.itch.mgdsstudio.battlecity.game;
+
 import io.itch.mgdsstudio.battlecity.editor.changessaving.ChangesController;
 import io.itch.mgdsstudio.battlecity.editor.data.EditorPreferences;
 import io.itch.mgdsstudio.battlecity.editor.data.EditorPreferencesSingleton;
@@ -28,7 +29,7 @@ public class EditorController extends GamePartWithGameWorldAbstractController im
     private AbstractEditorMenu menu;
     private MenuType actualMenuType, nextMenuType;
 
-    priyvate ChangesController changesController;
+    private ChangesController changesController;
     private ArrayList <ISelectable> selectedElements;
 
     public EditorController(IEngine engine, MainController mainController, int level, int dif, int playersConnected, int playerNumber, int playerNumberInMultiplayerMode) {
@@ -159,9 +160,10 @@ public class EditorController extends GamePartWithGameWorldAbstractController im
         editorHud.setTextForConsole(text);
     }
 
-    public void exitFromEditor() {
+    public void exitFromEditor(boolean testLevel) {
         MenuDataStruct dataStruct = new MenuDataStruct();
-        dataStruct.setNextMenu(io.itch.mgdsstudio.battlecity.menu.MenuType.EDITOR_PRELOADING_WINDOW);
+        if (!testLevel)  dataStruct.setNextMenu(io.itch.mgdsstudio.battlecity.menu.MenuType.EDITOR_PRELOADING_WINDOW);
+        else dataStruct.setNextMenu(io.itch.mgdsstudio.battlecity.menu.MenuType.SINGLE_MISSION_LOADING);
         mainController.backToMenu(dataStruct);
     }
 

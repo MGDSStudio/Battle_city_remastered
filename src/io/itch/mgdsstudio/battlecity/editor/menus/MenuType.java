@@ -1,7 +1,8 @@
 package io.itch.mgdsstudio.battlecity.editor.menus;
 
 public enum MenuType {
-    MAIN, FILE, PREFERENCES, TEST,
+    MAIN,
+    FILE, EDIT, PREFERENCES, TEST,
     PLAYER, GRAPHIC, WALL, ENEMY,
-    WATER;
+    ABOUT_EDITOR, STAFF, FOREST, COLLECTABLE;
 }

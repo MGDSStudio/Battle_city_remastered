@@ -84,9 +84,9 @@ case (4): name =  remove; break;
         else if (element.getName() == clearSelection){
             return "CLEAR SELECTION";
         }
-else if (element.getName() == remove){
-            return "REMOVE SELECTED OBJECTS FROM GAME WORLD";
-}
+        else if (element.getName() == remove){
+                    return "REMOVE SELECTED OBJECTS FROM GAME WORLD";
+        }
 
 
         else return "NO DATA";

@@ -13,7 +13,7 @@ import java.awt.*;
 public class Main extends AbstractEditorMenu {
     private enum MainButtonsNames {
         WALL, PLAYER_TANK, ENEMY_TANK, COLLECTABLE,
-        GRAPHIC, STAFF, WATER, FOREST,
+        GRAPHIC, STAFF, QUESTION_MARK, FOREST,
         FILE, EDIT , PREFERENCES, TEST;
     }
 
@@ -21,7 +21,7 @@ public class Main extends AbstractEditorMenu {
         ImageZoneSimpleData WALL = new ImageZoneSimpleData(84,326, 118,360);
         ImageZoneSimpleData PREFERENCES = new ImageZoneSimpleData(119,326, 153,360);
         ImageZoneSimpleData GRAPHIC = new ImageZoneSimpleData(119,291, 153,325);
-        ImageZoneSimpleData WATER = new ImageZoneSimpleData(84,291, 118,325);
+        ImageZoneSimpleData QUESTION_MARK = new ImageZoneSimpleData(84,291, 118,325);
         ImageZoneSimpleData PLAYER_TANK = new ImageZoneSimpleData(84,361, 118,393);
 // not Set up
         ImageZoneSimpleData ENEMY_TANK = new ImageZoneSimpleData(119,429, 153,463);
@@ -64,8 +64,8 @@ public class Main extends AbstractEditorMenu {
             case (7): name =  MainButtonsNames.ENEMY_TANK.name(); break;
             case (8): name =  MainButtonsNames.GRAPHIC.name(); break;
             case (9): name =  MainButtonsNames.STAFF.name(); break;
-            case (10): name =  MainButtonsNames.WATER.name(); break;
-            default:  name = MainButtonsNames.FOREST.name(); break;
+            case (10): name =  MainButtonsNames.FOREST.name(); break;
+            default:  name = MainButtonsNames.QUESTION_MARK.name(); break;
         }
         return name;
     }
@@ -104,7 +104,7 @@ else if (element.getName() == MainButtonsNames.GRAPHIC.name()){
 else if (element.getName() == MainButtonsNames.STAFF.name()){
             return "CATEGORY: STAFF";
         }
-else if (element.getName() == MainButtonsNames.WATER.name()){
+else if (element.getName() == MainButtonsNames.QUESTION_MARK.name()){
             return "CATEGORY: WATER";
 }
 
@@ -139,16 +139,14 @@ else if (element.getName() == MainButtonsNames.FOREST.name()){
             case (7): name =  ImageZones.ENEMY_TANK; break;
             case (8): name =  ImageZones.GRAPHIC; break;
             case (9): name =  ImageZones.STAFF; break;
-            case (10): name =  ImageZones.WATER; break;
-            default:  name = ImageZones.FOREST; break;
+            case (10): name =  ImageZones.FOREST; break;
+            default:  name = ImageZones.QUESTION_MARK; break;
         }
         return name;
-        //return name;
     }
 
     @Override
     protected void guiPressed(GuiElement element) {
-
 
     }
 
@@ -163,9 +161,47 @@ else if (element.getName() == MainButtonsNames.FOREST.name()){
         if (element.getName() == MainButtonsNames.TEST.name()) {
             onBackPressed();
         }
+
         else if (element.getName() == MainButtonsNames.FILE.name()) {
             editorController.transferToMenu(MenuType.MAIN, MenuType.FILE);
         }
+        else if (element.getName() == MainButtonsNames.EDIT.name()) {
+            editorController.transferToMenu(MenuType.MAIN, MenuType.EDIT);
+        }
+        else if (element.getName() == MainButtonsNames.PREFERENCES.name()) {
+            editorController.transferToMenu(MenuType.MAIN, MenuType.PREFERENCES);
+        }
+        else if (element.getName() == MainButtonsNames.TEST.name()) {
+            editorController.exitFromEditor(true);
+        }
+        else if (element.getName() == MainButtonsNames.PLAYER_TANK.name()) {
+            editorController.transferToMenu(MenuType.MAIN, MenuType.PLAYER);
+        }
+        else if (element.getName() == MainButtonsNames.WALL.name()) {
+            editorController.transferToMenu(MenuType.MAIN, MenuType.WALL);
+        }
+        else if (element.getName() == MainButtonsNames.COLLECTABLE.name()) {
+            editorController.transferToMenu(MenuType.MAIN, MenuType.COLLECTABLE);
+        }
+        else if (element.getName() == MainButtonsNames.ENEMY_TANK.name()) {
+            editorController.transferToMenu(MenuType.MAIN, MenuType.ENEMY);
+        }
+        else if (element.getName() == MainButtonsNames.GRAPHIC.name()) {
+            editorController.transferToMenu(MenuType.MAIN, MenuType.GRAPHIC);
+        }
+        else if (element.getName() == MainButtonsNames.STAFF.name()) {
+            editorController.transferToMenu(MenuType.MAIN, MenuType.STAFF);
+        }
+        else if (element.getName() == MainButtonsNames.QUESTION_MARK.name()) {
+            editorController.transferToMenu(MenuType.MAIN, MenuType.ABOUT_EDITOR);
+        }
+        else if (element.getName() == MainButtonsNames.FOREST.name()) {
+            editorController.transferToMenu(MenuType.MAIN, MenuType.FOREST);
+        }
+        else{
+            Logger.error("No data for this button");
+        }
+
     }
 
     @Override
@@ -177,10 +213,10 @@ else if (element.getName() == MainButtonsNames.FOREST.name()){
     @Override
     protected void onBackPressed(){
         if (!editorController.areThereUnsavedData()){
-          editorController.exitFromEditor();
+          editorController.exitFromEditor(false);
         }
         else if (userKnowsAboutUnsavedData){
-            editorController.exitFromEditor();
+            editorController.exitFromEditor(false);
         }
         else {
             tellAboutUnsavedData();
