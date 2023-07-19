@@ -54,6 +54,10 @@ public abstract class GamePartWithGameWorldAbstractController extends GamePart{
 
     }
 
+    public GameRound getGameRound(){
+        return gameRound();
+    }
+
     public void beginContact(Contact contact) {
         gameRound.addNewBeginContact(contact);
     }
