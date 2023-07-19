@@ -59,7 +59,7 @@ move = "MOVE";
             case (1): name =  copy; break;
             case (2): name =  move; break;
             case (3): name =  clearSelection; break;
-case (4): name =  remove; break;
+            case (4): name =  remove; break;
 //case (5): name =  clearSelection; break;
 
             
@@ -128,7 +128,8 @@ clearSelection();
     }
 
   protected void clearSelection(){
-! continue
+      Logger.debug("Not implemented");
+       //! continue
   }
 
     @Override
@@ -139,7 +140,7 @@ clearSelection();
 
     @Override
     protected void onBackPressed(){
-          editorController.transferToMenu(MenuType.FILE, MenuType.MAIN);
+          editorController.transferToMenu(MenuType.EDIT, MenuType.MAIN);
     }
     
   }
