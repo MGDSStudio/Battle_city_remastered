@@ -40,10 +40,13 @@ public class Cross extends Entity {
     private Statement statement;
     private boolean toCellCenter;
 
+    private GameRound gameRound;
+    private final ArrayList <ISelectable> mutObjects = new ArrayList<>()
 
     public Cross(EditorController editorController) {
         super(editorController.getEngine(), new Coordinate(0,0), 0, IMMORTAL_LIFE, getSize(editorController), getSize(editorController));
-       this.editorController = editorController;
+        this.editorController = editorController;
+        this.gameRound = editorController.getGameRound();
         theoreticalCoordinate = new Vec2(0,0);
         linesThickness = (int) (6f*((float) this.editorController.getEngine().getEngine().width)/((float)(500f)));
         mapZoneCenterX = this.editorController.getHud().getGraphicLeftPixel()+ this.editorController.getGraphicWidth()/2;
@@ -169,6 +172,29 @@ public class Cross extends Entity {
         
     }
 
+    public ArrayList <ISelectable> getObjectsUnder(){
+         ArrayList <Entity> entities = gameRound.getEntities();
+         Rect testArea = new Rect();
+        float x = realCoordinate.x;
+        float y = realCoordinate.y;
+        if (statement == Statements.CROSS  ){
+           testArea.width = 1;
+            testArea.height = testArea.width;
+        }
+        else if (statement != Statements.INVISIBLE_AS_CROSS){
+            testArea.width = gridStep;
+            testArea.height = testArea.width;
+        }
+        testArea.x = realCoordinate.x - testArea.width/2f;
+        testArea.y = realCoordinate.y - testArea.height/2f;
+        mutObjects.clear();
+         for (Entity entity : entityes){
+              boolean inZone = entity.inZone(testZone);
+             if (entity instanceof ISelectable && inZone){
+                    mutObjects.add((ISelectable)entity);
+             }
+         }
+    }
 
     public Coordinate getActualCrossPos(){
         return realCoordinate;
