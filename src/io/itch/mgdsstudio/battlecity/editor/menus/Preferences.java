@@ -1,10 +1,7 @@
 package io.itch.mgdsstudio.battlecity.editor.menus;
 
-import com.mgdsstudio.engine.nesgui.ButtonInFrameWithGraphic;
-import com.mgdsstudio.engine.nesgui.ButtonWithFrameSelection;
-import com.mgdsstudio.engine.nesgui.GuiElement;
+import com.mgdsstudio.engine.nesgui.*;
 
-import com.mgdsstudio.engine.nesgui.NoTextButtonWithFrameSelection;
 import io.itch.mgdsstudio.battlecity.game.EditorController;
 import io.itch.mgdsstudio.battlecity.game.Logger;
 import io.itch.mgdsstudio.battlecity.game.hud.LowerPanelInEditor;
@@ -37,7 +34,7 @@ public class Preferences extends AbstractEditorMenu {
         for (int i = 0; i < buttons; i++){
 
             GuiElement gui ;
-            if (i == 0) gui = new CheckBox(editorController.getEngine(), zones[i].x, zones[i].y, zones[i].width, zones[i].height, getNameForPos(i), editorController.getEngine().getEngine().g, true);
+            if (i == 0) gui = new CheckBox(editorController.getEngine(), zones[i].x, zones[i].y, zones[i].width, zones[i].height, getNameForPos(i), editorController.getEngine().getEngine().g);
             
             else gui = new ButtonWithFrameSelection(editorController.getEngine(), zones[i].x, zones[i].y, zones[i].width, zones[i].height, getNameForPos(i), editorController.getEngine().getEngine().g, true);
             //GuiElement gui = new ButtonWithFrameSelection(editorController.getEngine(), zones[i].x-zones[i].width/2, zones[i].y-zones[i].height/2, zones[i].width, zones[i].height, getNameForPos(i), editorController.getEngine().getEngine().g);

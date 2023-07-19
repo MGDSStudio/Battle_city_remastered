@@ -6,6 +6,7 @@ import io.itch.mgdsstudio.battlecity.game.GameRound;
 import io.itch.mgdsstudio.battlecity.game.PhysicWorld;
 import io.itch.mgdsstudio.battlecity.game.gameobjects.GameElement;
 import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
+import processing.core.PApplet;
 
 public class SelectingController {
 
@@ -19,11 +20,11 @@ public class SelectingController {
     }
 
   private void update(int millis){
-      actualAlpha = MIN_ALPHA+ DELTA_ALPHA*PApplet.sin(millis/1000f);
+      actualAlpha = MIN_ALPHA+ DELTA_ALPHA* PApplet.sin(millis/1000f);
   }
 
- private int getSlpha(){
-return alpha;
+ private int getAlpha(){
+        return (int)actualAlpha;
  }
 
     
