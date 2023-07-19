@@ -30,9 +30,11 @@ public class EditorController extends GamePartWithGameWorldAbstractController im
     private MenuType actualMenuType, nextMenuType;
 
     private ChangesController changesController;
+    private ArrayList <ISelectable> selectedElements;
 
     public EditorController(IEngine engine, MainController mainController, int level, int dif, int playersConnected, int playerNumber, int playerNumberInMultiplayerMode) {
         super(engine, mainController, dif, level, playerNumberInMultiplayerMode,playersConnected);
+        selectedElements = new ArrayList<>();
         changesController = new ChangesController(this);
         EditorPreferencesSingleton editorPreferencesSingleton = EditorPreferencesSingleton.getInstance(engine);
         Logger.editor("Grid step: " + editorPreferencesSingleton.getIntegerValue(EditorPreferences.GRID_STEP.name()));
