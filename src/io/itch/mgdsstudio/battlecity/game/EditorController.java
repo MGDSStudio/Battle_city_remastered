@@ -1,5 +1,4 @@
-package io.itch.mgdsstudio.battlecity.game;
-
+ublpackage io.itch.mgdsstudio.battlecity.game;
 import io.itch.mgdsstudio.battlecity.editor.changessaving.ChangesController;
 import io.itch.mgdsstudio.battlecity.editor.data.EditorPreferences;
 import io.itch.mgdsstudio.battlecity.editor.data.EditorPreferencesSingleton;
@@ -29,7 +28,7 @@ public class EditorController extends GamePartWithGameWorldAbstractController im
     private AbstractEditorMenu menu;
     private MenuType actualMenuType, nextMenuType;
 
-    private ChangesController changesController;
+    priyvate ChangesController changesController;
     private ArrayList <ISelectable> selectedElements;
 
     public EditorController(IEngine engine, MainController mainController, int level, int dif, int playersConnected, int playerNumber, int playerNumberInMultiplayerMode) {
@@ -175,6 +174,9 @@ public class EditorController extends GamePartWithGameWorldAbstractController im
 
     }
 
+    public ArrayList <ISelectable> getSelectedObjects(){
+        return selectedElements;
+    }
 
     public void transferToMenu(MenuType from , MenuType to) {
         nextMenuType = to;
