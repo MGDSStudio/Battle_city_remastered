@@ -119,7 +119,19 @@ public class Preferences extends AbstractEditorMenu {
 
     @Override
     protected void initDataForStatement(int actualStatement) {
-        Logger.debug("This menu has no statements");
+        //Logger.debug("This menu has no statements");
+        guiElements.clear();
+        String consoleText = "";
+        if (actualStatement == Statements.setGridStep){
+            consoleText = "ENTER THE GRID STEP YOU WANT";
+            createSubmenuWithDigitKeyboard(false);
+        }
+        if (actualStatement == Statements.setGridShifting){
+            consoleText = "ENTER THE SHIFTING FOR THE GRID START POINT";
+            createSubmenuWithDigitKeyboard(false);
+        }
+        editorController.setTextInConcole(getTextForConsoleByPressedGui(consoleText));
+
     }
 
 
