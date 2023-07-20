@@ -15,16 +15,16 @@ public class CheckBox extends AbstractCheckableElement {
 
     //private int prevStatement;
 
-    public CheckBox(IEngine engine, int centerX, int centerY, int width, int height, String name, PGraphics graphics) {
-        super(engine, centerX, centerY, width, height, name, graphics, CURSOR_DIMENSIONS_COEF );
-
+    public CheckBox(IEngine engine, int centerX, int centerY, int width, int height, String name, PGraphics graphics, boolean centerAlignment) {
+        super(engine, centerX, centerY, width, height, name, graphics, CURSOR_DIMENSIONS_COEF, centerAlignment);
         framePosY = centerY;
-        //setAnotherTextToBeDrawnAsName("    " + name);
         frameHeight = (int) (height*effectiveHeightCoef);
         framePosX = centerX;
         actualStatement = ACTIVE;
         prevStatement = ACTIVE;
     }
+
+
     @Override
     protected void updateFunction() {
 

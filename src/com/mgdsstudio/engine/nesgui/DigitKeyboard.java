@@ -1,5 +1,6 @@
 package com.mgdsstudio.engine.nesgui;
 
+import io.itch.mgdsstudio.battlecity.game.Logger;
 import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
 import io.itch.mgdsstudio.engine.graphic.ImageZoneSimpleData;
 import processing.core.PApplet;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 
 public class DigitKeyboard extends Frame{
     public static final String NO_DATA_STRING = "";
-
+    private GuiElement embeddedGui; //COnsole
     protected final static ImageZoneSimpleData frameImageZoneSimpleDataWithoutBackground = new ImageZoneSimpleData(0, 462, 33, 495);
     protected EightPartsFrameImage frame;
 private ArrayList<ButtonWithFrameSelection> buttons;
@@ -38,7 +39,8 @@ private ArrayList<ButtonWithFrameSelection> buttons;
 
         Rectangle[] zones = getCoordinatesForSquareButtonsAndColumnAlignment(12,4);
         for (int i = 0; i < zones.length; i++){
-             ButtonWithFrameSelection button = new ButtonWithFrameSelection(iengine, (int)zones[i].getX(), (int)zones[i].getY(), (int)zones[i].getWidth(), (int)zones[i].getHeight(), getNameForButtonNumber(i), engine.g, true);
+             ButtonWithFrameSelection button = new ButtonWithFrameSelection(iengine, (int)zones[i].getX(), (int)zones[i].getY(), (int)zones[i].getWidth(), (int)zones[i].getHeight(), getNameForButtonNumber(i), engine.g, true, 1f);
+             buttons.add(button);
         }
     }
 
@@ -46,8 +48,18 @@ private ArrayList<ButtonWithFrameSelection> buttons;
         String name = "";
         switch(i){
             case 0: name = "1"; break;
-
-            default: name = "no data"; break;
+            case 1: name = "2"; break;
+            case 2: name = "3"; break;
+            case 3: name = "BACK"; break;
+            case 4: name = "4"; break;
+            case 5: name = "5"; break;
+            case 6: name = "6"; break;
+            case 7: name = "CLEAR"; break;
+            case 8: name = "7"; break;
+            case 9: name = "8"; break;
+            case 10: name = "9"; break;
+            case 11: name = "0"; break;
+            default: name = "ENTER"; break;
         }
 
         return name;
@@ -74,6 +86,7 @@ private ArrayList<ButtonWithFrameSelection> buttons;
         if (actualStatement != HIDDEN && actualStatement != BLOCKED){
             boolean somePressed = false;
             boolean someReleased = false;
+           // Logger.debug(" Keyboard updated");
             for (GuiElement guiElement : buttons){
                 guiElement.update(mouseX, mouseY);
                 if (guiElement.getActualStatement() == PRESSED){
@@ -85,8 +98,14 @@ private ArrayList<ButtonWithFrameSelection> buttons;
                     someReleased = true;
                 }
             }
-            if (!someReleased) released = null;
-            if (!somePressed) pressed = null;
+            if (!someReleased) {
+                //Logger.debug(" Keyboard released");
+                released = null;
+            }
+            if (!somePressed) {
+                //Logger.debug(" Keyboard pressed");
+                pressed = null;
+            }
         }
     }
 
@@ -122,6 +141,7 @@ private ArrayList<ButtonWithFrameSelection> buttons;
         super.draw(graphic);
         for (GuiElement guiElement : buttons){
             guiElement.draw(graphic);
+
         }
     }
 
@@ -137,7 +157,7 @@ protected Rectangle[] getCoordinatesForSquareButtonsAndColumnAlignment(int fullC
         int left = (int) leftX;
         int upper = (int) upperY;
         int alongY = PApplet.ceil(fullCount/alongX);
-        float relativeGap = 0.1f;
+        float relativeGap = 0.05f;
         float fullRelativeGapX = (alongX+1f)*relativeGap;
         float fullRelativeGapY = (alongY+1f)*relativeGap;
         float fullGapX =  (float) fullWidth*fullRelativeGapX;
@@ -148,15 +168,13 @@ protected Rectangle[] getCoordinatesForSquareButtonsAndColumnAlignment(int fullC
         int guiHeight;
         int theoreticalGuisAlongX = alongX+3;
          
-            minimalFullGap = fullGapY;
-            int xGap = (int)(minimalFullGap/(alongX+1f));
-            guiWidth = (int) ((fullWidth-minimalFullGap)/theoreticalGuisAlongX);
-           
+        minimalFullGap = fullGapY;
+        int xGap = (int)(minimalFullGap/(alongX+1f));
+        guiWidth = (int) ((fullWidth-minimalFullGap)/theoreticalGuisAlongX);
         
-        
-            minimalFullGap = fullGapX;
-            int yGap = (int)(minimalFullGap/(alongY+1f));
-            guiHeight = (int) ((fullHeight-minimalFullGap)/alongY);
+        minimalFullGap = fullGapX;
+        int yGap = (int)(minimalFullGap/(alongY+1f));
+        guiHeight = (int) ((fullHeight-minimalFullGap)/alongY);
         Rectangle [] positions = calculatePositionsForParams(guiWidth, guiHeight, alongX, alongY, left, upper, xGap, yGap, 3);
         return positions;
     }
@@ -164,6 +182,7 @@ protected Rectangle[] getCoordinatesForSquareButtonsAndColumnAlignment(int fullC
     private Rectangle [] calculatePositionsForParams(int guiWidth, int guiHeight, int alongX, int alongY, int left, int upper, int gapX, int gapY, int lastColumnCoef){
         Rectangle [] positions = new Rectangle[alongX*alongY];
         int lastColumnGuiWidth = guiWidth*lastColumnCoef;
+        Logger.debug("Last button width: " + lastColumnCoef);
         int fullCount = 0;
         for (int i = 0; i < alongY; i++){
             for (int j = 0; j < alongX; j++){
@@ -171,7 +190,7 @@ protected Rectangle[] getCoordinatesForSquareButtonsAndColumnAlignment(int fullC
                 if (j != (alongX-1)){
                       int centerX = gapX+guiWidth/2+j*(guiWidth+gapX);
                       int centerY = gapY+guiHeight/2+i*(guiHeight+gapY);
-                     rect = new Rectangle(centerX+left, centerY+upper, guiWidth, guiHeight);
+                      rect = new Rectangle(centerX+left, centerY+upper, guiWidth, guiHeight);
                 }
                 else {
                       int leftCorner = gapX+(j*gapX+guiWidth);
@@ -191,4 +210,7 @@ protected Rectangle[] getCoordinatesForSquareButtonsAndColumnAlignment(int fullC
 
     }
 
+    public void setEmbeddedGui(GuiElement embeddedGui) {
+        this.embeddedGui = embeddedGui;
+    }
 }

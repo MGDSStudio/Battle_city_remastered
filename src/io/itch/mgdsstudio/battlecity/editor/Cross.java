@@ -156,6 +156,7 @@ public class Cross extends Entity {
     }
 
     private void renderCross(PGraphics graphic){
+        //To add arrow rendering
         graphic.strokeWeight(linesThickness);
         graphic.stroke(0,255,0);
         graphic.line(-width/2, 0, width/2,0);

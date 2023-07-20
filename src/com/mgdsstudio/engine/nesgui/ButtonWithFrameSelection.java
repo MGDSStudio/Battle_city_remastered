@@ -15,7 +15,12 @@ public class ButtonWithFrameSelection extends ElementWithFrameSelection {
         super(engine, centerX, centerY, width, height, name, graphics, CURSOR_DIMENSIONS_COEF);
         init(centerX, centerY);
         this.centerAlignment = centerAlignment;
+    }
 
+    public ButtonWithFrameSelection(IEngine engine, int centerX, int centerY, int width, int height, String name, PGraphics graphics, boolean centerAlignment, float cursorDimensionCoef) {
+        super(engine, centerX, centerY, width, height, name, graphics, cursorDimensionCoef);
+        init(centerX, centerY);
+        this.centerAlignment = centerAlignment;
     }
 
     @Override

@@ -11,6 +11,8 @@ import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
 public abstract class DataFromMgdsTextParametersListReader {
     public final int ERROR_VALUE = -9999;
     protected String [] data;
+    protected IEngine engine;
+    protected String filePath;
 
     public int getIntegerValue(String key){
         for (int i = 0; i < data.length; i++){
@@ -24,6 +26,11 @@ public abstract class DataFromMgdsTextParametersListReader {
         }
         Logger.error("Can not key " + key + " in the data file");
         return ERROR_VALUE;
+    }
+
+    public void updateData(){
+        loadArray(engine, filePath);
+        Logger.debug("This must be got from the readable folder on android");
     }
 
     private String getKeyFromString(String dataString) {
@@ -142,6 +149,13 @@ public abstract class DataFromMgdsTextParametersListReader {
         else {
             Logger.debug("Data successfully uploaded and decoded");
         }
+    }
+
+    public void saveOnDisk(){
+        String path = filePath;
+        Logger.debug("Try to save data on disk at " + path);
+        engine.getEngine().saveStrings(path, data);
+        Logger.debug("Data saved on disk ");
     }
 
 }

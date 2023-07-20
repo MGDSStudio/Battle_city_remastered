@@ -45,8 +45,8 @@ public class MainController implements GameStatements{
         else {
             MenuDataStruct menuDataStruct = new MenuDataStruct();
             menuDataStruct.setNextLevel(1);
-            //menuDataStruct.setNextMenu(MenuType.SINGLE_MISSION_LOADING);
-            menuDataStruct.setNextMenu(MenuType.MAIN);
+            menuDataStruct.setNextMenu(MenuType.EDITOR_PRELOADING_WINDOW);
+            //menuDataStruct.setNextMenu(MenuType.MAIN);
             gamePart = new MenuController(engine, this, menuDataStruct);
         }
         mustBeReloaded = false;
@@ -107,14 +107,18 @@ public class MainController implements GameStatements{
         Logger.debug("It is better if I save this as a command in a queue");
     }
 
-    public void backToMenu(MenuDataStruct dataStruct) {
+    public void backToMenu(MenuDataStruct dataStruct, boolean fromEditor) {
         globalStatement = MENU;
-        int levelEndCode = dataStruct.getLevelEndCode();
-        if (levelEndCode == LevelEndConditionController.LevelEndType.PLAYER_CAMP_KILLED) dataStruct.setNextMenu(MenuType.SINGLE_MISSION_LOOSED);
-        else if (levelEndCode == LevelEndConditionController.LevelEndType.PLAYER_RETURNED_BACK) {
-            //dataStruct.setNextMenu(MenuType.CAMPAIGN_RETURN_IN_GARAGE);
+        if (fromEditor){
+            Logger.debug("Next menu after editor must be: " + dataStruct.getNextMenuType().name());
         }
-        else dataStruct.setNextMenu(MenuType.SINGLE_MISSION_COMPLETED);
+        else {
+            int levelEndCode = dataStruct.getLevelEndCode();
+            if (levelEndCode == LevelEndConditionController.LevelEndType.PLAYER_CAMP_KILLED)
+                dataStruct.setNextMenu(MenuType.SINGLE_MISSION_LOOSED);
+            else if (levelEndCode == LevelEndConditionController.LevelEndType.PLAYER_RETURNED_BACK) {
+            } else dataStruct.setNextMenu(MenuType.SINGLE_MISSION_COMPLETED);
+        }
         gamePart = new MenuController(engine, this, dataStruct);
         Logger.debug("It is better if I save this as a command in a queue");
         Logger.correct("I need to implement campaign in this function to select the rightest menu!");

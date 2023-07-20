@@ -115,7 +115,7 @@ public class GameController extends GamePartWithGameWorldAbstractController {
         MenuDataStruct menuDataStruct = new MenuDataStruct();
         menuDataStruct.setNextMenu(MenuType.SINGLE_MISSIONS);
         menuDataStruct.setLevelEndCode(LevelEndConditionController.LevelEndType.PLAYER_RETURNED_BACK);
-        mainController.backToMenu(menuDataStruct);
+        mainController.backToMenu(menuDataStruct, false);
     }
 
 
@@ -125,7 +125,7 @@ public class GameController extends GamePartWithGameWorldAbstractController {
 
     @Override
     public void backToMenu(MenuDataStruct dataStruct) {
-        mainController.backToMenu(dataStruct);
+        mainController.backToMenu(dataStruct, false);
     }
 
     @Override

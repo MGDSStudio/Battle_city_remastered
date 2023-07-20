@@ -16,8 +16,8 @@ public class RadioButton extends AbstractCheckableElement {
 
     //private int prevStatement;
 
-    public RadioButton(IEngine engine, int centerX, int centerY, int width, int height, String name, PGraphics graphics) {
-        super(engine, centerX, centerY, width, height, name, graphics, CURSOR_DIMENSIONS_COEF );
+    public RadioButton(IEngine engine, int centerX, int centerY, int width, int height, String name, PGraphics graphics, boolean centerAlignment) {
+        super(engine, centerX, centerY, width, height, name, graphics, CURSOR_DIMENSIONS_COEF, centerAlignment );
         framePosY = centerY;
         frameHeight = (int) (height*effectiveHeightCoef);
         framePosX = centerX;

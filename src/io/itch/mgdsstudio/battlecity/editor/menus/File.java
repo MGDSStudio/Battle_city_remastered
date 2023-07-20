@@ -13,7 +13,7 @@ import java.awt.*;
 
 public class File extends AbstractEditorMenu {
 
-    private String save, clear, back, exit;
+    private String save, clear, exit;
 
 
    private interface Statements{
@@ -45,9 +45,7 @@ int REALLY_WANT_TO_CLEAR = 21;
     private void initButtonNames(){
         save = "SAVE";
        clear = "CLEAR";
-        back = "BACK";
          exit = "EXIT";
-
     }
 
     private String getNameForPos(int i) {

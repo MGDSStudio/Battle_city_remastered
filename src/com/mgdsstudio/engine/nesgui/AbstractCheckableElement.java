@@ -10,9 +10,14 @@ abstract class AbstractCheckableElement extends ElementWithCursor {
     protected boolean flagSet;
     protected final static float CURSOR_DIMENSIONS_COEF = 1.2f/(23f/36f);
     protected int framePosX, framePosY, frameHeight;
+    private int alignment;
 
-    AbstractCheckableElement(IEngine engine, int centerX, int centerY, int width, int height, String name, PGraphics graphics, float cursorDimensionsCoef) {
+    AbstractCheckableElement(IEngine engine, int centerX, int centerY, int width, int height, String name, PGraphics graphics, float cursorDimensionsCoef, boolean centerAlignment) {
         super(engine, centerX, centerY, width, height, name, graphics, CURSOR_DIMENSIONS_COEF );
+        if (centerAlignment) {
+            alignment = PConstants.CENTER;
+        }
+        else alignment = LEFT_ALIGNMENT_OS_SPECIFIC;
     }
 
     protected final boolean isMouseOnEffectiveArea(int mouseX, int mouseY){
@@ -28,7 +33,7 @@ abstract class AbstractCheckableElement extends ElementWithCursor {
                 setYShiftingForFont(graphic.textFont);
                 shiftingWasSet = true;
             }
-            drawName(graphic, LEFT_ALIGNMENT_OS_SPECIFIC);
+            drawName(graphic, alignment);
             drawCursor(graphic);
         }
         //System.out.println("Frame effective hight: " + height + " text height: " + graphic.textFont.getSize());

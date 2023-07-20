@@ -110,13 +110,13 @@ public class Tab extends GuiElement {
             if (additionalData!= null) element.setUserData(additionalData);
         }
         else if (type == RadioButton.class){
-            element = new RadioButton(engineInteface, x+xShifting,y, normalWidth, guiHeight, name, basicGraphic);
+            element = new RadioButton(engineInteface, x+xShifting,y, normalWidth, guiHeight, name, basicGraphic, false);
             RadioButton radioButton = (RadioButton) element;
             RadioButton.addButtonToList(elements, radioButton);
             if (additionalData!= null) element.setUserData(additionalData);
         }
         else if (type == CheckBox.class){
-            element = new CheckBox(engineInteface, x+xShifting,y, normalWidth, guiHeight, name, basicGraphic);
+            element = new CheckBox(engineInteface, x+xShifting,y, normalWidth, guiHeight, name, basicGraphic, false);
             if (additionalData!= null) element.setUserData(additionalData);
         }
         else if (type == TextDataFieldWithText.class){

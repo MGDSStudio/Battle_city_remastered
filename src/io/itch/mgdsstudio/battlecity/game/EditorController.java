@@ -26,6 +26,7 @@ public class EditorController extends GamePartWithGameWorldAbstractController im
     private ArrayList <EditorAction> actions;
     private WorldZoneScrollingController worldZoneScrollingController;
     private Cross cross;
+    private Grid grid;
     private AbstractEditorMenu menu;
     private MenuType actualMenuType, nextMenuType;
 
@@ -74,7 +75,10 @@ public class EditorController extends GamePartWithGameWorldAbstractController im
 
     private void createOnMapZoneGraphic() {
         cross = new Cross(this);
-        Grid grid = new Grid(this);
+        grid = new Grid(this);
+        boolean visible = EditorPreferencesSingleton.getInstance().getBooleanValue(EditorPreferences.GRID_VISIBILITY.name());
+        if (!visible) grid.setVisible(false);
+
         gameRound.addEntityToEnd(cross);
         gameRound.addEntityToEnd(grid);
     }
@@ -131,7 +135,7 @@ public class EditorController extends GamePartWithGameWorldAbstractController im
 
     @Override
     public void backToMenu(MenuDataStruct dataStruct) {
-        mainController.backToMenu(dataStruct);
+        mainController.backToMenu(dataStruct, true);
     }
 
     @Override
@@ -162,9 +166,10 @@ public class EditorController extends GamePartWithGameWorldAbstractController im
 
     public void exitFromEditor(boolean testLevel) {
         MenuDataStruct dataStruct = new MenuDataStruct();
+        dataStruct.setNextLevel(level);
         if (!testLevel)  dataStruct.setNextMenu(io.itch.mgdsstudio.battlecity.menu.MenuType.EDITOR_PRELOADING_WINDOW);
         else dataStruct.setNextMenu(io.itch.mgdsstudio.battlecity.menu.MenuType.SINGLE_MISSION_LOADING);
-        mainController.backToMenu(dataStruct);
+        mainController.backToMenu(dataStruct, true);
     }
 
     public boolean areThereUnsavedData() {
@@ -183,5 +188,13 @@ public class EditorController extends GamePartWithGameWorldAbstractController im
     public void transferToMenu(MenuType from , MenuType to) {
         nextMenuType = to;
         Logger.debug("transfer to menu: " + to.name());
+    }
+
+    public Cross getCross() {
+        return cross;
+    }
+
+    public Grid getGrid() {
+        return grid;
     }
 }

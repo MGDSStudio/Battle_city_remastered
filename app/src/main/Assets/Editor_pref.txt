@@ -1,3 +1,4 @@
-GRID_STEP = 50		//
+GRID_STEP = 50//
 GRID_START_X = 0    //
 GRID_START_Y = 0    //
+GRID_VISIBILITY = 1//

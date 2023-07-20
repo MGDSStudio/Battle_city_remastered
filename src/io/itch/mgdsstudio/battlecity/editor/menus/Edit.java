@@ -13,7 +13,7 @@ import java.awt.*;
 
 public class Edit extends AbstractEditorMenu {
 
-    private String select, copy, move, clearSelection, remove, back;
+    private String select, copy, move, clearSelection, remove;
 
 
    private interface Statements{
@@ -44,11 +44,9 @@ public class Edit extends AbstractEditorMenu {
       //select, copy, move, clearSelection, delete, back;
         select = "SELECT";
         copy = "COPY";
-move = "MOVE";
-       clearSelection = "CLEAR SELECTION";
+        move = "MOVE";
+        clearSelection = "CLEAR SELECTION";
         remove = "REMOVE";
-         back = "BACK";
-
     }
 
     private String getNameForPos(int i) {

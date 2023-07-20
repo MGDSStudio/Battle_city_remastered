@@ -1,6 +1,7 @@
 package io.itch.mgdsstudio.battlecity.editor.menus;
 
-import com.mgdsstudio.engine.nesgui.GuiElement;
+import com.mgdsstudio.engine.nesgui.*;
+import com.mgdsstudio.engine.nesgui.TextArea;
 import io.itch.mgdsstudio.battlecity.game.EditorController;
 import io.itch.mgdsstudio.battlecity.game.Logger;
 import io.itch.mgdsstudio.battlecity.game.hud.LowerPanelInEditor;
@@ -11,7 +12,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public abstract class AbstractEditorMenu {
-
+    protected String back, apply;
 
     
     protected final LowerPanelInEditor lowerPanelInEditor;
@@ -32,8 +33,14 @@ public abstract class AbstractEditorMenu {
         this.lowerPanelInEditor = lowerPanelInEditor;
         this.endStatement = endStatement;
         guiElements = new ArrayList<>();
+        initDefaultButtonNames();
         //if (lowerPanelInEditor == null) Logger.error("Lower panel is null: " );
         initGui();
+    }
+
+    private void initDefaultButtonNames(){
+        back = "BACK";
+        apply = "APPLY";
     }
 
     public static AbstractEditorMenu createMenuForType(MenuType actualMenuType, EditorController editorController, LowerPanelInEditor lowerPanel) {
@@ -41,12 +48,12 @@ public abstract class AbstractEditorMenu {
         else if (actualMenuType == MenuType.FILE) return new File(editorController, lowerPanel);
         else if (actualMenuType == MenuType.EDIT) return new Edit(editorController, lowerPanel);
         else if (actualMenuType == MenuType.PREFERENCES) return new Preferences(editorController, lowerPanel);
-        else if (actualMenuType == MenuType.ABOUT) return new About(editorController, lowerPanel);
+        /*else if (actualMenuType == MenuType.ABOUT) return new About(editorController, lowerPanel);
         else if (actualMenuType == MenuType.PLAYER) return new Player(editorController, lowerPanel);
         else if (actualMenuType == MenuType.ENEMY) return new Enemy(editorController, lowerPanel);
         else if (actualMenuType == MenuType.GRAPHIC) return new Graphic(editorController, lowerPanel);
         else if (actualMenuType == MenuType.WALL) return new Wall(editorController, lowerPanel);
-        
+        */
         
         
         
@@ -88,7 +95,7 @@ public abstract class AbstractEditorMenu {
 
                 }
                 else if (element.getActualStatement() == GuiElement.PRESSED){
-                    Logger.debug("Button " + element.getName() + " was pressed");
+                    if (element.wasStatementChanged()) Logger.debug("Button " + element.getName() + " was pressed");
                     if (!wasGuiPressedAlsoOnPrevFrame(element)){
                         setConsoleTextForFirstButtonPressing(element);
                     }
@@ -129,13 +136,40 @@ public abstract class AbstractEditorMenu {
         Logger.debug("Not implemented for the actual menu");
     }
 
-    
-
     protected abstract void initDataForStatement(int actualStatement);
 
-protected Rectangle[] getCoordinatesForDefaultButtonsAlignment(int frameButtonsCount){
+    protected Rectangle[] getCoordinatesForDefaultButtonsAlignment(int frameButtonsCount){
+        int buttonsCountForCalculations = frameButtonsCount;
+        if (buttonsCountForCalculations<6) buttonsCountForCalculations = 6;
         int fullWidth = lowerPanelInEditor.getLowerTab().getWidth();
         int fullHeight = lowerPanelInEditor.getLowerTab().getHeight();
+        //if (frameButtonsCount )
+        //int fullHeight = lowerPanelInEditor.getLowerTab().getHeight();
+
+
+        int left = lowerPanelInEditor.getLowerTab().getLeft();
+        int upper = lowerPanelInEditor.getLowerTab().getUpper();
+        float buttonRelativeWidth = 0.6f;
+        int guiWidth = (int) (fullWidth*buttonRelativeWidth);
+        float relativeGap = 0.075f;
+        float fullRelativeGapY = (buttonsCountForCalculations+1f)*relativeGap;
+        float fullGapY = (float) (fullHeight*fullRelativeGapY);
+        int yGap = (int) (fullGapY/(buttonsCountForCalculations+1));
+        int guiHeight;
+        guiHeight = (int) ((fullHeight-((buttonsCountForCalculations+1f)*yGap))/buttonsCountForCalculations);
+        int xGap = (int) ((fullWidth-guiWidth)/2f);
+        Rectangle [] positions = calculatePositionsForParams(guiWidth, guiHeight, 1, buttonsCountForCalculations, left, upper, xGap, yGap);
+        Logger.debug("Button width: " + guiWidth + "; Full width: " + fullWidth);
+        return positions;
+        /*
+        int buttonsCountForCalculations = frameButtonsCount;
+    if (buttonsCountForCalculations<6) buttonsCountForCalculations = 6;
+        int fullWidth = lowerPanelInEditor.getLowerTab().getWidth();
+        int fullHeight = lowerPanelInEditor.getLowerTab().getHeight();
+        //if (frameButtonsCount )
+        //int fullHeight = lowerPanelInEditor.getLowerTab().getHeight();
+
+
         int left = lowerPanelInEditor.getLowerTab().getLeft();
         int upper = lowerPanelInEditor.getLowerTab().getUpper();
         float buttonRelativeWidth = 0.7f;
@@ -145,14 +179,72 @@ protected Rectangle[] getCoordinatesForDefaultButtonsAlignment(int frameButtonsC
         float fullGapY = (float) (fullHeight*fullRelativeGapY);
         int yGap = (int) (fullGapY/(frameButtonsCount+1));
         int guiHeight;
-        
         guiHeight = (int) ((fullHeight-((frameButtonsCount+1f)*yGap))/frameButtonsCount);
         int xGap = (int) ((fullWidth-guiWidth)/2f);
         Rectangle [] positions = calculatePositionsForParams(guiWidth, guiHeight, 1, frameButtonsCount, left, upper, xGap, yGap);
+        Logger.debug("Button width: " + guiWidth + "; Full width: " + fullWidth);
         return positions;
+
+         */
+
+
     }
 
-    
+    protected void createSubmenuWithDigitKeyboard(boolean withApply, String labelName){
+        int fullWidth = lowerPanelInEditor.getLowerTab().getWidth();
+        int fullHeight = lowerPanelInEditor.getLowerTab().getHeight();
+        int left = lowerPanelInEditor.getLowerTab().getLeft();
+        int upper = lowerPanelInEditor.getLowerTab().getUpper();
+
+        int defaultGuis = 2;
+        if (withApply) defaultGuis = 3;
+        float relativeGap = 0.075f;     //rel gap between button and keyboard
+        float fullRelativeGap = (defaultGuis+1f+1f)*relativeGap;    //summ of all gaps - relative
+        float fullGap = fullHeight*fullRelativeGap;                 //summ of all gaps - absolute
+        float gapY = fullGap/(defaultGuis+1+1);                     //single absolute gap between guis
+
+        float restHeightForGui = fullHeight-fullGap;                //rest height only for guis
+        //float relativeHeightOfButtonGuiZone = 0.2f;         //from fullWidth!
+        float relativeHeightOfButtonGuiZone = 0.1f;         //from rest height
+        float textLabelHeight = relativeHeightOfButtonGuiZone*restHeightForGui;         //from fullWidth!
+        float keyboardHeight = restHeightForGui-textLabelHeight*defaultGuis;
+
+        int labelCenterX = (int) (left+fullWidth/2);
+        int labelCenterY = (int) (gapY+textLabelHeight/2)+upper;
+        int labelWidth = (int) (fullWidth*0.6f);
+        int labelHeight = (int) textLabelHeight;
+
+        TextDataFieldWithText textLabel = new TextDataFieldWithText(editorController.getEngine(), labelCenterX, labelCenterY, labelWidth, labelHeight, labelName, editorController.getEngine().getEngine().g, labelName);
+
+        //TextDataFieldWithText textLabel = new TextDataFieldWithText(editorController.getEngine(), labelCenterX, labelCenterY, labelWidth, labelHeight, labelName, editorController.getEngine().getEngine().g, labelName);
+        //public TextDataFieldWithText(IEngine engine, int centerX, int centerY, int width, int height, String name, PGraphics graphics, String defaultValue) {
+        //TextLabel textLabel = new TextLabel(editorController.getEngine(), labelCenterX, labelCenterY, labelWidth, labelHeight, labelName);
+        Logger.debug("Button height: " + textLabelHeight + "; Keyboard height: " + keyboardHeight + "; full height: " + fullHeight);
+
+        int keyboardX = labelCenterX;
+
+        int keyboardY = (int) (labelCenterY+labelHeight/2+gapY+keyboardHeight/2);
+        int keyboardWidth = (int) (labelWidth);
+        //public DigitKeyboard(IEngine engine, int centerX, int centerY, int width, int height, String name, PGraphics graphics) {
+
+        DigitKeyboard keyboard = new DigitKeyboard(editorController.getEngine(), keyboardX, keyboardY, keyboardWidth, (int) keyboardHeight, "Keyboard", editorController.getEngine().getEngine().g);
+        
+        guiElements.add(textLabel);
+        guiElements.add(keyboard);
+
+        int backButtonX = keyboardX;
+        int backButtonWidth = labelWidth;
+        int backButtonHeight = labelHeight;
+        int backButtonY = (int) (keyboardY+keyboardHeight/2+gapY+labelHeight/2);
+
+
+        ButtonWithFrameSelection back = new ButtonWithFrameSelection(editorController.getEngine(), backButtonX, backButtonY, backButtonWidth, backButtonHeight, this.back, editorController.getEngine().getEngine().g, true);
+        guiElements.add(back);
+
+    }
+
+
+
     protected Rectangle[] getCoordinatesForSquareButtonsAndColumnAlignment(int fullCount, int alongX){
         int fullWidth = lowerPanelInEditor.getLowerTab().getWidth();
         int fullHeight = lowerPanelInEditor.getLowerTab().getHeight();
@@ -183,13 +275,11 @@ protected Rectangle[] getCoordinatesForDefaultButtonsAlignment(int frameButtonsC
             minimalFullGap = fullGapY;
             singleGap = (int)(minimalFullGap/(alongX+1f));
             guiWidth = (int) ((fullWidth-minimalFullGap)/alongX);
-            //guiHeight = (int) ((fullHeight-((alongY+1f)*singleGap))/alongY);
         }
         else{
             minimalFullGap = fullGapX;
             singleGap = (int)(minimalFullGap/(alongY+1f));
             guiWidth = (int) ((fullHeight-minimalFullGap)/alongY);
-
         }
         guiHeight = (int) ((fullHeight-((alongY+1f)*singleGap))/alongY);
         Logger.debug("Full width x height: " + fullWidth + "x" + fullHeight + " gap: " +  singleGap + "; gui width: "  + guiWidth);
@@ -220,12 +310,9 @@ protected Rectangle[] getCoordinatesForDefaultButtonsAlignment(int frameButtonsC
     }
 
     private void changeStatement(){
-        actualStatement = nextStatement();
+        actualStatement = nextStatement;
         initDataForStatement(actualStatement);
     }
 
-    private void createSubmenuWithDigitKeyboard(boolean withApply){
-        //continue
-    }
-    
+
 }

@@ -158,11 +158,9 @@ else if (element.getName() == MainButtonsNames.FOREST.name()){
 
     @Override
     protected void guiReleased(GuiElement element) {
-        if (element.getName() == MainButtonsNames.TEST.name()) {
-            onBackPressed();
-        }
 
-        else if (element.getName() == MainButtonsNames.FILE.name()) {
+
+        if (element.getName() == MainButtonsNames.FILE.name()) {
             editorController.transferToMenu(MenuType.MAIN, MenuType.FILE);
         }
         else if (element.getName() == MainButtonsNames.EDIT.name()) {
@@ -193,7 +191,7 @@ else if (element.getName() == MainButtonsNames.FOREST.name()){
             editorController.transferToMenu(MenuType.MAIN, MenuType.STAFF);
         }
         else if (element.getName() == MainButtonsNames.QUESTION_MARK.name()) {
-            editorController.transferToMenu(MenuType.MAIN, MenuType.ABOUT_EDITOR);
+            editorController.transferToMenu(MenuType.MAIN, MenuType.ABOUT);
         }
         else if (element.getName() == MainButtonsNames.FOREST.name()) {
             editorController.transferToMenu(MenuType.MAIN, MenuType.FOREST);

@@ -3,8 +3,6 @@ package io.itch.mgdsstudio.battlecity.game.dataloading;
 import io.itch.mgdsstudio.battlecity.game.Logger;
 import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
 import io.itch.mgdsstudio.engine.libs.DataFromMgdsTextParametersListReader;
-import processing.data.JSONArray;
-import sun.rmi.runtime.Log;
 
 import static javax.swing.UIManager.getString;
 
@@ -20,10 +18,13 @@ public class PlayerProgressControllerSingleton extends DataFromMgdsTextParameter
 
 
     private PlayerProgressControllerSingleton(IEngine engine, boolean levelType) {
+        this.engine = engine;
+
         String path = engine.getPathToObjectInAssets(CAMPAIGN_PROGRESS_FILE_NAME);
         if (levelType == SINGLE_MISSIONS) path = engine.getPathToObjectInAssets(SINGLE_MISSIONS_PROGRESS_FILE_NAME);
-        loadArray(engine, path);
-        Logger.debug("This must be got from the readable folder on android");
+
+        this.filePath = path;
+        updateData();
     }
 
     public static void dispose(){
@@ -46,6 +47,12 @@ public class PlayerProgressControllerSingleton extends DataFromMgdsTextParameter
     }
 
 
-
+    @Override
+    public void saveOnDisk(){
+        String path = filePath;
+        Logger.debug("Try to save data on disk at " + path);
+        engine.getEngine().saveStrings(path, data);
+        Logger.debug("Data saved on disk ");
+    }
 
 }

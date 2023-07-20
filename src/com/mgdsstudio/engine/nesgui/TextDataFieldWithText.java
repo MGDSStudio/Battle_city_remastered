@@ -25,8 +25,6 @@ public class TextDataFieldWithText extends DataFieldWithText {
         return data;
     }
 
-
-
     protected void updateDataFilling() {
         if (wasKeyPressed()) {
             //System.out.println("Key pressed");

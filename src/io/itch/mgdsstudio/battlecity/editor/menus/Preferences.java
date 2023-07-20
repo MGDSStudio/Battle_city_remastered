@@ -2,6 +2,8 @@ package io.itch.mgdsstudio.battlecity.editor.menus;
 
 import com.mgdsstudio.engine.nesgui.*;
 
+import io.itch.mgdsstudio.battlecity.editor.data.EditorPreferences;
+import io.itch.mgdsstudio.battlecity.editor.data.EditorPreferencesSingleton;
 import io.itch.mgdsstudio.battlecity.game.EditorController;
 import io.itch.mgdsstudio.battlecity.game.Logger;
 import io.itch.mgdsstudio.battlecity.game.hud.LowerPanelInEditor;
@@ -10,8 +12,8 @@ import java.awt.*;
 
 public class Preferences extends AbstractEditorMenu {
 
-    private String grid, gridStep, gridShifting, back;
-
+    private String grid, gridStep, gridShifting;
+    private String textField;
 
    private interface Statements{
          int setGridStep = 11;
@@ -34,23 +36,32 @@ public class Preferences extends AbstractEditorMenu {
         for (int i = 0; i < buttons; i++){
 
             GuiElement gui ;
-            if (i == 0) gui = new CheckBox(editorController.getEngine(), zones[i].x, zones[i].y, zones[i].width, zones[i].height, getNameForPos(i), editorController.getEngine().getEngine().g);
-            
+            if (i == 0) {
+                gui = new CheckBox(editorController.getEngine(), zones[i].x, zones[i].y, zones[i].width, zones[i].height, getNameForPos(i), editorController.getEngine().getEngine().g, true);
+                EditorPreferencesSingleton preferencesSingleton = EditorPreferencesSingleton.getInstance();
+                boolean gridVisible = preferencesSingleton.getBooleanValue(EditorPreferences.GRID_VISIBILITY.name());
+                CheckBox checkBox = (CheckBox) gui;
+                if (gridVisible){
+                    editorController.getGrid().setVisible(true);
+                    checkBox.setChecked(true);
+                    editorController.setTextInConcole("GRID IS VISIBLE NOW");
+                }
+                else {
+                    editorController.getGrid().setVisible(false);
+                    checkBox.setChecked(false);
+                    editorController.setTextInConcole("GRID IS NOT VISIBLE NOT");
+                }
+            }
             else gui = new ButtonWithFrameSelection(editorController.getEngine(), zones[i].x, zones[i].y, zones[i].width, zones[i].height, getNameForPos(i), editorController.getEngine().getEngine().g, true);
-            //GuiElement gui = new ButtonWithFrameSelection(editorController.getEngine(), zones[i].x-zones[i].width/2, zones[i].y-zones[i].height/2, zones[i].width, zones[i].height, getNameForPos(i), editorController.getEngine().getEngine().g);
-            //
-            //new NoTextButtonWithFrameSelection(engine, x, y, w, h, name, graphics);
             guiElements.add(gui);
         }
     }
 
     private void initButtonNames(){
-      //grid, gridStep, gridShifting, back;
         grid = "GRID VISIBLE";
-       gridStep = "GRID STEP";
+        gridStep = "GRID STEP";
         gridShifting = "GRID SHIFTING";
-         back = "BACK";
-
+        textField = "TEXT FIELD";
     }
 
     private String getNameForPos(int i) {
@@ -68,7 +79,6 @@ public class Preferences extends AbstractEditorMenu {
     protected String getTextForConsoleByPressedGui(GuiElement element){
         int ENGLISH = 0;
         int language = ENGLISH;
-        //set specific language
         if (element.getName() == grid){
             return "MAKE GRID VISIBLE OR INVISIBLE";
         }
@@ -100,19 +110,35 @@ public class Preferences extends AbstractEditorMenu {
     @Override
     protected void guiReleased(GuiElement element) {
         if (element.getName().equals(back)) {
-            onBackPressed();
+            if (actualStatement == Statements.setGridStep){
+                nextStatement = START_STATEMENT;
+            }
+            else if (actualStatement == Statements.setGridShifting){
+                nextStatement = START_STATEMENT;
+            }
+            else if (actualStatement == START_STATEMENT) onBackPressed();
+            else onBackPressed();
         }
         else if (element.getName().equals(gridStep)){
-            changeStatement(Statements.setGridStep);
-            
+            nextStatement = Statements.setGridStep;
         }
         else if (element.getName().equals(gridShifting)){
-            changeStatement(Statements.setGridShifting);
+            nextStatement = Statements.setGridShifting;
         }
         else if (element.getName().equals(grid)){
             if (element instanceof CheckBox){
                 CheckBox box = (CheckBox)element;
-                //if flag set
+                EditorPreferencesSingleton preferencesSingleton = EditorPreferencesSingleton.getInstance();
+                if (box.isChecked()){
+                    editorController.getGrid().setVisible(true);
+                    preferencesSingleton.setValueForKey(EditorPreferences.GRID_VISIBILITY, 1);
+                }
+                else {
+                    editorController.getGrid().setVisible(false);
+                    preferencesSingleton.setValueForKey(EditorPreferences.GRID_VISIBILITY, 0);
+                }
+                preferencesSingleton.saveOnDisk();
+                Logger.debug("Grid statement was changed");
             }
         }
     }
@@ -124,13 +150,13 @@ public class Preferences extends AbstractEditorMenu {
         String consoleText = "";
         if (actualStatement == Statements.setGridStep){
             consoleText = "ENTER THE GRID STEP YOU WANT";
-            createSubmenuWithDigitKeyboard(false);
+            createSubmenuWithDigitKeyboard(false, textField);
         }
         if (actualStatement == Statements.setGridShifting){
             consoleText = "ENTER THE SHIFTING FOR THE GRID START POINT";
-            createSubmenuWithDigitKeyboard(false);
+            createSubmenuWithDigitKeyboard(false, textField);
         }
-        editorController.setTextInConcole(getTextForConsoleByPressedGui(consoleText));
+        editorController.setTextInConcole(consoleText);
 
     }
 
