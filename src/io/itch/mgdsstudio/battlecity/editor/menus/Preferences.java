@@ -102,6 +102,19 @@ public class Preferences extends AbstractEditorMenu {
         if (element.getName().equals(back)) {
             onBackPressed();
         }
+        else if (element.getName().equals(gridStep)){
+            changeStatement(Statements.setGridStep);
+            
+        }
+        else if (element.getName().equals(gridShifting)){
+            changeStatement(Statements.setGridShifting);
+        }
+        else if (element.getName().equals(grid)){
+            if (element instanceof CheckBox){
+                CheckBox box = (CheckBox)element;
+                //if flag set
+            }
+        }
     }
 
     @Override
