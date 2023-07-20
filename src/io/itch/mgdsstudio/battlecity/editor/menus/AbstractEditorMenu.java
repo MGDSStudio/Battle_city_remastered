@@ -40,6 +40,19 @@ public abstract class AbstractEditorMenu {
         if (actualMenuType == MenuType.MAIN) return new Main(editorController, lowerPanel);
         else if (actualMenuType == MenuType.FILE) return new File(editorController, lowerPanel);
         else if (actualMenuType == MenuType.EDIT) return new Edit(editorController, lowerPanel);
+        else if (actualMenuType == MenuType.PREFERENCES) return new Preferences(editorController, lowerPanel);
+        else if (actualMenuType == MenuType.ABOUT) return new About(editorController, lowerPanel);
+        else if (actualMenuType == MenuType.PLAYER) return new Player(editorController, lowerPanel);
+        else if (actualMenuType == MenuType.ENEMY) return new Enemy(editorController, lowerPanel);
+        else if (actualMenuType == MenuType.GRAPHIC) return new Graphic(editorController, lowerPanel);
+        else if (actualMenuType == MenuType.WALL) return new Wall(editorController, lowerPanel);
+        
+        
+        
+        
+        
+        
+        
         else {
             Logger.error("No menu fot this type: " + actualMenuType);
             return new Main(editorController, lowerPanel);
