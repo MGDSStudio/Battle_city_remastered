@@ -223,4 +223,9 @@ protected Rectangle[] getCoordinatesForDefaultButtonsAlignment(int frameButtonsC
         actualStatement = nextStatement();
         initDataForStatement(actualStatement);
     }
+
+    private void createSubmenuWithDigitKeyboard(boolean withApply){
+        //continue
+    }
+    
 }
