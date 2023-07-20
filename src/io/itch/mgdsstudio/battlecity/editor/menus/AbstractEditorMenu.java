@@ -129,10 +129,7 @@ public abstract class AbstractEditorMenu {
         Logger.debug("Not implemented for the actual menu");
     }
 
-    private void changeStatement() {
-        actualStatement = nextStatement;
-        initDataForStatement(actualStatement);
-    }
+    
 
     protected abstract void initDataForStatement(int actualStatement);
 
