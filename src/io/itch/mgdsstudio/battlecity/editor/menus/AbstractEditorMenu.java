@@ -218,4 +218,9 @@ protected Rectangle[] getCoordinatesForDefaultButtonsAlignment(int frameButtonsC
    
 
     }
+
+    private void changeStatement(){
+        actualStatement = nextStatement();
+        initDataForStatement(actualStatement);
+    }
 }
