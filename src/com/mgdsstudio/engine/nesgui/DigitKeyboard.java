@@ -37,7 +37,7 @@ private ArrayList<ButtonWithFrameSelection> buttons;
     //WIDTHES
     // x x x 3x
 
-        Rectangle[] zones = getCoordinatesForSquareButtonsAndColumnAlignment(12,4);
+        Rectangle[] zones = getCoordinatesForSquareButtonsAndColumnAlignment(12,5);
         for (int i = 0; i < zones.length; i++){
              ButtonWithFrameSelection button = new ButtonWithFrameSelection(iengine, (int)zones[i].getX(), (int)zones[i].getY(), (int)zones[i].getWidth(), (int)zones[i].getHeight(), getNameForButtonNumber(i), engine.g, true, 1f);
              buttons.add(button);
@@ -50,16 +50,16 @@ private ArrayList<ButtonWithFrameSelection> buttons;
             case 0: name = "1"; break;
             case 1: name = "2"; break;
             case 2: name = "3"; break;
-            case 3: name = "BACK"; break;
-            case 4: name = "4"; break;
-            case 5: name = "5"; break;
-            case 6: name = "6"; break;
-            case 7: name = "CLEAR"; break;
-            case 8: name = "7"; break;
-            case 9: name = "8"; break;
-            case 10: name = "9"; break;
-            case 11: name = "0"; break;
-            default: name = "ENTER"; break;
+            case 3: name = "4"; break;
+            case 4: name = "5"; break;
+            case 5: name = "6"; break;
+            case 6: name = "7"; break;
+            case 7: name = "8"; break;
+            case 8: name = "9"; break;
+            case 9: name = "0"; break;
+            case 10: name = "CLEAR"; break;
+            case 11: name = "ENTER"; break;
+            default: name = "NO DATA"; break;
         }
 
         return name;
@@ -157,8 +157,19 @@ protected Rectangle[] getCoordinatesForSquareButtonsAndColumnAlignment(int fullC
         int left = (int) leftX;
         int upper = (int) upperY;
         int alongY = PApplet.ceil(fullCount/alongX);
-        float relativeGap = 0.05f;
-        float fullRelativeGapX = (alongX+1f)*relativeGap;
+        float xRelativeGap = 0.05f;
+        float xRelativeGapOnBoard = 0.75f;
+        float xGapInCenter = fullWidth*relativeGap;
+        float xGapOnBoard = fullWidth*xRelativeGapOnBoard;
+        
+    float fullRelativeGapX = xGapOnBoard*2+(alongX-1)*relativeGap;
+        Logger.debug("Full realative x: " + fullRelativeGapX);
+        
+        float restWidth = fullWidth-
+        int guiWidth = alongX
+    
+           
+    
         float fullRelativeGapY = (alongY+1f)*relativeGap;
         float fullGapX =  (float) fullWidth*fullRelativeGapX;
         float fullGapY = (float) fullHeight*fullRelativeGapY;
@@ -168,11 +179,11 @@ protected Rectangle[] getCoordinatesForSquareButtonsAndColumnAlignment(int fullC
         int guiHeight;
         int theoreticalGuisAlongX = alongX+3;
          
-        minimalFullGap = fullGapY;
-        int xGap = (int)(minimalFullGap/(alongX+1f));
+        minimalFullGap = fullGapX;
+        int xCentralGap = (int)(minimalFullGap/(alongX+1f));
         guiWidth = (int) ((fullWidth-minimalFullGap)/theoreticalGuisAlongX);
         
-        minimalFullGap = fullGapX;
+        minimalFullGap = fullGapY;
         int yGap = (int)(minimalFullGap/(alongY+1f));
         guiHeight = (int) ((fullHeight-minimalFullGap)/alongY);
         Rectangle [] positions = calculatePositionsForParams(guiWidth, guiHeight, alongX, alongY, left, upper, xGap, yGap, 3);
