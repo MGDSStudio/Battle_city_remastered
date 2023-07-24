@@ -1,6 +1,5 @@
 package io.itch.mgdsstudio.battlecity.editor;
 
-import io.itch.mgdsstudio.battlecity.editor.data.EditorPreferences;
 import io.itch.mgdsstudio.battlecity.editor.data.EditorPreferencesSingleton;
 import io.itch.mgdsstudio.battlecity.game.EditorController;
 import io.itch.mgdsstudio.battlecity.game.GameRound;
@@ -17,8 +16,9 @@ import processing.core.PGraphics;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class Cross extends Entity {
+public class Cross extends Entity implements EditorActionsListener{
     public final static int POINT_SIZE = 2;
+    private ArrayList <EditorAction> actions = new ArrayList<>();
     private boolean visible = true;
     private Vec2 theoreticalCoordinate;
     private final ImageZoneSimpleData RECT = new ImageZoneSimpleData(35,362,35+16,362+16);
@@ -50,13 +50,15 @@ public class Cross extends Entity {
 
     public Cross(EditorController editorController) {
         super(editorController.getEngine(), new Coordinate(0,0), 0, IMMORTAL_LIFE, getSize(editorController), getSize(editorController));
+        EditorListenersManagerSingleton singleton = EditorListenersManagerSingleton.getInstance();
+        singleton.addAsListener(this);
         this.editorController = editorController;
         this.gameRound = editorController.getGameRound();
         theoreticalCoordinate = new Vec2(0,0);
         linesThickness = (int) (6f*((float) this.editorController.getEngine().getEngine().width)/((float)(500f)));
         mapZoneCenterX = this.editorController.getHud().getGraphicLeftPixel()+ this.editorController.getGraphicWidth()/2;
         mapZoneCenterY = this.editorController.getHud().getGraphicUpperPixel()+ this.editorController.getGraphicHeight()/2;
-        initGridStartParameters(editorController);
+        initGridStartParameters();
         setStatement(Statement.CROSS);
     }
 
@@ -70,11 +72,12 @@ public class Cross extends Entity {
         else toCellCenter = true;
     }
 
-    private void initGridStartParameters(EditorController editorController) {
+    private void initGridStartParameters() {
+
        EditorPreferencesSingleton pref = EditorPreferencesSingleton.getInstance();
-       gridStep = pref.getIntegerValue(EditorPreferences.GRID_STEP.name());
-       gridStartX = pref.getIntegerValue(EditorPreferences.GRID_START_X.name());
-       gridStartY = pref.getIntegerValue(EditorPreferences.GRID_START_Y.name());
+       gridStep = editorController.getGrid().getGridStep();
+       gridStartX = editorController.getGrid().getGridShiftingX();
+       gridStartY = editorController.getGrid().getGridShiftingX();
        //Logger.editor("Cross data: step: " + gridStep + "; Start: " + gridStartX + "x" + gridStartY);
     }
 
@@ -83,14 +86,33 @@ public class Cross extends Entity {
     }
 
     private void update(Camera editorCamera){
+        updateActions();
         if (visible){
             theoreticalCoordinate.x = mapZoneCenterX+editorCamera.getPos().x;
             theoreticalCoordinate.y = mapZoneCenterY+editorCamera.getPos().y;
             if (toCellCenter) updateRealCoordinateForCellCenter();
- else updateRealCoordinateForCorner();
+            else updateRealCoordinateForCorner();
 
             pos.x = realCoordinate.x;
             pos.y = realCoordinate.y;
+        }
+    }
+
+
+    private void updateActions() {
+        if (actions.size()>0){
+            for (int i = (actions.size()-1); i >= 0; i--){
+                if (actions.get(i).getPrefix().equals(EditorCommandPrefix.GRID_STEP_CHANGED)){
+                    gridStep = editorController.getGrid().getGridStep();
+                }
+                else if (actions.get(i).getPrefix().equals(EditorCommandPrefix.GRID_SHIFTING_CHANGED)){
+                    gridStep = editorController.getGrid().getGridShiftingX();
+                }
+                actions.remove(i);
+            }
+        }
+        if (actions.size()>20){
+            Logger.error("Too many actions " + actions.size() + this.getClass());
         }
     }
 
@@ -218,5 +240,11 @@ public class Cross extends Entity {
     @Override
     public boolean mustBeAlwaysAbove() {
         return true;
+    }
+
+    @Override
+    public void appendCommand(EditorAction action) {
+        actions.add(action);
+        //Logger.debug("Camera got action");
     }
 }

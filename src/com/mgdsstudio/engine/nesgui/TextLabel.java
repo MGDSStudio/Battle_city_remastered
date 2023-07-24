@@ -6,7 +6,7 @@ import processing.core.PConstants;
 import processing.core.PGraphics;
 
 public class TextLabel extends GuiElement {
-
+    private String prefix;
 
     public TextLabel(IEngine engine, int centerX, int centerY, int width, int height, String name, PGraphics graphics) {
         super(engine, centerX, centerY, width, height, name, graphics);
@@ -42,5 +42,9 @@ public class TextLabel extends GuiElement {
     @Override
     protected void updateFunction() {
         // Npthing to update
+    }
+
+    public void setPrefix(String prefix) {
+        this.prefix = prefix;
     }
 }

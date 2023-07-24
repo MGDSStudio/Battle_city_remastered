@@ -14,6 +14,7 @@ import java.util.ArrayList;
 public abstract class AbstractEditorMenu {
     protected String back, apply;
 
+    protected final static String KEYBOARD_GUI_NAME = "Keyboard";
     
     protected final LowerPanelInEditor lowerPanelInEditor;
     protected final static int NO_END = 9999;
@@ -214,11 +215,16 @@ public abstract class AbstractEditorMenu {
         int labelWidth = (int) (fullWidth*0.6f);
         int labelHeight = (int) textLabelHeight;
 
-        TextDataFieldWithText textLabel = new TextDataFieldWithText(editorController.getEngine(), labelCenterX, labelCenterY, labelWidth, labelHeight, labelName, editorController.getEngine().getEngine().g, labelName);
+        //TextDataFieldWithText textLabel = new TextDataFieldWithText(editorController.getEngine(), labelCenterX, labelCenterY, labelWidth, labelHeight, labelName, editorController.getEngine().getEngine().g, labelName);
+        //DigitDataFieldWithText textLabel = new DigitDataFieldWithText(editorController.getEngine(), labelCenterX, labelCenterY, labelWidth, labelHeight, labelName, editorController.getEngine().getEngine().g, 0);
+
+        //DigitDataFieldWithText(IEngine engine, int centerX, int centerY, int width, int height, String name, PGraphics graphics, int defaultValue)
 
         //TextDataFieldWithText textLabel = new TextDataFieldWithText(editorController.getEngine(), labelCenterX, labelCenterY, labelWidth, labelHeight, labelName, editorController.getEngine().getEngine().g, labelName);
         //public TextDataFieldWithText(IEngine engine, int centerX, int centerY, int width, int height, String name, PGraphics graphics, String defaultValue) {
-        //TextLabel textLabel = new TextLabel(editorController.getEngine(), labelCenterX, labelCenterY, labelWidth, labelHeight, labelName);
+        TextLabel textLabel = new TextLabel(editorController.getEngine(), labelCenterX, labelCenterY, labelWidth, labelHeight, labelName);
+        textLabel.setAnotherTextToBeDrawnAsName("");
+        //textLabel.setPrefix("");
         Logger.debug("Button height: " + textLabelHeight + "; Keyboard height: " + keyboardHeight + "; full height: " + fullHeight);
 
         int keyboardX = labelCenterX;
@@ -227,8 +233,8 @@ public abstract class AbstractEditorMenu {
         int keyboardWidth = (int) (labelWidth);
         //public DigitKeyboard(IEngine engine, int centerX, int centerY, int width, int height, String name, PGraphics graphics) {
 
-        DigitKeyboard keyboard = new DigitKeyboard(editorController.getEngine(), keyboardX, keyboardY, keyboardWidth, (int) keyboardHeight, "Keyboard", editorController.getEngine().getEngine().g);
-        
+        DigitKeyboard keyboard = new DigitKeyboard(editorController.getEngine(), keyboardX, keyboardY, keyboardWidth, (int) keyboardHeight, KEYBOARD_GUI_NAME, editorController.getEngine().getEngine().g);
+        keyboard.setEmbeddedGui(textLabel);
         guiElements.add(textLabel);
         guiElements.add(keyboard);
 
@@ -314,5 +320,17 @@ public abstract class AbstractEditorMenu {
         initDataForStatement(actualStatement);
     }
 
+    protected GuiElement getGuiByName(String textField) {
+        for (GuiElement guiElement : guiElements){
+            if (guiElement.getName().equals( textField) || guiElement.getName()==textField){
+                return guiElement;
+            }
+        }
+        Logger.error("No GUI for name: " + textField + "; There are names only: ");
+        for (GuiElement guiElement : guiElements){
+            System.out.println("     " + guiElement.getName());
+        }
+        return null;
+    }
 
 }

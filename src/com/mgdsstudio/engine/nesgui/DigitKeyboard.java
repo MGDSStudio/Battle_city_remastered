@@ -4,16 +4,18 @@ import io.itch.mgdsstudio.battlecity.game.Logger;
 import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
 import io.itch.mgdsstudio.engine.graphic.ImageZoneSimpleData;
 import processing.core.PApplet;
-import processing.core.PConstants;
 import processing.core.PGraphics;
-import processing.core.PVector;
 
 import java.awt.*;
 import java.util.ArrayList;
 
 public class DigitKeyboard extends Frame{
     public static final String NO_DATA_STRING = "";
-    private GuiElement embeddedGui; //COnsole
+    private static final String CLEAR = "CLEAR";
+    private static final String BACK = "BACK";
+    //private FrameWithText embeddedGui; //COnsole
+    private TextLabel embeddedGui; //COnsole
+    private int minValue, maxValue;
     protected final static ImageZoneSimpleData frameImageZoneSimpleDataWithoutBackground = new ImageZoneSimpleData(0, 462, 33, 495);
     protected EightPartsFrameImage frame;
 private ArrayList<ButtonWithFrameSelection> buttons;
@@ -39,8 +41,13 @@ private ArrayList<ButtonWithFrameSelection> buttons;
 
         Rectangle[] zones = getCoordinatesForSquareButtonsAndColumnAlignment(12,5);
         for (int i = 0; i < zones.length; i++){
-             ButtonWithFrameSelection button = new ButtonWithFrameSelection(iengine, (int)zones[i].getX(), (int)zones[i].getY(), (int)zones[i].getWidth(), (int)zones[i].getHeight(), getNameForButtonNumber(i), engine.g, true, 1f);
-             buttons.add(button);
+            try {
+                ButtonWithFrameSelection button = new ButtonWithFrameSelection(iengine, (int) zones[i].getX(), (int) zones[i].getY(), (int) zones[i].getWidth(), (int) zones[i].getHeight(), getNameForButtonNumber(i), engine.g, true, 1f);
+                buttons.add(button);
+            }
+            catch (Exception e){
+
+            }
         }
     }
 
@@ -57,8 +64,8 @@ private ArrayList<ButtonWithFrameSelection> buttons;
             case 7: name = "8"; break;
             case 8: name = "9"; break;
             case 9: name = "0"; break;
-            case 10: name = "CLEAR"; break;
-            case 11: name = "ENTER"; break;
+            case 10: name = CLEAR; break;
+            case 11: name = BACK; break;
             default: name = "NO DATA"; break;
         }
 
@@ -81,44 +88,98 @@ private ArrayList<ButtonWithFrameSelection> buttons;
         super.update(mouseX, mouseY);
         if (actualStatement == PRESSED || actualStatement == RELEASED){
             actualStatement = ACTIVE;
-
         }
         if (actualStatement != HIDDEN && actualStatement != BLOCKED){
             boolean somePressed = false;
             boolean someReleased = false;
-           // Logger.debug(" Keyboard updated");
             for (GuiElement guiElement : buttons){
                 guiElement.update(mouseX, mouseY);
                 if (guiElement.getActualStatement() == PRESSED){
                     pressed = guiElement;
+                    actualStatement = PRESSED;
                     somePressed = true;
                 }
                 if (guiElement.getActualStatement() == RELEASED){
                     released = guiElement;
+                    actualStatement = RELEASED;
                     someReleased = true;
+                    updateTextEntering();
                 }
             }
             if (!someReleased) {
-                //Logger.debug(" Keyboard released");
                 released = null;
             }
             if (!somePressed) {
-                //Logger.debug(" Keyboard pressed");
                 pressed = null;
             }
         }
     }
 
-    public String getPressedName(){
+    private void updateTextEntering() {
+        if (embeddedGui != null){
+            if (embeddedGui instanceof TextLabel){
+                TextLabel frameWithText = (TextLabel) embeddedGui;
+                String origData = ""+frameWithText.getTextToBeDrawn();
+                if (released.getName().equals(CLEAR)){
+                    frameWithText.setAnotherTextToBeDrawnAsName(NO_DATA_STRING);
+                }
+                else if (released.getName().equals(BACK)){
+
+                    if (origData.length()==0){
+                        //NOTHING
+                    }
+                    else  if (origData.length()==1){
+                        origData = "";
+                    }
+                    else {
+                        origData = origData.substring(0, origData.length()-1);
+                    }
+                    try{
+                        int value = Integer.parseInt(origData);
+                        if (value< minValue) value = minValue;
+                        origData = ""+value;
+                    }
+                    catch (Exception e){
+                        Logger.error("Not a digit string " + origData);
+                    }
+                    frameWithText.setAnotherTextToBeDrawnAsName(origData);
+                }
+                else {
+                    try {
+                        int value = Integer.parseInt(released.getName());
+                        origData+=value;
+                        if (maxValue != minValue){
+                            try{
+                                int intValue = Integer.parseInt(origData);
+                                if (intValue> maxValue) intValue = maxValue;
+                                origData = ""+intValue;
+                            }
+                            catch (Exception e){
+                                Logger.error("Not a digit string " + origData);
+                            }
+                        }
+                        frameWithText.setAnotherTextToBeDrawnAsName(origData);
+                    }
+                    catch (Exception e){
+                        Logger.debug("Not digit data was entered!");
+                    }
+                }
+                frameWithText.setUserData(origData);
+            }
+
+        }
+    }
+
+    public String getPressedKeyName(){
         if (pressed != null){
             return pressed.getName();
         }
         else return NO_DATA_STRING;
     }
 
-    public String getReleasedName(){
-        if (pressed != null){
-            return pressed.getName();
+    public String getReleasedKeyName(){
+        if (released != null){
+            return released.getName();
         }
         else return NO_DATA_STRING;
     }
@@ -150,69 +211,66 @@ private ArrayList<ButtonWithFrameSelection> buttons;
 
     }
 
+    public void setMinValue(int minValue) {
+        this.minValue = minValue;
+    }
 
-protected Rectangle[] getCoordinatesForSquareButtonsAndColumnAlignment(int fullCount, int alongX){
+    public void setMaxValue(int maxValue) {
+        this.maxValue = maxValue;
+    }
+
+    protected Rectangle[] getCoordinatesForSquareButtonsAndColumnAlignment(int fullCount, int alongX){
         int fullWidth = width;
         int fullHeight = height;
         int left = (int) leftX;
         int upper = (int) upperY;
-        int alongY = PApplet.ceil(fullCount/alongX);
-        float xRelativeGap = 0.05f;
-        float xRelativeGapOnBoard = 0.75f;
+        float relativeGap = 0.05f;
+        float relativeGapOnBoard = 0.075f;
         float xGapInCenter = fullWidth*relativeGap;
-        float xGapOnBoard = fullWidth*xRelativeGapOnBoard;
-        
-    float fullRelativeGapX = xGapOnBoard*2+(alongX-1)*relativeGap;
-        Logger.debug("Full realative x: " + fullRelativeGapX);
-        
-        float restWidth = fullWidth-
-        int guiWidth = alongX
-    
-           
-    
-        float fullRelativeGapY = (alongY+1f)*relativeGap;
-        float fullGapX =  (float) fullWidth*fullRelativeGapX;
-        float fullGapY = (float) fullHeight*fullRelativeGapY;
+        float xGapOnBoard = fullWidth*relativeGapOnBoard;
+        float allGapsAlongX = xGapOnBoard*2+(alongX-1)*xGapInCenter;
+        float widthForGui = fullWidth-allGapsAlongX;
+        int guiWidth = (int)(widthForGui/alongX);
+        int doubleGuiWidth = (int) (guiWidth*2+xGapInCenter);
 
-        float minimalFullGap;
-        int guiWidth;
-        int guiHeight;
-        int theoreticalGuisAlongX = alongX+3;
-         
-        minimalFullGap = fullGapX;
-        int xCentralGap = (int)(minimalFullGap/(alongX+1f));
-        guiWidth = (int) ((fullWidth-minimalFullGap)/theoreticalGuisAlongX);
-        
-        minimalFullGap = fullGapY;
-        int yGap = (int)(minimalFullGap/(alongY+1f));
-        guiHeight = (int) ((fullHeight-minimalFullGap)/alongY);
-        Rectangle [] positions = calculatePositionsForParams(guiWidth, guiHeight, alongX, alongY, left, upper, xGap, yGap, 3);
+        int alongY = PApplet.ceil((float)fullCount/alongX);
+        float yGapInCenter = fullWidth*relativeGap;
+        float yGapOnBoard = fullWidth*relativeGapOnBoard;
+        float allGapsAlongY = yGapOnBoard*2+(alongY-1)*yGapInCenter;
+        float heightForGui = fullHeight-allGapsAlongY;
+        int guiHeight = (int) (heightForGui/alongY);
+
+        Rectangle [] positions = calculatePositionsForParams(guiWidth, guiHeight, alongX, alongY, left, upper, (int)xGapOnBoard, (int)xGapInCenter, (int)yGapOnBoard, (int)yGapInCenter, fullCount, doubleGuiWidth);
         return positions;
     }
 
-    private Rectangle [] calculatePositionsForParams(int guiWidth, int guiHeight, int alongX, int alongY, int left, int upper, int gapX, int gapY, int lastColumnCoef){
+    private Rectangle [] calculatePositionsForParams(int guiWidth, int guiHeight, int alongX, int alongY, int left, int upper, int xGapOnBoard, int xGapInCenter, int yGapOnBoard, int yGapInCenter, int max, int doubleGuiWidth){
         Rectangle [] positions = new Rectangle[alongX*alongY];
-        int lastColumnGuiWidth = guiWidth*lastColumnCoef;
-        Logger.debug("Last button width: " + lastColumnCoef);
+
         int fullCount = 0;
         for (int i = 0; i < alongY; i++){
             for (int j = 0; j < alongX; j++){
-                 Rectangle rect ;
-                if (j != (alongX-1)){
-                      int centerX = gapX+guiWidth/2+j*(guiWidth+gapX);
-                      int centerY = gapY+guiHeight/2+i*(guiHeight+gapY);
-                      rect = new Rectangle(centerX+left, centerY+upper, guiWidth, guiHeight);
+                Rectangle rect ;
+                int centerX;
+                int centerY = yGapOnBoard+guiHeight/2+((yGapInCenter+guiHeight)*i)+upper;
+                if (i == (alongY-1)){
+                      if (j == 0){
+                          centerX = xGapOnBoard+xGapInCenter+doubleGuiWidth/2+left;
+                      }
+                      else centerX = (left+width)-xGapOnBoard-xGapInCenter-doubleGuiWidth/2;
+                      rect = new Rectangle(centerX, centerY, doubleGuiWidth, guiHeight);
                 }
                 else {
-                      int leftCorner = gapX+(j*gapX+guiWidth);
-                      int centerX = leftCorner+lastColumnGuiWidth/2;
-                      int centerY = gapY+guiHeight/2+i*(guiHeight+gapY);
-                      rect = new Rectangle(centerX+left, centerY+upper, guiWidth, guiHeight);
-   
+                    centerX = xGapOnBoard+guiWidth/2+((xGapInCenter+guiWidth)*j)+left;
+                    rect = new Rectangle(centerX, centerY, guiWidth, guiHeight);
                 }
                 int number = j+i*alongX;
                 positions[number] = rect;
                 fullCount++;
+                Logger.debug(i + "x" + j + "; " + rect + "; Along Y: " + alongY + "; ");
+                if (fullCount == max){
+                    return positions;
+                }
             }
         }
         return positions;
@@ -221,7 +279,7 @@ protected Rectangle[] getCoordinatesForSquareButtonsAndColumnAlignment(int fullC
 
     }
 
-    public void setEmbeddedGui(GuiElement embeddedGui) {
+    public void setEmbeddedGui(TextLabel embeddedGui) {
         this.embeddedGui = embeddedGui;
     }
 }

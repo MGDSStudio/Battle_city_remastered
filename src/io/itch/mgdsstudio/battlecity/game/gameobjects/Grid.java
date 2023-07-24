@@ -23,9 +23,9 @@ public class Grid extends Entity{
     private final int linesThickness;
 
     private final Coordinate leftUpperFrameCorner, rightLowerFrameCorner;
-    private final int alongX, alongY;
+    private int alongX, alongY;
     private final Coordinate leftLineUpper = new Coordinate(0,0), upperLineLeft = new Coordinate(0,0);
-    private final float lineWidth, lineHeight;
+    private float lineWidth, lineHeight;
 
 
     public Grid(EditorController editorController) {
@@ -35,10 +35,21 @@ public class Grid extends Entity{
         rightLowerFrameCorner = new Coordinate(editorController.getHud().getGraphicRightPixel(), editorController.getHud().getGraphicLowerPixel());
         linesThickness = (int) (2f*((float) this.editorController.getEngine().getEngine().width)/((float)(500f)));
         initGridStartParameters();
+        initGridData();
+    }
+
+    private void initGridData(){
+        alongX = PApplet.ceil(rightLowerFrameCorner.x-leftUpperFrameCorner.x)/gridStep+2;
+        alongY = PApplet.ceil(rightLowerFrameCorner.y-leftUpperFrameCorner.y)/gridStep+2;
+        lineWidth = rightLowerFrameCorner.x-leftUpperFrameCorner.x+gridStep*2;
+        lineHeight = rightLowerFrameCorner.y-leftUpperFrameCorner.y+gridStep*2;
+        /*
         alongX = PApplet.ceil(rightLowerFrameCorner.x-leftUpperFrameCorner.x)+0;
         alongY = PApplet.ceil(rightLowerFrameCorner.y-leftUpperFrameCorner.y)+0;
         lineWidth = rightLowerFrameCorner.x-leftUpperFrameCorner.x+gridStep*2;
         lineHeight = rightLowerFrameCorner.y-leftUpperFrameCorner.y+gridStep*2;
+         */
+
     }
 
     private void initGridStartParameters() {
@@ -112,8 +123,9 @@ public class Grid extends Entity{
         graphic.stroke(25,25,25,128);
         graphic.translate(editorCamera.getDrawPosX(upperLineLeft.x), editorCamera.getDrawPosY(upperLineLeft.y));
         for (int i = 0; i < alongY; i++){
-            graphic.line(0, i*gridStep,lineWidth, i*gridStep);
+            graphic.line(0, i*gridStep, lineWidth, i*gridStep);
         }
+        Logger.debug("Along y: " + alongY + "; Grid step: " + gridStep);
         graphic.popStyle();
         graphic.popMatrix();
     }
@@ -148,5 +160,25 @@ public class Grid extends Entity{
     @Override
     public boolean mustBeAlwaysAbove() {
         return true;
+    }
+
+    public void setCellWidth(int value) {
+        this.gridStep = value;
+        initGridData();
+    }
+
+    public void setGridShifting(int value) {
+        leftLineUpper.x = value;
+        leftLineUpper.y = value;
+        initGridData();
+    }
+
+    public int getGridStep() {
+        return gridStep;
+    }
+
+    public int getGridShiftingX() {
+        return (int) leftLineUpper.x;
+
     }
 }

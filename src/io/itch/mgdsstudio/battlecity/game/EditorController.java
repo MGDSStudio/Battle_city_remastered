@@ -74,8 +74,9 @@ public class EditorController extends GamePartWithGameWorldAbstractController im
     }
 
     private void createOnMapZoneGraphic() {
-        cross = new Cross(this);
+
         grid = new Grid(this);
+        cross = new Cross(this);
         boolean visible = EditorPreferencesSingleton.getInstance().getBooleanValue(EditorPreferences.GRID_VISIBILITY.name());
         if (!visible) grid.setVisible(false);
 
