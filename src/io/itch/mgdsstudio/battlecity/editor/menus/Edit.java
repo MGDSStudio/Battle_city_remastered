@@ -15,6 +15,7 @@ public class Edit extends AbstractEditorMenu {
 
     private String select, copy, move, clearSelection, remove;
 
+   // private String select
 
    private interface Statements{
          int SELECT = 11;
@@ -128,7 +129,11 @@ clearSelection();
     private void removeSelectedObjects(GuiElement element) {
     }
 
-    private void initSubmenu(int select) {
+    private void initSubmenu(int substatement) {
+        this.statement = substatement;
+        if (substatement==Statements.SELECT){
+            
+        }
     }
 
     protected void clearSelection(){
