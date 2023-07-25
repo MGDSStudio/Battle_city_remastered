@@ -3,6 +3,7 @@ package io.itch.mgdsstudio.battlecity.editor.menus;
 import com.mgdsstudio.engine.nesgui.ButtonInFrameWithGraphic;
 import com.mgdsstudio.engine.nesgui.GuiElement;
 
+import io.itch.mgdsstudio.battlecity.editor.Cross;
 import io.itch.mgdsstudio.battlecity.game.EditorController;
 import io.itch.mgdsstudio.battlecity.game.Logger;
 import io.itch.mgdsstudio.battlecity.game.hud.LowerPanelInEditor;
@@ -37,6 +38,7 @@ public class Main extends AbstractEditorMenu {
 
     public Main(EditorController editorController, LowerPanelInEditor lowerPanelInEditor) {
         super(editorController, lowerPanelInEditor, NO_END);
+        editorController.getCross().setStatement(Cross.Statement.INVISIBLE_AS_CELL_CENTER);
     }
 
     @Override
@@ -158,8 +160,6 @@ else if (element.getName() == MainButtonsNames.FOREST.name()){
 
     @Override
     protected void guiReleased(GuiElement element) {
-
-
         if (element.getName() == MainButtonsNames.FILE.name()) {
             editorController.transferToMenu(MenuType.MAIN, MenuType.FILE);
         }

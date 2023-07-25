@@ -72,7 +72,6 @@ case (4): name =  remove; break;
     protected String getTextForConsoleByPressedGui(GuiElement element){
         int ENGLISH = 0;
         int language = ENGLISH;
-        //set specific language
         if (element.getName() == select){
             return "SELECT ONE OR MORE OBJECTS TO COPY OR DELETE THEM";
         }

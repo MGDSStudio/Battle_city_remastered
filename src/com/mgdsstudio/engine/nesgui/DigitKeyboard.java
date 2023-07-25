@@ -267,7 +267,7 @@ private ArrayList<ButtonWithFrameSelection> buttons;
                 int number = j+i*alongX;
                 positions[number] = rect;
                 fullCount++;
-                Logger.debug(i + "x" + j + "; " + rect + "; Along Y: " + alongY + "; ");
+                //Logger.debug(i + "x" + j + "; " + rect + "; Along Y: " + alongY + "; ");
                 if (fullCount == max){
                     return positions;
                 }

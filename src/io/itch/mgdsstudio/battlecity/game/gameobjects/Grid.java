@@ -125,7 +125,7 @@ public class Grid extends Entity{
         for (int i = 0; i < alongY; i++){
             graphic.line(0, i*gridStep, lineWidth, i*gridStep);
         }
-        Logger.debug("Along y: " + alongY + "; Grid step: " + gridStep);
+        //Logger.debug("Along y: " + alongY + "; Grid step: " + gridStep);
         graphic.popStyle();
         graphic.popMatrix();
     }

@@ -49,8 +49,9 @@ public abstract class AbstractEditorMenu {
         else if (actualMenuType == MenuType.FILE) return new File(editorController, lowerPanel);
         else if (actualMenuType == MenuType.EDIT) return new Edit(editorController, lowerPanel);
         else if (actualMenuType == MenuType.PREFERENCES) return new Preferences(editorController, lowerPanel);
-        /*else if (actualMenuType == MenuType.ABOUT) return new About(editorController, lowerPanel);
         else if (actualMenuType == MenuType.PLAYER) return new Player(editorController, lowerPanel);
+        /*else if (actualMenuType == MenuType.ABOUT) return new About(editorController, lowerPanel);
+
         else if (actualMenuType == MenuType.ENEMY) return new Enemy(editorController, lowerPanel);
         else if (actualMenuType == MenuType.GRAPHIC) return new Graphic(editorController, lowerPanel);
         else if (actualMenuType == MenuType.WALL) return new Wall(editorController, lowerPanel);
@@ -162,33 +163,6 @@ public abstract class AbstractEditorMenu {
         Rectangle [] positions = calculatePositionsForParams(guiWidth, guiHeight, 1, buttonsCountForCalculations, left, upper, xGap, yGap);
         Logger.debug("Button width: " + guiWidth + "; Full width: " + fullWidth);
         return positions;
-        /*
-        int buttonsCountForCalculations = frameButtonsCount;
-    if (buttonsCountForCalculations<6) buttonsCountForCalculations = 6;
-        int fullWidth = lowerPanelInEditor.getLowerTab().getWidth();
-        int fullHeight = lowerPanelInEditor.getLowerTab().getHeight();
-        //if (frameButtonsCount )
-        //int fullHeight = lowerPanelInEditor.getLowerTab().getHeight();
-
-
-        int left = lowerPanelInEditor.getLowerTab().getLeft();
-        int upper = lowerPanelInEditor.getLowerTab().getUpper();
-        float buttonRelativeWidth = 0.7f;
-        int guiWidth = (int) ((float)fullWidth*buttonRelativeWidth);
-        float relativeGap = 0.075f;
-        float fullRelativeGapY = (frameButtonsCount+1f)*relativeGap;
-        float fullGapY = (float) (fullHeight*fullRelativeGapY);
-        int yGap = (int) (fullGapY/(frameButtonsCount+1));
-        int guiHeight;
-        guiHeight = (int) ((fullHeight-((frameButtonsCount+1f)*yGap))/frameButtonsCount);
-        int xGap = (int) ((fullWidth-guiWidth)/2f);
-        Rectangle [] positions = calculatePositionsForParams(guiWidth, guiHeight, 1, frameButtonsCount, left, upper, xGap, yGap);
-        Logger.debug("Button width: " + guiWidth + "; Full width: " + fullWidth);
-        return positions;
-
-         */
-
-
     }
 
     protected void createSubmenuWithDigitKeyboard(boolean withApply, String labelName){
