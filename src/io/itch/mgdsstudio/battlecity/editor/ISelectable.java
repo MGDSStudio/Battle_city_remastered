@@ -4,4 +4,6 @@ public interface ISelectable {
     boolean isSelected();
     void setSelected(boolean selected);
     String getInEditorName();
+
+    String getDataString();
 }

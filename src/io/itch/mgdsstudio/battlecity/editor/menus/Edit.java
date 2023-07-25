@@ -5,11 +5,13 @@ import com.mgdsstudio.engine.nesgui.ButtonWithFrameSelection;
 import com.mgdsstudio.engine.nesgui.GuiElement;
 
 import com.mgdsstudio.engine.nesgui.NoTextButtonWithFrameSelection;
+import io.itch.mgdsstudio.battlecity.editor.ISelectable;
 import io.itch.mgdsstudio.battlecity.game.EditorController;
 import io.itch.mgdsstudio.battlecity.game.Logger;
 import io.itch.mgdsstudio.battlecity.game.hud.LowerPanelInEditor;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Edit extends AbstractEditorMenu {
 
@@ -22,7 +24,7 @@ public class Edit extends AbstractEditorMenu {
          int COPY = 21;
          int MOVE = 31;
          //int CLEARING = 22;  NO CLEARING STATEMENT
-         int REMOVE_1 = 41;
+         int REMOVE = 41;
     // int BACK = NO_BACK_ACTION
    }
 
@@ -84,7 +86,7 @@ case (4): name =  remove; break;
             return "CLEAR SELECTION";
         }
         else if (element.getName() == remove){
-                    return "REMOVE SELECTED OBJECTS FROM GAME WORLD";
+             return "REMOVE SELECTED OBJECTS FROM GAME WORLD";
         }
 
 
@@ -110,31 +112,32 @@ case (4): name =  remove; break;
             onBackPressed();
         }
        else if (element.getName().equals(select)){
-initSubmenu(Statements.SELECT);
+         nextStatement =   Statements.SELECT;
+
       }
 else if (element.getName().equals(copy)){
-initSubmenu(Statements.COPY);
+     nextStatement =   Statements.COPY;
       }
 else if (element.getName().equals(move)){
-initSubmenu(Statements.MOVE);
+     nextStatement =   Statements.MOVE;
 }
 else if (element.getName().equals(remove)){
-removeSelectedObjects(element);
+      nextStatement = Statements.REMOVE;
       }
       else if (element.getName().equals(clearSelection)){
 clearSelection();
       }
     }
 
-    private void removeSelectedObjects(GuiElement element) {
+    private void removeSelectedObjects() {
+       ArrayList < ISelectable> selected = editorController.getSelectedObjects();
+       for (int i = selected.size()-1; i>= 0; i--){
+           String sourceString = selected.get(i).getDataString();
+
+       }
     }
 
-    private void initSubmenu(int substatement) {
-        this.statement = substatement;
-        if (substatement==Statements.SELECT){
-            
-        }
-    }
+
 
     protected void clearSelection(){
 
