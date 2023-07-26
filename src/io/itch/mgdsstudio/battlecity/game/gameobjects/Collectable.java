@@ -142,6 +142,14 @@ public class Collectable extends SolidObject {
         return collectable;
     }
 
+    public String getDataString(){
+        int posX = pos.x;
+        int posY = pos.y;
+        int value = type;
+        Logger.correct("To implement");
+        return null;
+    }
+
     public void loadGraphicDefaultData(IEngine engine){
 
         final String path = engine.getPathToObjectInAssets(GlobalConstants.NAME_FOR_TANK_GRAPHIC_FILE);
