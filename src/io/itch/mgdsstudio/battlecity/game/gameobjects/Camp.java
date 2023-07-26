@@ -33,6 +33,11 @@ public class Camp extends Wall{
         return wall;
     }
 
+    public String getDataString(){
+        int posX = pos.x;
+        
+    }
+
     @Override
     public void update(GameRound gameRound, long deltaTime) {
         if (!destroyed){
