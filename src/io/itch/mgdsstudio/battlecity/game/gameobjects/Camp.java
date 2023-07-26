@@ -35,7 +35,8 @@ public class Camp extends Wall{
 
     public String getDataString(){
         int posX = pos.x;
-        
+        Logger.correct("To implement");
+        return null;
     }
 
     @Override
