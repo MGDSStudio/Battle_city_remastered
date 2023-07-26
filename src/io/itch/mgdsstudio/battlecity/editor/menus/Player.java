@@ -104,24 +104,30 @@ public class Player extends AbstractEditorMenu {
             nextStatement = Statements.DELETE_PLAYER;
         }
         else if (element.getName().equals(addPlayer)){
-
+            addPlayer();
+            
+        }
+        else if (element.getName().equals(yesIWant)){
+            removePlayer();
+            nextStatement = START_STATEMENT;
         }
     }
 
-    private void removeSelectedObjects() {
-        ArrayList<ISelectable> selected = editorController.getSelectedObjects();
-        for (int i = selected.size()-1; i>= 0; i--){
-            String sourceString = selected.get(i).getDataString();
+    private void addPlayer(){
+        Entity <ArrayList> gameObjects = editorController.getGameRound().getEntities();
+        
+    }
 
+    private void removePlayer(){
+        Entity <ArrayList> gameObjects = editorController.getGameRound().getEntities();
+        for (int i = (gameObjects.size()-1); i >= 0; i--){
+            if (gameObjects.get(i) instanceof PlayerTank){
+                gameObjects.remove(i);
+            }
         }
     }
 
-
-
-    protected void clearSelection(){
-
-    }
-
+    
     @Override
     protected void initDataForStatement(int actualStatement) {
         guiElements.clear();
