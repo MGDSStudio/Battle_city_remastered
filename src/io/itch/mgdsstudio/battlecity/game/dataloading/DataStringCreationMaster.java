@@ -27,7 +27,7 @@ public class DataStringCreationMaster {
     // I should use the StringBuilder
     //ArmoredWall 8:350,282,0,32,32,0#
     dataString = ""+name;
-    
+    dataString+=' ';
   }
   
   public String getDataDtring(){
