@@ -143,8 +143,8 @@ public class Collectable extends SolidObject {
     }
 
     public String getDataString(){
-        int posX = pos.x;
-        int posY = pos.y;
+        int posX = (int) pos.x;
+        int posY = (int) pos.y;
         int value = type;
         Logger.correct("To implement");
         return null;

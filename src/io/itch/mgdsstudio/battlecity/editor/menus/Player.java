@@ -6,6 +6,8 @@ import io.itch.mgdsstudio.battlecity.editor.Cross;
 import io.itch.mgdsstudio.battlecity.editor.ISelectable;
 import io.itch.mgdsstudio.battlecity.game.EditorController;
 import io.itch.mgdsstudio.battlecity.game.Logger;
+import io.itch.mgdsstudio.battlecity.game.gameobjects.Entity;
+import io.itch.mgdsstudio.battlecity.game.gameobjects.PlayerTank;
 import io.itch.mgdsstudio.battlecity.game.hud.LowerPanelInEditor;
 
 import java.awt.*;
@@ -114,12 +116,12 @@ public class Player extends AbstractEditorMenu {
     }
 
     private void addPlayer(){
-        Entity <ArrayList> gameObjects = editorController.getGameRound().getEntities();
+        ArrayList <Entity> gameObjects = editorController.getGameRound().getEntities();
         
     }
 
     private void removePlayer(){
-        Entity <ArrayList> gameObjects = editorController.getGameRound().getEntities();
+        ArrayList <Entity> gameObjects = editorController.getGameRound().getEntities();
         for (int i = (gameObjects.size()-1); i >= 0; i--){
             if (gameObjects.get(i) instanceof PlayerTank){
                 gameObjects.remove(i);

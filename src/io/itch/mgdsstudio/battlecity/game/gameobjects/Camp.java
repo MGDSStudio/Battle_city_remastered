@@ -1,6 +1,7 @@
 package io.itch.mgdsstudio.battlecity.game.gameobjects;
 
 import io.itch.mgdsstudio.battlecity.game.GameRound;
+import io.itch.mgdsstudio.battlecity.game.Logger;
 import io.itch.mgdsstudio.battlecity.game.PhysicWorld;
 import io.itch.mgdsstudio.battlecity.game.dataloading.EntityData;
 import io.itch.mgdsstudio.battlecity.game.gameobjects.controllers.LevelEndConditionController;
@@ -34,7 +35,7 @@ public class Camp extends Wall{
     }
 
     public String getDataString(){
-        int posX = pos.x;
+        int posX = (int) pos.x;
         Logger.correct("To implement");
         return null;
     }
