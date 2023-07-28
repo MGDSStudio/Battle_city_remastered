@@ -26,18 +26,34 @@ public class RepeatingIdsController {
     }
 
   private class StringWithId{
-      private bool isData;
+      private bool isData = false;
       private String dataString;
       private int id;
 
       private StringWithId(String fullString){
           dataString = fullString;
         if (fullString.length < 3){
-          isData = false;
+          //isData = false;
         }
         else if (fullString.charAt(0) == '/' || fullString.charAt(0) == '\' ){
-
+            //comment string    
         }
+        else if (!fullString.contains(DataDecoder.MAIN_DATA_START_CHAR)||!fullString.contains(DataDecoder.DIVIDER_NAME_ID )){
+            Logger.error(" String " + fullString + " doesn't have main data start char");
+        }
+          else{
+                isData = true;
+              extractId();
+          }
+      }
+
+      private void extractId(){
+          boolean founded = false;
+            for (int i = 0; i < dataString.length; i++){
+                if (dataString.charAt(i) == DataDecoder.DIVIDER_NAME_ID){
+                    int startDigitNumber = i+1;
+                }
+            }
       }
   }
 }
