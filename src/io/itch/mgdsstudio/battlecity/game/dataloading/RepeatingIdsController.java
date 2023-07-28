@@ -11,6 +11,7 @@ import io.itch.mgdsstudio.battlecity.game.gameobjects.controllers.LevelEndCondit
 import java.util.ArrayList;
 
 public class RepeatingIdsController {
+    public static final int ID_NOT_ENTCRYPTED = -999999;
     public static final char END_ROW_SYMBOL = '!';
     static final public char MAIN_DATA_START_CHAR = ':';
     static final public char GRAPHIC_NAME_START_CHAR = '#';
@@ -22,15 +23,19 @@ public class RepeatingIdsController {
     public final static String DIVIDER_NAME_ID = " ";
 
     private ArrayList<String> fileContent;
+    private ArrayList<StringWithId> stringWithDatas;
 
     public void deleteRepeatingIds(){
-      
+      for (int i = 0; i < stringWithDatas.size(); i++){
+
+      }
     }
 
   private class StringWithId{
+      
       private boolean isData = false;
       private String dataString;
-      private int id;
+      private int id = ID_NOT_ENTCRYPTED;
 
       private StringWithId(String fullString){
           dataString = fullString;
@@ -56,8 +61,24 @@ public class RepeatingIdsController {
                 String actualChar = String.valueOf(dataString.charAt(i));
                 if (actualChar == DataDecoder.DIVIDER_NAME_ID){
                     int startDigitNumber = i+1;
+                    for (int j == startDigitNumber; < dataString.length(); i++){
+                        if (!Char.isDigit(dataString.charAt(j)){
+                            String textRepresentation = dataString.substring(i,j-1);
+                            try{
+                                id = Integer.parseInt(textRepresentation);
+                                return;
+                            }
+                            catch(Exception e){
+                                Logger.error("Can not ectract ID 1" );
+                                e.printStackTrace();
+                                return;
+                            }
+                        }
+                    }
                 }
             }
+            Logger.error("Can not ectract ID 2" );
+                               
       }
 
 
