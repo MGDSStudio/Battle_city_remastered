@@ -16,15 +16,18 @@ import java.util.ArrayList;
 public class Collectable extends AbstractEditorMenu {
 
     private String weapon, armour, extraLife, engine;
+    private String valueAddingField;
+    private String apply;
 
    // private String select
 
    private interface Statements{
-         int SELECT = 11;
-         int COPY = 21;
-         int MOVE = 31;
+         int SELECT_TYPE = 11;
+         int SELECT_VALUE = 21;
+         int SELECT_DELAY = 31;
+         int PLACE_ON_MAP = 41;
          //int CLEARING = 22;  NO CLEARING STATEMENT
-         int REMOVE = 41;
+         //int REMOVE = 41;
     // int BACK = NO_BACK_ACTION
    }
 
