@@ -27,7 +27,7 @@ public class RepeatingIdsController {
 
     public void deleteRepeatingIds(){
       for (int i = 0; i < stringWithDatas.size(); i++){
-
+        // if ()       
       }
     }
 
