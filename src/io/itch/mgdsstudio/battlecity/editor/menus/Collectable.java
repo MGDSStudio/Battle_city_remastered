@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class Collectable extends AbstractEditorMenu {
 
     private String weapon, armour, extraLife, engine;
-    private String valueAddingField;
+    private String valueAddingField, add;
     private String apply;
 
    // private String select
@@ -26,9 +26,6 @@ public class Collectable extends AbstractEditorMenu {
          int SELECT_VALUE = 21;
          int SELECT_DELAY = 31;
          int PLACE_ON_MAP = 41;
-         //int CLEARING = 22;  NO CLEARING STATEMENT
-         //int REMOVE = 41;
-    // int BACK = NO_BACK_ACTION
    }
 
     public Collectable(EditorController editorController, LowerPanelInEditor lowerPanelInEditor) {
@@ -47,12 +44,13 @@ public class Collectable extends AbstractEditorMenu {
     }
 
     private void initButtonNames(){
-      //select, copy, move, clearSelection, delete, back;
-        select = "SELECT";
-        copy = "COPY";
-        move = "MOVE";
-        clearSelection = "CLEAR SELECTION";
-        remove = "REMOVE";
+        weapon =  "WEAPON";
+        armour = "ARMOUR";
+        extraLife = "EXTRA LIFE"
+        armour = "ENGINE";
+        valueAddingField = "valueAddingField";
+        apply = "NEXT";
+        add = "ADD ON MAP";
     }
 
     private String getNameForPos(int i) {
@@ -63,7 +61,7 @@ public class Collectable extends AbstractEditorMenu {
             case (1): name =  copy; break;
             case (2): name =  move; break;
             case (3): name =  clearSelection; break;
-case (4): name =  remove; break;
+            case (4): name =  remove; break;
 //case (5): name =  clearSelection; break;
 
             
@@ -75,22 +73,25 @@ case (4): name =  remove; break;
     protected String getTextForConsoleByPressedGui(GuiElement element){
         int ENGLISH = 0;
         int language = ENGLISH;
-        if (element.getName() == select){
-            return "SELECT ONE OR MORE OBJECTS TO COPY OR DELETE THEM";
+        
+        if (element.getName() == apply){
+            return "CONTINUE TO THE NEXT SUBMENU";
         }
-        else if (element.getName() == copy){
-            return "COPY SELECTED OBJECTS";
+        else if (element.getName() == add){
+            return "PLACE OBJECT ON THE FIELD";
         }
-        else if (element.getName() == move){
-            return "MOVE SELECTED OBJECTS";
+        else if (element.getName() == weapon){
+            return "TURRET UPGRADE";
         }
-        else if (element.getName() == clearSelection){
-            return "CLEAR SELECTION";
+        else if (element.getName() == armour){
+            return "BETTER ARMOUR";
         }
-        else if (element.getName() == remove){
-             return "REMOVE SELECTED OBJECTS FROM GAME WORLD";
+        else if (element.getName() == extraLife){
+             return "MORE LIFES FOR THE PLAYER";
         }
-
+        else if (element.getName() == engine){
+             return "POWERFULL ENGINE WITH HIGHER MAX VELOCITY";
+        }
 
         else return "NO DATA";
     }
@@ -110,10 +111,15 @@ case (4): name =  remove; break;
 
     @Override
     protected void guiReleased(GuiElement element) {
-        if (element.getName().equals(back)) {
+        /*
+    private String weapon, armour, extraLife, engine;
+    private String valueAddingField, add;
+    private String apply;
+        */
+       if (element.getName().equals(back)) {
             onBackPressed();
         }
-       else if (element.getName().equals(select)){
+       else if (element.getName().equals(weapon)){
          nextStatement =   Statements.SELECT;
 
       }
@@ -154,6 +160,10 @@ clearSelection();
     @Override
     protected void onBackPressed(){
           editorController.transferToMenu(MenuType.FILE, MenuType.MAIN);
+    }
+
+    class ObjectDataStruct{
+
     }
     
   }
