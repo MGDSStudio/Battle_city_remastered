@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class Collectable extends AbstractEditorMenu {
 
     /*
-    int LIFE = 0;   //More tanks
+         int LIFE = 0;   //More tanks
         int WEAPON = 1;     //Rocket launcher
         int ENGINE = 2;    //Motor
         int MINE = 3;       //Mines
@@ -77,9 +77,27 @@ public class Collectable extends AbstractEditorMenu {
         armour = "ARMOUR";
         extraLife = "EXTRA LIFE";
         armour = "ENGINE";
+        mine = "MINE";
+        radar = "RADAR";
+        aiturret = "TURRET";
+        random = "RANDOM";
+        money = "MONEY";
         valueAddingField = "valueAddingField";
         apply = "NEXT";
         add = "ADD ON MAP";
+
+        money1 = " 1;
+        money2 = " 2";
+        money3 = " 3"; 
+        money5 = " 5";
+        money10 = "10"; 
+        money15 = "15";
+        money20 = "20";
+        money25 = "25";
+        money30 = "30";
+        money40 = "40"; 
+        money50 = "50";
+
     }
 
     private String getNameForPos(int i) {
