@@ -25,19 +25,19 @@ public abstract class ObjectAppearingController{
     }
 
     public static ObjectAppearingController createAppearingController(ArrayList <Integer> values, GameRound gr){
-      if (values == null || values.size(<2)){
+      ObjectAppearingController controller = null;
+        if (values == null || values.size(<2)){
         Logger.error("Can not create appearing controller");
         //return null controller
-        return null;
+        
       }
       else{
         if (values.get(0) == BY_TIMER_ACTIVATION){
-                    ObjectAppearingController controller = new 
+             controller = new ByTimerActivatingController(values, gr);
         }
-
+        else Logger.error("Can not create appearing controller for this type " + values.get(0));
       }
-      Logger.error("Can not create appearing controller for this type " + values.get(0));
-      return null;
+      return controller;
     }
 
     public abstract void update ();
