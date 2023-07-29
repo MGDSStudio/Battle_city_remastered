@@ -4,7 +4,7 @@ public abstract class ByTimerActivatingController extends ObjectAppearingControl
 
     private final int activatingTime;
 
-    ByTimerActivatingController(Entity entity, ArrayList <Integer> values){
+    ByTimerActivatingController(IActivateable entity, ArrayList <Integer> values){
           super(entity, values);
           activatingTime = values.get(1);
     }
