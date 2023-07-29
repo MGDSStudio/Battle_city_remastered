@@ -32,7 +32,7 @@ public abstract class ObjectAppearingController{
       }
       else{
         if (values.get(0) == BY_TIMER_ACTIVATION){
-
+                    ObjectAppearingController controller = new 
         }
 
       }
@@ -46,6 +46,8 @@ public abstract class ObjectAppearingController{
         return activated;
     }
 
-    
+    protected void notify(){
+        entity.avtivate();
+    }
       
 }
