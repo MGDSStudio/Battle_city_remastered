@@ -12,11 +12,17 @@ public abstract class ObjectAppearingController{
     
   
   
-    private final Entity;
-    private final ArrayList <Integer> values;
-    private boolean activated;
+    protected final Entity;
+   // private final ArrayList <Integer> values;
+    protected boolean activated;
     private int type;
-    private GameRound gr;
+    protected GameRound gr;
+    protected IEngine engine;
+
+    protected ObjectAppearingController(Entity entity, ArrayList <Integer> values){
+            type = values.get(0);
+            this.entity = entity;
+    }
 
     public static ObjectAppearingController createAppearingController(ArrayList <Integer> values, GameRound gr){
       if (values == null || values.size(<2)){
@@ -36,9 +42,10 @@ public abstract class ObjectAppearingController{
 
     public abstract void update ();
       
-    public boolean isActivated(){
+    public final boolean isActivated(){
         return activated;
     }
-  
+
+    
       
 }
