@@ -12,7 +12,9 @@ public abstract class ByTimerActivatingController extends ObjectAppearingControl
     }
 
     public void update (){
-        
+        if (!firstLoopEnded){
+
+        }
         if (!activated){
               if (engine.getEngine().millis()>=activatingTime){
                 notify();
