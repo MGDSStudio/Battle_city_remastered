@@ -12,28 +12,27 @@ public abstract class ObjectAppearingController{
     
   
   
-    protected final Entity;
+    protected final IActivateable;
    // private final ArrayList <Integer> values;
     protected boolean activated;
     private int type;
     protected GameRound gr;
     protected IEngine engine;
 
-    protected ObjectAppearingController(Entity entity, ArrayList <Integer> values){
+    protected ObjectAppearingController(IActivateable entity, ArrayList <Integer> values, GameRound gr){
             type = values.get(0);
             this.entity = entity;
+            this.gr = gr;
     }
 
-    public static ObjectAppearingController createAppearingController(ArrayList <Integer> values, GameRound gr){
+    public static ObjectAppearingController createAppearingController(ArrayList <Integer> values, IActivateable entity, GameRound gr){
       ObjectAppearingController controller = null;
         if (values == null || values.size(<2)){
         Logger.error("Can not create appearing controller");
-        //return null controller
-        
       }
       else{
         if (values.get(0) == BY_TIMER_ACTIVATION){
-             controller = new ByTimerActivatingController(values, gr);
+             controller = new ByTimerActivatingController(values, entity, gr);
         }
         else Logger.error("Can not create appearing controller for this type " + values.get(0));
       }
