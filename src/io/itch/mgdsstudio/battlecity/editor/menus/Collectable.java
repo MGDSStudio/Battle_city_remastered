@@ -15,7 +15,36 @@ import java.util.ArrayList;
 
 public class Collectable extends AbstractEditorMenu {
 
-    private String weapon, armour, extraLife, engine;
+    /*
+    int LIFE = 0;   //More tanks
+        int WEAPON = 1;     //Rocket launcher
+        int ENGINE = 2;    //Motor
+        int MINE = 3;       //Mines
+        int ARMOUR = 4;
+        int RADAR = 5;  //Enemies to flag
+
+        int AI_TURRET = 6;  //Enemies to flag
+
+        int RANDOM = 7;  //Enemies to flag
+
+        int CLOCK = 8;  //Enemies to flag
+        int MONEY_1 = 21;
+        int MONEY_2 = 22;
+        int MONEY_3 = 23;
+        int MONEY_5 = 24;
+        int MONEY_10 = 25;
+        int MONEY_15 = 26;
+        int MONEY_20 = 27;
+        int MONEY_25 = 28;
+        int MONEY_30 = 29;
+        int MONEY_40 = 30;
+        int MONEY_50 = 31;
+
+     */
+
+
+    private String weapon, armour, extraLife, engine, mine, radar, aiturret, random, money;
+    private String money1, money2, money3, money5, money10, money15, money20,money25, money30, money40, money50;
     private String valueAddingField, add;
     private String apply;
 
@@ -46,7 +75,7 @@ public class Collectable extends AbstractEditorMenu {
     private void initButtonNames(){
         weapon =  "WEAPON";
         armour = "ARMOUR";
-        extraLife = "EXTRA LIFE"
+        extraLife = "EXTRA LIFE";
         armour = "ENGINE";
         valueAddingField = "valueAddingField";
         apply = "NEXT";
@@ -62,9 +91,6 @@ public class Collectable extends AbstractEditorMenu {
             case (2): name =  move; break;
             case (3): name =  clearSelection; break;
             case (4): name =  remove; break;
-//case (5): name =  clearSelection; break;
-
-            
             default:  name = back; break;
         }
         return name;
@@ -123,17 +149,17 @@ public class Collectable extends AbstractEditorMenu {
          nextStatement =   Statements.SELECT;
 
       }
-else if (element.getName().equals(copy)){
-     nextStatement =   Statements.COPY;
-      }
-else if (element.getName().equals(move)){
-     nextStatement =   Statements.MOVE;
-}
-else if (element.getName().equals(remove)){
-      nextStatement = Statements.REMOVE;
+         else if (element.getName().equals(copy)){
+         nextStatement =   Statements.COPY;
+          }
+            else if (element.getName().equals(move)){
+         nextStatement =   Statements.MOVE;
+    }
+         else if (element.getName().equals(remove)){
+          nextStatement = Statements.REMOVE;
       }
       else if (element.getName().equals(clearSelection)){
-clearSelection();
+            clearSelection();
       }
     }
 
@@ -163,7 +189,15 @@ clearSelection();
     }
 
     class ObjectDataStruct{
+        public ArrayList <Integer> values ;
+        public int id;
+        public String name;
 
+        public ObjectDataStruct(ArrayList<Integer> values, int id, String name) {
+            this.values = values;
+            this.id = id;
+            this.name = name;
+        }
     }
     
   }
