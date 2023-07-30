@@ -47,6 +47,7 @@ public class AddCollectable extends AbstractEditorMenu {
     private String money1, money2, money3, money5, money10, money15, money20,money25, money30, money40, money50;
     private String valueAddingField, add;
     private String apply;
+    private final static String DATA_FIELD = "DATA_FIELD";
     private ObjectDataStruct objectData;
 
    // private String select
@@ -176,10 +177,20 @@ public class AddCollectable extends AbstractEditorMenu {
          nextStatement =   Statements.SELECT_DELAY;
          initDataStructForGuiName(element.getName());
       }
-         else if (element.getName().equals(element.getName().equals(money))){
+      else if (element.getName().equals(money)){
              nextStatement =   Statements.SELECT_VALUE;
              objectData = new ObjectDataStruct(io.itch.mgdsstudio.battlecity.game.gameobjects.Collectable.class.getSimpleName());
-          }
+        }
+        else if (element.getName().equals(apply)){
+            if (actualStatement == Statements.SELECT_DELAY){
+                GuiElement gui = getGuiByName("DATA_FIELD");
+                TextLabel
+                objectData = new ObjectDataStruct(io.itch.mgdsstudio.battlecity.game.gameobjects.Collectable.class.getSimpleName());
+
+                nextStatement = Statements.PLACE_ON_MAP;
+            }
+            else Logger.debug("No data for this statement and button");
+        }
     }
 
     private void initDataStructForGuiName(String name) {
@@ -188,7 +199,7 @@ public class AddCollectable extends AbstractEditorMenu {
         */
        int value = -1;
        if (name == extraLife)  value = Collectable.Types.LIFE;
-       else if (name == weapon)  value = Collectable.Types.WEAPON;
+       elsselect_value= weapon)  value = Collectable.Types.WEAPON;
        else if (name == armour)  value = Collectable.Types.ARMOUR;
        else if (name == engine)  value = Collectable.Types.ENGINE;
        else if (name == mine)  value = Collectable.Types.MINE;
@@ -204,8 +215,7 @@ public class AddCollectable extends AbstractEditorMenu {
     protected void initDataForStatement(int actualStatement) {
         if (actualStatement == Statements.SELECT_DELAY){
             guiElements.clear();
-            
-        
+            createSubmenuWithDigitKeyboard(true, DATA_FIELD);
         }
     }
 
