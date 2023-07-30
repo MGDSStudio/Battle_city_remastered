@@ -184,10 +184,17 @@ public class AddCollectable extends AbstractEditorMenu {
         else if (element.getName().equals(apply)){
             if (actualStatement == Statements.SELECT_DELAY){
                 GuiElement gui = getGuiByName("DATA_FIELD");
-                TextLabel
-                objectData = new ObjectDataStruct(io.itch.mgdsstudio.battlecity.game.gameobjects.Collectable.class.getSimpleName());
-
+                try{
+                    TextLabel label = (TextLabel)gui;
+                    int value = label.getValue();
+                    objectData.addValue(value);
+                }
+                catch (Exception e){
+                    Logger.error("Can not get value from gui");
+                    e.printStackTrace();
+                }
                 nextStatement = Statements.PLACE_ON_MAP;
+                
             }
             else Logger.debug("No data for this statement and button");
         }
@@ -226,9 +233,9 @@ public class AddCollectable extends AbstractEditorMenu {
     }
 
     class ObjectDataStruct{
-        public ArrayList <Integer> values ;
-        public int id;
-        public String name;
+        private ArrayList <Integer> values ;
+        private int id;
+        private String name;
 
         public ObjectDataStruct(ArrayList<Integer> values, int id, String name) {
             this.values = values;
@@ -254,6 +261,10 @@ public class AddCollectable extends AbstractEditorMenu {
             this.values = new ArrayList<>();
             this.id = Entity.NO_ID;
             this.name = name;
+        }
+
+        public void addValue(int value){
+            values.add(value);
         }
 
     }
