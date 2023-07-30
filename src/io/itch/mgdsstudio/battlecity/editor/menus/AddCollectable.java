@@ -1,19 +1,19 @@
 package io.itch.mgdsstudio.battlecity.editor.menus;
 
-import com.mgdsstudio.engine.nesgui.ButtonInFrameWithGraphic;
 import com.mgdsstudio.engine.nesgui.ButtonWithFrameSelection;
 import com.mgdsstudio.engine.nesgui.GuiElement;
 
-import com.mgdsstudio.engine.nesgui.NoTextButtonWithFrameSelection;
 import io.itch.mgdsstudio.battlecity.editor.ISelectable;
 import io.itch.mgdsstudio.battlecity.game.EditorController;
 import io.itch.mgdsstudio.battlecity.game.Logger;
+import io.itch.mgdsstudio.battlecity.game.gameobjects.Collectable;
+import io.itch.mgdsstudio.battlecity.game.gameobjects.Entity;
 import io.itch.mgdsstudio.battlecity.game.hud.LowerPanelInEditor;
 
 import java.awt.*;
 import java.util.ArrayList;
 
-public class Collectable extends AbstractEditorMenu {
+public class AddCollectable extends AbstractEditorMenu {
 
     /*
          int LIFE = 0;   //More tanks
@@ -47,17 +47,19 @@ public class Collectable extends AbstractEditorMenu {
     private String money1, money2, money3, money5, money10, money15, money20,money25, money30, money40, money50;
     private String valueAddingField, add;
     private String apply;
+    private ObjectDataStruct objectData;
 
    // private String select
 
    private interface Statements{
          int SELECT_TYPE = 11;
-         int SELECT_VALUE = 21;
-         int SELECT_DELAY = 31;
-         int PLACE_ON_MAP = 41;
+         int SELECT_VALUE = 21; //only for money
+         int SELECT_ACTIVATION_TYPE = 31;   //for future
+         int SELECT_DELAY = 41;
+         int PLACE_ON_MAP = 51;
    }
 
-    public Collectable(EditorController editorController, LowerPanelInEditor lowerPanelInEditor) {
+    public AddCollectable(EditorController editorController, LowerPanelInEditor lowerPanelInEditor) {
         super(editorController, lowerPanelInEditor, NO_END);
     }
 
@@ -86,7 +88,7 @@ public class Collectable extends AbstractEditorMenu {
         apply = "NEXT";
         add = "ADD ON MAP";
 
-        money1 = " 1;
+        money1 = " 1";
         money2 = " 2";
         money3 = " 3"; 
         money5 = " 5";
@@ -101,14 +103,17 @@ public class Collectable extends AbstractEditorMenu {
     }
 
     private String getNameForPos(int i) {
-//      //select, copy, move, clearSelection, delete, back;
         String name;
         switch(i) {
-            case (0): name =  select; break;
-            case (1): name =  copy; break;
-            case (2): name =  move; break;
-            case (3): name =  clearSelection; break;
-            case (4): name =  remove; break;
+            case (0): name =  weapon; break;
+            case (1): name =  armour; break;
+            case (2): name =  extraLife; break;
+            case (3): name =  engine; break;
+            case (4): name =  mine; break;
+            case (5): name =  radar; break;
+            case (6): name =  aiturret; break;
+            case (7): name =  money; break;
+            case (8): name =  random; break;
             default:  name = back; break;
         }
         return name;
@@ -117,7 +122,6 @@ public class Collectable extends AbstractEditorMenu {
     protected String getTextForConsoleByPressedGui(GuiElement element){
         int ENGLISH = 0;
         int language = ENGLISH;
-        
         if (element.getName() == apply){
             return "CONTINUE TO THE NEXT SUBMENU";
         }
@@ -155,30 +159,49 @@ public class Collectable extends AbstractEditorMenu {
 
     @Override
     protected void guiReleased(GuiElement element) {
-        /*
-    private String weapon, armour, extraLife, engine;
+         /*
+        private String weapon, armour, extraLife, engine, mine, radar, aiturret, random, money;
+    private String money1, money2, money3, money5, money10, money15, money20,money25, money30, money40, money50;
     private String valueAddingField, add;
-    private String apply;
-        */
+
+         */
        if (element.getName().equals(back)) {
             onBackPressed();
         }
-       else if (element.getName().equals(weapon)){
-         nextStatement =   Statements.SELECT;
-
+       else if (element.getName().equals(weapon) || element.getName().equals(armour)  ||
+               element.getName().equals(extraLife)  || element.getName().equals(engine)  ||
+               element.getName().equals(mine)  || element.getName().equals(radar)
+               || element.getName().equals(aiturret)
+               || element.getName().equals(random)){
+         nextStatement =   Statements.SELECT_DELAY;
+         initDataStructForGuiName(element.getName());
       }
-         else if (element.getName().equals(copy)){
-         nextStatement =   Statements.COPY;
+         else if (element.getName().equals(element.getName().equals(money))){
+             nextStatement =   Statements.SELECT_VALUE;
+             objectData = new ObjectDataStruct(io.itch.mgdsstudio.battlecity.game.gameobjects.Collectable.class.getSimpleName());
           }
-            else if (element.getName().equals(move)){
-         nextStatement =   Statements.MOVE;
+
     }
-         else if (element.getName().equals(remove)){
-          nextStatement = Statements.REMOVE;
-      }
-      else if (element.getName().equals(clearSelection)){
-            clearSelection();
-      }
+
+    private void initDataStructForGuiName(String name) {
+       /*
+       private String weapon, armour, extraLife, engine, mine, radar, aiturret, random, money;
+        */
+
+
+       int value = -1;
+       if (name == extraLife)  value = Collectable.Types.LIFE;
+       else if (name == weapon)  value = Collectable.Types.WEAPON;
+       else if (name == armour)  value = Collectable.Types.ARMOUR;
+       else if (name == engine)  value = Collectable.Types.ENGINE;
+       else if (name == mine)  value = Collectable.Types.MINE;
+       else if (name == radar)  value = Collectable.Types.RADAR;
+       else if (name == aiturret)  value = Collectable.Types.AI_TURRET;
+       else if (name == random)  value = Collectable.Types.RANDOM;
+       else if (name == money)  value = Collectable.Types.MONEY_1;  //not need
+
+        objectData = new ObjectDataStruct(value, io.itch.mgdsstudio.battlecity.game.gameobjects.Collectable.class.getSimpleName());
+
     }
 
     private void removeSelectedObjects() {
@@ -216,6 +239,27 @@ public class Collectable extends AbstractEditorMenu {
             this.id = id;
             this.name = name;
         }
+
+        public ObjectDataStruct(int value) {
+            this.values = new ArrayList<>();
+            values.add(value);
+            this.id = Entity.NO_ID;
+            this.name = "no name";
+        }
+
+        public ObjectDataStruct(int value, String name) {
+            this.values = new ArrayList<>();
+            values.add(value);
+            this.id = Entity.NO_ID;
+            this.name = name;
+        }
+
+        public ObjectDataStruct(String name) {
+            this.values = new ArrayList<>();
+            this.id = Entity.NO_ID;
+            this.name = name;
+        }
+
     }
     
   }

@@ -1,6 +1,12 @@
 package io.itch.mgdsstudio.battlecity.game.gameobjects.controllers;
 
-public abstract class ObjectAppearingController{
+import io.itch.mgdsstudio.battlecity.game.GameRound;
+import io.itch.mgdsstudio.battlecity.game.Logger;
+import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
+
+import java.util.ArrayList;
+
+public abstract class ObjectActivatingController {
     public final static int BY_TIMER_ACTIVATION = 0;
     public final static int BY_REST_ENEMIES_ACTIVATION = 1;
     public final static int BY_KILLED_ENEMIES_ACTIVATION = 2;
@@ -12,41 +18,41 @@ public abstract class ObjectAppearingController{
     
   
   
-    protected final IActivateable;
+    protected final IActivateable entity;
    // private final ArrayList <Integer> values;
     protected boolean activated;
     private int type;
-    protected GameRound gr;
+    //protected GameRound gr;
     protected IEngine engine;
 
-    protected ObjectAppearingController(IActivateable entity, ArrayList <Integer> values, GameRound gr){
+    protected ObjectActivatingController(IActivateable entity, ArrayList<Integer> values, IEngine engine){
             type = values.get(0);
             this.entity = entity;
-            this.gr = gr;
+            this.engine = engine;
     }
 
-    public static ObjectAppearingController createAppearingController(ArrayList <Integer> values, IActivateable entity, GameRound gr){
-      ObjectAppearingController controller = null;
-        if (values == null || values.size(<2)){
+    public static ObjectActivatingController createAppearingController(ArrayList <Integer> values, IActivateable entity, IEngine engine){
+      ObjectActivatingController controller = null;
+        if (values == null || values.size()<2){
         Logger.error("Can not create appearing controller");
       }
       else{
         if (values.get(0) == BY_TIMER_ACTIVATION){
-             controller = new ByTimerActivatingController(values, entity, gr);
+             controller = new ByTimerActivatingController(values, entity, engine);
         }
         else Logger.error("Can not create appearing controller for this type " + values.get(0));
       }
       return controller;
     }
 
-    public abstract void update ();
+    public abstract void update (GameRound gr);
       
     public final boolean isActivated(){
         return activated;
     }
 
-    protected void notify(){
-        entity.avtivate();
+    protected void notifyObject(){
+        entity.activate();
     }
       
 }

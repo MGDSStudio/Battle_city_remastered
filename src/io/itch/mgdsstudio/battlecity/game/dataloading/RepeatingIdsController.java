@@ -61,8 +61,8 @@ public class RepeatingIdsController {
                 String actualChar = String.valueOf(dataString.charAt(i));
                 if (actualChar == DataDecoder.DIVIDER_NAME_ID){
                     int startDigitNumber = i+1;
-                    for (int j == startDigitNumber; < dataString.length(); i++){
-                        if (!Char.isDigit(dataString.charAt(j)){
+                    for (int j = startDigitNumber; j < dataString.length(); i++){
+                        if (!Character.isDigit(dataString.charAt(j))){
                             String textRepresentation = dataString.substring(i,j-1);
                             try{
                                 id = Integer.parseInt(textRepresentation);

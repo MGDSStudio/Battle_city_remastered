@@ -7,6 +7,8 @@ import io.itch.mgdsstudio.battlecity.game.camera.GameCamera;
 import io.itch.mgdsstudio.battlecity.game.dataloading.EntityData;
 import io.itch.mgdsstudio.battlecity.game.gameobjects.controllers.EntityVisibilityController;
 import io.itch.mgdsstudio.battlecity.game.gameobjects.controllers.HaloController;
+import io.itch.mgdsstudio.battlecity.game.gameobjects.controllers.IActivateable;
+import io.itch.mgdsstudio.battlecity.game.gameobjects.controllers.ObjectActivatingController;
 import io.itch.mgdsstudio.battlecity.game.graphic.IAnimations;
 import io.itch.mgdsstudio.battlecity.game.textes.AbstractText;
 import io.itch.mgdsstudio.battlecity.game.textes.DissolvingAndUpwardsMovingText;
@@ -19,15 +21,15 @@ import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyType;
 import processing.core.PGraphics;
 
+import java.util.ArrayList;
 import java.util.prefs.PreferencesFactory;
 
-public class Collectable extends SolidObject {
+public class Collectable extends SolidObject implements IActivateable {
     public final static int COLLECTABLE_NORMAL_DIM = 24;
+    private ObjectActivatingController activatingController;
+    private boolean active;
 
     private interface ImageZones{
-        //ImageZoneSimpleData LIFE_GRAPHIC = new ImageZoneSimpleData(0,0, 961,1024);
-
-
         ImageZoneSimpleData WEAPON_UPGRADE_GRAPHIC = new ImageZoneSimpleData(799,992, 799+32,992+32);
         ImageZoneSimpleData GEAR_GRAPHIC = new ImageZoneSimpleData(832,992, 832+32,992+32);
         ImageZoneSimpleData MINE_GRAPHIC = new ImageZoneSimpleData(865,992, 865+32,992+32);
@@ -113,13 +115,23 @@ public class Collectable extends SolidObject {
     private HaloController haloController;
     private int type;
 
-    public Collectable(IEngine engine, PhysicWorld physicWorld, Coordinate pos, int type){
+    public Collectable(IEngine engine, PhysicWorld physicWorld, Coordinate pos, int type, ArrayList <Integer> activatingValues){
         super(engine, physicWorld, pos, 0, 1, getWidthForEntity(type), getHeightForEntity(type), BodyForms.RECT, BodyType.DYNAMIC, -1);
         this.type = type;
         loadGraphicDefaultData(engine);
         entityVisibilityController = new EntityVisibilityController(this);
         setType(type);
+        activatingController = ObjectActivatingController.createAppearingController(activatingValues, this, engine);
+        if (activatingController.isActivated()){
+            active = true;
+        }
+        else deactivate();
     }
+
+    private void deactivate() {
+        body.setActive(false);
+    }
+
 
     private void setType(int type) {
         if (type == Types.RANDOM){
@@ -136,8 +148,10 @@ public class Collectable extends SolidObject {
     public static Collectable create(IEngine engine, PhysicWorld physicWorld, EntityData entityData) {
         int [] values = entityData.getValues();
         Coordinate pos = new Coordinate(values[0], values[1]);
+        ArrayList <Integer> activatingValues = new ArrayList<>();
+        for (int i  = 2; i < values.length; i++) activatingValues.add(values[i]);
         Logger.debug("Collectable in point: " + pos.x + "x" + pos.y + " and type: " + values[2]);
-        Collectable collectable = new Collectable (engine, physicWorld, pos, values[2]);
+        Collectable collectable = new Collectable (engine, physicWorld, pos, values[2], activatingValues);
         collectable.setId(entityData.getId());
         return collectable;
     }
@@ -222,17 +236,20 @@ public class Collectable extends SolidObject {
 
     @Override
     public void update(GameRound gameRound, long deltaTime) {
-        super.update(gameRound, deltaTime);
-        if (type == Types.LIFE) entityVisibilityController.update(gameRound, deltaTime);
-        haloController.update();
-
+        if (!active) activatingController.update(gameRound);
+        else {
+            super.update(gameRound, deltaTime);
+            if (type == Types.LIFE) entityVisibilityController.update(gameRound, deltaTime);
+            haloController.update();
+        }
     }
 
     public void draw(PGraphics graphics, GameCamera gameCamera) {
-        super.draw(graphics, gameCamera);
-        //if (type == Types.LIFE) Logger.debug("" + entityVisibilityController.getAlphaUpTo255());
-        graphicElementInGame.setAlpha(entityVisibilityController.getAlphaUpTo255());
-        haloController.draw(graphics, gameCamera);
+        if (active) {
+            super.draw(graphics, gameCamera);
+            graphicElementInGame.setAlpha(entityVisibilityController.getAlphaUpTo255());
+            haloController.draw(graphics, gameCamera);
+        }
     }
 
     public int getType() {
@@ -253,5 +270,12 @@ public class Collectable extends SolidObject {
             return KILLED;
         }
         return !KILLED;
+    }
+
+    @Override
+    public void activate() {
+        active = true;
+        body.setActive(true);
+        //activatingController = null;
     }
 }
