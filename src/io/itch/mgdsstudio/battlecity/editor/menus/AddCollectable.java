@@ -193,10 +193,18 @@ public class AddCollectable extends AbstractEditorMenu {
                     Logger.error("Can not get value from gui");
                     e.printStackTrace();
                 }
+                editorController.getCross().setStatement(Cross.Statements.CENTER);
                 nextStatement = Statements.PLACE_ON_MAP;
                 
             }
             else Logger.debug("No data for this statement and button");
+        }
+        else if (element.getName().equals(add)){
+             nextStatement = START_STATEMENT;
+             Coordinate pos = editorController.getCross().getPos();
+             objectData.addValueToStart((int)pos.x);
+             objectData.addValueToStart((int)pos.y);
+            Collectable object = Collectable.
         }
     }
 
