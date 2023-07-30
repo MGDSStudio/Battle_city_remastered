@@ -180,15 +180,12 @@ public class AddCollectable extends AbstractEditorMenu {
              nextStatement =   Statements.SELECT_VALUE;
              objectData = new ObjectDataStruct(io.itch.mgdsstudio.battlecity.game.gameobjects.Collectable.class.getSimpleName());
           }
-
     }
 
     private void initDataStructForGuiName(String name) {
        /*
        private String weapon, armour, extraLife, engine, mine, radar, aiturret, random, money;
         */
-
-
        int value = -1;
        if (name == extraLife)  value = Collectable.Types.LIFE;
        else if (name == weapon)  value = Collectable.Types.WEAPON;
@@ -199,28 +196,17 @@ public class AddCollectable extends AbstractEditorMenu {
        else if (name == aiturret)  value = Collectable.Types.AI_TURRET;
        else if (name == random)  value = Collectable.Types.RANDOM;
        else if (name == money)  value = Collectable.Types.MONEY_1;  //not need
-
-        objectData = new ObjectDataStruct(value, io.itch.mgdsstudio.battlecity.game.gameobjects.Collectable.class.getSimpleName());
-
-    }
-
-    private void removeSelectedObjects() {
-       ArrayList < ISelectable> selected = editorController.getSelectedObjects();
-       for (int i = selected.size()-1; i>= 0; i--){
-           String sourceString = selected.get(i).getDataString();
-
-       }
+       objectData = new ObjectDataStruct(value, io.itch.mgdsstudio.battlecity.game.gameobjects.Collectable.class.getSimpleName());
     }
 
 
-
-    protected void clearSelection(){
-
-  }
-
-    @Override
+   @Override
     protected void initDataForStatement(int actualStatement) {
-        Logger.debug("This menu has no statements");
+        if (actualStatement == Statements.SELECT_DELAY){
+            guiElements.clear();
+            
+        
+        }
     }
 
 
