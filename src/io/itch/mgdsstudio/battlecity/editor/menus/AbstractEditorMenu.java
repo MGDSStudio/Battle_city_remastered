@@ -140,8 +140,14 @@ public abstract class AbstractEditorMenu {
 
     protected abstract void initDataForStatement(int actualStatement);
 
-    protected void createSubmenuWithDefaultAlignedButtons(String [] names){
+    protected final void createSubmenuWithDefaultAlignedButtons(String [] names){
         guiElements.clear();
+        int buttons = names.length;
+        Rectangle [] zones = getCoordinatesForDefaultButtonsAlignment(buttons);
+        for (int i = 0; i < buttons; i++){
+            GuiElement gui = new ButtonWithFrameSelection(editorController.getEngine(), zones[i].x, zones[i].y, zones[i].width, zones[i].height, names[i], editorController.getEngine().getEngine().g, true);
+            guiElements.add(gui);
+        }
     }
     
     protected Rectangle[] getCoordinatesForDefaultButtonsAlignment(int frameButtonsCount){
