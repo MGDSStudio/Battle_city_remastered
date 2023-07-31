@@ -67,7 +67,15 @@ public class AddCollectable extends AbstractEditorMenu {
     @Override
     protected void initGui(){
         //it should be rewritten for all the statements
-        initButtonNames();
+        if (statement == START_STATEMENT) {
+            initButtonNames();
+            String [] names = new String[9];
+            for (int i = 0; i < names.length; i++){
+                names[i] = getNameForPos(i);
+            }
+            createSubmenuWithDefaultAlignedButtons(names);
+        }
+        
         int buttons = 6;
         Rectangle [] zones = getCoordinatesForDefaultButtonsAlignment(buttons);
         for (int i = 0; i < buttons; i++){
