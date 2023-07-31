@@ -140,6 +140,10 @@ public abstract class AbstractEditorMenu {
 
     protected abstract void initDataForStatement(int actualStatement);
 
+    protected void createSubmenuWithDefaultAlignedButtons(String [] names){
+        guiElements.clear();
+    }
+    
     protected Rectangle[] getCoordinatesForDefaultButtonsAlignment(int frameButtonsCount){
         int buttonsCountForCalculations = frameButtonsCount;
         if (buttonsCountForCalculations<6) buttonsCountForCalculations = 6;
