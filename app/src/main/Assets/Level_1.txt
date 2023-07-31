@@ -33,4 +33,3 @@ Collectable 26:660,490,22,0,5200#
 //int maxTanksOnScreen, int spawnTime, int tanks0, int tanks1, int tanks2, int tanks3, int tanks4, int tanks5, int controlBy, int aiModelForTanks0, int aiModelForTanks1, int aiModelForTanks2, int aiModelForTanks3, int aiModelForTanks4, int aiModelForTanks5, int additionalData1, int additionalData2, ArrayList <Coordinate> placesForEnemiesSpawn) {
 // public EnemiesSpawnController(IEngine engine, int maxTanksOnScreen, int spawnTime, int tanks0, int tanks1, int tanks2, int tanks3, int tanks4, int tanks5, int additionalData1, int additionalData2, ArrayList <Coordinate> spawnPositions) {
 Collectable -9999:225,375,1,0,234#
-[Collectable -9999:275,275,1,0,2345#]

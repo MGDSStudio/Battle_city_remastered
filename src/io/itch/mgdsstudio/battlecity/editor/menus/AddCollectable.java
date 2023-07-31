@@ -16,6 +16,7 @@ import io.itch.mgdsstudio.battlecity.game.gameobjects.controllers.ObjectActivati
 import io.itch.mgdsstudio.battlecity.game.hud.LowerPanelInEditor;
 import io.itch.mgdsstudio.engine.libs.Coordinate;
 
+import javax.swing.plaf.nimbus.State;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -81,11 +82,13 @@ public class AddCollectable extends AbstractEditorMenu {
                 names[i] = getNameForPos(i);
             }
             createSubmenuWithColumnAlignedButtons(names,2);
+            editorController.setTextInConcole("SELECT TYPE OF THE COLLECTABLE OBJECT TO BE ADDED ON THE BATTLEFIELD");
         }
         else if (actualStatement == Statements.SELECT_DELAY){
             editorController.getCross().setStatement(Cross.Statement.INVISIBLE_AS_CELL_CENTER);
             guiElements.clear();
             createSubmenuWithDigitKeyboard(true, DATA_FIELD);
+            editorController.setTextInConcole("ENTER THE DELAY FOR START TIMER. THE OBJECT WILL APPEAR ON THE BATTLE FIELD AFTER THE TIMER CALLS BACK");
         }
         else if (actualStatement == Statements.PLACE_ON_MAP){
             int value = getDigitValueFromKeyboard();
@@ -93,6 +96,14 @@ public class AddCollectable extends AbstractEditorMenu {
             editorController.getCross().setStatement(Cross.Statement.CELL_CENTER);
             String [] names = new String[] {add, back};
             createSubmenuWithDefaultAlignedButtons(names);
+            editorController.setTextInConcole("SHIFT THE BATTLEFIED VIA SWIPES TO SELECT RIGHT POSITION FOR THE OBJECT. PRESS ADD BUTTON TO PLACE THE OBJECT ON THE BATTLEFIELD");
+        }
+        else if (actualStatement == Statements.SELECT_VALUE){
+
+            editorController.getCross().setStatement(Cross.Statement.CELL_CENTER);
+            String [] names = new String[] {money1, money2, money3, money5, money10, money15, money20, money25, money30,money40, money50, back};
+            createSubmenuWithColumnAlignedButtons(names,3);
+            editorController.setTextInConcole("SELECT VALUE - HOW MUCH COSTS THIS COLLECTABLE?");
         }
     }
 
@@ -224,6 +235,33 @@ public class AddCollectable extends AbstractEditorMenu {
              singleton.notify(editorAction);
              nextStatement = START_STATEMENT;
         }
+        else if (element.getName().equals(money1) || element.getName().equals(money2) || element.getName().equals(money3) || element.getName().equals(money5) || element.getName().equals(money10) || element.getName().equals(money15) || element.getName().equals(money20) || element.getName().equals(money25)|| element.getName().equals(money30) || element.getName().equals(money30) || element.getName().equals(money40) || element.getName().equals(money50)){
+            int value = getValueFromName(element.getName());
+            objectData.addValue(value);
+            nextStatement = Statements.SELECT_DELAY;
+           }
+       }
+
+    private int getValueFromName(String name) {
+       int value = 0;
+       for (int i = 0; i < name.length(); i++) {
+            if (Character.isDigit(name.charAt(i))) {
+                String valueString = ""+ name.charAt(i);
+                for (int j = i; j < name.length(); j++) {
+                    if (Character.isDigit(name.charAt(j))) {
+                        valueString+=name.charAt(j);
+                    }
+                }
+                try {
+                    value = Integer.parseInt(valueString);
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+           }
+       }
+       return value;
+
     }
 
     private void initDataStructForGuiName(String name) {
