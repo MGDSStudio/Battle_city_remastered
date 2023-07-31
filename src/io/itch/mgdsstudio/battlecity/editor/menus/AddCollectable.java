@@ -66,6 +66,7 @@ public class AddCollectable extends AbstractEditorMenu {
 
     @Override
     protected void initGui(){
+        //it should be rewritten for all the statements
         initButtonNames();
         int buttons = 6;
         Rectangle [] zones = getCoordinatesForDefaultButtonsAlignment(buttons);
@@ -73,6 +74,10 @@ public class AddCollectable extends AbstractEditorMenu {
             GuiElement gui = new ButtonWithFrameSelection(editorController.getEngine(), zones[i].x, zones[i].y, zones[i].width, zones[i].height, getNameForPos(i), editorController.getEngine().getEngine().g, true);
             guiElements.add(gui);
         }
+    }
+
+    protected void createSubmenuWithDefaultAlignedButtons(String [] names){
+        guiElements.clear();
     }
 
     private void initButtonNames(){
@@ -141,7 +146,24 @@ public class AddCollectable extends AbstractEditorMenu {
         else if (element.getName() == engine){
              return "POWERFULL ENGINE WITH HIGHER MAX VELOCITY";
         }
-
+        else if (element.getName() == mine){
+             return "GENERATE MINES ON THE BATTLE FIELD";
+        }
+        else if (element.getName() == radar){
+             return "RADAR SHOWS THE ENEMIES ON THE BATTLEFIELD EVEN BEHIND OBSTACLES";
+        }
+        else if (element.getName() == aiturret){
+             return "GENERATE AI CONTROLLED TURRETS ON THE BATTLEFIELD";
+        }
+        else if (element.getName() == money){
+             return "MONEY WHICH CAN BE USED TO BUY UPGRADES IN THE SHOP";
+        }
+        /*
+    private String weapon, armour, extraLife, engine, mine, radar, aiturret, random, money;
+    private String money1, money2, money3, money5, money10, money15, money20,money25, money30, money40, money50;
+    private String valueAddingField, add;
+    private String apply;
+        */
         else return "NO DATA";
     }
 
@@ -183,19 +205,7 @@ public class AddCollectable extends AbstractEditorMenu {
         }
         else if (element.getName().equals(apply)){
             if (actualStatement == Statements.SELECT_DELAY){
-                GuiElement gui = getGuiByName("DATA_FIELD");
-                try{
-                    TextLabel label = (TextLabel)gui;
-                    int value = label.getValue();
-                    objectData.addValue(value);
-                }
-                catch (Exception e){
-                    Logger.error("Can not get value from gui");
-                    e.printStackTrace();
-                }
-                editorController.getCross().setStatement(Cross.Statements.CENTER);
                 nextStatement = Statements.PLACE_ON_MAP;
-                
             }
             else Logger.debug("No data for this statement and button");
         }
@@ -204,7 +214,7 @@ public class AddCollectable extends AbstractEditorMenu {
              Coordinate pos = editorController.getCross().getPos();
              objectData.addValueToStart((int)pos.x);
              objectData.addValueToStart((int)pos.y);
-            Collectable object = Collectable.
+             Collectable object = Collectable.
         }
     }
 
@@ -229,8 +239,24 @@ public class AddCollectable extends AbstractEditorMenu {
    @Override
     protected void initDataForStatement(int actualStatement) {
         if (actualStatement == Statements.SELECT_DELAY){
+            editorController.getCross().setStatement(Cross.Statements.INVISIBLE_CENTER);
             guiElements.clear();
             createSubmenuWithDigitKeyboard(true, DATA_FIELD);
+        }
+        else if (actualStatement == Statements.PLACE_ON_MAP){
+                GuiElement gui = getGuiByName("DATA_FIELD");
+                try{
+                    TextLabel label = (TextLabel)gui;
+                    int value = label.getValue();
+                    objectData.addValue(value);
+                }
+                catch (Exception e){
+                    Logger.error("Can not get value from gui");
+                    e.printStackTrace();
+                }
+                editorController.getCross().setStatement(Cross.Statements.CENTER);
+                String [] names = new String {add, back};
+                createSubmenuWithDefaultAlignedButtons(names);
         }
     }
 
