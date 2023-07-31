@@ -12,15 +12,7 @@ import java.util.ArrayList;
 
 public class RepeatingIdsController {
     public static final int ID_NOT_ENTCRYPTED = -999999;
-    public static final char END_ROW_SYMBOL = '!';
-    static final public char MAIN_DATA_START_CHAR = ':';
-    static final public char GRAPHIC_NAME_START_CHAR = '#';
-    static final public char GRAPHIC_NAME_END_CHAR = ';';
-    static final public char DIVIDER_BETWEEN_VALUES = ',';
-    static final public char DIVIDER_BETWEEN_GRAPHIC_DATA = 'x';
-    static final protected char VERTICES_START_CHAR = '%';
-    static final protected char DIVIDER_BETWEEN_VERTICES = 'v';
-    public final static String DIVIDER_NAME_ID = " ";
+
 
     private ArrayList<String> fileContent;
     private ArrayList<StringWithId> stringWithDatas;
@@ -32,7 +24,7 @@ public class RepeatingIdsController {
     }
 
   private class StringWithId{
-      
+
       private boolean isData = false;
       private String dataString;
       private int id = ID_NOT_ENTCRYPTED;
@@ -77,10 +69,8 @@ public class RepeatingIdsController {
                     }
                 }
             }
-            Logger.error("Can not ectract ID 2" );
-                               
+            Logger.error("Can not extract ID 2" );
       }
-
 
       private boolean hasIdSpecificChars(){
           CharSequence whitespace = ""+  DataDecoder.MAIN_DATA_START_CHAR;
@@ -88,10 +78,8 @@ public class RepeatingIdsController {
           CharSequence afterIdChar = ""+  DataDecoder.DIVIDER_NAME_ID;
           if (!dataString.contains(afterIdChar)) return false;
           return true;
-          //!fullString.contains(DataDecoder.MAIN_DATA_START_CHAR)||!fullString.contains(DataDecoder.DIVIDER_NAME_ID )
-
-
       }
+
   }
 
 

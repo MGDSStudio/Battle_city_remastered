@@ -124,7 +124,6 @@ private ArrayList<ButtonWithFrameSelection> buttons;
                     frameWithText.setAnotherTextToBeDrawnAsName(NO_DATA_STRING);
                 }
                 else if (released.getName().equals(BACK)){
-
                     if (origData.length()==0){
                         //NOTHING
                     }
@@ -145,6 +144,7 @@ private ArrayList<ButtonWithFrameSelection> buttons;
                     frameWithText.setAnotherTextToBeDrawnAsName(origData);
                 }
                 else {
+                    Logger.debug("Pressed button name is " + released.getName());
                     try {
                         int value = Integer.parseInt(released.getName());
                         origData+=value;
@@ -165,9 +165,14 @@ private ArrayList<ButtonWithFrameSelection> buttons;
                     }
                 }
                 frameWithText.setUserData(origData);
+                Logger.debug("Value in frame: " + origData + ". text: " + frameWithText.getTextToBeDrawn());
             }
 
         }
+    }
+
+    public TextLabel getEmbeddedGui() {
+        return embeddedGui;
     }
 
     public String getPressedKeyName(){

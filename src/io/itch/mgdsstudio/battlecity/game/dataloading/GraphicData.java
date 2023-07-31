@@ -1,6 +1,6 @@
 package io.itch.mgdsstudio.battlecity.game.dataloading;
 
-class GraphicData {
+public class GraphicData {
     private int [] values;
     private String path;
 

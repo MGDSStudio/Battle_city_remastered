@@ -3,11 +3,12 @@ package io.itch.mgdsstudio.battlecity.game;
 import io.itch.mgdsstudio.battlecity.editor.changessaving.ChangesController;
 import io.itch.mgdsstudio.battlecity.editor.data.EditorPreferences;
 import io.itch.mgdsstudio.battlecity.editor.data.EditorPreferencesSingleton;
+import io.itch.mgdsstudio.battlecity.editor.data.UnsavedDataList;
 import io.itch.mgdsstudio.battlecity.editor.menus.AbstractEditorMenu;
-import io.itch.mgdsstudio.battlecity.editor.menus.Main;
 import io.itch.mgdsstudio.battlecity.editor.menus.MenuType;
 import io.itch.mgdsstudio.battlecity.game.camera.EditorCamera;
 import io.itch.mgdsstudio.battlecity.game.control.GameProcessController;
+import io.itch.mgdsstudio.battlecity.game.dataloading.ExternalDataController;
 import io.itch.mgdsstudio.battlecity.game.gameobjects.Grid;
 import io.itch.mgdsstudio.battlecity.game.hud.Hud;
 import io.itch.mgdsstudio.battlecity.game.hud.InEditorHud;
@@ -22,6 +23,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class EditorController extends GamePartWithGameWorldAbstractController implements EditorActionsListener {
+    private LastActionController lastActionController;
 
     private ArrayList <EditorAction> actions;
     private WorldZoneScrollingController worldZoneScrollingController;
@@ -30,11 +32,13 @@ public class EditorController extends GamePartWithGameWorldAbstractController im
     private AbstractEditorMenu menu;
     private MenuType actualMenuType, nextMenuType;
 
+    private UnsavedDataList unsavedDataList;;
     private ChangesController changesController;
     private ArrayList <ISelectable> selectedElements;
+    private final UnsavedDataLabel unsavedDataLabel;
 
-    public EditorController(IEngine engine, MainController mainController, int level, int dif, int playersConnected, int playerNumber, int playerNumberInMultiplayerMode) {
-        super(engine, mainController, dif, level, playerNumberInMultiplayerMode,playersConnected);
+    public EditorController(IEngine engine, MainController mainController, int levelNumber, int dif, int playersConnected, int playerNumber, int playerNumberInMultiplayerMode) {
+        super(engine, mainController, dif, levelNumber, playerNumberInMultiplayerMode,playersConnected);
         selectedElements = new ArrayList<>();
         changesController = new ChangesController(this);
         EditorPreferencesSingleton editorPreferencesSingleton = EditorPreferencesSingleton.getInstance(engine);
@@ -55,9 +59,17 @@ public class EditorController extends GamePartWithGameWorldAbstractController im
         createOnMapZoneGraphic();
         nextMenuType = MenuType.MAIN;
         createMenu();
-        //new Main(this, (LowerPanelInEditor) hud.getLowerPanel());
+        int size = (int) ((hud.getGraphicRightPixel()-hud.getGraphicLeftPixel())/12f);
+
+        unsavedDataLabel = new UnsavedDataLabel(engine, hud.getImage(), new Coordinate(hud.getGraphicLeftPixel(), hud.getGraphicUpperPixel()) , size);
+        unsavedDataLabel.setActive(true);
+
+        unsavedDataList = new UnsavedDataList(engine.getPathToObjectInUserFolder(ExternalDataController.LEVEL_PREFIX)+levelNumber+ExternalDataController.LEVEL_EXTENSION, unsavedDataLabel);
+        lastActionController = new LastActionController(10);
 
     }
+
+
 
     private void createMenu(){
         menu = AbstractEditorMenu.createMenuForType(nextMenuType, this, (LowerPanelInEditor) hud.getLowerPanel());
@@ -70,6 +82,8 @@ public class EditorController extends GamePartWithGameWorldAbstractController im
         graphicZone.y = hud.getGraphicUpperPixel();
         graphicZone.width = hud.getGraphicRightPixel()-graphicZone.x;
         graphicZone.height = hud.getGraphicLowerPixel()-graphicZone.y;
+
+        //IEngine engine, Image image, Coordinate pos, int size
 
     }
 
@@ -114,9 +128,13 @@ public class EditorController extends GamePartWithGameWorldAbstractController im
                 if (actions.get(i).getPrefix().equals(EditorCommandPrefix.WORLD_SCROLLING)){
                     EditorCamera editorCamera = (EditorCamera) gameRound.getCamera();
                     editorCamera.appendCommand(actions.get(i));
-                    actions.remove(i);
                 }
-                else actions.remove(i);
+                else if (actions.get(i).getPrefix().equals(EditorCommandPrefix.OBJECT_CREATED)){
+                    unsavedDataList.addNewObjectString(actions.get(i).getStringParameters());
+
+                }
+                lastActionController.saveActionForRestoring(actions.get(i));
+                actions.remove(i);
             }
         }
         if (actions.size()>20){
@@ -128,6 +146,7 @@ public class EditorController extends GamePartWithGameWorldAbstractController im
     public void draw(){
         hud.draw();
         menu.draw();
+        unsavedDataLabel.draw();
     }
 
     public Hud getHud() {
@@ -197,5 +216,23 @@ public class EditorController extends GamePartWithGameWorldAbstractController im
 
     public Grid getGrid() {
         return grid;
+    }
+
+    public UnsavedDataList getUnsavedDataList() {
+        return unsavedDataList;
+    }
+
+    private class LastActionController{
+        private final ArrayList <EditorAction> actions = new ArrayList<>();
+        private final int maxActions;
+
+        private LastActionController(int maxActions) {
+            this.maxActions = maxActions;
+        }
+
+        private void saveActionForRestoring(EditorAction action){
+            actions.add(0,action);
+            if (actions.size()>maxActions) actions.remove(actions.size()-1);
+        }
     }
 }

@@ -50,8 +50,9 @@ public abstract class AbstractEditorMenu {
         else if (actualMenuType == MenuType.EDIT) return new Edit(editorController, lowerPanel);
         else if (actualMenuType == MenuType.PREFERENCES) return new Preferences(editorController, lowerPanel);
         else if (actualMenuType == MenuType.PLAYER) return new Player(editorController, lowerPanel);
-        /*else if (actualMenuType == MenuType.ABOUT) return new About(editorController, lowerPanel);
+        else if (actualMenuType == MenuType.COLLECTABLE) return new AddCollectable(editorController, lowerPanel);
 
+        /*else if (actualMenuType == MenuType.ABOUT) return new About(editorController, lowerPanel);
         else if (actualMenuType == MenuType.ENEMY) return new Enemy(editorController, lowerPanel);
         else if (actualMenuType == MenuType.GRAPHIC) return new Graphic(editorController, lowerPanel);
         else if (actualMenuType == MenuType.WALL) return new Wall(editorController, lowerPanel);
@@ -138,7 +139,10 @@ public abstract class AbstractEditorMenu {
         Logger.debug("Not implemented for the actual menu");
     }
 
-    protected abstract void initDataForStatement(int actualStatement);
+    protected void initDataForStatement(int actualStatement)
+    {
+        initGui();
+    }
 
     protected final void createSubmenuWithDefaultAlignedButtons(String [] names){
         guiElements.clear();
@@ -155,9 +159,6 @@ public abstract class AbstractEditorMenu {
         if (buttonsCountForCalculations<6) buttonsCountForCalculations = 6;
         int fullWidth = lowerPanelInEditor.getLowerTab().getWidth();
         int fullHeight = lowerPanelInEditor.getLowerTab().getHeight();
-        //if (frameButtonsCount )
-        //int fullHeight = lowerPanelInEditor.getLowerTab().getHeight();
-
 
         int left = lowerPanelInEditor.getLowerTab().getLeft();
         int upper = lowerPanelInEditor.getLowerTab().getUpper();
@@ -198,14 +199,6 @@ public abstract class AbstractEditorMenu {
         int labelCenterY = (int) (gapY+textLabelHeight/2)+upper;
         int labelWidth = (int) (fullWidth*0.6f);
         int labelHeight = (int) textLabelHeight;
-
-        //TextDataFieldWithText textLabel = new TextDataFieldWithText(editorController.getEngine(), labelCenterX, labelCenterY, labelWidth, labelHeight, labelName, editorController.getEngine().getEngine().g, labelName);
-        //DigitDataFieldWithText textLabel = new DigitDataFieldWithText(editorController.getEngine(), labelCenterX, labelCenterY, labelWidth, labelHeight, labelName, editorController.getEngine().getEngine().g, 0);
-
-        //DigitDataFieldWithText(IEngine engine, int centerX, int centerY, int width, int height, String name, PGraphics graphics, int defaultValue)
-
-        //TextDataFieldWithText textLabel = new TextDataFieldWithText(editorController.getEngine(), labelCenterX, labelCenterY, labelWidth, labelHeight, labelName, editorController.getEngine().getEngine().g, labelName);
-        //public TextDataFieldWithText(IEngine engine, int centerX, int centerY, int width, int height, String name, PGraphics graphics, String defaultValue) {
         TextLabel textLabel = new TextLabel(editorController.getEngine(), labelCenterX, labelCenterY, labelWidth, labelHeight, labelName);
         textLabel.setAnotherTextToBeDrawnAsName("");
         //textLabel.setPrefix("");
@@ -222,59 +215,96 @@ public abstract class AbstractEditorMenu {
         guiElements.add(textLabel);
         guiElements.add(keyboard);
 
-        int backButtonX = keyboardX;
-        int backButtonWidth = labelWidth;
-        int backButtonHeight = labelHeight;
-        int backButtonY = (int) (keyboardY+keyboardHeight/2+gapY+labelHeight/2);
+        int upperButtonX = keyboardX;
+        int buttonWidth = labelWidth;
+        int buttonHeight = labelHeight;
+        int firstButtonPosY = (int) (keyboardY+keyboardHeight/2+gapY+labelHeight/2);
+        if (withApply){
+            ButtonWithFrameSelection apply = new ButtonWithFrameSelection(editorController.getEngine(), upperButtonX, firstButtonPosY, buttonWidth, buttonHeight, this.apply, editorController.getEngine().getEngine().g, true);
+            guiElements.add(apply);
+            int lowerButtonY = (int) (firstButtonPosY+gapY+buttonHeight);
+            ButtonWithFrameSelection back = new ButtonWithFrameSelection(editorController.getEngine(), upperButtonX, lowerButtonY, buttonWidth, buttonHeight, this.back, editorController.getEngine().getEngine().g, true);
+            guiElements.add(back);
 
+        }
+        else {
+            int backButtonY = (int) (keyboardY+keyboardHeight/2+gapY+labelHeight/2);
+            ButtonWithFrameSelection back = new ButtonWithFrameSelection(editorController.getEngine(), upperButtonX, backButtonY, buttonWidth, buttonHeight, this.back, editorController.getEngine().getEngine().g, true);
+            guiElements.add(back);
+        }
+    }
 
-        ButtonWithFrameSelection back = new ButtonWithFrameSelection(editorController.getEngine(), backButtonX, backButtonY, backButtonWidth, backButtonHeight, this.back, editorController.getEngine().getEngine().g, true);
-        guiElements.add(back);
+    protected final void createSubmenuWithColumnAlignedButtons(String [] names, int alongX){
+        guiElements.clear();
+        int buttonsCount = names.length;
+        Rectangle [] zones = getCoordinatesForSquareButtonsAndColumnAlignment(buttonsCount , alongX);
+        //Logger.debug("We have " + zones.length + " zones but all count: " + buttonsCount);
+        for (int i = 0; i < buttonsCount; i++){
+            GuiElement gui = new ButtonWithFrameSelection(editorController.getEngine(), zones[i].x, zones[i].y, zones[i].width, zones[i].height, names[i], editorController.getEngine().getEngine().g, true);
+          //  Logger.debug("Button name is: " + names[i] + " and height: " + zones[i].height);
 
+            guiElements.add(gui);
+        }
     }
 
 
-
-    protected Rectangle[] getCoordinatesForSquareButtonsAndColumnAlignment(int fullCount, int alongX){
+    protected Rectangle[] getCoordinatesForSquareButtonsAndColumnAlignment(int fullCount, final int alongX){
         int fullWidth = lowerPanelInEditor.getLowerTab().getWidth();
         int fullHeight = lowerPanelInEditor.getLowerTab().getHeight();
         int left = lowerPanelInEditor.getLowerTab().getLeft();
         int upper = lowerPanelInEditor.getLowerTab().getUpper();
         //final float xGapCoef = 0.1f;
-        
-        int alongY = PApplet.ceil(fullCount/alongX);
-
-       
-        float relativeGap = 0.1f;
-        float fullRelativeGapX = (alongX+1f)*relativeGap;
-        float fullRelativeGapY = (alongY+1f)*relativeGap;
-        float fullGapX =  (float) fullWidth*fullRelativeGapX;
-        float fullGapY = (float) fullHeight*fullRelativeGapY;
-
+        int alongY = PApplet.ceil((float)fullCount/alongX);
         float sizesRelationship = (float)fullWidth/fullHeight;
         float countRelationship = (float)alongX/alongY;
         boolean criticalSizeIsX;
         if (sizesRelationship>countRelationship) criticalSizeIsX = false;
         else criticalSizeIsX = true;
+        float relativeGapY = 0.1f;
+        float relativeGapX = 0.1f;
+        if (alongY == 3) relativeGapY = 0.1f;
+        else if (alongY == 4) relativeGapY = 0.075f;
+        else if (alongY == 5) relativeGapY = 0.065f;
+        else if (alongY == 6) relativeGapY = 0.05f;
+        else if (alongY == 7) relativeGapY = 0.04f;
+        if (alongX == 2) relativeGapX = 0.165f;
+        else if (alongX == 3) relativeGapX = 0.135f;
+        else if (alongX == 4) relativeGapX = 0.1f;
 
-        int singleGap;
-        float minimalFullGap;
+        float fullRelativeGapX = (alongX+1f)*relativeGapX;
+        float fullRelativeGapY = (alongY+1f)*relativeGapY;
+        float fullGapX =  (float) fullWidth*fullRelativeGapX;
+        float fullGapY = (float) fullHeight*fullRelativeGapY;
+
+        int singleGapY;
+        int singleGapX;
+        float minimalFullGapY;
+        float minimalFullGapX;
         int guiWidth;
         int guiHeight;
         if (!criticalSizeIsX) {
-            minimalFullGap = fullGapY;
-            singleGap = (int)(minimalFullGap/(alongX+1f));
-            guiWidth = (int) ((fullWidth-minimalFullGap)/alongX);
+            //Logger.debug("Critical size is X. Relative gap Y: " + relativeGapY + " full: " + fullRelativeGapY + " but along Y: " + alongY + " and along X " + alongX + " relativeX = " + relativeGapX);
+            minimalFullGapY = fullGapY;
+            minimalFullGapX = fullGapX;
+            singleGapY = (int)(minimalFullGapY/(alongY+1f));
+            singleGapX = (int)(minimalFullGapX/(alongX+1f));
+            //Logger.debug("minimalFullGap " + minimalFullGapY);
+            guiWidth = (int) ((fullWidth-minimalFullGapX)/(float)alongX);
         }
         else{
-            minimalFullGap = fullGapX;
-            singleGap = (int)(minimalFullGap/(alongY+1f));
-            guiWidth = (int) ((fullHeight-minimalFullGap)/alongY);
+            //Logger.debug("Critical size is Y");
+            minimalFullGapY = fullGapX;
+            minimalFullGapX = fullGapX;
+            singleGapY = (int)(minimalFullGapY/(alongY+1f));
+            singleGapX = (int)(minimalFullGapX/(alongX+1f));
+            guiWidth = (int) ((fullHeight-minimalFullGapX)/(float)alongX);
         }
-        guiHeight = (int) ((fullHeight-((alongY+1f)*singleGap))/alongY);
-        Logger.debug("Full width x height: " + fullWidth + "x" + fullHeight + " gap: " +  singleGap + "; gui width: "  + guiWidth);
+        guiHeight = (int) ((fullHeight-((alongY+1f)*singleGapY))/alongY);
+        //Logger.debug("Button height must be: " + guiHeight);
+        //Logger.debug("Full width x height: " + fullWidth + "x" + fullHeight + " gap: " +  singleGapY + "; gui width: "  + guiWidth);
         //Buttons are squares
-        Rectangle [] positions = calculatePositionsForParams(guiWidth, guiHeight, alongX, alongY, left, upper, singleGap, singleGap);
+
+        Rectangle [] positions = calculatePositionsForParams(guiWidth, guiHeight, alongX, alongY, left, upper, singleGapX, singleGapY);
         return positions;
     }
 
@@ -293,6 +323,7 @@ public abstract class AbstractEditorMenu {
                 fullCount++;
             }
         }
+        //Logger.debug("Must created: along sides " + alongX + "x" + alongY + " summ: " + fullCount);
         return positions;
 
    
@@ -315,6 +346,31 @@ public abstract class AbstractEditorMenu {
             System.out.println("     " + guiElement.getName());
         }
         return null;
+    }
+
+    protected int getDigitValueFromKeyboard(){
+        GuiElement keyboard = getGuiByName(KEYBOARD_GUI_NAME);
+        if (keyboard != null){
+            DigitKeyboard digitKeyboard = (DigitKeyboard) keyboard;
+            GuiElement gui = digitKeyboard.getEmbeddedGui();
+            try{
+                TextLabel label = (TextLabel)gui;
+                if (label.getUserData() == null){
+                    Logger.error("User data is null. No time");
+                }
+                String userDataString = (String)label.getUserData();
+                int value = Integer.parseInt(userDataString);
+                return value;
+            }
+            catch (Exception e){
+                Logger.error("Can not get value from gui");
+                e.printStackTrace();
+                return 0;
+            }
+
+        }
+        else Logger.error("Can not get data value. Can not find keyboard");
+        return 0;
     }
 
 }

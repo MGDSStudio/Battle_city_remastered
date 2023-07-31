@@ -1,9 +1,7 @@
 package io.itch.mgdsstudio.battlecity.game.dataloading;
 
 
-import io.itch.mgdsstudio.battlecity.game.Logger;
-
-import javax.xml.crypto.Data;
+import java.util.ArrayList;
 
 public class DataStringCreationMaster {
 
@@ -15,6 +13,15 @@ public class DataStringCreationMaster {
 
   public DataStringCreationMaster(int[] values, String name) {
     this.values = values;
+    this.name = name;
+    init();
+  }
+
+  public DataStringCreationMaster(ArrayList <Integer> intList, String name) {
+    this.values = new int[intList.size()];
+    for (int i = 0; i < intList.size(); i++){
+      values[i] = intList.get(i);
+    }
     this.name = name;
     init();
   }
@@ -57,7 +64,7 @@ public class DataStringCreationMaster {
   }
 
 
-  public String getDataDtring(){
+  public String getDataString(){
     return dataString;
   }
 }

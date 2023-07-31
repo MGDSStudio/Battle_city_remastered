@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 public class EditorListenersManagerSingleton {
 
-
     private ArrayList<EditorActionsListener> localListeners;
     private static EditorListenersManagerSingleton instance;
 

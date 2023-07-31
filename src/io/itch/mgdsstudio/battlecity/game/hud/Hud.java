@@ -83,4 +83,8 @@ public abstract class Hud {
     public abstract void update(GameRound gameRound);
 
     public abstract void initHudStartData(GameRound gameRound);
+
+    public Image getImage() {
+        return image;
+    }
 }

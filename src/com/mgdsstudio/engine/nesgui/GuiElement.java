@@ -171,7 +171,10 @@ public abstract class GuiElement {
         if (font == null){
             font = engine.loadFont("Font1.vlw");
             graphics.textFont = font;
-            graphics.textSize(height);
+            if (height <= 0 ) {
+                Logger.error("Can not set text height! It is " + height);
+            }
+            else graphics.textSize(height);
             if (width<=0){
                 width = (int) graphics.textWidth(name);
             }
@@ -194,7 +197,10 @@ public abstract class GuiElement {
         graphic.pushStyle();
         graphic.textFont(font);
         graphic.textAlign(xAlignment, PConstants.CENTER);
-        graphic.textSize(height);
+        if (height < 0) {
+            Logger.debug("Text height can not be applied by name drawing: " + height);
+        }
+        else graphic.textSize(height);
         if (!drawDigitWithAnotherColor) {
             if (actualStatement == BLOCKED) {
                 graphic.tint(colorRed, colorGreen, colorBlue);
@@ -221,7 +227,10 @@ public abstract class GuiElement {
             else {
                 graphic.fill(colorRed, colorGreen, colorBlue);
             }
-            graphic.textSize(height);
+            if (height < 0) {
+                Logger.debug("Text height can not be applied by name drawing: " + height);
+            }
+            else graphic.textSize(height);
             if (xAlignment == LEFT_ALIGNMENT_OS_SPECIFIC) {
                 graphic.text(getTextToBeDrawn(), leftX, y+textYShifting);
             } else {
@@ -510,7 +519,10 @@ public abstract class GuiElement {
         graphics.background(255);
         graphics.fill(0);
         graphics.textFont(font);
-        graphics.textSize(height);
+        if (height < 0) {
+            Logger.debug("Text height can not be applied by creation of clear graphic: " + height);
+        }
+        else graphics.textSize(height);
         graphics.textAlign(PConstants.CENTER, PConstants.CENTER);
         graphics.text('R', graphics.width/2, graphics.height/2);
         graphics.loadPixels();
@@ -605,6 +617,10 @@ public abstract class GuiElement {
                 //int[] pixels = testGraphic.pixels;
                 int fullTextWidth = getTextWidth(testGraphic.pixels, testGraphic.width, testGraphic.height);
                 testGraphic.updatePixels();
+                if (testText.length()== 0) {
+                    Logger.error("Test text length is null! ");
+                    testText = " ";
+                }
                 singleCharWidth = ((fullTextWidth / testText.length()));
             }
             //String saveName = "Frame "+className+".png";

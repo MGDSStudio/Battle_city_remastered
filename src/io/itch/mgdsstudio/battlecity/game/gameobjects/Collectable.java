@@ -3,7 +3,8 @@ package io.itch.mgdsstudio.battlecity.game.gameobjects;
 import io.itch.mgdsstudio.battlecity.game.GameRound;
 import io.itch.mgdsstudio.battlecity.game.Logger;
 import io.itch.mgdsstudio.battlecity.game.PhysicWorld;
-import io.itch.mgdsstudio.battlecity.game.camera.GameCamera;
+import io.itch.mgdsstudio.battlecity.game.camera.Camera;
+import io.itch.mgdsstudio.battlecity.game.dataloading.DataStringCreationMaster;
 import io.itch.mgdsstudio.battlecity.game.dataloading.EntityData;
 import io.itch.mgdsstudio.battlecity.game.gameobjects.controllers.EntityVisibilityController;
 import io.itch.mgdsstudio.battlecity.game.gameobjects.controllers.HaloController;
@@ -22,7 +23,6 @@ import org.jbox2d.dynamics.BodyType;
 import processing.core.PGraphics;
 
 import java.util.ArrayList;
-import java.util.prefs.PreferencesFactory;
 
 public class Collectable extends SolidObject implements IActivateable {
     public final static int COLLECTABLE_NORMAL_DIM = 24;
@@ -74,10 +74,7 @@ public class Collectable extends SolidObject implements IActivateable {
 
     }
 
-    boolean isMoney(int type){
-        if (type >= Types.MONEY_1 && type <= Types.MONEY_50) return true;
-        else return false;
-    }
+
 
     private interface GotTextes{
         String TEXT_FOR_LIFE = "1UP";
@@ -110,7 +107,6 @@ public class Collectable extends SolidObject implements IActivateable {
         }
         else return 1;
     }
-
     private EntityVisibilityController entityVisibilityController;
     private HaloController haloController;
     private int type;
@@ -128,8 +124,14 @@ public class Collectable extends SolidObject implements IActivateable {
         else deactivate();
     }
 
+    boolean isMoney(int type){
+        if (type >= Types.MONEY_1 && type <= Types.MONEY_50) return true;
+        else return false;
+    }
+
     private void deactivate() {
         body.setActive(false);
+        active = false;
     }
 
 
@@ -140,7 +142,7 @@ public class Collectable extends SolidObject implements IActivateable {
                 i--;
             }
             type = i;
-            Logger.debug("Random object will have type: " + type + "; This info must be transferred to other users");
+            //Logger.debug("Random object will have type: " + type + "; This info must be transferred to other users");
         }
         this.type = type;
     }
@@ -149,10 +151,14 @@ public class Collectable extends SolidObject implements IActivateable {
         int [] values = entityData.getValues();
         Coordinate pos = new Coordinate(values[0], values[1]);
         ArrayList <Integer> activatingValues = new ArrayList<>();
-        for (int i  = 2; i < values.length; i++) activatingValues.add(values[i]);
-        Logger.debug("Collectable in point: " + pos.x + "x" + pos.y + " and type: " + values[2]);
+        for (int i  = 3; i < values.length; i++) activatingValues.add(values[i]);
         Collectable collectable = new Collectable (engine, physicWorld, pos, values[2], activatingValues);
-        collectable.setId(entityData.getId());
+        int id = entityData.getId();
+        if (id == NO_ID){
+            collectable.setNextId();
+            //Next id will be generated
+        }
+        else collectable.setId(entityData.getId());
         return collectable;
     }
 
@@ -160,8 +166,20 @@ public class Collectable extends SolidObject implements IActivateable {
         int posX = (int) pos.x;
         int posY = (int) pos.y;
         int value = type;
-        Logger.correct("To implement");
-        return null;
+        ArrayList <Integer> list = new ArrayList<>();
+        list.add(posX);
+        list.add(posY);
+        list.add(value);
+        ArrayList <Integer> activatingControllerList = activatingController.getDataList();
+        for (Integer val : activatingControllerList){
+            list.add(val);
+        }
+        // public DataStringCreationMaster(int[] values, String name) {
+        DataStringCreationMaster dataStringCreationMaster = new DataStringCreationMaster(list, this.getClass().getSimpleName());
+        String dataString = dataStringCreationMaster.getDataString();
+
+        //Logger.correct("To implement");
+        return dataString;
     }
 
     public void loadGraphicDefaultData(IEngine engine){
@@ -236,7 +254,10 @@ public class Collectable extends SolidObject implements IActivateable {
 
     @Override
     public void update(GameRound gameRound, long deltaTime) {
-        if (!active) activatingController.update(gameRound);
+        if (!active) {
+            activatingController.update(gameRound);
+            //Logger.debug("It is active: " + activatingController.isActivated());
+        }
         else {
             super.update(gameRound, deltaTime);
             if (type == Types.LIFE) entityVisibilityController.update(gameRound, deltaTime);
@@ -244,11 +265,15 @@ public class Collectable extends SolidObject implements IActivateable {
         }
     }
 
-    public void draw(PGraphics graphics, GameCamera gameCamera) {
+
+
+    @Override
+    public void draw(PGraphics graphics, Camera gameCamera) {
         if (active) {
             super.draw(graphics, gameCamera);
             graphicElementInGame.setAlpha(entityVisibilityController.getAlphaUpTo255());
             haloController.draw(graphics, gameCamera);
+            //Logger.debug("Drawn");
         }
     }
 
@@ -261,7 +286,6 @@ public class Collectable extends SolidObject implements IActivateable {
     @Override
     public boolean attackBy(Entity attackingObject, GameRound gameRound){
         if (attackingObject instanceof Bullet){
-
             gameRound.addExplosion(attackingObject.pos.clone(), 0f, IAnimations.MINE_EXPLOSION);
             gameRound.addExplosion(pos.clone(), 0f, IAnimations.DUST_SPLASH);
             body.setActive(false);

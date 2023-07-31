@@ -19,7 +19,7 @@ public class File extends AbstractEditorMenu {
    private interface Statements{
          int REALLY_WANT_TO_SAVE = 11;
          int SAVED = 12;
-int REALLY_WANT_TO_CLEAR = 21;
+         int REALLY_WANT_TO_CLEAR = 21;
          int CLEARING = 22;
        
    }
@@ -30,22 +30,44 @@ int REALLY_WANT_TO_CLEAR = 21;
 
     @Override
     protected void initGui(){
-        initButtonNames();
-        int buttons = 4;
-        Rectangle [] zones = getCoordinatesForDefaultButtonsAlignment(buttons);
-        for (int i = 0; i < buttons; i++){
-            GuiElement gui = new ButtonWithFrameSelection(editorController.getEngine(), zones[i].x, zones[i].y, zones[i].width, zones[i].height, getNameForPos(i), editorController.getEngine().getEngine().g, true);
-            //GuiElement gui = new ButtonWithFrameSelection(editorController.getEngine(), zones[i].x-zones[i].width/2, zones[i].y-zones[i].height/2, zones[i].width, zones[i].height, getNameForPos(i), editorController.getEngine().getEngine().g);
-            //
-            //new NoTextButtonWithFrameSelection(engine, x, y, w, h, name, graphics);
-            guiElements.add(gui);
+        if (actualStatement == START_STATEMENT) {
+            initButtonNames();
+            String [] names = new String[4];
+            for (int i = 0; i < names.length; i++){
+                names[i] = getNameForPos(i);
+            }
+            createSubmenuWithDefaultAlignedButtons(names);
+        }
+        /*else if (actualStatement == Statements.REALLY_WANT_TO_SAVE){
+            String [] names = new String[2];
+            names[0] = save;
+            names[1] = back;
+            createSubmenuWithDefaultAlignedButtons(names);
+        }*/
+        else if (actualStatement == Statements.SAVED){
+            String [] names = new String[1];
+            names[0] = back;
+            createSubmenuWithDefaultAlignedButtons(names);
+            saveData();
+
         }
     }
 
+    private void saveData() {
+
+        boolean success =  editorController.getUnsavedDataList().save();
+
+        if (success) {
+            editorController.setTextInConcole("DATA WAS SUCCESSFULLY SAVED!");
+        }
+        else editorController.setTextInConcole("NOT ALL THE DATA WAS SUCCESSFULLY SAVED");
+    }
+
+
     private void initButtonNames(){
         save = "SAVE";
-       clear = "CLEAR";
-         exit = "EXIT";
+        clear = "CLEAR";
+        exit = "EXIT";
     }
 
     private String getNameForPos(int i) {
@@ -63,7 +85,6 @@ int REALLY_WANT_TO_CLEAR = 21;
     protected String getTextForConsoleByPressedGui(GuiElement element){
         int ENGLISH = 0;
         int language = ENGLISH;
-        //set specific language
         if (element.getName() == save){
             return "SAVE CHANGES IN THE ACTUAL LEVEL";
         }
@@ -97,17 +118,24 @@ int REALLY_WANT_TO_CLEAR = 21;
         if (element.getName().equals(back)) {
             onBackPressed();
         }
+        else if (element.getName().equals(save)) {
+            nextStatement = Statements.SAVED;
+        }
+        //else if (element.getName().equals())
     }
 
     @Override
     protected void initDataForStatement(int actualStatement) {
-        Logger.debug("This menu has no statements");
+        initGui();
     }
 
 
     @Override
     protected void onBackPressed(){
-          editorController.transferToMenu(MenuType.FILE, MenuType.MAIN);
+       if (actualStatement == START_STATEMENT || actualStatement == Statements.CLEARING || actualStatement == Statements.SAVED) editorController.transferToMenu(MenuType.FILE, MenuType.MAIN);
+       else if (actualStatement == Statements.REALLY_WANT_TO_SAVE || actualStatement == Statements.REALLY_WANT_TO_CLEAR){
+           nextStatement = START_STATEMENT;
+       }
     }
     
 }

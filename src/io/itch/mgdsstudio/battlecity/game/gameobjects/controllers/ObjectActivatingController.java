@@ -17,7 +17,7 @@ public abstract class ObjectActivatingController {
     public final static int BY_ENEMIES_NOT_IN_ZONE_ACTIVATION = 7;
     
   
-  
+    private ArrayList <Integer> values;
     protected final IActivateable entity;
    // private final ArrayList <Integer> values;
     protected boolean activated;
@@ -26,15 +26,16 @@ public abstract class ObjectActivatingController {
     protected IEngine engine;
 
     protected ObjectActivatingController(IActivateable entity, ArrayList<Integer> values, IEngine engine){
-            type = values.get(0);
-            this.entity = entity;
-            this.engine = engine;
+        type = values.get(0);
+        this.entity = entity;
+        this.engine = engine;
+        this.values = values;
     }
 
     public static ObjectActivatingController createAppearingController(ArrayList <Integer> values, IActivateable entity, IEngine engine){
       ObjectActivatingController controller = null;
         if (values == null || values.size()<2){
-        Logger.error("Can not create appearing controller");
+        Logger.error("Can not create appearing controller. Values is null: " + (values == null));
       }
       else{
         if (values.get(0) == BY_TIMER_ACTIVATION){
@@ -53,6 +54,10 @@ public abstract class ObjectActivatingController {
 
     protected void notifyObject(){
         entity.activate();
+        Logger.debug("Object " + entity.getClass().getSimpleName() + " must be activated at " + engine.getEngine().frameCount + " frame ");
     }
-      
+
+    public ArrayList <Integer> getDataList() {
+        return values;
+    }
 }

@@ -1,6 +1,7 @@
 package io.itch.mgdsstudio.battlecity.game.gameobjects.controllers;
 
 import io.itch.mgdsstudio.battlecity.game.Logger;
+import io.itch.mgdsstudio.battlecity.game.camera.Camera;
 import io.itch.mgdsstudio.battlecity.game.camera.GameCamera;
 import io.itch.mgdsstudio.battlecity.game.gameobjects.Entity;
 import io.itch.mgdsstudio.engine.graphic.Image;
@@ -47,7 +48,7 @@ public class HaloController
     }
 
 
-    public void draw (PGraphics graphic, GameCamera gameCamera){
+    public void draw (PGraphics graphic, Camera gameCamera){
         graphic.pushMatrix();
         graphic.pushStyle();
         graphic.imageMode(PConstants.CENTER);

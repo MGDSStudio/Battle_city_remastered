@@ -11,7 +11,7 @@ public class EntityData {
     private int id = -9999;
 
 
-    EntityData(int[] values, GraphicData [] graphicData, int id) {
+    public EntityData(int[] values, GraphicData[] graphicData, int id) {
         this.graphicData = graphicData;
         this.values = values;
         this.id = id;

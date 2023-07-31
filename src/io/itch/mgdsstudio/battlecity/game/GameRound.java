@@ -328,7 +328,7 @@ public class GameRound {
         return playerProgressControllerSingleton;
     }
 
-    public void addEntityOnGround(SpriteInGame rest) {
+    public void addEntityOnGround(Entity rest) {
         int lastEntityOnLayer = 0;
         if (gameObjects.size()>0){
             if (gameObjects.get(0).getGraphicLayer() != GraphicObject.GraphicLayers.GROUND_LAYER){

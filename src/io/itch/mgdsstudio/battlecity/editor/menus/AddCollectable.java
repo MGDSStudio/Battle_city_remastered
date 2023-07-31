@@ -1,17 +1,24 @@
 package io.itch.mgdsstudio.battlecity.editor.menus;
 
 import com.mgdsstudio.engine.nesgui.ButtonWithFrameSelection;
+import com.mgdsstudio.engine.nesgui.DigitKeyboard;
 import com.mgdsstudio.engine.nesgui.GuiElement;
 
-import io.itch.mgdsstudio.battlecity.editor.ISelectable;
+import com.mgdsstudio.engine.nesgui.TextLabel;
+import io.itch.mgdsstudio.battlecity.editor.*;
 import io.itch.mgdsstudio.battlecity.game.EditorController;
 import io.itch.mgdsstudio.battlecity.game.Logger;
+import io.itch.mgdsstudio.battlecity.game.dataloading.EntityData;
+import io.itch.mgdsstudio.battlecity.game.dataloading.GraphicData;
 import io.itch.mgdsstudio.battlecity.game.gameobjects.Collectable;
 import io.itch.mgdsstudio.battlecity.game.gameobjects.Entity;
+import io.itch.mgdsstudio.battlecity.game.gameobjects.controllers.ObjectActivatingController;
 import io.itch.mgdsstudio.battlecity.game.hud.LowerPanelInEditor;
+import io.itch.mgdsstudio.engine.libs.Coordinate;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class AddCollectable extends AbstractEditorMenu {
 
@@ -46,11 +53,11 @@ public class AddCollectable extends AbstractEditorMenu {
     private String weapon, armour, extraLife, engine, mine, radar, aiturret, random, money;
     private String money1, money2, money3, money5, money10, money15, money20,money25, money30, money40, money50;
     private String valueAddingField, add;
-    private String apply;
+   // private String apply;
     private final static String DATA_FIELD = "DATA_FIELD";
     private ObjectDataStruct objectData;
 
-   // private String select
+    // private String select
 
    private interface Statements{
          int SELECT_TYPE = 11;
@@ -66,31 +73,34 @@ public class AddCollectable extends AbstractEditorMenu {
 
     @Override
     protected void initGui(){
-        //it should be rewritten for all the statements
-        if (statement == START_STATEMENT) {
+        if (actualStatement == START_STATEMENT) {
+            editorController.getCross().setStatement(Cross.Statement.INVISIBLE_AS_CELL_CENTER);
             initButtonNames();
-            String [] names = new String[9];
+            String [] names = new String[10];
             for (int i = 0; i < names.length; i++){
                 names[i] = getNameForPos(i);
             }
+            createSubmenuWithColumnAlignedButtons(names,2);
+        }
+        else if (actualStatement == Statements.SELECT_DELAY){
+            editorController.getCross().setStatement(Cross.Statement.INVISIBLE_AS_CELL_CENTER);
+            guiElements.clear();
+            createSubmenuWithDigitKeyboard(true, DATA_FIELD);
+        }
+        else if (actualStatement == Statements.PLACE_ON_MAP){
+            int value = getDigitValueFromKeyboard();
+            objectData.addValue(value);
+            editorController.getCross().setStatement(Cross.Statement.CELL_CENTER);
+            String [] names = new String[] {add, back};
             createSubmenuWithDefaultAlignedButtons(names);
         }
-        
-        int buttons = 6;
-        Rectangle [] zones = getCoordinatesForDefaultButtonsAlignment(buttons);
-        for (int i = 0; i < buttons; i++){
-            GuiElement gui = new ButtonWithFrameSelection(editorController.getEngine(), zones[i].x, zones[i].y, zones[i].width, zones[i].height, getNameForPos(i), editorController.getEngine().getEngine().g, true);
-            guiElements.add(gui);
-        }
     }
-
-    
 
     private void initButtonNames(){
         weapon =  "WEAPON";
         armour = "ARMOUR";
         extraLife = "EXTRA LIFE";
-        armour = "ENGINE";
+        engine = "ENGINE";
         mine = "MINE";
         radar = "RADAR";
         aiturret = "TURRET";
@@ -150,7 +160,7 @@ public class AddCollectable extends AbstractEditorMenu {
              return "MORE LIFES FOR THE PLAYER";
         }
         else if (element.getName() == engine){
-             return "POWERFULL ENGINE WITH HIGHER MAX VELOCITY";
+             return "POWERFUL ENGINE WITH HIGHER MAX VELOCITY";
         }
         else if (element.getName() == mine){
              return "GENERATE MINES ON THE BATTLE FIELD";
@@ -164,23 +174,14 @@ public class AddCollectable extends AbstractEditorMenu {
         else if (element.getName() == money){
              return "MONEY WHICH CAN BE USED TO BUY UPGRADES IN THE SHOP";
         }
-        /*
-    private String weapon, armour, extraLife, engine, mine, radar, aiturret, random, money;
-    private String money1, money2, money3, money5, money10, money15, money20,money25, money30, money40, money50;
-    private String valueAddingField, add;
-    private String apply;
-        */
         else return "NO DATA";
     }
-
-    
 
     @Override
     protected void guiPressed(GuiElement element) {
 
     }
 
-    //transfer in parent
     @Override
     protected void setConsoleTextForFirstButtonPressing(GuiElement element) {
         editorController.setTextInConcole(getTextForConsoleByPressedGui(element));
@@ -188,12 +189,6 @@ public class AddCollectable extends AbstractEditorMenu {
 
     @Override
     protected void guiReleased(GuiElement element) {
-         /*
-        private String weapon, armour, extraLife, engine, mine, radar, aiturret, random, money;
-    private String money1, money2, money3, money5, money10, money15, money20,money25, money30, money40, money50;
-    private String valueAddingField, add;
-
-         */
        if (element.getName().equals(back)) {
             onBackPressed();
         }
@@ -211,26 +206,30 @@ public class AddCollectable extends AbstractEditorMenu {
         }
         else if (element.getName().equals(apply)){
             if (actualStatement == Statements.SELECT_DELAY){
+                objectData.addValue(ObjectActivatingController.BY_TIMER_ACTIVATION);
                 nextStatement = Statements.PLACE_ON_MAP;
             }
             else Logger.debug("No data for this statement and button");
+            Logger.debug("Apply action");
         }
         else if (element.getName().equals(add)){
-             nextStatement = START_STATEMENT;
              Coordinate pos = editorController.getCross().getPos();
-             objectData.addValueToStart((int)pos.x);
              objectData.addValueToStart((int)pos.y);
-             Collectable object = Collectable.
+             objectData.addValueToStart((int)pos.x);
+             Collectable object = Collectable.create(editorController.getEngine(), editorController.getGameRound().getPhysicWorld(), objectData.createEntityData());
+             editorController.getGameRound().addEntityOnGround(object);
+             Logger.debug("Created object: " + object.getDataString());
+             EditorListenersManagerSingleton singleton = EditorListenersManagerSingleton.getInstance();
+             EditorAction editorAction = new EditorAction(EditorCommandPrefix.OBJECT_CREATED, object.getDataString());
+             singleton.notify(editorAction);
+             nextStatement = START_STATEMENT;
         }
     }
 
     private void initDataStructForGuiName(String name) {
-       /*
-       private String weapon, armour, extraLife, engine, mine, radar, aiturret, random, money;
-        */
        int value = -1;
        if (name == extraLife)  value = Collectable.Types.LIFE;
-       elsselect_value= weapon)  value = Collectable.Types.WEAPON;
+       else if (name == weapon)  value = Collectable.Types.WEAPON;
        else if (name == armour)  value = Collectable.Types.ARMOUR;
        else if (name == engine)  value = Collectable.Types.ENGINE;
        else if (name == mine)  value = Collectable.Types.MINE;
@@ -244,32 +243,18 @@ public class AddCollectable extends AbstractEditorMenu {
 
    @Override
     protected void initDataForStatement(int actualStatement) {
-        if (actualStatement == Statements.SELECT_DELAY){
-            editorController.getCross().setStatement(Cross.Statements.INVISIBLE_CENTER);
-            guiElements.clear();
-            createSubmenuWithDigitKeyboard(true, DATA_FIELD);
-        }
-        else if (actualStatement == Statements.PLACE_ON_MAP){
-                GuiElement gui = getGuiByName("DATA_FIELD");
-                try{
-                    TextLabel label = (TextLabel)gui;
-                    int value = label.getValue();
-                    objectData.addValue(value);
-                }
-                catch (Exception e){
-                    Logger.error("Can not get value from gui");
-                    e.printStackTrace();
-                }
-                editorController.getCross().setStatement(Cross.Statements.CENTER);
-                String [] names = new String {add, back};
-                createSubmenuWithDefaultAlignedButtons(names);
-        }
+        initGui();
     }
-
 
     @Override
     protected void onBackPressed(){
-          editorController.transferToMenu(MenuType.FILE, MenuType.MAIN);
+        if (actualStatement == START_STATEMENT) editorController.transferToMenu(MenuType.FILE, MenuType.MAIN);
+        else if (actualStatement == Statements.SELECT_TYPE) editorController.transferToMenu(MenuType.FILE, MenuType.MAIN);
+        else {
+            if (actualStatement == Statements.SELECT_DELAY) nextStatement = Statements.SELECT_TYPE;
+            else if (actualStatement == Statements.SELECT_VALUE) nextStatement = Statements.SELECT_TYPE;
+            else if (actualStatement == Statements.PLACE_ON_MAP) nextStatement = Statements.SELECT_DELAY;
+        }
     }
 
     class ObjectDataStruct{
@@ -307,6 +292,19 @@ public class AddCollectable extends AbstractEditorMenu {
             values.add(value);
         }
 
+        public EntityData createEntityData(){
+            int [] valuesArray = new int[values.size()];
+            for (int i  = 0 ; i < valuesArray.length ; i++){
+                valuesArray[i] = values.get(i);
+            }
+            EntityData entityData = new EntityData(valuesArray, new GraphicData[]{}, id);
+            Logger.debug("Entity data will content: " + values + "; ID: " + id );
+            return entityData;
+        }
+
+        public void addValueToStart(int x) {
+            values.add(0,x);
+        }
     }
     
   }
