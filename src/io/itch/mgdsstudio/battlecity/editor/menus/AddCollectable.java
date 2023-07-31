@@ -76,9 +76,7 @@ public class AddCollectable extends AbstractEditorMenu {
         }
     }
 
-    protected void createSubmenuWithDefaultAlignedButtons(String [] names){
-        guiElements.clear();
-    }
+    
 
     private void initButtonNames(){
         weapon =  "WEAPON";
