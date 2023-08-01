@@ -10,12 +10,11 @@ import io.itch.mgdsstudio.battlecity.game.GameRound;
 import io.itch.mgdsstudio.battlecity.game.Logger;
 import io.itch.mgdsstudio.battlecity.game.gameobjects.Entity;
 import io.itch.mgdsstudio.battlecity.game.gameobjects.Grid;
-import io.itch.mgdsstudio.battlecity.game.hud.Hud;
 import io.itch.mgdsstudio.battlecity.game.hud.InEditorGameWorldFrame;
 import io.itch.mgdsstudio.battlecity.game.hud.InEditorHud;
 import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
 import io.itch.mgdsstudio.engine.graphic.Image;
-import io.itch.mgdsstudio.engine.graphic.ImageZoneSimpleData;
+import io.itch.mgdsstudio.engine.libs.imagezones.ImageZoneSimpleData;
 import processing.core.PConstants;
 import processing.core.PGraphics;
 

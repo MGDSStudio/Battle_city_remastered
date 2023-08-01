@@ -7,7 +7,7 @@ import io.itch.mgdsstudio.battlecity.editor.Cross;
 import io.itch.mgdsstudio.battlecity.game.EditorController;
 import io.itch.mgdsstudio.battlecity.game.Logger;
 import io.itch.mgdsstudio.battlecity.game.hud.LowerPanelInEditor;
-import io.itch.mgdsstudio.engine.graphic.ImageZoneSimpleData;
+import io.itch.mgdsstudio.engine.libs.imagezones.ImageZoneSimpleData;
 
 import java.awt.*;
 

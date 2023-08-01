@@ -18,10 +18,8 @@ import java.awt.*;
 
 public abstract class Entity extends GameElement{
 
-
+    protected int [] graphicData;
     public final static boolean KILLED = true;
-
-
     public final static int ENTITY_NORMAL_DIM = 32;
     public static final int NO_ID = -9999;
 

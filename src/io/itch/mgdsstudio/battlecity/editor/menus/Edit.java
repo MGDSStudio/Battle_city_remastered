@@ -114,29 +114,19 @@ case (4): name =  remove; break;
          nextStatement =   Statements.SELECT;
 
       }
-else if (element.getName().equals(copy)){
-     nextStatement =   Statements.COPY;
-      }
-else if (element.getName().equals(move)){
-     nextStatement =   Statements.MOVE;
-}
-else if (element.getName().equals(remove)){
-      nextStatement = Statements.REMOVE;
+    else if (element.getName().equals(copy)){
+         nextStatement =   Statements.COPY;
+          }
+    else if (element.getName().equals(move)){
+         nextStatement =   Statements.MOVE;
+    }
+    else if (element.getName().equals(remove)){
+          nextStatement = Statements.REMOVE;
       }
       else if (element.getName().equals(clearSelection)){
 clearSelection();
       }
     }
-
-    private void removeSelectedObjects() {
-       ArrayList < ISelectable> selected = editorController.getSelectedObjects();
-       for (int i = selected.size()-1; i>= 0; i--){
-           String sourceString = selected.get(i).getDataString();
-
-       }
-    }
-
-
 
     protected void clearSelection(){
 

@@ -5,6 +5,7 @@ import io.itch.mgdsstudio.battlecity.game.camera.GameCamera;
 import io.itch.mgdsstudio.battlecity.game.gameobjects.Tank;
 import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
 import io.itch.mgdsstudio.engine.graphic.*;
+import io.itch.mgdsstudio.engine.libs.imagezones.ImageZoneSimpleData;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 
@@ -40,7 +41,7 @@ class TrackGraphic extends GraphicPart{
     private final static boolean RIGHT = false;
 
     private SimpleSpriteAnimationController leftTrackGraphicController, rightTrackGraphicController;
-    private ImageZoneSimpleData [] singleSpriteZones;
+    private ImageZoneSimpleData[] singleSpriteZones;
 
     TrackGraphic(GraphicPart parent, Tank tank, IEngine engine, float relativeGraphicScale, boolean side) {
         super(parent, tank, engine, relativeGraphicScale);

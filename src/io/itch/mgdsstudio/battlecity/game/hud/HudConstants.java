@@ -1,7 +1,6 @@
 package io.itch.mgdsstudio.battlecity.game.hud;
 
-import io.itch.mgdsstudio.engine.graphic.GraphicManager;
-import io.itch.mgdsstudio.engine.graphic.ImageZoneSimpleData;
+import io.itch.mgdsstudio.engine.libs.imagezones.ImageZoneSimpleData;
 
 public class HudConstants {
     public final static String RELATIVE_PATH = "HUD.png";

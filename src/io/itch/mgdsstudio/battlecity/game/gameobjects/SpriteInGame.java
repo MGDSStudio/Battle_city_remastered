@@ -3,7 +3,7 @@ package io.itch.mgdsstudio.battlecity.game.gameobjects;
 import io.itch.mgdsstudio.battlecity.game.PhysicWorld;
 import io.itch.mgdsstudio.battlecity.game.dataloading.EntityData;
 import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
-import io.itch.mgdsstudio.engine.graphic.ImageZoneSimpleData;
+import io.itch.mgdsstudio.engine.libs.imagezones.ImageZoneSimpleData;
 import io.itch.mgdsstudio.engine.libs.Coordinate;
 
 public class SpriteInGame extends GraphicObject{

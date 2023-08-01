@@ -7,7 +7,7 @@ import io.itch.mgdsstudio.battlecity.datatransfer.listeners.GlobalListener;
 import io.itch.mgdsstudio.battlecity.game.hud.HudConstants;
 import io.itch.mgdsstudio.battlecity.game.hud.Panel;
 import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
-import io.itch.mgdsstudio.engine.graphic.ImageZoneSimpleData;
+import io.itch.mgdsstudio.engine.libs.imagezones.ImageZoneSimpleData;
 import io.itch.mgdsstudio.engine.libs.Coordinate;
 import processing.core.PApplet;
 import processing.core.PGraphics;

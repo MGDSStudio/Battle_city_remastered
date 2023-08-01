@@ -2,9 +2,9 @@ package io.itch.mgdsstudio.engine.graphic;
 
 import io.itch.mgdsstudio.battlecity.game.Logger;
 import io.itch.mgdsstudio.engine.libs.Timer;
+import io.itch.mgdsstudio.engine.libs.imagezones.ImageZoneSimpleData;
 import processing.core.PApplet;
 import processing.core.PGraphics;
-import sun.rmi.runtime.Log;
 
 public class AnimationInGame extends GraphicElementInGame{
 

@@ -1,8 +1,8 @@
 package io.itch.mgdsstudio.engine.graphic;
 
 import io.itch.mgdsstudio.battlecity.game.camera.Camera;
-import io.itch.mgdsstudio.battlecity.game.camera.GameCamera;
 import io.itch.mgdsstudio.battlecity.game.gameobjects.Entity;
+import io.itch.mgdsstudio.engine.libs.imagezones.ImageZoneSimpleData;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 

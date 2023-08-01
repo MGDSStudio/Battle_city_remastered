@@ -118,7 +118,6 @@ public class LevelLoadingMaster extends ExternalDataController {
     }
 
     protected ArrayList<String> whenReadWithBufferedReader_thenCorrect(String fileName) {
-
         try {
             Logger.debug("sketch path: " + fileName);
             BufferedReader reader = null;
@@ -143,6 +142,5 @@ public class LevelLoadingMaster extends ExternalDataController {
             Logger.error("Can not load data; " + e);
             return null;
         }
-
     }
 }

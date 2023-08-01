@@ -12,7 +12,7 @@ public class DataDecoder {
     public static final char END_ROW_SYMBOL = '!';
     static final public char MAIN_DATA_START_CHAR = ':';
     static final public char GRAPHIC_NAME_START_CHAR = '#';
-    static final public char GRAPHIC_NAME_END_CHAR = ';';
+    static final public char GRAPHIC_DATA_END_CHAR = ';';
     static final public char DIVIDER_BETWEEN_VALUES = ',';
     static final public char DIVIDER_BETWEEN_GRAPHIC_DATA = 'x';
     static final protected char VERTICES_START_CHAR = '%';

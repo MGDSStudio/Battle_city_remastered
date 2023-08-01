@@ -1,9 +1,8 @@
 package com.mgdsstudio.engine.nesgui;
 
 import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
-import io.itch.mgdsstudio.engine.graphic.ImageZoneSimpleData;
+import io.itch.mgdsstudio.engine.libs.imagezones.ImageZoneSimpleData;
 import processing.core.PApplet;
-import processing.core.PConstants;
 import processing.core.PGraphics;
 
 public class SliderButtonWithText extends ButtonInFrameWithText {

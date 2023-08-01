@@ -2,10 +2,9 @@ package com.mgdsstudio.engine.nesgui;
 
 import io.itch.mgdsstudio.battlecity.game.Logger;
 import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
-import io.itch.mgdsstudio.engine.graphic.ImageZoneSimpleData;
+import io.itch.mgdsstudio.engine.libs.imagezones.ImageZoneSimpleData;
 import processing.core.PApplet;
 import processing.core.PGraphics;
-import processing.core.PImage;
 
 public class NoTextCursorButton extends ButtonWithCursor{
 

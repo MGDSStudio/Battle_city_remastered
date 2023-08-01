@@ -1,6 +1,6 @@
 package com.mgdsstudio.engine.nesgui;
 
-import io.itch.mgdsstudio.engine.graphic.ImageZoneSimpleData;
+import io.itch.mgdsstudio.engine.libs.imagezones.ImageZoneSimpleData;
 
 interface StandardGraphic {
     ImageZoneSimpleData MOVE_IMAGE_RIGHT = new ImageZoneSimpleData(65, 289+100, 98, 322+100);

@@ -2,7 +2,7 @@ package io.itch.mgdsstudio.battlecity.game.graphic;
 
 import io.itch.mgdsstudio.engine.graphic.AnimationInGame;
 import io.itch.mgdsstudio.engine.graphic.Image;
-import io.itch.mgdsstudio.engine.graphic.ImageZoneSimpleData;
+import io.itch.mgdsstudio.engine.libs.imagezones.ImageZoneSimpleData;
 
 public class ShotAnimation extends AnimationInGame {
 

@@ -3,12 +3,10 @@ package io.itch.mgdsstudio.battlecity.game.gameobjects;
 import io.itch.mgdsstudio.battlecity.game.GameRound;
 import io.itch.mgdsstudio.battlecity.game.PhysicWorld;
 import io.itch.mgdsstudio.battlecity.game.dataloading.EntityData;
-import io.itch.mgdsstudio.battlecity.game.dataloading.GraphicData;
-import io.itch.mgdsstudio.battlecity.mainpackage.GlobalConstants;
 import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
-import io.itch.mgdsstudio.engine.graphic.ImageZoneSimpleData;
+import io.itch.mgdsstudio.engine.libs.imagezones.ImageZoneSimpleData;
 import io.itch.mgdsstudio.engine.libs.Coordinate;
-import io.itch.mgdsstudio.engine.libs.ImageZoneLoader;
+import io.itch.mgdsstudio.engine.libs.imagezones.SingleImageZoneFromFileLoader;
 
 public class BrickWall extends Wall{
 
@@ -29,8 +27,8 @@ public class BrickWall extends Wall{
     }
 
     private void loadGraphicDefaultData(IEngine engine, int [] graphicData){
-        //final String path = engine.getPathToSpriteInAssets(graphicData[0]);
-        ImageZoneLoader loader = new ImageZoneLoader(engine, graphicData);
+        this.graphicData = graphicData;
+        SingleImageZoneFromFileLoader loader = new SingleImageZoneFromFileLoader(engine, graphicData);
         final ImageZoneSimpleData data = loader.getData();
         final String pathToTileset = loader.getPath();
         loadImage(engine, pathToTileset, width, height, data);

@@ -9,7 +9,7 @@ import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
 import io.itch.mgdsstudio.engine.graphic.GraphicManager;
 import io.itch.mgdsstudio.engine.graphic.Image;
 import io.itch.mgdsstudio.engine.graphic.ImageInGame;
-import io.itch.mgdsstudio.engine.graphic.ImageZoneSimpleData;
+import io.itch.mgdsstudio.engine.libs.imagezones.ImageZoneSimpleData;
 import io.itch.mgdsstudio.engine.libs.AxisAlignedBoundingBox;
 import io.itch.mgdsstudio.engine.libs.Coordinate;
 import org.jbox2d.collision.shapes.CircleShape;
@@ -20,9 +20,6 @@ import processing.core.PApplet;
 import processing.core.PVector;
 
 public abstract class SolidObject extends Entity{
-
-
-
 
     public interface BodyForms{
         int RECT = 0;
@@ -39,10 +36,11 @@ public abstract class SolidObject extends Entity{
 
     protected Body body;
     protected AxisAlignedBoundingBox aabb;
-
+    protected final int bodyForm;
 
     protected SolidObject(IEngine engine, PhysicWorld physicWorld, Coordinate pos, int angle, int life, int width, int height, int bodyForm, BodyType bodyType, int additionalDim) {
         super(engine, pos, angle, life, width, height);
+        this.bodyForm = bodyForm;
         createBody(physicWorld, bodyForm, additionalDim, bodyType);
 
         setBodyData();

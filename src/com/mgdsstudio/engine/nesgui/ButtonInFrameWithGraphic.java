@@ -1,8 +1,8 @@
 package com.mgdsstudio.engine.nesgui;
 
-import io.itch.mgdsstudio.battlecity.game.Logger;
 import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
-import io.itch.mgdsstudio.engine.graphic.ImageZoneSimpleData;
+import io.itch.mgdsstudio.engine.graphic.Image;
+import io.itch.mgdsstudio.engine.libs.imagezones.ImageZoneSimpleData;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 
@@ -11,21 +11,29 @@ public class ButtonInFrameWithGraphic extends ButtonInFrameWithText{
     //private final static ImageZoneSimpleData openedImageZoneSimpleDataWithBlackBackground = new ImageZoneSimpleData(98, 254, 131, 289);
     private final static ImageZoneSimpleData selectedWithoutFlagFrameData = new ImageZoneSimpleData(34,32,68,66);
 
-    private final ImageZoneSimpleData insideImage;
+    private final ImageZoneSimpleData insideImageData;
+    private Image image;
     private int graphicAngleInRad;
     final int graphicWidth, graphicHeight;
     private final static float GRAPHIC_SCALE = 0.72f;
 
     public ButtonInFrameWithGraphic(IEngine engine, int left, int upper, int width, int frameHeight, String name, ImageZoneSimpleData imageData, int graphicAngle, PGraphics graphics) {
         super(engine, left+width/2, (int) (upper+frameHeight/2), width, frameHeight/ListButton.CURSOR_DIMENSIONS_COEF*heightRelativeCoef, name, graphics);
-        //super(engine, left+width/2, (int) (upper+frameHeight/2), width, frameHeight/ListButton.CURSOR_DIMENSIONS_COEF*heightRelativeCoef, name, graphics);
-        this.insideImage = imageData;
+        this.insideImageData = imageData;
         this.graphicAngleInRad = (int) graphics.parent.radians(graphicAngle);
-
         float smallestSize = PApplet.min(width, frameHeight);
         graphicWidth = (int) (smallestSize*GRAPHIC_SCALE);
         graphicHeight = (int) (smallestSize*GRAPHIC_SCALE);
-        //Logger.debug("Button sizes: " + this.width + "x" + height);
+    }
+
+    public ButtonInFrameWithGraphic(IEngine engine, int left, int upper, int width, int frameHeight, String name, ImageZoneSimpleData imageData, int graphicAngle, PGraphics graphics, Image externalImage) {
+        super(engine, left+width/2, (int) (upper+frameHeight/2), width, frameHeight/ListButton.CURSOR_DIMENSIONS_COEF*heightRelativeCoef, name, graphics);
+        this.insideImageData = imageData;
+        this.image = externalImage;
+        this.graphicAngleInRad = (int) graphics.parent.radians(graphicAngle);
+        float smallestSize = PApplet.min(width, frameHeight);
+        graphicWidth = (int) (smallestSize*GRAPHIC_SCALE);
+        graphicHeight = (int) (smallestSize*GRAPHIC_SCALE);
     }
 
     @Override
@@ -44,7 +52,9 @@ public class ButtonInFrameWithGraphic extends ButtonInFrameWithText{
             graphic.pushMatrix();
             graphic.rotate(graphicAngleInRad);
             graphic.translate(x,y);
-            graphic.image(graphicFile.getImage(), 0,0, graphicWidth, graphicHeight, insideImage.leftX, insideImage.upperY, insideImage.rightX, insideImage.lowerY);
+            if (image == null) graphic.image(graphicFile.getImage(), 0,0, graphicWidth, graphicHeight, insideImageData.leftX, insideImageData.upperY, insideImageData.rightX, insideImageData.lowerY);
+            else graphic.image(image.getImage(), 0,0, graphicWidth, graphicHeight, insideImageData.leftX, insideImageData.upperY, insideImageData.rightX, insideImageData.lowerY);
+
             graphic.popMatrix();
         }
     }

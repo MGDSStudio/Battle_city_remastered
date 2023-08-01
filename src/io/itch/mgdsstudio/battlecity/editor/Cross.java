@@ -7,7 +7,7 @@ import io.itch.mgdsstudio.battlecity.game.Logger;
 import io.itch.mgdsstudio.battlecity.game.camera.Camera;
 
 import io.itch.mgdsstudio.battlecity.game.gameobjects.Entity;
-import io.itch.mgdsstudio.engine.graphic.ImageZoneSimpleData;
+import io.itch.mgdsstudio.engine.libs.imagezones.ImageZoneSimpleData;
 import io.itch.mgdsstudio.engine.libs.Coordinate;
 import org.jbox2d.common.Vec2;
 import processing.core.PApplet;

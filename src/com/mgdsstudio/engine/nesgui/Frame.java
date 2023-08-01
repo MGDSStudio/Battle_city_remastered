@@ -1,8 +1,7 @@
 package com.mgdsstudio.engine.nesgui;
 
 import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
-import io.itch.mgdsstudio.engine.graphic.ImageZoneSimpleData;
-import processing.core.PConstants;
+import io.itch.mgdsstudio.engine.libs.imagezones.ImageZoneSimpleData;
 import processing.core.PGraphics;
 import processing.core.PVector;
 

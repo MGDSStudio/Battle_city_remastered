@@ -159,7 +159,7 @@ public class DataStringDecoder {
 
         if (values != null) {
             int id = getValueBetweenChars(DataDecoder.DIVIDER_NAME_ID, DataDecoder.MAIN_DATA_START_CHAR);
-            int [] graphicValues = getValuesBetweenCharsNew(DataDecoder.GRAPHIC_NAME_START_CHAR, DataDecoder.DIVIDER_BETWEEN_GRAPHIC_DATA, DataDecoder.GRAPHIC_NAME_END_CHAR);
+            int [] graphicValues = getValuesBetweenCharsNew(DataDecoder.GRAPHIC_NAME_START_CHAR, DataDecoder.DIVIDER_BETWEEN_GRAPHIC_DATA, DataDecoder.GRAPHIC_DATA_END_CHAR);
 
             EntityData entityData = new EntityData(values, graphicValues, id);
             return entityData;

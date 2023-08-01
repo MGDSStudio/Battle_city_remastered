@@ -168,7 +168,7 @@ public class AddCollectable extends AbstractEditorMenu {
             return "BETTER ARMOUR";
         }
         else if (element.getName() == extraLife){
-             return "MORE LIFES FOR THE PLAYER";
+             return "MORE LIFE FOR THE PLAYER";
         }
         else if (element.getName() == engine){
              return "POWERFUL ENGINE WITH HIGHER MAX VELOCITY";
@@ -233,7 +233,7 @@ public class AddCollectable extends AbstractEditorMenu {
              EditorListenersManagerSingleton singleton = EditorListenersManagerSingleton.getInstance();
              EditorAction editorAction = new EditorAction(EditorCommandPrefix.OBJECT_CREATED, object.getDataString());
              singleton.notify(editorAction);
-             nextStatement = START_STATEMENT;
+             //nextStatement = START_STATEMENT;
         }
         else if (element.getName().equals(money1) || element.getName().equals(money2) || element.getName().equals(money3) || element.getName().equals(money5) || element.getName().equals(money10) || element.getName().equals(money15) || element.getName().equals(money20) || element.getName().equals(money25)|| element.getName().equals(money30) || element.getName().equals(money30) || element.getName().equals(money40) || element.getName().equals(money50)){
             int value = getValueFromName(element.getName());

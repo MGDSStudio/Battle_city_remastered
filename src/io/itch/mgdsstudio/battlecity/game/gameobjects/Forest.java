@@ -4,8 +4,8 @@ import io.itch.mgdsstudio.battlecity.game.PhysicWorld;
 import io.itch.mgdsstudio.battlecity.game.dataloading.EntityData;
 import io.itch.mgdsstudio.battlecity.mainpackage.GlobalConstants;
 import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
-import io.itch.mgdsstudio.engine.graphic.*;
 import io.itch.mgdsstudio.engine.libs.Coordinate;
+import io.itch.mgdsstudio.engine.libs.imagezones.ImageZoneSimpleData;
 
 public class Forest extends GraphicObject{
 

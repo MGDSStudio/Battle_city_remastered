@@ -1,5 +1,6 @@
 package io.itch.mgdsstudio.engine.graphic;
 
+import io.itch.mgdsstudio.engine.libs.imagezones.ImageZoneSimpleData;
 import processing.core.PGraphics;
 
 public class ImageInGame extends GraphicElementInGame{

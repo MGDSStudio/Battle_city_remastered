@@ -1,4 +1,4 @@
-package io.itch.mgdsstudio.engine.graphic;
+package io.itch.mgdsstudio.engine.libs.imagezones;
 
 public class ImageZoneSimpleData {
 

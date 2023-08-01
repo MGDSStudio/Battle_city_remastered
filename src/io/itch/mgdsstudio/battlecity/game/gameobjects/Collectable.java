@@ -16,7 +16,7 @@ import io.itch.mgdsstudio.battlecity.game.textes.DissolvingAndUpwardsMovingText;
 import io.itch.mgdsstudio.battlecity.mainpackage.GlobalConstants;
 import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
 import io.itch.mgdsstudio.engine.graphic.GraphicManager;
-import io.itch.mgdsstudio.engine.graphic.ImageZoneSimpleData;
+import io.itch.mgdsstudio.engine.libs.imagezones.ImageZoneSimpleData;
 import io.itch.mgdsstudio.engine.libs.Coordinate;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyType;
@@ -174,11 +174,8 @@ public class Collectable extends SolidObject implements IActivateable {
         for (Integer val : activatingControllerList){
             list.add(val);
         }
-        // public DataStringCreationMaster(int[] values, String name) {
         DataStringCreationMaster dataStringCreationMaster = new DataStringCreationMaster(list, this.getClass().getSimpleName());
         String dataString = dataStringCreationMaster.getDataString();
-
-        //Logger.correct("To implement");
         return dataString;
     }
 

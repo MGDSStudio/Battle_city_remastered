@@ -2,8 +2,7 @@ package io.itch.mgdsstudio.engine.graphic.tankgraphic;
 
 import io.itch.mgdsstudio.battlecity.game.Logger;
 import io.itch.mgdsstudio.battlecity.game.gameobjects.PlayerTank;
-import io.itch.mgdsstudio.battlecity.game.gameobjects.Tank;
-import io.itch.mgdsstudio.engine.graphic.ImageZoneSimpleData;
+import io.itch.mgdsstudio.engine.libs.imagezones.ImageZoneSimpleData;
 
 interface GraphicData {
     ImageZoneSimpleData PLAYER_BASIC_BODY = new ImageZoneSimpleData(0,685-685, 80,685+80-685);

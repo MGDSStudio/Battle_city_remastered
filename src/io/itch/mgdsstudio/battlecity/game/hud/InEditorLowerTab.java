@@ -4,10 +4,8 @@ import com.mgdsstudio.engine.nesgui.EightPartsFrameImage;
 import com.mgdsstudio.engine.nesgui.GuiElement;
 import io.itch.mgdsstudio.battlecity.game.InEditorGraphicData;
 import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
-import io.itch.mgdsstudio.engine.graphic.ImageZoneSimpleData;
+import io.itch.mgdsstudio.engine.libs.imagezones.ImageZoneSimpleData;
 import processing.core.PVector;
-
-import java.awt.*;
 
 public class InEditorLowerTab extends InEditorFrame{
     //private int yFreeZone;

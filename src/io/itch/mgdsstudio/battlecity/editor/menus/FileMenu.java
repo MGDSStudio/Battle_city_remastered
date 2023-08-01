@@ -1,17 +1,11 @@
 package io.itch.mgdsstudio.battlecity.editor.menus;
 
-import com.mgdsstudio.engine.nesgui.ButtonInFrameWithGraphic;
-import com.mgdsstudio.engine.nesgui.ButtonWithFrameSelection;
 import com.mgdsstudio.engine.nesgui.GuiElement;
 
-import com.mgdsstudio.engine.nesgui.NoTextButtonWithFrameSelection;
 import io.itch.mgdsstudio.battlecity.game.EditorController;
-import io.itch.mgdsstudio.battlecity.game.Logger;
 import io.itch.mgdsstudio.battlecity.game.hud.LowerPanelInEditor;
 
-import java.awt.*;
-
-public class File extends AbstractEditorMenu {
+public class FileMenu extends AbstractEditorMenu {
 
     private String save, clear, exit;
 
@@ -24,7 +18,7 @@ public class File extends AbstractEditorMenu {
        
    }
 
-    public File(EditorController editorController, LowerPanelInEditor lowerPanelInEditor) {
+    public FileMenu(EditorController editorController, LowerPanelInEditor lowerPanelInEditor) {
         super(editorController, lowerPanelInEditor, NO_END);
     }
 

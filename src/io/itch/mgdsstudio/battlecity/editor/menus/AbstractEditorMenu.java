@@ -1,11 +1,10 @@
 package io.itch.mgdsstudio.battlecity.editor.menus;
 
 import com.mgdsstudio.engine.nesgui.*;
-import com.mgdsstudio.engine.nesgui.TextArea;
 import io.itch.mgdsstudio.battlecity.game.EditorController;
 import io.itch.mgdsstudio.battlecity.game.Logger;
 import io.itch.mgdsstudio.battlecity.game.hud.LowerPanelInEditor;
-import io.itch.mgdsstudio.engine.libs.Coordinate;
+import io.itch.mgdsstudio.engine.libs.imagezones.SingleImageZoneFromFileLoader;
 import processing.core.PApplet;
 
 import java.awt.*;
@@ -46,7 +45,7 @@ public abstract class AbstractEditorMenu {
 
     public static AbstractEditorMenu createMenuForType(MenuType actualMenuType, EditorController editorController, LowerPanelInEditor lowerPanel) {
         if (actualMenuType == MenuType.MAIN) return new Main(editorController, lowerPanel);
-        else if (actualMenuType == MenuType.FILE) return new File(editorController, lowerPanel);
+        else if (actualMenuType == MenuType.FILE) return new FileMenu(editorController, lowerPanel);
         else if (actualMenuType == MenuType.EDIT) return new Edit(editorController, lowerPanel);
         else if (actualMenuType == MenuType.PREFERENCES) return new Preferences(editorController, lowerPanel);
         else if (actualMenuType == MenuType.PLAYER) return new Player(editorController, lowerPanel);
@@ -378,6 +377,10 @@ public abstract class AbstractEditorMenu {
         }
         else Logger.error("Can not get data value. Can not find keyboard");
         return 0;
+    }
+
+    protected void createMenuWithGraphicButtons(int alongX, int alongY) {
+        SingleImageZoneFromFileLoader loader = new SingleImageZoneFromFileLoader();
     }
 
 }

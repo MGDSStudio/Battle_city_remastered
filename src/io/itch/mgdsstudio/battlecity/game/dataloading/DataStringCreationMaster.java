@@ -41,6 +41,22 @@ public class DataStringCreationMaster {
     init();
   }
 
+  public DataStringCreationMaster(int id, ArrayList<Integer>  valuesList, ArrayList<Integer>  graphicList, String name) {
+    this.id = id;
+    int[] values = new int[valuesList.size()];
+    for (int i = 0; i < values[i]; i++){
+      values[i] = valuesList.get(i);
+    }
+    int [] graphicValues = new int[graphicList.size()];
+    for (int i = 0; i < graphicValues[i]; i++){
+      graphicValues[i] = graphicList.get(i);
+    }
+    this.values = values;
+    this.name = name;
+    this.graphicValues = graphicValues;
+    init();
+  }
+
   private void init(){
     // I should use the StringBuilder
     //I don't write the tileset name. Only the number
@@ -59,7 +75,8 @@ public class DataStringCreationMaster {
         dataString+=graphicValues[i];
         dataString+= DataDecoder.DIVIDER_BETWEEN_VALUES;
       }
-      dataString+=values[graphicValues.length-1];
+      dataString+=graphicValues[graphicValues.length-1];
+      dataString+=DataDecoder.GRAPHIC_DATA_END_CHAR;
     }
   }
 

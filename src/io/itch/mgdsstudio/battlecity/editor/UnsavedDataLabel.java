@@ -1,10 +1,9 @@
 package io.itch.mgdsstudio.battlecity.editor;
 
 import com.mgdsstudio.engine.nesgui.GuiElement;
-import io.itch.mgdsstudio.battlecity.game.Logger;
 import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
 import io.itch.mgdsstudio.engine.graphic.Image;
-import io.itch.mgdsstudio.engine.graphic.ImageZoneSimpleData;
+import io.itch.mgdsstudio.engine.libs.imagezones.ImageZoneSimpleData;
 import io.itch.mgdsstudio.engine.libs.Coordinate;
 
 public class UnsavedDataLabel {

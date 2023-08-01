@@ -1,7 +1,7 @@
 package com.mgdsstudio.engine.nesgui;
 
 import processing.core.PGraphics;
-import io.itch.mgdsstudio.engine.graphic.ImageZoneSimpleData;
+import io.itch.mgdsstudio.engine.libs.imagezones.ImageZoneSimpleData;
 
 public class GraphicArea {
     enum Dir{
