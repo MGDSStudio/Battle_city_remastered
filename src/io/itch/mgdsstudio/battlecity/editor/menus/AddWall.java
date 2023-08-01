@@ -18,6 +18,7 @@ public class AddWall extends AbstractEditorMenu {
 
     private String crushable, armored, immortal;
     private String square, triangle, circle;
+    private String NE, NW, SE,SW;
     private String add;
     private ObjectDataStruct objectData;
 
@@ -25,6 +26,7 @@ public class AddWall extends AbstractEditorMenu {
 
          int SELECT_FORM = 11;
          int SELECT_TRIANGLE_FORM = 15;
+         int SELECT_SIZE = 17;
          int SELECT_TILESET = 21;
          int PLACE_SIMPLE_OBJECT_ON_MAP = 51;
          int PLACE_TRIANGLE_ON_MAP = 61;
@@ -53,11 +55,17 @@ public class AddWall extends AbstractEditorMenu {
             editorController.setTextInConcole("SHIFT THE BATTLEFIELD VIA SWIPES TO SELECT RIGHT POSITION FOR THE OBJECT. PRESS ADD BUTTON TO PLACE THE OBJECT ON THE BATTLEFIELD");
         }
         else if (actualStatement == Statements.SELECT_FORM){
-            editorController.getCross().setStatement(Cross.Statement.CELL_CENTER);
-            String [] names = new String[] {square,triangle,circle,back};
+            editorController.getCross().setStatement(Cross.Statement.INVISIBLE_AS_CELL_CENTER);
+            String [] names = new String[] {square,circle,triangle,back};
             createSubmenuWithDefaultAlignedButtons(names);
             editorController.setTextInConcole("SELECT FORM OF THE WALL ELEMENT");
         }
+        else if (actualStatement == Statements.SELECT_TRIANGLE_FORM){
+editorController.getCross().setStatement(Cross.Statement.INVISIBLE_AS_CELL_CENTER);
+String [] names = new String []{ SE, SW, NW, NE, back }
+
+        }
+    
     }
 
     private void initButtonNames(){
@@ -65,10 +73,12 @@ public class AddWall extends AbstractEditorMenu {
         immortal = "IMMORTAL";
         add = "ADD ON MAP";
         square = "SQUARE;"
+        circle = "CIRCLE";
+        triangle = "TRIANGLE";
     }
 
     protected String getTextForConsoleByPressedGui(GuiElement element){
-        int ENGLISH = 0;
+        int ENGLISH = 0; 
         int language = ENGLISH;
         if (element.getName() == crushable){
             return "THE NEW OBJECT CAN BE DESTROYED BY A SIMPLE SHOT";
@@ -105,8 +115,9 @@ public class AddWall extends AbstractEditorMenu {
             initDataStructForGuiName(element.getName());
       }
       else if (actualStatement == Statements.SELECT_FORM){
-
-      
+if (element.getName().equals(rectangle) == element.getName().equals(circle)) nextStatement = Statements.SELECT_SIZE;
+else if (element .getName().equals(triangle)) nextStatement = Statements.SELECT_TRIANGLE_FORM;
+      else Logger.error("No data for this button");
       }
     }
 
