@@ -24,6 +24,7 @@ public class AddWall extends AbstractEditorMenu {
    private interface Statements{
 
          int SELECT_FORM = 11;
+         int SELECT_TRIANGLE_FORM = 15;
          int SELECT_TILESET = 21;
          int PLACE_SIMPLE_OBJECT_ON_MAP = 51;
          int PLACE_TRIANGLE_ON_MAP = 61;
@@ -63,6 +64,7 @@ public class AddWall extends AbstractEditorMenu {
         crushable =  "DESTROYABLE";
         immortal = "IMMORTAL";
         add = "ADD ON MAP";
+        square = "SQUARE;"
     }
 
     protected String getTextForConsoleByPressedGui(GuiElement element){
@@ -101,6 +103,10 @@ public class AddWall extends AbstractEditorMenu {
        else if (element.getName().equals(crushable) || element.getName().equals(armored) || element.getName().equals(immortal)){
             nextStatement =   Statements.SELECT_TILESET;
             initDataStructForGuiName(element.getName());
+      }
+      else if (actualStatement == Statements.SELECT_FORM){
+
+      
       }
     }
 
