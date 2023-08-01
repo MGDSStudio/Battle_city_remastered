@@ -139,10 +139,12 @@ public class X64Launcher extends PApplet implements ContactListener , IEngine {
 
     @Override
     public String getPathToSpriteInAssets(int spritesheetNumber) {
-        if (spritesheetNumber == 0) return getPathToObjectInAssets(GlobalConstants.NAME_FOR_TANK_GRAPHIC_FILE);
+        if (spritesheetNumber == 0 || spritesheetNumber == 1) return getPathToObjectInAssets(GlobalConstants.NAME_FOR_TANK_GRAPHIC_FILE);
+
         else {
+            String path = GlobalConstants.TILESET_PREFIX+spritesheetNumber+GlobalConstants.TILESET_EXTENSION;
             Logger.error("We dont have implemented another sprites");
-            return  getPathToObjectInAssets(GlobalConstants.NAME_FOR_TANK_GRAPHIC_FILE);
+            return  getPathToObjectInAssets(path);
         }
     }
 

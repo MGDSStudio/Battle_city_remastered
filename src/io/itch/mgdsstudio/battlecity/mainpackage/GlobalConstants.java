@@ -5,7 +5,10 @@ public interface GlobalConstants {
     String NAME_FOR_LEVEL_GRAPHIC_FILE = "Game_graphic.png";
     //String NAME_FOR_LEVEL_GRAPHIC_FILE = "Game_graphic.png";
 
-    String NAME_FOR_TANK_GRAPHIC_FILE = "Tanks.png";
+    String TILESET_PREFIX = "Tileset_";
+    String TILESET_EXTENSION = ".png";
+    String NAME_FOR_TANK_GRAPHIC_FILE = "Tileset_1.png";
+
     String NAME_FOR_HUD_GRAPHIC_FILE = "HUD.png";
 
     int WINDOWS = 0;

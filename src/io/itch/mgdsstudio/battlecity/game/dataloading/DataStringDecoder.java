@@ -1,6 +1,7 @@
 package io.itch.mgdsstudio.battlecity.game.dataloading;
 
 import io.itch.mgdsstudio.battlecity.game.Logger;
+import processing.core.PApplet;
 
 
 public class DataStringDecoder {
@@ -38,7 +39,12 @@ public class DataStringDecoder {
     private int[] getValuesBetweenChars(char startChar, char dividingChar, char endChar) {
         int[] values = new int[valuesNumber(dividingChar, endChar)];
         String testString = "";
+        //int startCharPos = stringToBeDecoded.indexOf(startChar)+1;
+        //int endCharPos = stringToBeDecoded.indexOf(endChar);
+        //testString += testString.concat(stringToBeDecoded.substring(startCharPos, endCharPos));
         testString += testString.concat(stringToBeDecoded);
+
+        Logger.debug("Test string to get main data: " + testString);
         for (int i = 0; i < values.length; i++) {
             try {
                 int endSymbolPosition = testString.indexOf(dividingChar);
@@ -69,14 +75,38 @@ public class DataStringDecoder {
                 }
                 //System.out.println("Test string after " + i + " itteration: " + testString);
             } catch (Exception e) {
-                System.out.println("Can not devide. Must be:  " + values.length + " values. TestString: " + testString + "; Exc: " + e);
-                for (int j = 0; j < values.length; j++) {
-                    System.out.print(values[j] + ",");
-                }
+                System.out.println("Can not devide. Must be:  " + values.length + " values. TestString: " + testString + " Deviders: " + startChar + "," + dividingChar + "," + endChar + " Exception: " + e);
+
                 System.out.println("");
             }
         }
         return values;
+    }
+
+    private int[] getValuesBetweenCharsNew(char startChar, char dividingChar, char endChar) {
+        String testString = "";
+        int startCharPos = stringToBeDecoded.indexOf(startChar)+1;
+        int endCharPos = stringToBeDecoded.indexOf(endChar);
+        if (startCharPos<0 || endCharPos < 0){
+            return new int[0];
+        }
+        testString += testString.concat(stringToBeDecoded.substring(startCharPos, endCharPos));
+        //Logger.debug("Source string: " + stringToBeDecoded + " is " + testString);
+        if (testString.contains(""+dividingChar)){
+            String [] singleTextValues = PApplet.split(testString, dividingChar);
+            int values [] = new int[singleTextValues.length];
+            for (int i = 0; i < values.length; i++){
+                values[i] = Integer.parseInt(singleTextValues[i]);
+            }
+            return values;
+
+        }
+        else {
+            //Logger.debug("only one value");
+            int value = Integer.parseInt(testString);
+            int [] values = new int[]{value};
+            return values;
+        }
     }
 
     private int valuesNumber(char devidingChar, char endChar) {
@@ -125,9 +155,22 @@ public class DataStringDecoder {
 
 
     public EntityData getDecodedData(String type) {
-        //IndependentOnScreenStaticSprite 1:2930,930,0,0,3#Tileset5.png;224x125x256x150x160x120x0
-        //String[] pathes, int[] values, int[] graphicValues)
+        int[] values = getValuesBetweenCharsNew(DataDecoder.MAIN_DATA_START_CHAR, DataDecoder.DIVIDER_BETWEEN_VALUES, DataDecoder.GRAPHIC_NAME_START_CHAR);
 
+        if (values != null) {
+            int id = getValueBetweenChars(DataDecoder.DIVIDER_NAME_ID, DataDecoder.MAIN_DATA_START_CHAR);
+            int [] graphicValues = getValuesBetweenCharsNew(DataDecoder.GRAPHIC_NAME_START_CHAR, DataDecoder.DIVIDER_BETWEEN_GRAPHIC_DATA, DataDecoder.GRAPHIC_NAME_END_CHAR);
+
+            EntityData entityData = new EntityData(values, graphicValues, id);
+            return entityData;
+        } else {
+            Logger.error("No values founded at " + stringToBeDecoded);
+        }
+        return null;
+    }
+
+    /*
+    public EntityData getDecodedData(String type) {
         int[] values = getValuesBetweenChars(DataDecoder.MAIN_DATA_START_CHAR, DataDecoder.DIVIDER_BETWEEN_VALUES, DataDecoder.GRAPHIC_NAME_START_CHAR);
         GraphicData[] graphicDataArray = null;
         if (values != null) {
@@ -156,6 +199,8 @@ public class DataStringDecoder {
         }
         return null;
     }
+     */
+
 
     private int[][] getIntDataLists(String[] paths, char divider) {
         int size1 = paths.length;

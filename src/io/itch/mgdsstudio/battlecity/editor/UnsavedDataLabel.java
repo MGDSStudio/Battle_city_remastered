@@ -1,5 +1,6 @@
 package io.itch.mgdsstudio.battlecity.editor;
 
+import com.mgdsstudio.engine.nesgui.GuiElement;
 import io.itch.mgdsstudio.battlecity.game.Logger;
 import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
 import io.itch.mgdsstudio.engine.graphic.Image;
@@ -15,9 +16,9 @@ public class UnsavedDataLabel {
 
     private final IEngine engine;
 
-    public UnsavedDataLabel(IEngine engine, Image image, Coordinate pos, int size) {
+    public UnsavedDataLabel(IEngine engine, Coordinate pos, int size) {
         this.engine = engine;
-        this.image = image;
+        this.image = GuiElement.getGraphicFile();
         this.pos = pos;
         this.size = size;
     }
@@ -25,7 +26,7 @@ public class UnsavedDataLabel {
     public void draw(){
         if (active){
             engine.getEngine().image(image.getImage(), pos.x, pos.y, size, size, data.leftX, data.upperY, data.rightX, data.lowerY);
-            //Logger.debug("Drawn ");
+            //Logger.debug("Drawn at " + pos.x + "x" + pos.y + "; Sizes: " + size + "; Data: " + data  + " image: " + image.getPath());
         }
     }
 

@@ -50,6 +50,7 @@ public class UpperPanelInEditor extends Panel implements GlobalListener {
         Logger.debug("Upper height: " + height);
         //public FrameWithMoveableText(IEngine engine, int centerX, int centerY, int width, int height, String name, PGraphics graphics, String text) {
         console = new FrameWithMoveableText(engine, (int) center.x, (int) worldZone.y/2, (int) width, (int) consoleHeight, "Console", engine.getEngine().g, "WELCOME TO THE EDITOR");
+
     }
 
     public void setLevelEnded(MenuDataStruct dataStruct) {
@@ -69,6 +70,8 @@ public class UpperPanelInEditor extends Panel implements GlobalListener {
     }
 
     public void setConsoleText(String newText) {
-        console.setAnotherTextToBeDrawnAsName(newText);
+        //int height = console.getHeight();
+        //console = new FrameWithMoveableText(engine, (int) center.x, (int) worldZone.y/2, (int) width, (int) height, "Console", engine.getEngine().g, newText);
+        console.changeConsoleText(newText);
     }
 }

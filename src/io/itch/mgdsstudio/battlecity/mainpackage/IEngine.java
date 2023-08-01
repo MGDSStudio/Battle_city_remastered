@@ -36,5 +36,4 @@ public interface IEngine {
 
     String getPathToObjectInUserFolder(String fileName);
 
-
 }

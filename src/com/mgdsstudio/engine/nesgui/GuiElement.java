@@ -593,7 +593,8 @@ public abstract class GuiElement {
             Logger.error("can not calculate char width for this gui");
             charWidth++;
         }
-        int maxChars = PApplet.floor(maxWidth/ underLineValue) - 3;
+        int maxChars = PApplet.floor(maxWidth/ underLineValue) - 4;
+        if (maxChars <= 0) maxChars = 1;
         //System.out.println("Single char width for " + this.getClass() + " is " + charWidth + " by frame width: " + maxWidth + " and max chars: " + maxChars) ;
         return maxChars;
     }

@@ -2,6 +2,7 @@ package io.itch.mgdsstudio.battlecity.desktop;
 
 import io.itch.mgdsstudio.battlecity.game.Logger;
 import io.itch.mgdsstudio.battlecity.mainpackage.GlobalConstants;
+import io.itch.mgdsstudio.battlecity.mainpackage.GlobalVariables;
 import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
 import io.itch.mgdsstudio.battlecity.mainpackage.MultiplatformLauncher;
 import io.itch.mgdsstudio.engine.libs.Coordinate;
@@ -144,10 +145,12 @@ public class ARMLauncher extends PApplet implements ContactListener , IEngine {
 
     @Override
     public String getPathToSpriteInAssets(int spritesheetNumber) {
-        if (spritesheetNumber == 0) return getPathToObjectInAssets(GlobalConstants.NAME_FOR_TANK_GRAPHIC_FILE);
+        if (spritesheetNumber == 0 || spritesheetNumber == 1) return getPathToObjectInAssets(GlobalConstants.NAME_FOR_TANK_GRAPHIC_FILE);
+
         else {
+            String path = GlobalConstants.TILESET_PREFIX+spritesheetNumber+GlobalConstants.TILESET_EXTENSION;
             Logger.error("We dont have implemented another sprites");
-            return  getPathToObjectInAssets(GlobalConstants.NAME_FOR_TANK_GRAPHIC_FILE);
+            return  getPathToObjectInAssets(path);
         }
     }
 
@@ -155,4 +158,6 @@ public class ARMLauncher extends PApplet implements ContactListener , IEngine {
     public String getPathToObjectInUserFolder(String fileName) {
         return getPathToObjectInAssets(fileName);
     }
+
+
 }

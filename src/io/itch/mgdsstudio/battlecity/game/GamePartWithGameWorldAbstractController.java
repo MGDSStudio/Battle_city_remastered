@@ -82,6 +82,7 @@ public abstract class GamePartWithGameWorldAbstractController extends GamePart{
     protected void initStartData() {
         gameProcessController.setLevelStartTimeForUsers(gameRound.getPlayer().getId(), engine.getEngine().millis());
         startDataInit = true;
+
     }
 
     public abstract int getGraphicWidth();

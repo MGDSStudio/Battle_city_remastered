@@ -359,7 +359,13 @@ public abstract class AbstractEditorMenu {
                     Logger.error("User data is null. No time");
                 }
                 String userDataString = (String)label.getUserData();
-                int value = Integer.parseInt(userDataString);
+                int value = 0;
+                try{
+                    value = Integer.parseInt(userDataString);
+                }
+                catch (Exception e){
+
+                }
                 return value;
             }
             catch (Exception e){

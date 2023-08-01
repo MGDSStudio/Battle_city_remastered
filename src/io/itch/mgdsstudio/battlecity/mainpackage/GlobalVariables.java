@@ -17,6 +17,7 @@ public abstract class GlobalVariables {
     private static boolean desktop;
     private static boolean renderer;
     private static boolean twoDim;
+    public final static float yDirectionCoefficient = 1;    //if Y-Axis shows down - 1 (Processing) if up - -1 (libGDX)
 
     private static int screenCenterX, screenCenterY;
     private final static Random randomGenerator = new Random();

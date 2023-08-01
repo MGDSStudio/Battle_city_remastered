@@ -12,8 +12,8 @@ public class ArmoredWall extends Wall{
 
 
     //(PhysicGameWorld physicGameWorld, Coordinate pos, int angle, int width, int height) {
-    public ArmoredWall(IEngine engine, PhysicWorld physicWorld, Coordinate pos, int angle, int width, int height, int thirdDim){
-        super(engine, physicWorld, pos, angle, width, height, thirdDim);
+    public ArmoredWall(IEngine engine, PhysicWorld physicWorld, Coordinate pos, int angle, int width, int height, int form){
+        super(engine, physicWorld, pos, angle, width, height, form);
         loadGraphicDefaultData(engine);
     }
 

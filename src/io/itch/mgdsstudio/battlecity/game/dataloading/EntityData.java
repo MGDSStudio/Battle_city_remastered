@@ -5,21 +5,36 @@ import java.util.Arrays;
 public class EntityData {
     //private String [] pathes;
 
-    private GraphicData [] graphicData;
+    private int [] graphicData;
+    //private GraphicData [] graphicData;
     private int [] values;
 
     private int id = -9999;
 
 
-    public EntityData(int[] values, GraphicData[] graphicData, int id) {
+    public EntityData(int[] values, int[] graphicData, int id) {
         this.graphicData = graphicData;
         this.values = values;
         this.id = id;
     }
 
+    /*
+    public EntityData(int[] values, GraphicData[] graphicData, int id) {
+        this.graphicData = graphicData;
+        this.values = values;
+        this.id = id;
+    }
+     */
+
+    public int[] getGraphicData() {
+        return graphicData;
+    }
+
+    /*
     public GraphicData[] getGraphicData() {
         return graphicData;
     }
+     */
 
     public int[] getValues() {
         return values;

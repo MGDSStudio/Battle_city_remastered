@@ -1,0 +1,42 @@
+[
+{
+     "NAME": "BRICK_WALL_RECT",
+     "TILESET": 1,
+     "ID": 3,
+     "LEFT": 896,
+     "UP": 320,
+     "RIGHT": 960,
+     "DOWN": 383,
+     "COMMENT": "NOTHING"
+   },
+   {
+     "NAME": "ARMORED_WALL_RECT",
+     "TILESET": 1,
+     "ID": 2,
+     "LEFT": 960,
+     "UP": 64,
+     "RIGHT": 1024,
+     "DOWN": 124,
+     "COMMENT": "NOTHING"
+   },
+   {
+     "NAME": "1",
+     "TILESET": 1,
+     "ID": 1,
+     "LEFT": 896,
+     "UP": 320,
+     "RIGHT": 960,
+     "DOWN": 384,
+     "COMMENT": "BRICK WALL NORMAL"
+   },
+  {
+    "NAME": "2",
+    "TILESET": 1,
+    "ID": 4,
+    "LEFT": 960,
+    "UP": 320,
+    "RIGHT": 1023,
+    "DOWN": 383,
+    "COMMENT": "BRICK WALL WINTER"
+  }
+ ]

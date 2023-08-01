@@ -21,15 +21,15 @@ public class Camp extends Wall{
     //protected Wall(IEngine engine, PhysicGameWorld physicGameWorld, Coordinate pos, int angle, int width, int height, int thirdDim) {
     //
 
-    public Camp(IEngine engine, PhysicWorld physicWorld, Coordinate pos, int angle, int width, int height, int thirdDim){
-        super(engine, physicWorld, pos, angle, width, height, thirdDim);
+    public Camp(IEngine engine, PhysicWorld physicWorld, Coordinate pos, int angle, int width, int height){
+        super(engine, physicWorld, pos, angle, width, height, BodyForms.RECT);
         loadGraphicDefaultData(engine);
     }
 
     public static Camp create(IEngine engine, PhysicWorld physicWorld, EntityData entityData) {
         int [] values = entityData.getValues();
         Coordinate pos = new Coordinate(values[0], values[1]);
-        Camp wall = new Camp (engine, physicWorld, pos, values[2], values[3], values[4], values[5]);
+        Camp wall = new Camp (engine, physicWorld, pos, values[2], values[3], values[4]);
         wall.setId(entityData.getId());
         return wall;
     }

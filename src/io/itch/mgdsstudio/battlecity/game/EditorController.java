@@ -35,10 +35,11 @@ public class EditorController extends GamePartWithGameWorldAbstractController im
     private UnsavedDataList unsavedDataList;;
     private ChangesController changesController;
     private ArrayList <ISelectable> selectedElements;
-    private final UnsavedDataLabel unsavedDataLabel;
+    private UnsavedDataLabel unsavedDataLabel;
+    private boolean firstUpdated;
 
-    public EditorController(IEngine engine, MainController mainController, int levelNumber, int dif, int playersConnected, int playerNumber, int playerNumberInMultiplayerMode) {
-        super(engine, mainController, dif, levelNumber, playerNumberInMultiplayerMode,playersConnected);
+    public EditorController(IEngine engine, MainController mainController, int level, int dif, int playersConnected, int playerNumber, int playerNumberInMultiplayerMode) {
+        super(engine, mainController, dif, level, playerNumberInMultiplayerMode,playersConnected);
         selectedElements = new ArrayList<>();
         changesController = new ChangesController(this);
         EditorPreferencesSingleton editorPreferencesSingleton = EditorPreferencesSingleton.getInstance(engine);
@@ -59,12 +60,9 @@ public class EditorController extends GamePartWithGameWorldAbstractController im
         createOnMapZoneGraphic();
         nextMenuType = MenuType.MAIN;
         createMenu();
-        int size = (int) ((hud.getGraphicRightPixel()-hud.getGraphicLeftPixel())/12f);
 
-        unsavedDataLabel = new UnsavedDataLabel(engine, hud.getImage(), new Coordinate(hud.getGraphicLeftPixel(), hud.getGraphicUpperPixel()) , size);
-        unsavedDataLabel.setActive(true);
 
-        unsavedDataList = new UnsavedDataList(engine.getPathToObjectInUserFolder(ExternalDataController.LEVEL_PREFIX)+levelNumber+ExternalDataController.LEVEL_EXTENSION, unsavedDataLabel);
+
         lastActionController = new LastActionController(10);
 
     }
@@ -82,9 +80,7 @@ public class EditorController extends GamePartWithGameWorldAbstractController im
         graphicZone.y = hud.getGraphicUpperPixel();
         graphicZone.width = hud.getGraphicRightPixel()-graphicZone.x;
         graphicZone.height = hud.getGraphicLowerPixel()-graphicZone.y;
-
         //IEngine engine, Image image, Coordinate pos, int size
-
     }
 
     private void createOnMapZoneGraphic() {
@@ -100,14 +96,19 @@ public class EditorController extends GamePartWithGameWorldAbstractController im
 
     protected void initHud(int playerNumberInMultiplayerMode){
         hud = new InEditorHud(this, engine, playerNumberInMultiplayerMode, singleplayer);
+
     }
 
     public void update(){
-        if (!startDataInit) initStartData();
+        if (!startDataInit) {
+            initStartData();
+            int size = (int) ((hud.getGraphicRightPixel()-hud.getGraphicLeftPixel())/12f);
+            unsavedDataLabel = new UnsavedDataLabel(engine, new Coordinate(drawingGraphicPlaces.centerX-drawingGraphicPlaces.getWidth()/2+size*0.9f, drawingGraphicPlaces.centerY-drawingGraphicPlaces.getHeight()/2+size*0.9f) , size);
+            unsavedDataList = new UnsavedDataList(engine.getPathToObjectInUserFolder(ExternalDataController.LEVEL_PREFIX)+level+ExternalDataController.LEVEL_EXTENSION, unsavedDataLabel);
+        }
         if (nextMenuType!= actualMenuType){
             createMenu();
         }
-
         worldZoneScrollingController.update( engine.getEngine().millis());
         updateActions();
         deltaTime = engine.getEngine().millis() - lastFrameTime;
@@ -118,6 +119,7 @@ public class EditorController extends GamePartWithGameWorldAbstractController im
         engine.getEngine().image(gameRound.getGraphics(), drawingGraphicPlaces.centerX, drawingGraphicPlaces.centerY,
             drawingGraphicPlaces.getWidth(), drawingGraphicPlaces.getHeight(),
             hud.getGraphicLeftPixel(), hud.getGraphicUpperPixel(), hud.getGraphicRightPixel(), hud.getGraphicLowerPixel());
+        if (startDataInit) unsavedDataLabel.draw();
         menu.update();
         hud.update(gameRound);
     }
@@ -146,7 +148,7 @@ public class EditorController extends GamePartWithGameWorldAbstractController im
     public void draw(){
         hud.draw();
         menu.draw();
-        unsavedDataLabel.draw();
+
     }
 
     public Hud getHud() {

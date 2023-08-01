@@ -1,5 +1,6 @@
 package com.mgdsstudio.engine.nesgui;
 
+import io.itch.mgdsstudio.battlecity.game.Logger;
 import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
 import io.itch.mgdsstudio.engine.graphic.ImageZoneSimpleData;
 import processing.core.PApplet;
@@ -16,17 +17,21 @@ public class FrameWithMoveableText extends FrameWithText {
         this.graphics = graphics;
         basicString = text;
         maxChars = getMaxCharsForGui(graphics, frame.getWidth(), text);
+
         setAnotherTextToBeDrawnAsName(text);
-        //System.out.println("This console can have only " + maxChars + " chars ");
         movementController = new MovementController();
+        //System.out.println("This console can have only " + maxChars + " chars ");
+
     }
 
 
     public void changeConsoleText(String anotherTextToBeDrawnAsName){
+        super.setAnotherTextToBeDrawnAsName(anotherTextToBeDrawnAsName);
         basicString = anotherTextToBeDrawnAsName;
-        maxChars = getMaxCharsForGui(graphics, frame.getWidth(), anotherTextToBeDrawnAsName);
-        System.out.println("Text: " + anotherTextToBeDrawnAsName);
-        movementController = new MovementController();
+        movementController.updateMoveability();
+        //maxChars = getMaxCharsForGui(graphics, frame.getWidth(), anotherTextToBeDrawnAsName);
+        //System.out.println("Text: " + anotherTextToBeDrawnAsName);
+        //movementController = new MovementController();
     }
 
     @Override
@@ -50,6 +55,16 @@ public class FrameWithMoveableText extends FrameWithText {
         return data;
     }
 
+
+    @Override
+    public void setAnotherTextToBeDrawnAsName(String anotherTextToBeDrawnAsName) {
+
+        super.setAnotherTextToBeDrawnAsName(anotherTextToBeDrawnAsName);
+        //Logger.debug("Try to set text: " + anotherTextToBeDrawnAsName );
+        //basicString = anotherTextToBeDrawnAsName;
+        //if (movementController != null) movementController.updateMoveability();
+
+    }
 
 
     /*protected void updateDataFilling() {
@@ -123,17 +138,36 @@ public class FrameWithMoveableText extends FrameWithText {
             else {
                 actualDrawnString = basicString.substring(actualStartChar, actualEndChar);
             }
+
            // System.out.println("In this console frame with text " + maxChars + " chars in this string");
             //System.out.println("Substring is: " + actualDrawnString);
         }
 
-        protected void update(){
+        private void updateMoveability() {
+            Logger.debug("Try to get text to be drawn: ");
+            actualStartChar = 0;
+            actualEndChar = 1;
+            if (maxChars > getTextToBeDrawn().length()-1) {
+                moveable = false;
+                actualDrawnString = basicString;
+            }
+            else {
+                actualDrawnString = basicString.substring(actualStartChar, actualEndChar);
+                moveable = true;
+            }
+            Logger.debug("Moveable: " + moveable);
+        }
 
+        protected void update(){
             if (moveable) {
                 updateStatementChanging();
                 updateMovement();
+                //Logger.debug("Moveability aupdated");
             }
         }
+
+
+
 
         private void updateMovement() {
             if (movingStatement == MOVING){
@@ -244,5 +278,7 @@ public class FrameWithMoveableText extends FrameWithText {
         private int getCharWidth(){
             return (int) ((float)frame.getWidth()/(maxChars+1f));
         }
+
+
     }
 }

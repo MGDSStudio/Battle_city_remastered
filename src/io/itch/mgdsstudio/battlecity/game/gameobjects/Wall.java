@@ -12,8 +12,8 @@ import processing.core.PGraphics;
 public abstract class Wall extends SolidObject {
     //protected GraphicElementInGame image;
     //public ImageInGame(Image image, int width, int height, ImageZoneSimpleData imageZoneSimpleData) {
-    protected Wall(IEngine engine, PhysicWorld physicWorld, Coordinate pos, int angle, int width, int height, int thirdDim) {
-        super(engine, physicWorld, pos, angle, 1, width, height, BodyForms.RECT, BodyType.STATIC, -1);
+    protected Wall(IEngine engine, PhysicWorld physicWorld, Coordinate pos, int angle, int width, int height, int bodyForm) {
+        super(engine, physicWorld, pos, angle, 1, width, height, bodyForm, BodyType.STATIC, -1);
 
     }
 

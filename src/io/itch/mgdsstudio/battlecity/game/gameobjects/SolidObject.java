@@ -4,6 +4,7 @@ import io.itch.mgdsstudio.battlecity.game.GameRound;
 import io.itch.mgdsstudio.battlecity.game.Logger;
 import io.itch.mgdsstudio.battlecity.game.PhysicWorld;
 import io.itch.mgdsstudio.battlecity.game.graphic.IAnimations;
+import io.itch.mgdsstudio.battlecity.mainpackage.GlobalVariables;
 import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
 import io.itch.mgdsstudio.engine.graphic.GraphicManager;
 import io.itch.mgdsstudio.engine.graphic.Image;
@@ -27,6 +28,11 @@ public abstract class SolidObject extends Entity{
         int RECT = 0;
         int CIRCLE = 1;
         int TANK = 2;
+        int SW_TRIANGLE = 3;
+        int SE_TRIANGLE = 4;
+        int NW_TRIANGLE = 5;
+        int NE_TRIANGLE = 6;
+
     }
 
     //public final static int POLYGON = 3;
@@ -59,7 +65,7 @@ public abstract class SolidObject extends Entity{
         if (bodyForm == BodyForms.RECT) createRectBody(physicWorld, width, height, bodyType);
         else if (bodyForm == BodyForms.CIRCLE) createCircleBody(physicWorld, width, bodyType);
         else if (bodyForm == BodyForms.TANK) createTankBody(physicWorld, width, height, additionalDim);
-        else System.out.println("For this form there is no implementation");
+        else createTriangleBody(physicWorld, width, height, bodyType, bodyForm);
 
     }
 
@@ -114,9 +120,72 @@ public abstract class SolidObject extends Entity{
         body = physicWorld.controller.createBody(bd);
         body.createFixture(fd);
         body.setGravityScale(0f);
-        //setFilterDataForCategory(CollisionFilterCreator.CATEGORY_GAME_OBJECT);
     }
 
+    protected void createTriangleBody(PhysicWorld physicWorld, int width, int height, BodyType bodyType, int bodyForm ) {
+        PolygonShape sd = new PolygonShape();
+        float box2dW = physicWorld.controller.scalarPixelsToWorld(width/2);
+        float box2dH = physicWorld.controller.scalarPixelsToWorld(height/2);
+        sd.setAsBox(box2dW, box2dH);
+        Vec2[] vertices = new Vec2[3];
+        if (bodyForm == BodyForms.NE_TRIANGLE){
+            vertices[0] = new Vec2(-box2dW, -box2dW* GlobalVariables.yDirectionCoefficient);
+            vertices[1] = new Vec2(box2dW, -box2dW* GlobalVariables.yDirectionCoefficient);
+            vertices[2] = new Vec2(box2dW, box2dW* GlobalVariables.yDirectionCoefficient);
+        }
+        else if (bodyForm == BodyForms.NW_TRIANGLE){
+            vertices[0] = new Vec2(-box2dW, box2dW* GlobalVariables.yDirectionCoefficient);
+            vertices[1] = new Vec2(-box2dW, -box2dW* GlobalVariables.yDirectionCoefficient);
+            vertices[2] = new Vec2(box2dW, box2dW* GlobalVariables.yDirectionCoefficient);
+        }
+        else if (bodyForm == BodyForms.SW_TRIANGLE){
+            vertices[0] = new Vec2(-box2dW, -box2dW* GlobalVariables.yDirectionCoefficient);
+            vertices[1] = new Vec2(-box2dW, box2dW* GlobalVariables.yDirectionCoefficient);
+            vertices[2] = new Vec2(box2dW, box2dW* GlobalVariables.yDirectionCoefficient);
+        }
+        else if (bodyForm == BodyForms.SE_TRIANGLE){
+            vertices[0] = new Vec2(box2dW, -box2dW* GlobalVariables.yDirectionCoefficient);
+            vertices[1] = new Vec2(box2dW, box2dW* GlobalVariables.yDirectionCoefficient);
+            vertices[2] = new Vec2(-box2dW, -box2dW* GlobalVariables.yDirectionCoefficient);
+        }
+        sd.set(vertices, vertices.length);
+        FixtureDef fd = new FixtureDef();
+        fd.shape = sd;
+        fd.density = 2f;
+        fd.friction = 0.1f;
+        fd.restitution = 0.05f;
+        BodyDef bd = new BodyDef();
+        bd.type = bodyType;
+        bd.position.set(physicWorld.controller.coordPixelsToWorld(new Vec2(pos.x, pos.y)));
+        bd.angle = (float) Math.toRadians(angle);
+        body = physicWorld.controller.createBody(bd);
+        body.createFixture(fd);
+        body.setGravityScale(0f);
+
+/*
+        Vec2 centerInPixelCoordinates = getPixelCenter(pointsPositionsInPixelCoordinates);
+        Vec2 centerInWorldCoordinates = PhysicGameWorld.controller.vectorPixelsToWorld(centerInPixelCoordinates);
+        Vec2[] relativeCenterVerteciesInPixelCoordinate = getPixelRelativeCenterCoordinates(centerInPixelCoordinates, pointsPositionsInPixelCoordinates);
+        PolygonShape sd = new PolygonShape();
+        Vec2[] vertices = new Vec2[pointsPositionsInPixelCoordinates.size()];
+        for (int i = 0; i <pointsPositionsInPixelCoordinates.size(); i++){
+            vertices[i] = new Vec2(PhysicGameWorld.controller.coordPixelsToWorld(relativeCenterVerteciesInPixelCoordinate[i]));
+        }
+        sd.set(vertices, vertices.length);
+        System.out.println("Center: " + centerInPixelCoordinates + "; In world: " + centerInWorldCoordinates + "; Coordinates: " + pointsPositionsInPixelCoordinates.size() +" or " + vertices.length);
+
+        BodyDef bd = new BodyDef();
+        bd.type = bodyType;
+        bd.position.set(centerInWorldCoordinates);
+        bd.angle = (float) Math.toRadians(-angle);
+        body = PhysicGameWorld.controller.createBody(bd);
+        body.createFixture(sd, 1.0f);
+        body.getFixtureList().setDensity(1);
+        setFilterDataForCategory(CollisionFilterCreator.CATEGORY_GAME_OBJECT);
+        */
+
+
+    }
 
     public int getDyingAnimationType() {
         return IAnimations.NO_ANIMATION;

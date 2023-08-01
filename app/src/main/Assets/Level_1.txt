@@ -6,13 +6,21 @@
 //PhysicGameWorld physicWorld, Coordinate pos, int angle, int life, int turretType, int chassisType, int role, int ammoForActualWeapon
 //PlayerTank 1:280,360,0,1,0,0,0,9999#
 PlayerTank 1:600,420,0,0#
+BrickWall 7:600,520,0,40,40,3#2;
+BrickWall 7:600,620,0,40,40,4#1;
+BrickWall 7:600,720,0,40,40,5#2;
+BrickWall 7:600,820,0,40,40,6#1;
 WorldBoard 2:40,40,0,32,32,0#
 WorldBoard 3:350,250,0,32,32,0#
-BrickWall 4:350,118,0,16,16,0#
-BrickWall 5:366,118,0,16,16,0#
-BrickWall 6:350,134,0,16,16,0#
-BrickWall 7:366,134,0,16,16,0#
+BrickWall 4:350,118,0,16,16,0#1x1;
+BrickWall 5:366,118,0,16,16,0#2x1;
+BrickWall 6:350,134,0,16,16,0#1x1;
+BrickWall 7:366,134,0,16,16,0#2x1;
 ArmoredWall 8:350,282,0,32,32,0#
+//BrickWall 4:350,118,0,16,16,0#
+//BrickWall 5:366,118,0,16,16,0#
+//BrickWall 6:350,134,0,16,16,0#
+//BrickWall 7:366,134,0,16,16,0#
 Water 9:200,250,0,32,32,0,0#
 Ice 10:200,182,0,32,32#
 Forest 11:280,250,0,32,32,0,0#
@@ -26,10 +34,13 @@ Mine 19:270,560,0#
 Mine 20:220,520,0#
 Mine 21:220,620,0#
 EnemiesSpawnController 22:5,3000,1,0,0,0,0,0,0,1,1,1,1,1,1,0,0,150,150,400,450,100,450,100,400#
-LevelEndConditionController 23:0,0;
+LevelEndConditionController 23:0,0#
 Collectable 24:700,420,0,0,0#
 Collectable 25:660,420,22,0,5000#
 Collectable 26:660,490,22,0,5200#
 //int maxTanksOnScreen, int spawnTime, int tanks0, int tanks1, int tanks2, int tanks3, int tanks4, int tanks5, int controlBy, int aiModelForTanks0, int aiModelForTanks1, int aiModelForTanks2, int aiModelForTanks3, int aiModelForTanks4, int aiModelForTanks5, int additionalData1, int additionalData2, ArrayList <Coordinate> placesForEnemiesSpawn) {
 // public EnemiesSpawnController(IEngine engine, int maxTanksOnScreen, int spawnTime, int tanks0, int tanks1, int tanks2, int tanks3, int tanks4, int tanks5, int additionalData1, int additionalData2, ArrayList <Coordinate> spawnPositions) {
 Collectable -9999:225,375,1,0,234#
+[Collectable -9999:275,425,2,0,3#]
+[Collectable -9999:275,425,2,0,3#, Collectable -9999:375,325,4,0,432#]
+[Collectable -9999:275,425,2,0,3#, Collectable -9999:375,325,4,0,432#]

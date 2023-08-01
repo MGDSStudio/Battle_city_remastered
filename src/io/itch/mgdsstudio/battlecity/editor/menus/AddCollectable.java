@@ -335,7 +335,7 @@ public class AddCollectable extends AbstractEditorMenu {
             for (int i  = 0 ; i < valuesArray.length ; i++){
                 valuesArray[i] = values.get(i);
             }
-            EntityData entityData = new EntityData(valuesArray, new GraphicData[]{}, id);
+            EntityData entityData = new EntityData(valuesArray, new int[]{}, id);
             Logger.debug("Entity data will content: " + values + "; ID: " + id );
             return entityData;
         }

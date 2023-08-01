@@ -10,8 +10,8 @@ import io.itch.mgdsstudio.engine.libs.Coordinate;
 
 public class WorldBoard extends Wall{
 
-    public WorldBoard(IEngine engine, PhysicWorld physicWorld, Coordinate pos, int angle, int width, int height, int thirdDim){
-        super(engine, physicWorld, pos, angle, width, height, thirdDim);
+    public WorldBoard(IEngine engine, PhysicWorld physicWorld, Coordinate pos, int angle, int width, int height, int form){
+        super(engine, physicWorld, pos, angle, width, height, form);
         loadGraphicDefaultData(engine);
 
     }
@@ -25,7 +25,7 @@ public class WorldBoard extends Wall{
     public static WorldBoard create(IEngine engine, PhysicWorld physicWorld, EntityData entityData) {
         int [] values = entityData.getValues();
         Coordinate pos = new Coordinate(values[0], values[1]);
-        WorldBoard wall = new WorldBoard(engine, physicWorld, pos, values[2], values[3], values[4], values[5]);
+        WorldBoard wall = new WorldBoard(engine, physicWorld, pos, values[2], values[3], values[4], values [5]);
         wall.setId(entityData.getId());
         return wall;
     }
