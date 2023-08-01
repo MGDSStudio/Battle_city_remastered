@@ -81,7 +81,7 @@ public class AddWall extends AbstractEditorMenu {
             }
         }
         else if (actualStatement == Statements.SELECT_TILESET){
-            createMenuWithGraphicButtons(5,3);
+            createMenuWithGraphicButtons(5,3, 0);
         }
     }
 

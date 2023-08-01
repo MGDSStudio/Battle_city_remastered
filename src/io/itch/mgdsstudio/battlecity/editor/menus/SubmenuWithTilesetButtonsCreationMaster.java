@@ -2,6 +2,7 @@ package io.itch.mgdsstudio.battlecity.editor.menus;
 
 import io.itch.mgdsstudio.battlecity.game.Logger;
 import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
+import io.itch.mgdsstudio.engine.libs.imagezones.ImageZoneFullData;
 import io.itch.mgdsstudio.engine.libs.imagezones.SingleImageZoneFromFileLoader;
 import processing.data.JSONArray;
 import processing.data.JSONObject;
@@ -39,6 +40,24 @@ public class SubmenuWithTilesetButtonsCreationMaster {
             }
         }
         return avaliableTilesets;
+    }
+
+    public ArrayList <ImageZoneFullData> sortObjectsInAccordingToLastUsed(ArrayList <ImageZoneFullData> unsortedData){
+        ArrayList<String> lastUsed = whenReadWithBufferedReader_thenCorrect(path);
+        for (int i = lastUsed.size()-1; i>= 0; i--){
+            if (unsortedData.contains(lastUsed.get(i))){
+                int number =  unsortedData.indexOf(lastUsed.get(i));
+                ImageZoneFullData existing = unsortedData.get(number);
+                unsortedData.remove(existing);
+                unsortedData.add(0,existing);
+            }
+        }
+        return unsortedData;
+        /*for (int i = 0; i < unsortedData.size(); i++){
+            if (lastUsed.size()>i){
+                String newest
+            }
+        }*/
     }
 
     public void resortObjectsInFile(String lastUsed){

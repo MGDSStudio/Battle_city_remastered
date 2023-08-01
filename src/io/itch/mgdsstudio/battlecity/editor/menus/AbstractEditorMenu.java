@@ -4,7 +4,8 @@ import com.mgdsstudio.engine.nesgui.*;
 import io.itch.mgdsstudio.battlecity.game.EditorController;
 import io.itch.mgdsstudio.battlecity.game.Logger;
 import io.itch.mgdsstudio.battlecity.game.hud.LowerPanelInEditor;
-import io.itch.mgdsstudio.engine.libs.imagezones.SingleImageZoneFromFileLoader;
+import io.itch.mgdsstudio.engine.libs.imagezones.ImageZoneFullData;
+import io.itch.mgdsstudio.battlecity.utilities.ImageZonesSorterInAccordingToLastUsed;
 import processing.core.PApplet;
 
 import java.awt.*;
@@ -379,8 +380,18 @@ public abstract class AbstractEditorMenu {
         return 0;
     }
 
-    protected void createMenuWithGraphicButtons(int alongX, int alongY) {
-        SingleImageZoneFromFileLoader loader = new SingleImageZoneFromFileLoader();
+    protected void createMenuWithGraphicButtons(int alongX, int alongY, int page) {
+        ImageZonesSorterInAccordingToLastUsed sorter = new ImageZonesSorterInAccordingToLastUsed(editorController.getEngine());
+        ArrayList < ImageZoneFullData> data = sorter.getSortedData();
+        if (data.size()<(alongX*alongY) && page != 0){
+            page = 0;
+            Logger.debug("Only one page is possible");
+        }
+        /*AllImageZonesFromFileLoader loader = new AllImageZonesFromFileLoader(editorController.getEngine());
+        ArrayList < ImageZoneFullData> datas = loader.getImageZonesWithFulLData();
+        Logger.debug("We have: " + datas.size() + " unique tilesets");
+        */
+
     }
 
 }
