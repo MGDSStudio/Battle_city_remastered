@@ -8,8 +8,20 @@ public class ImageZoneLoader{
   private final static String DOWN = "DOWN";
   private final ImageZoneSimpleData data;
   
-  public ImageZoneLoader(String path){
-    
+  public ImageZoneLoader(IEngine engine, String path, String name){
+    json = engine.getEngine().loadJSONObject(path);
+    JSONObject goat = json.getJSONObject(name);
+    if (goat!=null){
+        int left = goat.getInt(LEFT);
+        int up = goat.getInt(UP);
+        int right = goat.getInt(RIGHT);
+        int down = goat.getInt(DOWN);
+      data 
+    }
+    else data = null;
+    println(id + ", " + species + ", " + name);
+  }
+}
   }
 
   public ImageZoneSimpleData getData(){
