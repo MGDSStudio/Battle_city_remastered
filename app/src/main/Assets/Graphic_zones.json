@@ -2,7 +2,7 @@
 {
      "NAME": "4",
      "TILESET": 1,
-     "ID": 3,
+     "ID": 4,
      "LEFT": 832,
      "UP": 320,
      "RIGHT": 896,
@@ -22,7 +22,7 @@
   {
     "NAME": "5",
     "TILESET": 1,
-    "ID": 3,
+    "ID": 5,
     "LEFT": 896,
     "UP": 448,
     "RIGHT": 960,
@@ -32,7 +32,7 @@
   {
     "NAME": "6",
     "TILESET": 1,
-    "ID": 3,
+    "ID": 6,
     "LEFT": 832,
     "UP": 384,
     "RIGHT": 896,
@@ -49,6 +49,36 @@
      "DOWN": 384,
      "COMMENT": "BRICK WALL NORMAL"
    },
+  {
+    "NAME": "7",
+    "TILESET": 1,
+    "ID": 1,
+    "LEFT": 832,
+    "UP": 192,
+    "RIGHT": 896,
+    "DOWN": 256,
+    "COMMENT": "GRASS NORMAL"
+  },
+  {
+    "NAME": "8",
+    "TILESET": 1,
+    "ID": 1,
+    "LEFT": 960,
+    "UP": 64,
+    "RIGHT": 1024,
+    "DOWN": 128,
+    "COMMENT": "ARMORED WALL"
+  },
+  {
+    "NAME": "9",
+    "TILESET": 1,
+    "ID": 1,
+    "LEFT": 896,
+    "UP": 64,
+    "RIGHT": 960,
+    "DOWN": 128,
+    "COMMENT": "FOREST"
+  },
   {
     "NAME": "2",
     "TILESET": 1,

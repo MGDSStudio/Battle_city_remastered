@@ -55,12 +55,16 @@ public class AddWall extends AbstractEditorMenu {
             else if (form == SolidObject.BodyForms.NW_TRIANGLE)  editorController.getCross().setStatement(Cross.Statement.TRIANGLE_LEFT_UP);
             else if (form == SolidObject.BodyForms.SE_TRIANGLE)  editorController.getCross().setStatement(Cross.Statement.TRIANGLE_RIGHT_DOWN);
             else if (form == SolidObject.BodyForms.SW_TRIANGLE)  editorController.getCross().setStatement(Cross.Statement.TRIANGLE_LEFT_DOWN);
+            if (value<1){
+                value = 1;
+
+            }
+            else editorController.setTextInConcole("SHIFT THE BATTLEFIELD VIA SWIPES TO SELECT RIGHT POSITION FOR THE OBJECT. PRESS ADD BUTTON TO PLACE THE OBJECT ON THE BATTLEFIELD. THE OBJECT SIZE WILL BE " + value + " WORLD UNITS");
 
             objectData.setSize(value); //width
             //editorController.getCross().setStatement(Cross.Statement.CELL_CENTER);
             String [] names = new String[] {add, back, cancel};
             createSubmenuWithDefaultAlignedButtons(names);
-            editorController.setTextInConcole("SHIFT THE BATTLEFIELD VIA SWIPES TO SELECT RIGHT POSITION FOR THE OBJECT. PRESS ADD BUTTON TO PLACE THE OBJECT ON THE BATTLEFIELD");
         }
         else if (actualStatement == Statements.SELECT_FORM){
             editorController.getCross().setStatement(Cross.Statement.INVISIBLE_AS_CELL_CENTER);
