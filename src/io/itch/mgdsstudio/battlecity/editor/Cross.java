@@ -196,8 +196,11 @@ public class Cross extends Entity implements EditorActionsListener{
     }
 
     private void renderTriangle(){
-        Logger.debug("Triangle must be implementted");
-        
+        //Logger.debug("Triangle must be implementted");
+        if (statement.equals(Statement.TRIANGLE_LEFT_UP)){
+
+            graphic.line()
+        }
     }
 
     public ArrayList <ISelectable> getObjectsUnder(){
@@ -246,5 +249,11 @@ public class Cross extends Entity implements EditorActionsListener{
     public void appendCommand(EditorAction action) {
         actions.add(action);
         //Logger.debug("Camera got action");
+    }
+
+    private class DrawingController{
+         private Image image;
+        // private 
+
     }
 }
