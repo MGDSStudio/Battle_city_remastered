@@ -42,15 +42,23 @@ public class AddWall extends AbstractEditorMenu {
         if (actualStatement == START_STATEMENT) {
             editorController.getCross().setStatement(Cross.Statement.INVISIBLE_AS_CELL_CENTER);
             initButtonNames();
-            String [] names = new String[]{crushable, armored, immortal};
+            String [] names = new String[]{crushable, armored, immortal, back};
             createSubmenuWithDefaultAlignedButtons(names);
             editorController.setTextInConcole("SELECT TYPE OF THE WALL ELEMENT");
         }
         else if (actualStatement == Statements.PLACE_ON_MAP){
             int value = getDigitValueFromKeyboard();
+            int form = objectData.form;
+            if (form == SolidObject.BodyForms.CIRCLE)  editorController.getCross().setStatement(Cross.Statement.CELL_CENTER);
+            else if (form == SolidObject.BodyForms.RECT)  editorController.getCross().setStatement(Cross.Statement.CELL_CENTER);
+            else if (form == SolidObject.BodyForms.NE_TRIANGLE)  editorController.getCross().setStatement(Cross.Statement.TRIANGLE_RIGHT_UP);
+            else if (form == SolidObject.BodyForms.NW_TRIANGLE)  editorController.getCross().setStatement(Cross.Statement.TRIANGLE_LEFT_UP);
+            else if (form == SolidObject.BodyForms.SE_TRIANGLE)  editorController.getCross().setStatement(Cross.Statement.TRIANGLE_RIGHT_DOWN);
+            else if (form == SolidObject.BodyForms.SW_TRIANGLE)  editorController.getCross().setStatement(Cross.Statement.TRIANGLE_LEFT_DOWN);
+
             objectData.setSize(value); //width
             //editorController.getCross().setStatement(Cross.Statement.CELL_CENTER);
-            String [] names = new String[] {add, back};
+            String [] names = new String[] {add, back, cancel};
             createSubmenuWithDefaultAlignedButtons(names);
             editorController.setTextInConcole("SHIFT THE BATTLEFIELD VIA SWIPES TO SELECT RIGHT POSITION FOR THE OBJECT. PRESS ADD BUTTON TO PLACE THE OBJECT ON THE BATTLEFIELD");
         }
@@ -67,6 +75,7 @@ public class AddWall extends AbstractEditorMenu {
             createSubmenuWithDefaultAlignedButtons(names);
         }
         else if (actualStatement == Statements.SELECT_SIZE){
+            guiElements.clear();
             editorController.getCross().setStatement(Cross.Statement.INVISIBLE_AS_CELL_CENTER);
             editorController.setTextInConcole("SELECT SIZE OF THE OBJECT");
             createSubmenuWithDigitKeyboard(true, "TEXT FIELD");
@@ -74,14 +83,16 @@ public class AddWall extends AbstractEditorMenu {
             if (gui != null){
                DigitKeyboard keyboard = (DigitKeyboard) gui;
                TextLabel label =  keyboard.getEmbeddedGui();
-               int actualSize = editorController.getGrid().getWidth();
+               int actualSize = editorController.getGrid().getGridStep();
                String defaultValue = ""+ actualSize;
                label.setAnotherTextToBeDrawnAsName(defaultValue);
                label.setUserData(defaultValue);
             }
         }
         else if (actualStatement == Statements.SELECT_TILESET){
-            createMenuWithGraphicButtons(5,3, 0);
+            editorController.getCross().setStatement(Cross.Statement.INVISIBLE_AS_CELL_CENTER);
+            createMenuWithGraphicButtons(4,3, 0);
+            editorController.setTextInConcole("SELECT SPRITE FOR THE GRAPHIC");
         }
     }
 
@@ -89,9 +100,10 @@ public class AddWall extends AbstractEditorMenu {
 
     private void initButtonNames(){
         crushable =  "DESTROYABLE";
+        armored = "ARMORED";
         immortal = "IMMORTAL";
         add = "ADD ON MAP";
-        square = "SQUARE;";
+        square = "SQUARE";
         circle = "CIRCLE";
         triangle = "TRIANGLE";
         NW = "NW";
@@ -142,6 +154,9 @@ public class AddWall extends AbstractEditorMenu {
        if (element.getName().equals(back)) {
             onBackPressed();
         }
+       else if (element.getName().equals(cancel)){
+           cancelPressed();
+       }
        else if (element.getName().equals(crushable) || element.getName().equals(armored) || element.getName().equals(immortal)){
             nextStatement = Statements.SELECT_TILESET;
             initDataStructForGuiName(element.getName());
@@ -184,12 +199,25 @@ public class AddWall extends AbstractEditorMenu {
        else if (actualStatement == Statements.PLACE_ON_MAP){
             if (element.getName().equals(add)){
                Coordinate pos = editorController.getCross().getPos();
-               objectData.setPosX((int)pos.y);
-               objectData.setPosY((int)pos.x);
+               objectData.setPosX((int)pos.x);
+               objectData.setPosY((int)pos.y);
                createWall();
            }
        }
+       else if (actualStatement == Statements.SELECT_TILESET){
+           int tilesetNumber = getSelectedTilesetButton(element);
+           objectData.setImageZoneKeyCode(tilesetNumber);
+           nextStatement = Statements.SELECT_FORM;
+       }
+       else if (actualStatement == Statements.SELECT_SIZE){
+           if (element.getName().equals(apply)){
+               nextStatement = Statements.PLACE_ON_MAP;
+           }
+       }
     }
+
+
+
 
     private void createWall() {
         Wall object;
@@ -232,6 +260,10 @@ public class AddWall extends AbstractEditorMenu {
         else if (actualStatement == Statements.SELECT_SIZE) nextStatement = Statements.SELECT_FORM;
     }
 
+    protected void cancelPressed() {
+       nextStatement = START_STATEMENT;
+    }
+
     class ObjectDataStruct{
         private ArrayList <Integer> values ;
         private ArrayList <Integer> graphicValues;
@@ -266,7 +298,12 @@ public class AddWall extends AbstractEditorMenu {
             int [] graphicValues = new int[1];
             graphicValues[0] = imageZoneKeyCode;
             EntityData entityData = new EntityData(values, graphicValues, id);
-            Logger.debug("Entity data will content: " + values + "; ID: " + id );
+            String content = "";
+            for (int i = 0; i < values.length; i++) {
+                content+=values[i];
+                content+=",";
+            }
+            Logger.debug("Entity data will content: " + content + "; ID: " + id );
             return entityData;
         }
 

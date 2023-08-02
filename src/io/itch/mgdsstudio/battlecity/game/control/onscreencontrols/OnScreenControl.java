@@ -6,7 +6,7 @@ import io.itch.mgdsstudio.battlecity.game.gameobjects.PlayerTank;
 import io.itch.mgdsstudio.battlecity.game.hud.HudConstants;
 import io.itch.mgdsstudio.battlecity.game.hud.Panel;
 import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
-import io.itch.mgdsstudio.engine.graphic.GraphicManager;
+import io.itch.mgdsstudio.engine.graphic.GraphicManagerSingleton;
 import io.itch.mgdsstudio.engine.graphic.Image;
 import io.itch.mgdsstudio.engine.libs.imagezones.ImageZoneSimpleData;
 import io.itch.mgdsstudio.engine.libs.Coordinate;
@@ -55,7 +55,7 @@ public abstract class OnScreenControl {
 
     private void init(IEngine engine) {
         String path = engine.getPathToObjectInAssets(HudConstants.RELATIVE_PATH);
-        if (image == null) image = GraphicManager.getManager(engine.getEngine()).getImage(path);
+        if (image == null) image = GraphicManagerSingleton.getManager(engine.getEngine()).getImage(path);
     }
 
 

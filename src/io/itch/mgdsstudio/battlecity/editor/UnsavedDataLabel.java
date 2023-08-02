@@ -25,7 +25,6 @@ public class UnsavedDataLabel {
     public void draw(){
         if (active){
             engine.getEngine().image(image.getImage(), pos.x, pos.y, size, size, data.leftX, data.upperY, data.rightX, data.lowerY);
-            //Logger.debug("Drawn at " + pos.x + "x" + pos.y + "; Sizes: " + size + "; Data: " + data  + " image: " + image.getPath());
         }
     }
 

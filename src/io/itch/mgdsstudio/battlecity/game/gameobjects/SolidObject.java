@@ -6,7 +6,7 @@ import io.itch.mgdsstudio.battlecity.game.PhysicWorld;
 import io.itch.mgdsstudio.battlecity.game.graphic.IAnimations;
 import io.itch.mgdsstudio.battlecity.mainpackage.GlobalVariables;
 import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
-import io.itch.mgdsstudio.engine.graphic.GraphicManager;
+import io.itch.mgdsstudio.engine.graphic.GraphicManagerSingleton;
 import io.itch.mgdsstudio.engine.graphic.Image;
 import io.itch.mgdsstudio.engine.graphic.ImageInGame;
 import io.itch.mgdsstudio.engine.libs.imagezones.ImageZoneSimpleData;
@@ -214,7 +214,7 @@ public abstract class SolidObject extends Entity{
     }
 
     protected final void loadImage(IEngine engine, String path, int graphicWidth, int graphicHeight, ImageZoneSimpleData data){
-        GraphicManager manager = GraphicManager.getManager(engine.getEngine());
+        GraphicManagerSingleton manager = GraphicManagerSingleton.getManager(engine.getEngine());
         Image graphicImage = manager.getImage(path);
         if (this.getClass() == Bullet.class){
             Logger.debug("Get image: " + graphicImage.getPath());
@@ -223,7 +223,7 @@ public abstract class SolidObject extends Entity{
     }
 
     protected final void loadAnimation(IEngine engine, String path, int graphicWidth, int graphicHeight, ImageZoneSimpleData data){
-        GraphicManager manager = GraphicManager.getManager(engine.getEngine());
+        GraphicManagerSingleton manager = GraphicManagerSingleton.getManager(engine.getEngine());
         Image graphicImage = manager.getImage(path);
         if (this.getClass() == Bullet.class){
             Logger.debug("Get image: " + graphicImage.getPath());

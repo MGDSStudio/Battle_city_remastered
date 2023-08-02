@@ -15,7 +15,7 @@ import io.itch.mgdsstudio.battlecity.game.textes.AbstractText;
 import io.itch.mgdsstudio.battlecity.game.textes.DissolvingAndUpwardsMovingText;
 import io.itch.mgdsstudio.battlecity.mainpackage.GlobalConstants;
 import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
-import io.itch.mgdsstudio.engine.graphic.GraphicManager;
+import io.itch.mgdsstudio.engine.graphic.GraphicManagerSingleton;
 import io.itch.mgdsstudio.engine.libs.imagezones.ImageZoneSimpleData;
 import io.itch.mgdsstudio.engine.libs.Coordinate;
 import org.jbox2d.dynamics.Body;
@@ -198,7 +198,7 @@ public class Collectable extends SolidObject implements IActivateable {
         }
         Logger.debug("Collectable created with graphic: " + data);
         loadImage(engine, path, width, height, data);
-        haloController = new HaloController(engine.getEngine(), GraphicManager.getManager(engine.getEngine()).getImage(path), this);
+        haloController = new HaloController(engine.getEngine(), GraphicManagerSingleton.getManager(engine.getEngine()).getImage(path), this);
     }
     protected void setBodyData() {
         if (GameRound.getDifficulty() == GlobalConstants.EASY_DIFFICULTY){

@@ -4,7 +4,7 @@ package com.mgdsstudio.engine.nesgui;
 
 import io.itch.mgdsstudio.battlecity.game.Logger;
 import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
-import io.itch.mgdsstudio.engine.graphic.GraphicManager;
+import io.itch.mgdsstudio.engine.graphic.GraphicManagerSingleton;
 import io.itch.mgdsstudio.engine.graphic.Image;
 import processing.core.PApplet;
 import processing.core.PConstants;
@@ -159,7 +159,7 @@ public abstract class GuiElement {
 
     protected void initGraphic(){
         if (graphicFile == null) {
-            graphicFile = GraphicManager.getManager(engine).getImage(engineInterface.getPathToObjectInAssets("Gui.gif"));
+            graphicFile = GraphicManagerSingleton.getManager(engine).getImage(engineInterface.getPathToObjectInAssets("Gui.gif"));
         }
     }
 

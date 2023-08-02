@@ -17,10 +17,10 @@ public class DataStringCreationMaster {
     init();
   }
 
-  public DataStringCreationMaster(ArrayList <Integer> intList, String name) {
-    this.values = new int[intList.size()];
-    for (int i = 0; i < intList.size(); i++){
-      values[i] = intList.get(i);
+  public DataStringCreationMaster(ArrayList <Integer> valuesAsList, String name) {
+    this.values = new int[valuesAsList.size()];
+    for (int i = 0; i < valuesAsList.size(); i++){
+      values[i] = valuesAsList.get(i);
     }
     this.name = name;
     init();
@@ -41,20 +41,34 @@ public class DataStringCreationMaster {
     init();
   }
 
-  public DataStringCreationMaster(int id, ArrayList<Integer>  valuesList, ArrayList<Integer>  graphicList, String name) {
+  public DataStringCreationMaster(int id, ArrayList<Integer>  valuesAsList, ArrayList<Integer>  graphicValuesAsList, String name) {
     this.id = id;
-    int[] values = new int[valuesList.size()];
-    for (int i = 0; i < values[i]; i++){
-      values[i] = valuesList.get(i);
+    this.values = new int[valuesAsList.size()];
+    for (int i = 0; i < values.length; i++){
+      this.values[i] = valuesAsList.get(i);
     }
-    int [] graphicValues = new int[graphicList.size()];
-    for (int i = 0; i < graphicValues[i]; i++){
-      graphicValues[i] = graphicList.get(i);
+    this.graphicValues = new int[graphicValuesAsList.size()];
+    for (int i = 0; i < this.graphicValues.length; i++){
+      this.graphicValues[i] = graphicValuesAsList.get(i);
+    }
+    this.name = name;
+    init();
+    /*
+    this.id = id;
+    int[] values = new int[valuesAsList.size()];
+    for (int i = 0; i < values[i]; i++){
+      values[i] = valuesAsList.get(i);
+    }
+    int [] graphicValuesArray = new int[graphicValuesAsList.size()];
+    for (int i = 0; i < graphicValuesArray[i]; i++){
+      graphicValuesArray[i] = graphicValuesAsList.get(i);
     }
     this.values = values;
     this.name = name;
-    this.graphicValues = graphicValues;
+    this.graphicValues = graphicValuesArray;
     init();
+     */
+
   }
 
   private void init(){

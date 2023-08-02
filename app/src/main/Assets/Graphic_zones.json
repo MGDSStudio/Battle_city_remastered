@@ -1,24 +1,44 @@
 [
 {
-     "NAME": "BRICK_WALL_RECT",
+     "NAME": "4",
      "TILESET": 1,
      "ID": 3,
-     "LEFT": 896,
+     "LEFT": 832,
      "UP": 320,
-     "RIGHT": 960,
-     "DOWN": 383,
-     "COMMENT": "NOTHING"
+     "RIGHT": 896,
+     "DOWN": 384,
+     "COMMENT": "TRIANGLE_NW"
    },
    {
-     "NAME": "ARMORED_WALL_RECT",
+     "NAME": "3",
      "TILESET": 1,
-     "ID": 2,
-     "LEFT": 960,
-     "UP": 64,
-     "RIGHT": 1024,
-     "DOWN": 124,
-     "COMMENT": "NOTHING"
+     "ID": 3,
+     "LEFT": 832,
+     "UP": 384,
+     "RIGHT": 896,
+     "DOWN": 448,
+     "COMMENT": "TRIANGLE_SE"
    },
+  {
+    "NAME": "5",
+    "TILESET": 1,
+    "ID": 3,
+    "LEFT": 896,
+    "UP": 448,
+    "RIGHT": 960,
+    "DOWN": 512,
+    "COMMENT": "TRIANGLE_SW"
+  },
+  {
+    "NAME": "6",
+    "TILESET": 1,
+    "ID": 3,
+    "LEFT": 832,
+    "UP": 384,
+    "RIGHT": 896,
+    "DOWN": 448,
+    "COMMENT": "TRIANGLE_SE"
+  },
    {
      "NAME": "1",
      "TILESET": 1,

@@ -5,7 +5,7 @@ import io.itch.mgdsstudio.battlecity.game.dataloading.EntityData;
 import io.itch.mgdsstudio.battlecity.mainpackage.GlobalConstants;
 import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
 import io.itch.mgdsstudio.engine.graphic.AnimationInGame;
-import io.itch.mgdsstudio.engine.graphic.GraphicManager;
+import io.itch.mgdsstudio.engine.graphic.GraphicManagerSingleton;
 import io.itch.mgdsstudio.engine.graphic.Image;
 import io.itch.mgdsstudio.engine.libs.imagezones.ImageZoneSimpleData;
 import io.itch.mgdsstudio.engine.libs.Coordinate;
@@ -35,7 +35,7 @@ public class Water extends SolidObject {
         int direction = 1;
         int actual = 0;
         int repeateability = AnimationInGame.PLAY_ALWAYS;
-        Image image = GraphicManager.getManager(engine.getEngine()).getImage(engine.getPathToObjectInAssets(GlobalConstants.NAME_FOR_TANK_GRAPHIC_FILE));
+        Image image = GraphicManagerSingleton.getManager(engine.getEngine()).getImage(engine.getPathToObjectInAssets(GlobalConstants.NAME_FOR_TANK_GRAPHIC_FILE));
         graphicElementInGame = new AnimationInGame(image, width, height, imageZoneSimpleData, alongX, alongY, first, last, imagesPerSecond, direction, actual, repeateability, -1);
 
 

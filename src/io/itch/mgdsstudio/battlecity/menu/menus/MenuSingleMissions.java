@@ -163,7 +163,6 @@ public class MenuSingleMissions extends Menu{
         actualPage--;
         if (actualPage < 1) actualPage = 1;
         updateDataForActualPage();
-
     }
 
     private void updateDataForActualPage() {

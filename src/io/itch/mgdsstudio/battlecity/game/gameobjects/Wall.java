@@ -28,6 +28,7 @@ public abstract class Wall extends SolidObject {
         ArrayList<Integer> dataList = new ArrayList<>();
         dataList.add(posX);
         dataList.add(posY);
+        dataList.add((int)angle);
         dataList.add(width);
         dataList.add(height);
         dataList.add(bodyForm);
@@ -37,7 +38,7 @@ public abstract class Wall extends SolidObject {
                 graphicList.add(graphicData[i]);
             }
         }
-        graphicList.add(1);
+        //graphicList.add(1);
         DataStringCreationMaster dataStringCreationMaster = new DataStringCreationMaster(getId(), dataList, graphicList, this.getClass().getSimpleName());
         String dataString = dataStringCreationMaster.getDataString();
         return dataString;

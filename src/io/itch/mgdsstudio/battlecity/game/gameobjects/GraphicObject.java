@@ -25,7 +25,7 @@ public abstract class GraphicObject extends Entity{
     }
 
     protected final void loadImage(IEngine engine, String path, int graphicWidth, int graphicHeight, ImageZoneSimpleData data){
-        GraphicManager manager = GraphicManager.getManager(engine.getEngine());
+        GraphicManagerSingleton manager = GraphicManagerSingleton.getManager(engine.getEngine());
         Image graphicImage = manager.getImage(path);
         if (width<0) width = data.rightX-data.leftX;
         if (height<0) height = data.lowerY-data.upperY;

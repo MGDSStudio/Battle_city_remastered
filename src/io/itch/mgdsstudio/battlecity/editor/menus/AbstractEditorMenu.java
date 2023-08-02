@@ -4,15 +4,18 @@ import com.mgdsstudio.engine.nesgui.*;
 import io.itch.mgdsstudio.battlecity.game.EditorController;
 import io.itch.mgdsstudio.battlecity.game.Logger;
 import io.itch.mgdsstudio.battlecity.game.hud.LowerPanelInEditor;
+import io.itch.mgdsstudio.engine.graphic.GraphicManagerSingleton;
+import io.itch.mgdsstudio.engine.graphic.Image;
 import io.itch.mgdsstudio.engine.libs.imagezones.ImageZoneFullData;
 import io.itch.mgdsstudio.battlecity.utilities.ImageZonesSorterInAccordingToLastUsed;
+import io.itch.mgdsstudio.engine.libs.imagezones.ImageZoneSimpleData;
 import processing.core.PApplet;
 
 import java.awt.*;
 import java.util.ArrayList;
 
 public abstract class AbstractEditorMenu {
-    protected String back, apply, prev, next;
+    protected String back, apply, prev, next, cancel;
 
     protected final static String KEYBOARD_GUI_NAME = "Keyboard";
     
@@ -35,15 +38,15 @@ public abstract class AbstractEditorMenu {
         this.endStatement = endStatement;
         guiElements = new ArrayList<>();
         initDefaultButtonNames();
-        //if (lowerPanelInEditor == null) Logger.error("Lower panel is null: " );
         initGui();
     }
 
     private void initDefaultButtonNames(){
-        back = "BACK";
+        back = " BACK ";
         apply = "APPLY";
-        prev = "PREV";
-        next = "NEXT";
+        prev = " PREV ";
+        next = " NEXT ";
+        cancel = "CANCEL";
     }
 
     public static AbstractEditorMenu createMenuForType(MenuType actualMenuType, EditorController editorController, LowerPanelInEditor lowerPanel) {
@@ -306,8 +309,9 @@ public abstract class AbstractEditorMenu {
         //Logger.debug("Button height must be: " + guiHeight);
         //Logger.debug("Full width x height: " + fullWidth + "x" + fullHeight + " gap: " +  singleGapY + "; gui width: "  + guiWidth);
         //Buttons are squares
-
+        Logger.debug("Try to generate zones at " + editorController.getEngine().getEngine().millis() + " along x " + alongX + " along y " + alongY);
         Rectangle [] positions = calculatePositionsForParams(guiWidth, guiHeight, alongX, alongY, left, upper, singleGapX, singleGapY);
+        Logger.debug("End to generate zones at " + editorController.getEngine().getEngine().millis());
         return positions;
     }
 
@@ -383,40 +387,127 @@ public abstract class AbstractEditorMenu {
     }
 
     protected void createMenuWithGraphicButtons(int alongX, int alongY, int page) {
+        guiElements.clear();
         ImageZonesSorterInAccordingToLastUsed sorter = new ImageZonesSorterInAccordingToLastUsed(editorController.getEngine());
         ArrayList < ImageZoneFullData> data = sorter.getSortedData();
         if (data.size()<(alongX*alongY) && page != 0){
             page = 0;
             Logger.debug("Only one page is possible");
         }
-        Rectangle [] coordinates = getCoordinatesForSquareButtonsAndColumnAlignment(slongX*(alongY+1);, alongX);
-int count = 0;
-for (int j = 0, j < alongY; j++){
-for (int i = 0; i < alongX; j++){
+
+       // Logger.debug("Start to sort");
+        Rectangle [] coordinates = getCoordinatesForSquareButtonsAndColumnAlignment(alongX*(alongY+1), alongX);
+        Logger.debug("End to sort 2");
+        int count = 0;
+        for (int j = 0; j < alongY; j++){
+            for (int i = 0; i < alongX; i++){
+                if (count < data.size()) {
+                    ImageZoneSimpleData simpleData = data.get(count).getData();
+                    String name = data.get(count).getName();
+                    Rectangle place = coordinates[count];
+
+                    Image image = GraphicManagerSingleton.getManager(editorController.getEngine().getEngine()).getImage(data.get(i).getPath());
+                    GuiElement button = new ButtonInFrameWithGraphic(editorController.getEngine(), place.x - place.width / 2, (int) (place.y - place.getHeight() / 2f), place.width, place.height, name, simpleData, 0, editorController.getEngine().getEngine().g, image);
+                    guiElements.add(button);
+
+                    count++;
+                }
+                else {
+                    /*ImageZoneSimpleData simpleData = data.get(0).getData();
+                    String name = data.get(0).getName();
+                    Rectangle place = coordinates[count];
+
+                    Image image = GraphicManagerSingleton.getManager(editorController.getEngine().getEngine()).getImage(data.get(i).getPath());
+                    GuiElement button = new ButtonInFrameWithGraphic(editorController.getEngine(), place.x - place.width / 2, (int) (place.y - place.getHeight() / 2f), place.width, place.height, name, simpleData, 0, editorController.getEngine().getEngine().g, image);
+                    guiElements.add(button);
+
+                    count++;*/
+                    break;
+                }
+            }
+        }
+        //Logger.debug("Started to get zones " );
+        Rectangle [] zones = getZonesForPrevBackNextButtons(coordinates[coordinates.length-1], coordinates[coordinates.length-alongX]);
+        Logger.debug("Zones sizes: " + zones[zones.length-1].width + "x" + zones[zones.length-1].height);
+        Rectangle prevButtonZone = zones[0];
+        Rectangle backButtonZone = zones[1];
+        Rectangle nextButtonZone = zones[2];
+        GuiElement prevButton = new ButtonWithFrameSelection(editorController.getEngine(), prevButtonZone.x, (int) (prevButtonZone.y), prevButtonZone.width, prevButtonZone.height, prev, editorController.getEngine().getEngine().g, true, 1.75f );
+        GuiElement backButton = new ButtonWithFrameSelection(editorController.getEngine(), backButtonZone.x, (int) (backButtonZone.y), prevButtonZone.width, prevButtonZone.height, back, editorController.getEngine().getEngine().g, true, 1.75f  );
+        GuiElement nextButton = new ButtonWithFrameSelection(editorController.getEngine(), nextButtonZone.x, (int) (nextButtonZone.y), prevButtonZone.width, prevButtonZone.height, next, editorController.getEngine().getEngine().g, true, 1.75f  );
+        guiElements.add(prevButton);
+        guiElements.add(nextButton);
+        guiElements.add(backButton);
+    }
+
+    Rectangle [] getZonesForPrevBackNextButtons(Rectangle rigthtLowerZone, Rectangle leftLowerZone){
+        Logger.debug("Left zone data: " + leftLowerZone);
+        Logger.debug("Right zone data: " + rigthtLowerZone);
+        int leftSideOfLeftGui = leftLowerZone.x;
+        int rightSideOfRightGui = rigthtLowerZone.x+rigthtLowerZone.width;
+        int left = lowerPanelInEditor.getLowerTab().getLeft();
+        int right = lowerPanelInEditor.getLowerTab().getWidth()+left;
+        int gap = leftSideOfLeftGui - left;
+        int restEffectiveWidth = rightSideOfRightGui-leftSideOfLeftGui-2*gap;
+        Logger.debug("Rest width for 3 buttons: " + restEffectiveWidth + "; Left size: " + leftSideOfLeftGui + "; Right: " + rightSideOfRightGui + "; Gap: " + gap );
+        int buttonWidth = restEffectiveWidth/3;
+        int buttonHeight = (int) (leftLowerZone.height*0.8f);
+        int backButtonX = left+ lowerPanelInEditor.getLowerTab().getWidth()/2;
+        int nextButtonX =backButtonX + buttonWidth/2+gap+buttonWidth/2;
+        int prevButtonX = backButtonX - buttonWidth/2-gap-buttonWidth/2;
+        Rectangle [] rectangles = new Rectangle[3];
+        rectangles[0] = new Rectangle(prevButtonX, leftLowerZone.y, buttonWidth, buttonHeight);
+        //int backButtonX = (rigthtLowerZone.getX()-(leftLowerZone.getX()+leftLowerZone.getWidth()))/2;
+
+        rectangles[1] = new Rectangle(backButtonX, leftLowerZone.y, buttonWidth, buttonHeight);
+        //rectangles[1] = new Rectangle(rectangles[0].x+gap+buttonWidth, leftLowerZone.y, buttonWidth, buttonHeight);
+        rectangles[2] = new Rectangle(nextButtonX, leftLowerZone.y, buttonWidth, buttonHeight);
+        /*
+        rectangles[0] = new Rectangle(gap + left+buttonWidth/2, leftLowerZone.y, buttonWidth, buttonHeight);
+        rectangles[1] = new Rectangle(rectangles[0].x+gap+buttonWidth, leftLowerZone.y, buttonWidth, buttonHeight);
+        rectangles[2] = new Rectangle(rectangles[1].x+gap+buttonWidth, leftLowerZone.y, buttonWidth, buttonHeight);
+         */
 
 
-count++;
-}
-}
-Rectangle prevButtonZone = coordinates[]
-GuiElement prevButton = new ButtonWithFrameSelection()
+        return  rectangles;
+    }
 
-        /*AllImageZonesFromFileLoader loader = new AllImageZonesFromFileLoader(editorController.getEngine());
-        ArrayList < ImageZoneFullData> datas = loader.getImageZonesWithFulLData();
-        Logger.debug("We have: " + datas.size() + " unique tilesets");
-        */
+    protected int getSelectedTilesetButton(GuiElement element) {
+        if (element.getName().equals(next)){
+            transferToNextPage();
+        }
+        else if (element.getName().equals(prev)){
+            transferToPrevPage();
+        }
+        if (element instanceof ButtonInFrameWithGraphic){
+            String name = element.getName();
+
+            try{
+                int value = Integer.parseInt(name);
+                Logger.debug("User selected: " + value + " tileset");
+                return value;
+            }
+            catch (Exception e){
+                Logger.error("Can not get value from the name " + name);
+                return NO_END;
+            }
+        }
+        return NO_END;
 
     }
 
-    Rectangle [] getZonesForPrevBackNextButtons(Rectangle leftLowerZone, Rectangle rigthtLowerZone){
-int leftSide = leftLowerZone.getLeft();
-int rightSide = rigthtLowerZone.getLeft()+rigthtLowerZone.getWidth();
-int left = lowerPanelInEditor.getLowerTab().getLeft();
-int gap = leftSide - left;
-int restEffectiveWidth = rightSide-leftSide-2*gap;
-Logger.debug("Rest width for 3 buttons: " + restEffectiveWidth);
-int buttonWidth = restEffectiveWidth/3;
+    protected void transferToPrevPage() {
+        Logger.correct("to implement");
+        /*actualPage--;
+        if (actualPage < 1) actualPage = 1;
+        updateDataForActualPage();*/
+    }
 
+    protected void transferToNextPage() {
+        Logger.correct("to implement");
+        /*actualPage++;
+        if (actualPage > pages) actualPage = pages;
+        updateDataForActualPage();*/
     }
 
 }

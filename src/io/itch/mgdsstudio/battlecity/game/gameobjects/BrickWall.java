@@ -2,11 +2,14 @@ package io.itch.mgdsstudio.battlecity.game.gameobjects;
 
 import io.itch.mgdsstudio.battlecity.game.GameRound;
 import io.itch.mgdsstudio.battlecity.game.PhysicWorld;
+import io.itch.mgdsstudio.battlecity.game.dataloading.DataStringCreationMaster;
 import io.itch.mgdsstudio.battlecity.game.dataloading.EntityData;
 import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
 import io.itch.mgdsstudio.engine.libs.imagezones.ImageZoneSimpleData;
 import io.itch.mgdsstudio.engine.libs.Coordinate;
 import io.itch.mgdsstudio.engine.libs.imagezones.SingleImageZoneFromFileLoader;
+
+import java.util.ArrayList;
 
 public class BrickWall extends Wall{
 
@@ -22,7 +25,10 @@ public class BrickWall extends Wall{
         int[] graphicData = entityData.getGraphicData();
         BrickWall wall = new BrickWall (engine, physicWorld, pos, values[2], values[3], values[4], values[5]);
         wall.loadGraphicDefaultData(engine,graphicData);
-        wall.setId(entityData.getId());
+        int id = entityData.getId();
+        if (id == NO_ID){
+            wall.setNextId();
+        }
         return wall;
     }
 
@@ -38,6 +44,7 @@ public class BrickWall extends Wall{
     public boolean attackBy(Entity attackingObject, GameRound gameRound){
          return KILLED;
     }
+
 
 
 

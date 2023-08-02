@@ -6,23 +6,23 @@ import processing.core.PApplet;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GraphicManager {
-    private static GraphicManager graphicManager;
+public class GraphicManagerSingleton {
+    private static GraphicManagerSingleton graphicManagerSingleton;
     private static boolean wasInit;
     private final HashMap<String, Image> images = new HashMap<>();
     //private final HashMap<String, Image> images = new HashMap<>();
     private final PApplet engine;
 
-    private GraphicManager(PApplet pApplet){
+    private GraphicManagerSingleton(PApplet pApplet){
         this.engine = pApplet;
     }
 
-    public static GraphicManager getManager(PApplet engine){
+    public static GraphicManagerSingleton getManager(PApplet engine){
         if (!wasInit) {
-            graphicManager = new GraphicManager(engine);
+            graphicManagerSingleton = new GraphicManagerSingleton(engine);
             wasInit = true;
         }
-        return graphicManager;
+        return graphicManagerSingleton;
     }
 
     public Image getImage(String path){

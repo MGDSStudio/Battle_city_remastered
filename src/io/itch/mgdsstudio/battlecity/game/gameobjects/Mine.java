@@ -205,7 +205,7 @@ public class Mine extends SolidObject {
         }
 
         protected final void loadSecondaryImage(IEngine engine, String path, int graphicWidth, int graphicHeight, ImageZoneSimpleData data){
-            GraphicManager manager = GraphicManager.getManager(engine.getEngine());
+            GraphicManagerSingleton manager = GraphicManagerSingleton.getManager(engine.getEngine());
             Image graphicImage = manager.getImage(path);
             secondaryGraphicObject = new ImageInGame(graphicImage, graphicWidth, graphicHeight, data);
         }

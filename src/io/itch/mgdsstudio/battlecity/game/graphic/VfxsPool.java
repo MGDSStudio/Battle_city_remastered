@@ -6,7 +6,7 @@ import io.itch.mgdsstudio.battlecity.game.gameobjects.Entity;
 import io.itch.mgdsstudio.battlecity.mainpackage.GlobalConstants;
 import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
 import io.itch.mgdsstudio.engine.graphic.AnimationInGame;
-import io.itch.mgdsstudio.engine.graphic.GraphicManager;
+import io.itch.mgdsstudio.engine.graphic.GraphicManagerSingleton;
 import io.itch.mgdsstudio.engine.graphic.Image;
 import io.itch.mgdsstudio.engine.libs.imagezones.ImageZoneSimpleData;
 
@@ -58,9 +58,9 @@ public class VfxsPool implements IAnimations {
 
     public static AnimationInGame createAnimation(int type, IEngine engine, int width, int height){
         AnimationInGame animationInGame;
-        GraphicManager graphicManager = GraphicManager.getManager(engine.getEngine());
+        GraphicManagerSingleton graphicManagerSingleton = GraphicManagerSingleton.getManager(engine.getEngine());
         final String path = engine.getPathToObjectInAssets(GlobalConstants.NAME_FOR_TANK_GRAPHIC_FILE);
-        final Image image = graphicManager.getImage(path);
+        final Image image = graphicManagerSingleton.getImage(path);
         int graphicStep = 32;
         ImageZoneSimpleData imageZoneSimpleData;
         int alongX = 6;

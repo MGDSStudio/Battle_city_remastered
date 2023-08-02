@@ -37,7 +37,7 @@ public class UnsavedDataList {
         try {
             output = new PrintWriter((new FileWriter(path, true)));
             for (String dataString : data){
-                output.println(data);
+                output.println(dataString);
             }
             output.flush();
             output.close();
