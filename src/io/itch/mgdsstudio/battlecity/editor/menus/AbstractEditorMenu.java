@@ -42,7 +42,8 @@ public abstract class AbstractEditorMenu {
     private void initDefaultButtonNames(){
         back = "BACK";
         apply = "APPLY";
-        prev
+        prev = "PREV";
+        next = "NEXT";
     }
 
     public static AbstractEditorMenu createMenuForType(MenuType actualMenuType, EditorController editorController, LowerPanelInEditor lowerPanel) {
@@ -390,18 +391,31 @@ public abstract class AbstractEditorMenu {
         }
         Rectangle [] coordinates = getCoordinatesForSquareButtonsAndColumnAlignment(slongX*(alongY+1);, alongX);
 int count = 0;
-for (int j = 0, j < alongX; j++){
-for (int i = 0; i < alongY; j++){
+for (int j = 0, j < alongY; j++){
+for (int i = 0; i < alongX; j++){
 
 
 count++;
 }
-GuiElement prevButton 
 }
+Rectangle prevButtonZone = coordinates[]
+GuiElement prevButton = new ButtonWithFrameSelection()
+
         /*AllImageZonesFromFileLoader loader = new AllImageZonesFromFileLoader(editorController.getEngine());
         ArrayList < ImageZoneFullData> datas = loader.getImageZonesWithFulLData();
         Logger.debug("We have: " + datas.size() + " unique tilesets");
         */
+
+    }
+
+    Rectangle [] getZonesForPrevBackNextButtons(Rectangle leftLowerZone, Rectangle rigthtLowerZone){
+int leftSide = leftLowerZone.getLeft();
+int rightSide = rigthtLowerZone.getLeft()+rigthtLowerZone.getWidth();
+int left = lowerPanelInEditor.getLowerTab().getLeft();
+int gap = leftSide - left;
+int restEffectiveWidth = rightSide-leftSide-2*gap;
+Logger.debug("Rest width for 3 buttons: " + restEffectiveWidth);
+int buttonWidth = restEffectiveWidth/3;
 
     }
 
