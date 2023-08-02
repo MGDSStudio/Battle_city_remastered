@@ -12,7 +12,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public abstract class AbstractEditorMenu {
-    protected String back, apply;
+    protected String back, apply, prev, next;
 
     protected final static String KEYBOARD_GUI_NAME = "Keyboard";
     
@@ -42,6 +42,7 @@ public abstract class AbstractEditorMenu {
     private void initDefaultButtonNames(){
         back = "BACK";
         apply = "APPLY";
+        prev
     }
 
     public static AbstractEditorMenu createMenuForType(MenuType actualMenuType, EditorController editorController, LowerPanelInEditor lowerPanel) {
@@ -395,7 +396,7 @@ for (int i = 0; i < alongY; j++){
 
 count++;
 }
-
+GuiElement prevButton 
 }
         /*AllImageZonesFromFileLoader loader = new AllImageZonesFromFileLoader(editorController.getEngine());
         ArrayList < ImageZoneFullData> datas = loader.getImageZonesWithFulLData();
