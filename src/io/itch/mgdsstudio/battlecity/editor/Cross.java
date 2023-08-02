@@ -165,6 +165,8 @@ public class Cross extends Entity implements EditorActionsListener{
         graphic.scale(1f);
         graphic.pushStyle();
         graphic.noFill();
+        graphic.strokeWeight(linesThickness);
+        graphic.stroke(0,255,0);
         graphic.translate(editorCamera.getDrawPosX(realCoordinate.x), editorCamera.getDrawPosY(realCoordinate.y));
         if (statement.equals(Statement.CROSS)){
              renderCross(graphic);
@@ -178,16 +180,12 @@ public class Cross extends Entity implements EditorActionsListener{
     }
 
     private void renderCross(PGraphics graphic){
-        //To add arrow rendering
-        graphic.strokeWeight(linesThickness);
-        graphic.stroke(0,255,0);
+        //To add arrow renderi
         graphic.line(-width/2, 0, width/2,0);
         graphic.line(0, -width/2, 0, width/2);
     }
 
     private void renderCellConture(PGraphics graphic){
-        graphic.strokeWeight(linesThickness);
-        graphic.stroke(0,255,0);
         float halfW = width/2;
         graphic.line(-halfW, -halfW, halfW, -halfW);
         graphic.line(-halfW, halfW, halfW, halfW);
@@ -196,11 +194,27 @@ public class Cross extends Entity implements EditorActionsListener{
     }
 
     private void renderTriangle(){
-        //Logger.debug("Triangle must be implementted");
-        if (statement.equals(Statement.TRIANGLE_LEFT_UP)){
-
-            graphic.line()
+        float halfW = width/2;
+        if (statement.equals(Statement.TRIANGLE_LEFT_UP))            
+        	graphic.line(-halfW, -halfW, -halfW, halfW);
+        	graphic.line(-halfW, -halfW, halfW, -halfW);
+        	graphic.line(-halfW, halfW, halfW, -halfW);
         }
+    	else if (statement.equals(Statement.TRIANGLE_RIGHT_UP))            
+        	graphic.line(halfW, -halfW, halfW, halfW);
+        	graphic.line(halfW, -halfW, -halfW, -halfW);
+        	graphic.line(-halfW, -halfW, halfW, halfW);
+        }
+		else if (statement.equals(Statement.TRIANGLE_RIGHT_DOWN))            
+        	graphic.line(halfW, -halfW, halfW, halfW);
+        	graphic.line(-halfW, halfW, halfW, halfW);
+        	graphic.line(-halfW, halfW, halfW, -halfW);
+        }
+		else if (statement.equals(Statement.TRIANGLE_LEFT_DOWN))            
+        	graphic.line(-halfW, -halfW, -halfW, halfW);
+        	graphic.line(halfW, halfW, -halfW, halfW);
+        	graphic.line(-halfW, -halfW, halfW, halfW);
+		}
     }
 
     public ArrayList <ISelectable> getObjectsUnder(){
