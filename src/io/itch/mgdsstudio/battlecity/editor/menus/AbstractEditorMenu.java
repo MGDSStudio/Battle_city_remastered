@@ -387,6 +387,16 @@ public abstract class AbstractEditorMenu {
             page = 0;
             Logger.debug("Only one page is possible");
         }
+        Rectangle [] coordinates = getCoordinatesForSquareButtonsAndColumnAlignment(slongX*(alongY+1);, alongX);
+int count = 0;
+for (int j = 0, j < alongX; j++){
+for (int i = 0; i < alongY; j++){
+
+
+count++;
+}
+
+}
         /*AllImageZonesFromFileLoader loader = new AllImageZonesFromFileLoader(editorController.getEngine());
         ArrayList < ImageZoneFullData> datas = loader.getImageZonesWithFulLData();
         Logger.debug("We have: " + datas.size() + " unique tilesets");
