@@ -246,7 +246,7 @@ public class Collectable extends SolidObject implements IActivateable {
         }
 
 
-        else return "";
+        else return " ";
     }
 
     @Override

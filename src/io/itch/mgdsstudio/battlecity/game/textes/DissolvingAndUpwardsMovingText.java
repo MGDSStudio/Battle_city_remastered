@@ -2,6 +2,7 @@ package io.itch.mgdsstudio.battlecity.game.textes;
 
 import io.itch.mgdsstudio.battlecity.game.GameRound;
 import io.itch.mgdsstudio.battlecity.game.Logger;
+import io.itch.mgdsstudio.battlecity.game.camera.Camera;
 import io.itch.mgdsstudio.battlecity.game.camera.GameCamera;
 import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
 import io.itch.mgdsstudio.engine.libs.Coordinate;
@@ -61,6 +62,7 @@ public class DissolvingAndUpwardsMovingText extends AbstractText{
         if (!fontUploaded){
             createFont();
         }
+        Logger.debug("TEXT " + text + " MUST BE SHOWN with size: " + font.getSize());
     }
 
     public DissolvingAndUpwardsMovingText(IEngine engine, Coordinate pos, String text, int color) {
@@ -68,7 +70,6 @@ public class DissolvingAndUpwardsMovingText extends AbstractText{
         valueType = 0;
         initBasicValues(pos.x, pos.y, yVelocity, text, valueType);
         init(NORMAL_DISSOLVING_TIME, NORMAL_STAGES_NUMBER);
-
         if (!fontUploaded){
             createFont();
         }
@@ -140,7 +141,8 @@ public class DissolvingAndUpwardsMovingText extends AbstractText{
         }
     }
 
-    public void draw(PGraphics objectsFrame, GameCamera gameCamera){
+    public void draw(PGraphics objectsFrame, Camera gameCamera){
+
         if (!fullDissolve){
             objectsFrame.pushStyle();
             if (font == null) createFont();
@@ -150,7 +152,10 @@ public class DissolvingAndUpwardsMovingText extends AbstractText{
             objectsFrame.text(text, gameCamera.getDrawPosX(pos.x), gameCamera.getDrawPosY(pos.y));
             objectsFrame.popStyle();
         }
+
     }
+
+
 
     public void draw(PGraphics graphics){
         if (!fullDissolve){

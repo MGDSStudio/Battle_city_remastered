@@ -5,10 +5,10 @@ import io.itch.mgdsstudio.battlecity.game.graphic.IAnimations;
 import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
 import io.itch.mgdsstudio.engine.libs.Coordinate;
 
-public class Animation extends GraphicObject {
+public class VfxAnimation extends GraphicObject {
     private int type;
 
-    public Animation(IEngine engine, Coordinate pos, int angle, int width, int height, int type){
+    public VfxAnimation(IEngine engine, Coordinate pos, int angle, int width, int height, int type){
         super(engine , pos, angle, width, height, 0, getLayerForAnimationType(type));
         this.type = type;
         loadGraphicDefaultData(engine);
@@ -22,28 +22,21 @@ public class Animation extends GraphicObject {
         else return GraphicLayers.GROUND_LAYER;
     }
 
-    /*public static Ice create(IEngine engine, PhysicGameWorld physicGameWorld, EntityData entityData) {
-        int [] values = entityData.getValues();
-        Coordinate pos = new Coordinate(values[0], values[1]);
-        Ice ice = new Ice(engine, pos, values[2], values[3], values[4]);
-        ice.setId(entityData.getId());
-        return ice;
-    }*/
-
     @Override
     public void update(GameRound gameRound, long deltaTime) {
         super.update(gameRound, deltaTime);
         if (!graphicObject.isActive()){
-            //Logger.debug("Animation ended and can be deleted");
             gameRound.deleteObjectAfterActualLoop(this);
         }
     }
 
     public void loadGraphicDefaultData(IEngine engine){
-        //final String path = engine.getPathToObjectInAssets(GlobalConstants.NAME_FOR_LEVEL_GRAPHIC_FILE);
-        //final ImageZoneSimpleData data = new ImageZoneSimpleData(64,128, 127, 191);
-        loadAnimation(engine, type);
+        loadAnimationFromPool(engine, type);
     }
 
 
+    @Override
+    public String getDataString() {
+        return null;
+    }
 }

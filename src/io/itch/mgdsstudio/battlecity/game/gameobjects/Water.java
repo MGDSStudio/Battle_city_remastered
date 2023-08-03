@@ -25,8 +25,6 @@ public class Water extends SolidObject {
     }
 
     private void loadGraphicDefaultData(IEngine engine) {
-
-
         int alongX = 1;
         int alongY = 3;
         int first = 0;
@@ -37,20 +35,11 @@ public class Water extends SolidObject {
         int repeateability = AnimationInGame.PLAY_ALWAYS;
         Image image = GraphicManagerSingleton.getManager(engine.getEngine()).getImage(engine.getPathToObjectInAssets(GlobalConstants.NAME_FOR_TANK_GRAPHIC_FILE));
         graphicElementInGame = new AnimationInGame(image, width, height, imageZoneSimpleData, alongX, alongY, first, last, imagesPerSecond, direction, actual, repeateability, -1);
-
-
-
-        //loadAnimation(engine, GlobalConstants.NAME_FOR_TANK_GRAPHIC_FILE, width, height);
-        //final String path = engine.getPathToObjectInAssets(GlobalConstants.NAME_FOR_TANK_GRAPHIC_FILE);
-       /// final ImageZoneSimpleData data = new ImageZoneSimpleData(896,0, 896+64,64);
-        //loadImage(engine, path, width, height, data);
     }
 
     @Override
     protected void setBodyData() {
-        //body.setUserData(BodyData.COLLECTABLE);
         setFilterDataForCategory(CollisionFilterCreator.CATEGORY_WATER_OR_COLLECTABLE);
-
     }
 
     public static Water create(IEngine engine, PhysicWorld physicWorld, EntityData entityData) {

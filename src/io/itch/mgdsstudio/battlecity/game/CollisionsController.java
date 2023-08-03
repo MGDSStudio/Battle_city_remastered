@@ -63,7 +63,11 @@ class CollisionsController extends Controller {
 
     private void contactCollectableWithObject(Body collectableBody, Body tankBody, GameRound gameRound) {
         SolidObject collectable = (SolidObject) gameRound.getObjectByBody(collectableBody);
-        collectable.collisionWithObject(tankBody, gameRound);
+        if (collectable.getBody().isActive()) {
+            if (tankBody == null) Logger.error("Tank body is null! Can not get contact with collectable");
+            if (collectable == null) Logger.error("Collectable is null! Can not get contact with collectable");
+            else collectable.collisionWithObject(tankBody, gameRound);
+        }
 
     }
 

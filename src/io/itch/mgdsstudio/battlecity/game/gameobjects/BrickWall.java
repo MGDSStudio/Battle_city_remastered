@@ -17,7 +17,6 @@ public class BrickWall extends Wall{
     //BrickWall 5:366,118,0,16,16,0#
     private BrickWall(IEngine engine, PhysicWorld physicWorld, Coordinate pos, int angle, int width, int height, int form){
         super(engine, physicWorld, pos, angle, width, height, form);
-
     }
     public static BrickWall create(IEngine engine, PhysicWorld physicWorld, EntityData entityData) {
         int [] values = entityData.getValues();
@@ -31,6 +30,14 @@ public class BrickWall extends Wall{
         }
         return wall;
     }
+
+    /*
+    public void loadGraphicDefaultData(IEngine engine){
+        final String path = engine.getPathToObjectInAssets(GlobalConstants.NAME_FOR_TANK_GRAPHIC_FILE);
+        final ImageZoneSimpleData data = new ImageZoneSimpleData(960,64, 960+64,128);
+        loadImage(engine, path, width, height, data);
+    }
+     */
 
     private void loadGraphicDefaultData(IEngine engine, int [] graphicData){
         this.graphicData = graphicData;

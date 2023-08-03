@@ -165,7 +165,7 @@ public class Mine extends SolidObject {
             int y = (int)pos.y;
             int angle = (int) engine.getEngine().random(360);
             //public SpriteInGame(IEngine engine, Coordinate pos, int angle, int width, int height, int thirdDim, int layer, int spritesheetNumber, int left, int up, int right, int down){
-            SpriteInGame rest = new SpriteInGame(engine, new Coordinate(x,y), angle, Entity.ENTITY_NORMAL_DIM, Entity.ENTITY_NORMAL_DIM, 0, GraphicObject.GraphicLayers.GROUND_LAYER, 0, REST_AFTER_EXPLOSION_ZONE_DATA.leftX, REST_AFTER_EXPLOSION_ZONE_DATA.upperY, REST_AFTER_EXPLOSION_ZONE_DATA.rightX, REST_AFTER_EXPLOSION_ZONE_DATA.lowerY) ;
+            SpriteInGame rest = new SpriteInGame(engine, new Coordinate(x,y), angle, Entity.ENTITY_NORMAL_DIM, Entity.ENTITY_NORMAL_DIM, GraphicObject.GraphicLayers.GROUND_LAYER, 0, REST_AFTER_EXPLOSION_ZONE_DATA.leftX, REST_AFTER_EXPLOSION_ZONE_DATA.upperY, REST_AFTER_EXPLOSION_ZONE_DATA.rightX, REST_AFTER_EXPLOSION_ZONE_DATA.lowerY) ;
             gameRound.addEntityOnGround(rest);
             exploded = true;
         }

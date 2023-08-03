@@ -1,6 +1,8 @@
 package io.itch.mgdsstudio.battlecity.editor.menus;
 
 import com.mgdsstudio.engine.nesgui.*;
+import io.itch.mgdsstudio.battlecity.editor.menus.utilities.LastUsedTilesetsInfoAdder;
+import io.itch.mgdsstudio.battlecity.editor.menus.utilities.SubmenuWithTilesetButtonsCreationMaster;
 import io.itch.mgdsstudio.battlecity.game.EditorController;
 import io.itch.mgdsstudio.battlecity.game.Logger;
 import io.itch.mgdsstudio.battlecity.game.hud.LowerPanelInEditor;
@@ -60,9 +62,11 @@ public abstract class AbstractEditorMenu {
         
         /*else if (actualMenuType == MenuType.ABOUT) return new About(editorController, lowerPanel);
         else if (actualMenuType == MenuType.ENEMY) return new Enemy(editorController, lowerPanel);
-        else if (actualMenuType == MenuType.GRAPHIC) return new Graphic(editorController, lowerPanel);
-        else if (actualMenuType == MenuType.WALL) return new Wall(editorController, lowerPanel);
         */
+        else if (actualMenuType == MenuType.GRAPHIC) return new AddGraphic(editorController, lowerPanel);
+
+        //else if (actualMenuType == MenuType.WALL) return new Wall(editorController, lowerPanel);
+
         
         
         
@@ -382,7 +386,14 @@ public abstract class AbstractEditorMenu {
             }
 
         }
-        else Logger.error("Can not get data value. Can not find keyboard");
+        else {
+
+            String existing = "";
+            for (int i = 0; i < guiElements.size(); i++){
+                existing+=guiElements.get(i);
+            }
+            Logger.error("Can not get data value. Can not find keyboard. There are only " + guiElements.size() + " elements with names: " + existing);
+        }
         return 0;
     }
 
@@ -510,4 +521,9 @@ public abstract class AbstractEditorMenu {
         updateDataForActualPage();*/
     }
 
+    protected void addInfoAboutLastUsedTilesets(int tilesetNumber) {
+        SubmenuWithTilesetButtonsCreationMaster master = new SubmenuWithTilesetButtonsCreationMaster(editorController.getEngine());
+        master.addInfoAndSave(tilesetNumber);
+        //LastUsedTilesetsInfoAdder writer = new LastUsedTilesetsInfoAdder(editorController.getEngine(), SubmenuWithTilesetButtonsCreationMaster.)
+    }
 }

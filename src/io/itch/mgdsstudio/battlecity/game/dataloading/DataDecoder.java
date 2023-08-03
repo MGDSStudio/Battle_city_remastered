@@ -7,6 +7,7 @@ import io.itch.mgdsstudio.battlecity.game.gameobjects.*;
 import io.itch.mgdsstudio.battlecity.game.gameobjects.controllers.Controller;
 import io.itch.mgdsstudio.battlecity.game.gameobjects.controllers.EnemiesSpawnController;
 import io.itch.mgdsstudio.battlecity.game.gameobjects.controllers.LevelEndConditionController;
+import io.itch.mgdsstudio.engine.graphic.AnimationInGame;
 
 public class DataDecoder {
     public static final char END_ROW_SYMBOL = '!';
@@ -131,7 +132,15 @@ public class DataDecoder {
             entity = Mine.create(gameRound.getEngine(), physicWorld, entityData);
             Logger.debug("Mine created with id: " + entity.getId());
         }
-        else Logger.error(" this class is not knew: " + type.toString());
+        else if (type == getClassNameForEntity(SpriteInGame.class) || type.contains(getClassNameForEntity(SpriteInGame.class))){
+            entity = SpriteInGame.create(gameRound.getEngine(), physicWorld, entityData);
+            Logger.debug("Sprite in game created with id: " + entity.getId());
+        }
+        else if (type == getClassNameForEntity(SpriteAnimationInGame.class) || type.contains(getClassNameForEntity(SpriteAnimationInGame.class))){
+            entity = SpriteAnimationInGame.create(gameRound.getEngine(), physicWorld, entityData);
+            Logger.debug("Sprite animation in game created with id: " + entity.getId());
+        }
+        else Logger.error(" This class is not knew: " + type.toString());
 
         return entity;
     }

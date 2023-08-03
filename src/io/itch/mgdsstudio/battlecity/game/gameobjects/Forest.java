@@ -30,5 +30,8 @@ public class Forest extends GraphicObject{
     }
 
 
-
+    @Override
+    public String getDataString() {
+        return null;
+    }
 }

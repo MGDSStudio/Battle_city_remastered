@@ -7,9 +7,7 @@ import processing.data.JSONObject;
 
 public class SingleImageZoneFromFileLoader extends ImageZoneLoader {
   //private String name;
-  private ImageZoneSimpleData data;
-  private int tileset;
-  private String pathToTileset;
+
   
   public SingleImageZoneFromFileLoader(IEngine engine, int [] graphicData){
     //Logger.debug("It must be a singleton to ");
@@ -22,17 +20,16 @@ public class SingleImageZoneFromFileLoader extends ImageZoneLoader {
         JSONObject jsonObject = jsonArray.getJSONObject(i);
         String key = jsonObject.getString(NAME);
         if (key.equals(nameToBeFind) || key == nameToBeFind){
-          int left = jsonObject.getInt(LEFT);
-          int up = jsonObject.getInt(UP);
-          int right = jsonObject.getInt(RIGHT);
-          int down = jsonObject.getInt(DOWN);
-          this.tileset = jsonObject.getInt(TILESET);
-          pathToTileset = engine.getPathToSpriteInAssets(tileset);
-          data = new ImageZoneSimpleData(left, up,right, down);
-          return;
+          if (jsonObject.getString(TYPE) == SPRITE || jsonObject.get(TYPE).equals(SPRITE)) {
+            initBasicData(engine, jsonObject);
+            return;
+          }
+          else {
+            Logger.error("This tileset " + key + " is not an sprite! The type is: " + jsonObject.getString(TYPE) + " must be " + SPRITE);
+          }
         }
         else {
-          Logger.debug("Name " + key + " is not " + nameToBeFind);
+          //Logger.debug("Name " + key + " is not " + nameToBeFind);
         }
       }
     }

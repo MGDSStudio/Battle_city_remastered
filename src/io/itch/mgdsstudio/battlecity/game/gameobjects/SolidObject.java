@@ -105,6 +105,10 @@ public abstract class SolidObject extends Entity{
         PolygonShape sd = new PolygonShape();
         float box2dW = physicWorld.controller.scalarPixelsToWorld(width/2);
         float box2dH = physicWorld.controller.scalarPixelsToWorld(height/2);
+        /*
+        float box2dW = physicWorld.controller.scalarPixelsToWorld(width/2);
+        float box2dH = physicWorld.controller.scalarPixelsToWorld(height/2);
+         */
         sd.setAsBox(box2dW, box2dH);
         FixtureDef fd = new FixtureDef();
         fd.shape = sd;
@@ -126,20 +130,21 @@ public abstract class SolidObject extends Entity{
         float box2dH = physicWorld.controller.scalarPixelsToWorld(height/2);
         sd.setAsBox(box2dW, box2dH);
         Vec2[] vertices = new Vec2[3];
-        if (bodyForm == BodyForms.NE_TRIANGLE){
-            vertices[0] = new Vec2(-box2dW, -box2dW* GlobalVariables.yDirectionCoefficient);
-            vertices[1] = new Vec2(box2dW, -box2dW* GlobalVariables.yDirectionCoefficient);
-            vertices[2] = new Vec2(box2dW, box2dW* GlobalVariables.yDirectionCoefficient);
+        //Y-axis is flipped in box 2D
+        if (bodyForm == BodyForms.NE_TRIANGLE){ //error
+            vertices[0] = new Vec2(-box2dW, +box2dH* GlobalVariables.yDirectionCoefficient);
+            vertices[1] = new Vec2(box2dW, +box2dH* GlobalVariables.yDirectionCoefficient);
+            vertices[2] = new Vec2(box2dW, -box2dH* GlobalVariables.yDirectionCoefficient);
         }
         else if (bodyForm == BodyForms.NW_TRIANGLE){
-            vertices[0] = new Vec2(-box2dW, box2dW* GlobalVariables.yDirectionCoefficient);
-            vertices[1] = new Vec2(-box2dW, -box2dW* GlobalVariables.yDirectionCoefficient);
-            vertices[2] = new Vec2(box2dW, box2dW* GlobalVariables.yDirectionCoefficient);
+            vertices[0] = new Vec2(-box2dW, box2dH* GlobalVariables.yDirectionCoefficient);
+            vertices[1] = new Vec2(-box2dW, -box2dH* GlobalVariables.yDirectionCoefficient);
+            vertices[2] = new Vec2(box2dW, box2dH* GlobalVariables.yDirectionCoefficient);
         }
-        else if (bodyForm == BodyForms.SW_TRIANGLE){
-            vertices[0] = new Vec2(-box2dW, -box2dW* GlobalVariables.yDirectionCoefficient);
-            vertices[1] = new Vec2(-box2dW, box2dW* GlobalVariables.yDirectionCoefficient);
-            vertices[2] = new Vec2(box2dW, box2dW* GlobalVariables.yDirectionCoefficient);
+        else if (bodyForm == BodyForms.SW_TRIANGLE){    //error
+            vertices[0] = new Vec2(-box2dW, +box2dH* GlobalVariables.yDirectionCoefficient);
+            vertices[1] = new Vec2(-box2dW, -box2dH* GlobalVariables.yDirectionCoefficient);
+            vertices[2] = new Vec2(box2dW, -box2dH* GlobalVariables.yDirectionCoefficient);
         }
         else if (bodyForm == BodyForms.SE_TRIANGLE){
             vertices[0] = new Vec2(box2dW, -box2dW* GlobalVariables.yDirectionCoefficient);

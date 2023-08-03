@@ -209,9 +209,12 @@ public class AddWall extends AbstractEditorMenu {
            }
        }
        else if (actualStatement == Statements.SELECT_TILESET){
-           int tilesetNumber = getSelectedTilesetButton(element);
-           objectData.setImageZoneKeyCode(tilesetNumber);
-           nextStatement = Statements.SELECT_FORM;
+           if (!element.getName().equals(prev) && !element.getName().equals(next)){
+               int tilesetNumber = getSelectedTilesetButton(element);
+               objectData.setImageZoneKeyCode(tilesetNumber);
+               nextStatement = Statements.SELECT_FORM;
+               addInfoAboutLastUsedTilesets(tilesetNumber);
+           }
        }
        else if (actualStatement == Statements.SELECT_SIZE){
            if (element.getName().equals(apply)){
@@ -262,6 +265,7 @@ public class AddWall extends AbstractEditorMenu {
         else if (actualStatement == Statements.SELECT_TILESET) nextStatement = Statements.SELECT_FORM;
         else if (actualStatement == Statements.PLACE_ON_MAP) nextStatement = Statements.SELECT_TILESET;
         else if (actualStatement == Statements.SELECT_SIZE) nextStatement = Statements.SELECT_FORM;
+        else if (actualStatement == Statements.SELECT_TRIANGLE_FORM) nextStatement = Statements.SELECT_FORM;
     }
 
     protected void cancelPressed() {

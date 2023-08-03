@@ -44,7 +44,7 @@ public abstract class AbstractText extends Entity {
 
 
 
-    public abstract void draw(PGraphics graphics, GameCamera gameCamera);
+   // public abstract void draw(PGraphics graphics, GameCamera gameCamera);
 
     public abstract boolean canBeDeleted();
 

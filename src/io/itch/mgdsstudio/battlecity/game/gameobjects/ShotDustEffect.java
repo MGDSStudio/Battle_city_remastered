@@ -1,6 +1,7 @@
 package io.itch.mgdsstudio.battlecity.game.gameobjects;
 
 import io.itch.mgdsstudio.battlecity.game.GameRound;
+import io.itch.mgdsstudio.battlecity.game.Logger;
 import io.itch.mgdsstudio.battlecity.game.camera.Camera;
 import io.itch.mgdsstudio.battlecity.mainpackage.GlobalConstants;
 import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
@@ -54,6 +55,12 @@ public class ShotDustEffect extends GraphicObject{
             graphicObject.setAlpha(tintController.actualAlpha);
             graphicObject.drawWithTransformations(graphics, gameCamera, this);
         }
+    }
+
+    @Override
+    public String getDataString() {
+        Logger.debug("This object can not be created from the level data file and need not data string");
+        return null;
     }
 
     private class TintController{

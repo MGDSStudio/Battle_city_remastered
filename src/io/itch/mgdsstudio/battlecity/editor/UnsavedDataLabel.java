@@ -12,7 +12,7 @@ public class UnsavedDataLabel {
     private final Image image;
     private Coordinate pos;
     private int size;
-
+    private final AlphaController alphaController;
     private final IEngine engine;
 
     public UnsavedDataLabel(IEngine engine, Coordinate pos, int size) {
@@ -20,6 +20,7 @@ public class UnsavedDataLabel {
         this.image = GuiElement.getGraphicFile();
         this.pos = pos;
         this.size = size;
+        alphaController = new AlphaController();
     }
 
     public void draw(){
@@ -34,5 +35,13 @@ public class UnsavedDataLabel {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    private class AlphaController{
+
+
+        void update(int millis){
+
+        }
     }
 }

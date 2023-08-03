@@ -43,14 +43,6 @@ public abstract class GraphicElementInGame {
         }
     }
 
-    public void drawWithoutTransformations(PGraphics graphics, Camera gameCamera) {
-        if (active) {
-            //startRender(graphics, gameCamera);
-            if (withSpecificFeatures) renderSpecific(graphics);
-            else render(graphics);
-            //endRender(graphics);
-        }
-    }
 
     protected void renderSpecific(PGraphics graphics) {
         graphics.pushStyle();

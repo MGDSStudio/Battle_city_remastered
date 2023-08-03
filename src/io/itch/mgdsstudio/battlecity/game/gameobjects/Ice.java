@@ -32,6 +32,11 @@ public class Ice extends GraphicObject{
         loadImage(engine, path, width, height, data);
     }
 
+    @Override
+    public String getDataString() {
+        return null;
+    }
+
 
     /*
     @Override

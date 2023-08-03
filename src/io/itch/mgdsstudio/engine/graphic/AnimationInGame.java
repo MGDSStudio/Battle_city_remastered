@@ -1,6 +1,12 @@
 package io.itch.mgdsstudio.engine.graphic;
 
 import io.itch.mgdsstudio.battlecity.game.Logger;
+import io.itch.mgdsstudio.battlecity.game.PhysicWorld;
+import io.itch.mgdsstudio.battlecity.game.dataloading.EntityData;
+import io.itch.mgdsstudio.battlecity.game.gameobjects.Entity;
+import io.itch.mgdsstudio.battlecity.game.gameobjects.SpriteInGame;
+import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
+import io.itch.mgdsstudio.engine.libs.Coordinate;
 import io.itch.mgdsstudio.engine.libs.Timer;
 import io.itch.mgdsstudio.engine.libs.imagezones.ImageZoneSimpleData;
 import processing.core.PApplet;
@@ -60,6 +66,7 @@ public class AnimationInGame extends GraphicElementInGame{
         this.keySprite = keySprite;
     }
 
+
     private static int getCorrectedWidth(int width, ImageZoneSimpleData data, int alongX){
         if (width > 0) return width;
         else {
@@ -83,6 +90,8 @@ public class AnimationInGame extends GraphicElementInGame{
             return correctedHeight;
         }
     }
+
+
 
     private void calculateAnimationChangingVelocity(float imagesPerSecond, int actualSprite, ImageZoneSimpleData imageZoneSimpleData) {
         if (imagesPerSecond == 0) imagesPerSecond = 0.001f;

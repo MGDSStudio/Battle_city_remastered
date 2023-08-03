@@ -174,7 +174,7 @@ public class Cross extends Entity implements EditorActionsListener{
         else if (statement.equals(Statement.CELL_CENTER)){
              renderCellConture(graphic);
         }
-        else renderTriangle();
+        else renderTriangle(graphic);
         graphic.popStyle();
         graphic.popMatrix();
     }
@@ -193,24 +193,24 @@ public class Cross extends Entity implements EditorActionsListener{
         graphic.line(halfW, -halfW, halfW, halfW);
     }
 
-    private void renderTriangle(){
+    private void renderTriangle(PGraphics graphic){
         float halfW = width/2;
-        if (statement.equals(Statement.TRIANGLE_LEFT_UP))            
+        if (statement.equals(Statement.TRIANGLE_LEFT_UP))     {
         	graphic.line(-halfW, -halfW, -halfW, halfW);
         	graphic.line(-halfW, -halfW, halfW, -halfW);
         	graphic.line(-halfW, halfW, halfW, -halfW);
         }
-    	else if (statement.equals(Statement.TRIANGLE_RIGHT_UP))            
+    	else if (statement.equals(Statement.TRIANGLE_RIGHT_UP)) {
         	graphic.line(halfW, -halfW, halfW, halfW);
         	graphic.line(halfW, -halfW, -halfW, -halfW);
         	graphic.line(-halfW, -halfW, halfW, halfW);
         }
-		else if (statement.equals(Statement.TRIANGLE_RIGHT_DOWN))            
+		else if (statement.equals(Statement.TRIANGLE_RIGHT_DOWN))      {
         	graphic.line(halfW, -halfW, halfW, halfW);
         	graphic.line(-halfW, halfW, halfW, halfW);
         	graphic.line(-halfW, halfW, halfW, -halfW);
         }
-		else if (statement.equals(Statement.TRIANGLE_LEFT_DOWN))            
+		else if (statement.equals(Statement.TRIANGLE_LEFT_DOWN))      {
         	graphic.line(-halfW, -halfW, -halfW, halfW);
         	graphic.line(halfW, halfW, -halfW, halfW);
         	graphic.line(-halfW, -halfW, halfW, halfW);

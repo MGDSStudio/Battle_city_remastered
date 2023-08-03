@@ -32,19 +32,19 @@ public abstract class GraphicObject extends Entity{
         graphicObject = new ImageInGame(graphicImage, graphicWidth, graphicHeight, data);
     }
 
-    protected void loadAnimation(IEngine engine, int type) {
+    protected void loadAnimationFromPool(IEngine engine, int type) {
         graphicObject = VfxsPool.createAnimation(type, engine);
     }
 
-    protected void loadAnimation(IEngine engine, int type, int width, int height) {
-        graphicObject = VfxsPool.createAnimation(type, engine, width, height);
-    }
+    /*protected void loadAnimation(IEngine engine, int type) {
+        graphicObject = new SpriteAnimationInGame(engine, type);
+    }*/
 
     @Override
     public void draw(PGraphics graphics, Camera gameCamera) {
         if (graphicObject != null) graphicObject.drawWithTransformations(graphics, gameCamera, this);
-
     }
 
+    public abstract String getDataString();
 
 }

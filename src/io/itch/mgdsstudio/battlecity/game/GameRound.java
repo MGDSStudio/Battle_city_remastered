@@ -309,8 +309,8 @@ public class GameRound {
 
 
     public void addExplosion(Coordinate pos, float angle, int type) {
-        Animation animation = new Animation(getEngine(), pos, (int) angle, -1, -1, type);
-        addEntityToEnd(animation);
+        VfxAnimation vfxAnimation = new VfxAnimation(getEngine(), pos, (int) angle, -1, -1, type);
+        addEntityToEnd(vfxAnimation);
     }
 
     /*public GameController getGameController() {
