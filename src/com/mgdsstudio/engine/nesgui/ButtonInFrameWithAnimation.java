@@ -11,7 +11,8 @@ import java.util.ArrayList;
 
 public class ButtonInFrameWithAnimation  extends ButtonInFrameWithGraphic{
     protected ImageZoneSimpleData insideImageData;
-    private ArrayList <ImageZoneSimpleData> imageZoneSimpleData;
+    private ArrayList <ImageZoneSimpleData> imageZoneSimpleDatas;
+    private Controller  controller;
 
     public ButtonInFrameWithAnimation(IEngine engine, int left, int upper, int width, int frameHeight, String name, AnimationZoneFullData imageData, int graphicAngle, PGraphics graphics) {
         super(engine, left+width/2, (int) (upper+frameHeight/2), width, frameHeight/ListButton.CURSOR_DIMENSIONS_COEF*heightRelativeCoef, name, graphics);
@@ -27,25 +28,60 @@ public class ButtonInFrameWithAnimation  extends ButtonInFrameWithGraphic{
         initGraphicCommonData(graphics, frameHeight, graphicAngle);
     }
 
-    private void initImageZones(AnimationZoneFullData imageData){
-
-
+    private void initImageZones(AnimationZoneFullData animData){
+        imageZoneSimpleDatas = new ArrayList <>();
+        ImageZoneSimpleData simpleData = animData.getData();
+        int alongX = animData.getAlongX();
+int singleW = (simpleData.getRight()-simpleData.getLeft())/alongX;
+int singleH = (simpleData.getLower()-simpleData.getUpper())/alongY;
+for (int i = 0; i < alongY; i++){
+for (int j = 0 ; j < alongX; j++){
+int l = simpleData.getLeft()+j*singleW;
+int u = simpleData.getUpper()+ u*singleH;
+int right = l + singleW;
+int down = u+ singleH;
+imageZoneSimpleDatas.add(new ImageZoneSimpleData(l,u, right, down));
+}
     }
-
+    controller = new Controller(alongX*alongY-1, animData.getSpritesPerSec());
+    }
 
     @Override
     protected void drawData(PGraphics graphic, int side) {
+        controller.update(graphic.getParent().millis());
         if (actualStatement != PRESSED && actualStatement != RELEASED){
             graphic.pushMatrix();
             graphic.rotate(graphicAngleInRad);
             graphic.translate(x,y);
-            if (image == null) graphic.image(graphicFile.getImage(), 0,0, graphicWidth, graphicHeight, insideImageData.leftX, insideImageData.upperY, insideImageData.rightX, insideImageData.lowerY);
-            else graphic.image(image.getImage(), 0,0, graphicWidth, graphicHeight, insideImageData.leftX, insideImageData.upperY, insideImageData.rightX, insideImageData.lowerY);
+            ImageZoneSimpleData data = imageZoneSimpleDatas.get(controller.actual);
+            if (image == null) graphic.image(graphicFile.getImage(), 0,0, graphicWidth, graphicHeight, data.leftX, data.upperY, data.rightX, data.lowerY);
+            else graphic.image(image.getImage(), 0,0, graphicWidth, graphicHeight, data.leftX, data.upperY, data.rightX, data.lowerY);
             graphic.popMatrix();
         }
+        
     }
 
 
+private class Controller{
+private int actual, last;
+private int timeBetween, nextChangeTime;
 
+Controller(int last, int spritesPerSec){
+this.last = last;
+
+this.timeBetween = 1000/spritesPerSec;;
+
+}
+
+private void update(int time){
+if (time>nextId) transfer();
+}
+
+private void transfer(){
+    actual++;
+    if (actual > last) actual = 0;
+    nextChangeTime+=timeBetween;
+}
+}
 
 }
