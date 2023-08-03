@@ -20,11 +20,12 @@ public class UnsavedDataLabel {
         this.image = GuiElement.getGraphicFile();
         this.pos = pos;
         this.size = size;
-        alphaController = new AlphaController();
+        alphaController = new AlphaController(0, 128);
     }
 
     public void draw(){
         if (active){
+            engine.getEngine().tint(255,255,255,alphaController.getAlpha(engine.getEngine().millis()));
             engine.getEngine().image(image.getImage(), pos.x, pos.y, size, size, data.leftX, data.upperY, data.rightX, data.lowerY);
         }
     }
@@ -38,10 +39,24 @@ public class UnsavedDataLabel {
     }
 
     private class AlphaController{
+private int max, min;
+//private float period;
+private float coef;
 
+private AlphaController(int min, int max, int period){
+this.min = min;
+this.max = max;
+    coef = PConstants.TWO_PI/period;
+}
 
         void update(int millis){
 
+        }
+
+        int getAlpha(int millis){
+            int alpha = min+(max-min)PApplet.sin(millis*coef);
+            if (alpha < 0) alphaChangingStep = 0;
+            return alpha;
         }
     }
 }
