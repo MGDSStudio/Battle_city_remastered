@@ -3,9 +3,10 @@ package io.itch.mgdsstudio.engine.libs.imagezones;
 import io.itch.mgdsstudio.engine.libs.imagezones.ImageZoneSimpleData;
 
 public class ImageZoneFullData {
-    private  final ImageZoneSimpleData data;
-    private final String path;
-    private final String name;
+    protected final ImageZoneSimpleData data;
+    protected final String path;
+    protected final String name;
+
 
     public ImageZoneFullData(ImageZoneSimpleData data, String path, String name) {
         this.data = data;

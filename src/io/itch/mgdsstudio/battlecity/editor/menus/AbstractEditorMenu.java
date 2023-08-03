@@ -1,13 +1,13 @@
 package io.itch.mgdsstudio.battlecity.editor.menus;
 
 import com.mgdsstudio.engine.nesgui.*;
-import io.itch.mgdsstudio.battlecity.editor.menus.utilities.LastUsedTilesetsInfoAdder;
 import io.itch.mgdsstudio.battlecity.editor.menus.utilities.SubmenuWithTilesetButtonsCreationMaster;
 import io.itch.mgdsstudio.battlecity.game.EditorController;
 import io.itch.mgdsstudio.battlecity.game.Logger;
 import io.itch.mgdsstudio.battlecity.game.hud.LowerPanelInEditor;
 import io.itch.mgdsstudio.engine.graphic.GraphicManagerSingleton;
 import io.itch.mgdsstudio.engine.graphic.Image;
+import io.itch.mgdsstudio.engine.libs.imagezones.AnimationZoneFullData;
 import io.itch.mgdsstudio.engine.libs.imagezones.ImageZoneFullData;
 import io.itch.mgdsstudio.battlecity.utilities.ImageZonesSorterInAccordingToLastUsed;
 import io.itch.mgdsstudio.engine.libs.imagezones.ImageZoneSimpleData;
@@ -405,8 +405,6 @@ public abstract class AbstractEditorMenu {
             page = 0;
             Logger.debug("Only one page is possible");
         }
-
-       // Logger.debug("Start to sort");
         Rectangle [] coordinates = getCoordinatesForSquareButtonsAndColumnAlignment(alongX*(alongY+1), alongX);
         Logger.debug("End to sort 2");
         int count = 0;
@@ -416,23 +414,19 @@ public abstract class AbstractEditorMenu {
                     ImageZoneSimpleData simpleData = data.get(count).getData();
                     String name = data.get(count).getName();
                     Rectangle place = coordinates[count];
-
                     Image image = GraphicManagerSingleton.getManager(editorController.getEngine().getEngine()).getImage(data.get(i).getPath());
-                    GuiElement button = new ButtonInFrameWithGraphic(editorController.getEngine(), place.x - place.width / 2, (int) (place.y - place.getHeight() / 2f), place.width, place.height, name, simpleData, 0, editorController.getEngine().getEngine().g, image);
+                    GuiElement button = null;
+                    if (data.get(count) instanceof AnimationZoneFullData){
+                        AnimationZoneFullData animationZoneFullData = (AnimationZoneFullData) data.get(count);
+                        button = new ButtonInFrameWithAnimation(editorController.getEngine(), place.x - place.width / 2, (int) (place.y - place.getHeight() / 2f), place.width, place.height, name, animationZoneFullData, 0, editorController.getEngine().getEngine().g, image);
+
+                    }
+                    else button = new ButtonInFrameWithImage(editorController.getEngine(), place.x - place.width / 2, (int) (place.y - place.getHeight() / 2f), place.width, place.height, name, simpleData, 0, editorController.getEngine().getEngine().g, image);
                     guiElements.add(button);
 
                     count++;
                 }
                 else {
-                    /*ImageZoneSimpleData simpleData = data.get(0).getData();
-                    String name = data.get(0).getName();
-                    Rectangle place = coordinates[count];
-
-                    Image image = GraphicManagerSingleton.getManager(editorController.getEngine().getEngine()).getImage(data.get(i).getPath());
-                    GuiElement button = new ButtonInFrameWithGraphic(editorController.getEngine(), place.x - place.width / 2, (int) (place.y - place.getHeight() / 2f), place.width, place.height, name, simpleData, 0, editorController.getEngine().getEngine().g, image);
-                    guiElements.add(button);
-
-                    count++;*/
                     break;
                 }
             }
@@ -490,7 +484,7 @@ public abstract class AbstractEditorMenu {
         else if (element.getName().equals(prev)){
             transferToPrevPage();
         }
-        if (element instanceof ButtonInFrameWithGraphic){
+        if (element instanceof ButtonInFrameWithImage){
             String name = element.getName();
 
             try{

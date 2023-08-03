@@ -52,17 +52,6 @@ public class SpriteAnimationInGame extends GraphicObject{
         int first = 0;
         int last = alongX*alongY-1;
         loadAnimation(image, data, alongX, alongY, first, last, spritesPerSec, direction, 0, playingType);
-        /*
-        alongX = 6;
-            alongY = 1;
-            first = 0;
-            last = 5;
-            imagesPerSecond = NORMAL_ANIMATION_FREQUENCY;
-            direction = 1;
-            actual = 0;
-            repeateability = AnimationInGame.PLAY_ONCE_AND_SWITCH_OFF;
-            animationInGame = new AnimationInGame(image, width, height, imageZoneSimpleData, alongX, alongY, first, last, imagesPerSecond, direction, actual, repeateability, -1);
-         */
     }
 
     protected void loadAnimation(Image image, ImageZoneSimpleData data, int alongX, int alongY, int first, int last, int spritesPerSec, int direction, int i, int playingType) {

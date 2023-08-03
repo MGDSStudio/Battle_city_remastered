@@ -1,17 +1,13 @@
 package io.itch.mgdsstudio.battlecity.editor.menus;
 
-import com.mgdsstudio.engine.nesgui.ButtonInFrameWithGraphic;
 import com.mgdsstudio.engine.nesgui.ButtonWithFrameSelection;
 import com.mgdsstudio.engine.nesgui.GuiElement;
 
-import com.mgdsstudio.engine.nesgui.NoTextButtonWithFrameSelection;
-import io.itch.mgdsstudio.battlecity.editor.ISelectable;
 import io.itch.mgdsstudio.battlecity.game.EditorController;
 import io.itch.mgdsstudio.battlecity.game.Logger;
 import io.itch.mgdsstudio.battlecity.game.hud.LowerPanelInEditor;
 
 import java.awt.*;
-import java.util.ArrayList;
 
 public class Edit extends AbstractEditorMenu {
 

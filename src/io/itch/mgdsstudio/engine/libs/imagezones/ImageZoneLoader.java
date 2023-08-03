@@ -11,6 +11,13 @@ public class ImageZoneLoader {
     public final static String DOWN = "DOWN";
     public final static String TILESET = "TILESET";
     public final static String NAME = "NAME";
+
+    public final static String ALONG_X = "ALONG_X";
+    public final static String ALONG_Y = "ALONG_Y";
+    public final static String SPRITES_PER_SEC = "SPRITES_PER_SEC";
+    public final static String PLAYING_TYPE = "PLAYING_TYPE";
+    public final static String DIRECTION = "DIRECTION";
+
     protected final static int NOT_FOUND = -9999;
     protected String SPRITE = "SPRITE";
     protected String ANIMATION = "ANIMATION";

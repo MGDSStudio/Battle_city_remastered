@@ -26,9 +26,19 @@ public class AllImageZonesFromFileLoader extends ImageZoneLoader{
             int right = jsonObject.getInt(RIGHT);
             int down = jsonObject.getInt(DOWN);
             int tileset = jsonObject.getInt(TILESET);
+            String type = jsonObject.getString(TYPE);
             String pathToTileset = engine.getPathToSpriteInAssets(tileset);
             ImageZoneSimpleData imageZoneSimpleData = new ImageZoneSimpleData(left, up, right, down);
-            ImageZoneFullData imageZoneFullData = new ImageZoneFullData(imageZoneSimpleData, pathToTileset, key);
+            ImageZoneFullData imageZoneFullData;
+            if (type.equals(SPRITE)) imageZoneFullData = new ImageZoneFullData(imageZoneSimpleData, pathToTileset, key);
+            else{
+                int alongX = jsonObject.getInt(ALONG_X);
+                int alongY = jsonObject.getInt(ALONG_Y);
+                int spritesPerSecond = jsonObject.getInt(SPRITES_PER_SEC);
+                int playingType = jsonObject.getInt(PLAYING_TYPE);
+                int direction  = jsonObject.getInt(DIRECTION);
+                imageZoneFullData = new AnimationZoneFullData(imageZoneSimpleData, pathToTileset, key, alongX, alongY, spritesPerSecond, playingType, direction);
+            }
             imageZonesWithFulLData.add(imageZoneFullData);
             }
         }

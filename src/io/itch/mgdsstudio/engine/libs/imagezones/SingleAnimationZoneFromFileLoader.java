@@ -7,38 +7,9 @@ import processing.data.JSONObject;
 
 public class SingleAnimationZoneFromFileLoader extends ImageZoneLoader{
 
-    private final static String ALONG_X = "ALONG_X";
-    private final static String ALONG_Y = "ALONG_Y";
-    private final static String SPRITES_PER_SEC = "SPRITES_PER_SEC";
-    private final static String PLAYING_TYPE = "PLAYING_TYPE";
-    private final static String DIRECTION = "DIRECTION";
-
-    /*
-    "NAME": "11",
-    "TILESET": 1,
-    "ID": 11,
-    "LEFT": 832,
-    "UP": 0,
-    "RIGHT": 896,
-    "DOWN": 192,
-    "ALONG_X": 1,
-    "ALONG_Y": 3,
-    "SPRITES_PER_SEC": 10,
-    "PLAYING_TYPE": 0,
-    "TYPE": "ANIMATION",
-    "COMMENT": "WATER"
-     */
-
     private int alongX, alongY, spritesPerSecond, playingType, direction;
 
     private void initAnimationData(IEngine engine, JSONObject jsonObject) {
-        /*int left = jsonObject.getInt(LEFT);
-        int up = jsonObject.getInt(UP);
-        int right = jsonObject.getInt(RIGHT);
-        int down = jsonObject.getInt(DOWN);
-        this.tileset = jsonObject.getInt(TILESET);
-        pathToTileset = engine.getPathToSpriteInAssets(tileset);
-        data = new ImageZoneSimpleData(left, up, right, down);*/
         alongX = jsonObject.getInt(ALONG_X);
         alongY = jsonObject.getInt(ALONG_Y);
         spritesPerSecond = jsonObject.getInt(SPRITES_PER_SEC );
@@ -47,7 +18,6 @@ public class SingleAnimationZoneFromFileLoader extends ImageZoneLoader{
     }
 
     public SingleAnimationZoneFromFileLoader(IEngine engine, int [] graphicData){
-        //Logger.debug("It must be a singleton to ");
         final String path = engine.getPathToObjectInUserFolder(FILE_NAME_FOR_GRAPHIC_ZONES_FILE);
         JSONArray jsonArray = engine.getEngine().loadJSONArray(path);
         String nameToBeFind = ""+graphicData[0];
