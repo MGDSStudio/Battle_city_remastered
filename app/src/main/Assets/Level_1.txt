@@ -60,3 +60,4 @@ SpriteInGame 17:475,175,0,50,50,3#9;
 SpriteAnimationInGame 22:475,125,0,50,50,0#11;
 BrickWall 7:675,125,0,50,50,0#7;
 SpriteAnimationInGame 7:575,25,0,50,50,0#11;
+BrickWall 7:475,275,0,50,50,0#2;

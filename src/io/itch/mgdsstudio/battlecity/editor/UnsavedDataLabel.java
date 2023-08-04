@@ -5,6 +5,8 @@ import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
 import io.itch.mgdsstudio.engine.graphic.Image;
 import io.itch.mgdsstudio.engine.libs.imagezones.ImageZoneSimpleData;
 import io.itch.mgdsstudio.engine.libs.Coordinate;
+import processing.core.PApplet;
+import processing.core.PConstants;
 
 public class UnsavedDataLabel {
     private final static ImageZoneSimpleData data = new ImageZoneSimpleData(0,496, 34,530);
@@ -20,13 +22,16 @@ public class UnsavedDataLabel {
         this.image = GuiElement.getGraphicFile();
         this.pos = pos;
         this.size = size;
-        alphaController = new AlphaController(0, 128);
+        alphaController = new AlphaController(0, 128,1500);
     }
 
     public void draw(){
         if (active){
-            engine.getEngine().tint(255,255,255,alphaController.getAlpha(engine.getEngine().millis()));
+            alphaController.update(engine.getEngine().millis());
+            engine.getEngine().pushStyle();
+            engine.getEngine().tint(255,255,255,alphaController.getAlpha());
             engine.getEngine().image(image.getImage(), pos.x, pos.y, size, size, data.leftX, data.upperY, data.rightX, data.lowerY);
+            engine.getEngine().popStyle();
         }
     }
 
@@ -39,23 +44,25 @@ public class UnsavedDataLabel {
     }
 
     private class AlphaController{
-private int max, min;
-//private float period;
-private float coef;
+        private int max, min;
+        //private float period;
+        private float coef;
+        private int alpha;
 
-private AlphaController(int min, int max, int period){
-this.min = min;
-this.max = max;
-    coef = PConstants.TWO_PI/period;
-}
-
-        void update(int millis){
-
+        private AlphaController(int min, int max, int period) {
+            this.min = min;
+            this.max = max;
+            coef = PConstants.TWO_PI / period;
         }
 
-        int getAlpha(int millis){
-            int alpha = min+(max-min)PApplet.sin(millis*coef);
-            if (alpha < 0) alphaChangingStep = 0;
+
+
+        void update(int millis){
+            alpha = (int) (min+((max-min)* PApplet.sin(millis*coef)));
+            if (alpha < min) alpha = min;
+        }
+
+        int getAlpha(){
             return alpha;
         }
     }

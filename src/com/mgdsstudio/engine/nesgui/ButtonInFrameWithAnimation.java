@@ -32,23 +32,24 @@ public class ButtonInFrameWithAnimation  extends ButtonInFrameWithGraphic{
         imageZoneSimpleDatas = new ArrayList <>();
         ImageZoneSimpleData simpleData = animData.getData();
         int alongX = animData.getAlongX();
-int singleW = (simpleData.getRight()-simpleData.getLeft())/alongX;
-int singleH = (simpleData.getLower()-simpleData.getUpper())/alongY;
-for (int i = 0; i < alongY; i++){
-for (int j = 0 ; j < alongX; j++){
-int l = simpleData.getLeft()+j*singleW;
-int u = simpleData.getUpper()+ u*singleH;
-int right = l + singleW;
-int down = u+ singleH;
-imageZoneSimpleDatas.add(new ImageZoneSimpleData(l,u, right, down));
-}
-    }
-    controller = new Controller(alongX*alongY-1, animData.getSpritesPerSec());
+        int alongY = animData.getAlongY();
+        int singleW = (simpleData.rightX-simpleData.leftX)/alongX;
+        int singleH = (simpleData.lowerY-simpleData.upperY)/alongY;
+        for (int i = 0; i < alongY; i++){
+            for (int j = 0 ; j < alongX; j++){
+                int l = simpleData.leftX+j*singleW;
+                int u = simpleData.upperY+ i*singleH;
+                int right = l + singleW;
+                int down = u+ singleH;
+                imageZoneSimpleDatas.add(new ImageZoneSimpleData(l,u, right, down));
+            }
+        }
+        controller = new Controller(alongX*alongY-1, animData.getSpritesPerSecond());
     }
 
     @Override
     protected void drawData(PGraphics graphic, int side) {
-        controller.update(graphic.getParent().millis());
+        controller.update(graphic.parent.millis());
         if (actualStatement != PRESSED && actualStatement != RELEASED){
             graphic.pushMatrix();
             graphic.rotate(graphicAngleInRad);
@@ -63,25 +64,25 @@ imageZoneSimpleDatas.add(new ImageZoneSimpleData(l,u, right, down));
 
 
 private class Controller{
-private int actual, last;
-private int timeBetween, nextChangeTime;
+    private int actual, last;
+    private int timeBetween, nextChangeTime;
 
-Controller(int last, int spritesPerSec){
-this.last = last;
+    Controller(int last, int spritesPerSec){
+    this.last = last;
 
-this.timeBetween = 1000/spritesPerSec;;
+    this.timeBetween = 1000/spritesPerSec;;
 
-}
+    }
 
-private void update(int time){
-if (time>nextId) transfer();
-}
+        private void update(int time){
+            if (time>nextChangeTime) transfer();
+        }
 
-private void transfer(){
-    actual++;
-    if (actual > last) actual = 0;
-    nextChangeTime+=timeBetween;
-}
-}
+        private void transfer(){
+            actual++;
+            if (actual > last) actual = 0;
+            nextChangeTime+=timeBetween;
+        }
+    }
 
 }
