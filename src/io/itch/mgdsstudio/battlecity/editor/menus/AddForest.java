@@ -14,80 +14,64 @@ import java.util.ArrayList;
 //To complete
 public class AddForest extends AbstractEditorMenu{
 
-    private String placePlayer, removePlayers;  //MAIN MENU
-    private String addPlayer, yesIWant;
+    private String add;
 
-    // private String select
-
-    private interface Statements{
-        int SELECT_TILESET = 11;
+    private interface Statements{        
+        int SELECT_TILESET = START_STATEMENT;
         int SELECT_SIZE = 21;
         int PLACE_ON_MAP = 31;
-
-
     }
 
-    public AddForest(EditorController editorController, LowerPanelInEditor lowerPanelInEditor) {
-        super(editorController, lowerPanelInEditor, NO_END);
-        editorController.getCross().setStatement(Cross.Statement.INVISIBLE_AS_CELL_CENTER);
-    }
-
-    @Override
+    Override
     protected void initGui(){
-        if (guiElements.size() > 0) guiElements.clear();
-        initButtonNames();
-        int buttons = 3;
-        Rectangle[] zones = getCoordinatesForDefaultButtonsAlignment(buttons);
-        for (int i = 0; i < buttons; i++){
-            GuiElement gui = new ButtonWithFrameSelection(editorController.getEngine(), zones[i].x, zones[i].y, zones[i].width, zones[i].height, getNameForPos(i), editorController.getEngine().getEngine().g, true);
-            guiElements.add(gui);
+         if (actualStatement == Statements.SELECT_TILESET){
+            editorController.getCross().setStatement(Cross.Statement.INVISIBLE_AS_CELL_CENTER);
+            createMenuWithGraphicButtons(4,3, 0);
+            editorController.setTextInConcole("SELECT SPRITE FOR THE GRAPHIC");
+        }
+        else if (actualStatement == Statements.SELECT_SIZE){
+            guiElements.clear();
+            editorController.getCross().setStatement(Cross.Statement.INVISIBLE_AS_CELL_CENTER);
+            editorController.setTextInConcole("SELECT SIZE OF THE OBJECT");
+            createSubmenuWithDigitKeyboard(true, "TEXT FIELD");
+            GuiElement gui = getGuiByName(KEYBOARD_GUI_NAME);
+            if (gui != null){
+                DigitKeyboard keyboard = (DigitKeyboard) gui;
+                TextLabel label =  keyboard.getEmbeddedGui();
+                int actualSize = editorController.getGrid().getGridStep();
+                String defaultValue = ""+ actualSize;
+                label.setAnotherTextToBeDrawnAsName(defaultValue);
+                label.setUserData(defaultValue);
+            }
+        }
+        
+        else if (actualStatement == Statements.PLACE_ON_MAP){
+            editorController.getCross().setStatement(Cross.Statement.CELL_CENTER);
+            String [] names = new String[] {add, back, cancel};
+            createSubmenuWithDefaultAlignedButtons(names);
         }
     }
+
+
 
     private void initButtonNames(){
-        //select, copy, move, clearSelection, delete, back;
-        placePlayer = "PLACE PLAYER";
-        removePlayers = "DELETE PLAYER";
-        yesIWant = "YES I WANT";
-        addPlayer = "ADD";
-    }
-
-    private String getNameForPos(int i) {
-        String name;
-        switch(i) {
-            case (0): name =  placePlayer; break;
-            case (1): name = removePlayers; break;
-            default:  name = back; break;
-        }
-        return name;
+        add = " ADD ON MAP "; 
     }
 
     protected String getTextForConsoleByPressedGui(GuiElement element){
         int ENGLISH = 0;
         int language = ENGLISH;
-        if (element.getName() == placePlayer){
-            return "PLACE NEW PLAYER ON MAP";
+        if (element.getName() == add){
+            return "PLACE OBJECT ON THE FIELD";
         }
-        else if (element.getName() == removePlayers){
-            return "REMOVE ALL PLAYERS FROM MAP";
-        }
-        else if (element.getName() == addPlayer){
-            return "ADD PLAYER";
-        }
-        else if (element.getName() == back){
-            return "BACK IN PREVIOUS MENU";
-        }
-        else return "NO DATA";
+        else return " ";
     }
-
-
 
     @Override
     protected void guiPressed(GuiElement element) {
 
     }
 
-    //transfer in parent
     @Override
     protected void setConsoleTextForFirstButtonPressing(GuiElement element) {
         editorController.setTextInConcole(getTextForConsoleByPressedGui(element));
@@ -98,80 +82,114 @@ public class AddForest extends AbstractEditorMenu{
         if (element.getName().equals(back)) {
             onBackPressed();
         }
-        else if (element.getName().equals(placePlayer)){
-            nextStatement =   Statements.PLACE_PLAYER;
+        else if (element.getName().equals(cancel)){
+            cancelPressed();
         }
-        else if (element.getName().equals(removePlayers)){
-            nextStatement = Statements.DELETE_PLAYER;
+        
+        else if (actualStatement == Statements.PLACE_ON_MAP){
+            if (element.getName().equals(add)){
+                Coordinate pos = editorController.getCross().getPos();
+                spriteDataStruct.setPosX((int)pos.x);
+                spriteDataStruct.setPosY((int)pos.y);
+                createGraphic();
+            }
         }
-        else if (element.getName().equals(addPlayer)){
-            addPlayer();
-
+        else if (actualStatement == Statements.SELECT_TILESET){
+            if (!element.getName().equals(prev) && !element.getName().equals(next)){
+                int tilesetNumber = getSelectedTilesetButton(element);
+                spriteDataStruct = new SpriteDataStruct(Forest.class.getSimpleName());
+                spriteDataStruct.setImageZoneKeyCode(tilesetNumber);
+                nextStatement = Statements.SELECT_SIZE;
+                addInfoAboutLastUsedTilesets(tilesetNumber);
+            }
         }
-        else if (element.getName().equals(yesIWant)){
-            removePlayer();
-            nextStatement = START_STATEMENT;
-        }
-    }
-
-    private void addPlayer(){
-        ArrayList<Entity> gameObjects = editorController.getGameRound().getEntities();
-
-    }
-
-    private void removePlayer(){
-        ArrayList <Entity> gameObjects = editorController.getGameRound().getEntities();
-        for (int i = (gameObjects.size()-1); i >= 0; i--){
-            if (gameObjects.get(i) instanceof PlayerTank){
-                gameObjects.remove(i);
+        else if (actualStatement == Statements.SELECT_SIZE){
+            if (element.getName().equals(apply)){
+                nextStatement = Statements.PLACE_ON_MAP;
             }
         }
     }
-
+    
+    private void createGraphic() {
+        Forest object;
+        object = Forest.create(editorController.getEngine(), editorController.getGameRound().getPhysicWorld(), spriteDataStruct.createEntityData());
+        editorController.getGameRound().addEntityAtEnd(object);
+        Logger.correct("This forest must be added on right layer");
+        Logger.debug("Created object: " + object.getDataString());
+        EditorListenersManagerSingleton singleton = EditorListenersManagerSingleton.getInstance();
+        EditorAction editorAction = new EditorAction(EditorCommandPrefix.OBJECT_CREATED, object.getDataString());
+        singleton.notify(editorAction);
+    }
 
     @Override
     protected void initDataForStatement(int actualStatement) {
-        guiElements.clear();
-        String consoleText = "";
-        if (actualStatement == Statements.PLACE_PLAYER){
-            consoleText = "PLACE THE BUTTON ADD TO ADD A PLAYER. IF YOU HAVE MORE THAN ONE PLAYERS - THEY WILL BE PLAYABLE ONLY IN MULTIPLAYER MODE";
-            int buttons = 2;
-            Rectangle[] zones = getCoordinatesForDefaultButtonsAlignment(buttons);
-            GuiElement add = new ButtonWithFrameSelection(editorController.getEngine(), zones[0].x, zones[0].y, zones[0].width, zones[0].height, addPlayer, editorController.getEngine().getEngine().g, true);
-            guiElements.add(add);
-            GuiElement backButton = new ButtonWithFrameSelection(editorController.getEngine(), zones[1].x, zones[1].y, zones[1].width, zones[1].height, back, editorController.getEngine().getEngine().g, true);
-            guiElements.add(backButton);
-            editorController.getCross().setStatement(Cross.Statement.CELL_CENTER);
-        }
-        else if (actualStatement == Statements.ARE_YOU_SURE_YOU_WANT_TO_DELETE){
-            consoleText = "DO YOU REALLY WANT TO DELETE ALL THE PLAYERS FROM THE MAP?";
-            int buttons = 2;
-            Rectangle[] zones = getCoordinatesForDefaultButtonsAlignment(buttons);
-            GuiElement add = new ButtonWithFrameSelection(editorController.getEngine(), zones[0].x, zones[0].y, zones[0].width, zones[0].height, yesIWant, editorController.getEngine().getEngine().g, true);
-            guiElements.add(add);
-            GuiElement backButton = new ButtonWithFrameSelection(editorController.getEngine(), zones[1].x, zones[1].y, zones[1].width, zones[1].height, back, editorController.getEngine().getEngine().g, true);
-            guiElements.add(backButton);
-            editorController.getCross().setStatement(Cross.Statement.CELL_CENTER);
-        }
-        else if (actualStatement == START_STATEMENT){
-            initGui();
-        }
-        editorController.setTextInConcole(consoleText);
-
+        initGui();
     }
-
 
     @Override
     protected void onBackPressed(){
-        //Logger.debug("Back pressed by statement: " + actualStatement);
-        if (actualStatement == START_STATEMENT) {
+        if (actualStatement == Statements.SELECT_TILESET) editorController.transferToMenu(MenuType.FOREST, MenuType.MAIN);
+        else if (actualStatement == Statements.SELECT_SIZE) nextStatement = Statements.SELECT_TILESET;
+        else if (actualStatement == Statements.PLACE_ON_MAP) nextStatement = Statements.SELECT_SIZE;
+    }
 
-            editorController.transferToMenu(MenuType.PLAYER, MenuType.MAIN);
+    protected void cancelPressed() {
+        nextStatement = START_STATEMENT;
+    }
+
+    class ObjectDataStruct {
+        private ArrayList<Integer> values ;
+        private ArrayList <Integer> graphicValues;
+        private int id;
+        private String name;
+        private int size, angle, posX, posY;
+        private int imageZoneKeyCode = 1;   //now only 1 - bricks
+
+        public ObjectDataStruct(String name) {
+            this.values = new ArrayList<>();
+            this.graphicValues = new ArrayList<>();
+            this.id = Entity.NO_ID;
+            this.name = name;
         }
-        else if (actualStatement == Statements.PLACE_PLAYER) nextStatement = START_STATEMENT;
-        else if (actualStatement == Statements.DELETE_PLAYER) nextStatement = START_STATEMENT;
-        else {
-            nextStatement = START_STATEMENT;
+        public EntityData createEntityData(){
+            int [] values = new int[6];
+            values[0] = posX;
+            values[1] = posY;
+            values[2] = angle;  //always 0
+            values[3] = size;
+            values[4] = size;
+         
+            int [] graphicValues = new int[1];
+            graphicValues[0] = imageZoneKeyCode;
+            EntityData entityData = new EntityData(values, graphicValues, id);
+            String content = "";
+            for (int i = 0; i < values.length; i++) {
+                content+=values[i];
+                content+=",";
+            }
+            Logger.debug("Entity data will content: " + content + "; ID: " + id );
+            return entityData;
+        }
+
+        public void setSize(int size) {
+            this.size = size;
+        }
+
+        public void setPosX(int posX) {
+            this.posX = posX;
+        }
+
+        public void setPosY(int posY) {
+            this.posY = posY;
+        }
+
+        public void setImageZoneKeyCode(int imageZoneKeyCode) {
+            this.imageZoneKeyCode = imageZoneKeyCode;
+        }
+
+        public void addValueToStart(int x) {
+            values.add(0,x);
         }
     }
+    
 }
