@@ -19,7 +19,7 @@ public class GameController extends GamePartWithGameWorldAbstractController {
     private ConnectingController connectingController;
 
     public GameController(IEngine engine, MainController mainController, int level, int dif, int playersConnected, int playerNumber, int playerNumberInMultiplayerMode) {
-        super(engine, mainController, dif, level, playerNumberInMultiplayerMode, playersConnected);
+        super(engine, mainController, dif, level, playerNumberInMultiplayerMode, playersConnected, false);
         drawingGraphicPlaces = new DrawingGraphicPlaces(InGameGraphicData.graphicCenterX, InGameGraphicData.graphicCenterY, InGameGraphicData.fullGraphicWidth, InGameGraphicData.fullGraphicHeight);
         //hud = new Hud(this, engine, playerNumberInMultiplayerMode, singleplayer);
 

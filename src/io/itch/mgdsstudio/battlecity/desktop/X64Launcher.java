@@ -47,8 +47,6 @@ public class X64Launcher extends PApplet implements ContactListener , IEngine {
 
     public void settings() {
         size(600,  900, P2D);
-        //size(480,  1080, P2D);
-        //size(480,  1080, P2D);
         smooth(0);
     }
 
@@ -152,4 +150,6 @@ public class X64Launcher extends PApplet implements ContactListener , IEngine {
     public String getPathToObjectInUserFolder(String fileName) {
         return getPathToObjectInAssets(fileName);
     }
+
+
 }

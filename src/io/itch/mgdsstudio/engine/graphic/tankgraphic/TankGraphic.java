@@ -1,6 +1,8 @@
 package io.itch.mgdsstudio.engine.graphic.tankgraphic;
 
+import io.itch.mgdsstudio.battlecity.game.camera.Camera;
 import io.itch.mgdsstudio.battlecity.game.camera.GameCamera;
+import io.itch.mgdsstudio.battlecity.game.gameobjects.PlayerTank;
 import io.itch.mgdsstudio.battlecity.game.gameobjects.Tank;
 import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
 import org.jbox2d.common.Vec2;
@@ -22,13 +24,11 @@ public class TankGraphic implements GraphicData{
         this.tank = tank;
         this.graphicType = tank.getType();
         tracksGraphic = new TrackGraphic(null, tank, engine, 1.7f, true);
-        //rightTrackGraphic = new TrackGraphic(null, tank, engine, 1.7f, false);
         turretGraphic = new TurretGraphic(null, tank, engine, 1.7f, graphicType);
-        //cannonGraphic = new CannonGraphic(null, tank, engine, 1.7f, graphicType);
         bodyGraphic = new BodyGraphic(null, tank, engine, 1.7f, graphicType);
     }
 
-    public void draw(PGraphics graphics, GameCamera gameCamera){
+    public void draw(PGraphics graphics, Camera gameCamera){
         startRender(graphics, gameCamera);
         update(graphics);
         tracksGraphic.draw(graphics, gameCamera);
@@ -52,7 +52,7 @@ public class TankGraphic implements GraphicData{
         graphics.popStyle();
     }
 
-    private void startRender(PGraphics graphics, GameCamera gameCamera){
+    private void startRender(PGraphics graphics, Camera gameCamera){
         graphics.pushMatrix();
         graphics.pushStyle();
         Vec2 vibrationPlace = tank.getTankController().getRelativeVibrationPos();
@@ -62,8 +62,8 @@ public class TankGraphic implements GraphicData{
     }
 
     public void updateGraphicForActualStatement(int turretType, int chassisType) {
-        turretGraphic.setGraphic(GraphicData.getGraphicForPlayerTurret(turretType));
-        //cannonGraphic.setGraphic(GraphicData.getGraphicForPlayerCannon(turretType));
+        if (tank instanceof PlayerTank) turretGraphic.setGraphic(GraphicData.getGraphicForPlayerTurret(turretType));
+        else turretGraphic.setGraphic(GraphicData.getGraphicForEnemyTurret(turretType));
     }
 
 }

@@ -73,7 +73,7 @@ public class SimpleSpriteAnimationController {
             if (timeBetweenChangings < (nextTransferTime-time)){
                 nextTransferTime = time;
             }
-            Logger.debug("Time set: " + nextTransferTime);
+            //Logger.debug("Time set: " + nextTransferTime);
         }
     }
 

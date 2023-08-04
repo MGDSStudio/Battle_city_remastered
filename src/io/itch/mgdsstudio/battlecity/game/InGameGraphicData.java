@@ -37,20 +37,6 @@ public class InGameGraphicData {
         else renderer = PConstants.P2D;
     }
 
-    /*public static void init(IEngine eng, float upperPanelHeight, float lowerPanelHeight){
-        PApplet engine = eng.getEngine();
-        InGameGraphicData instanceForInit = new InGameGraphicData(eng);
-        calculateResolution(engine, upperPanelHeight, lowerPanelHeight);
-        graphicScaleX = engine.width/(float)RESOLUTION_X;
-        graphicScaleY = engine.height/(float)RESOLUTION_Y;
-        graphicCenterX = engine.width/2;
-        graphicCenterY = engine.height/2;
-        if (GlobalVariables.getOs() == GlobalConstants.LINUX){
-            renderer = PConstants.JAVA2D;
-        }
-        else renderer = PConstants.P2D;
-    }*/
-
     private static void calculateResolution(PApplet engine, float upperPanelHeight, float lowerPanelHeight){
         RESOLUTION_X = 256;
         //RESOLUTION_X = 256+128;

@@ -4,6 +4,7 @@ import io.itch.mgdsstudio.battlecity.datatransfer.listeners.GlobalListener;
 import io.itch.mgdsstudio.battlecity.game.GameRound;
 import io.itch.mgdsstudio.battlecity.game.Logger;
 import io.itch.mgdsstudio.battlecity.game.PhysicWorld;
+import io.itch.mgdsstudio.battlecity.game.camera.Camera;
 import io.itch.mgdsstudio.battlecity.game.dataloading.EntityData;
 import io.itch.mgdsstudio.battlecity.game.gameobjects.controllers.ai.Ai;
 
@@ -11,6 +12,7 @@ import io.itch.mgdsstudio.battlecity.game.net.ISerializeable;
 import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
 import io.itch.mgdsstudio.battlecity.mainpackage.MainController;
 import io.itch.mgdsstudio.engine.libs.Coordinate;
+import processing.core.PGraphics;
 import processing.data.IntList;
 
 import java.util.ArrayList;
@@ -193,5 +195,13 @@ public class EnemyTank extends Tank implements ISerializeable {
     @Override
     protected void blockForTime(int timeToBlock) {
         getTankController().blockForTime(timeToBlock, engine.getEngine().millis());
+    }
+
+
+    public void draw(PGraphics graphics, Camera gameCamera) {
+        //It must be in Tank class
+        // tankGraphic.update(graphics);
+        tankGraphic.draw(graphics, gameCamera);
+        //graphicElementInGame.draw(graphics, gameCamera, pos.x, pos.y);
     }
 }

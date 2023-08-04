@@ -22,7 +22,6 @@ abstract class AbstractCheckableElement extends ElementWithCursor {
 
     protected final boolean isMouseOnEffectiveArea(int mouseX, int mouseY){
         return GameMechanics.isPointInRect(mouseX, mouseY, getCursorPosX()-frameHeight/2, getCursorPosY()-frameHeight/2, frameHeight, frameHeight);
-
     }
 
     @Override

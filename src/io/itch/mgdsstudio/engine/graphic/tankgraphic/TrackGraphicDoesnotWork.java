@@ -1,5 +1,6 @@
 package io.itch.mgdsstudio.engine.graphic.tankgraphic;
 
+import io.itch.mgdsstudio.battlecity.game.camera.Camera;
 import io.itch.mgdsstudio.battlecity.game.camera.GameCamera;
 import io.itch.mgdsstudio.battlecity.game.gameobjects.Tank;
 import io.itch.mgdsstudio.battlecity.game.gameobjects.TankController;
@@ -55,7 +56,7 @@ class TrackGraphicDoesnotWork extends GraphicPart{
     }
 
     @Override
-    void draw(PGraphics graphics, GameCamera gameCamera){
+    void draw(PGraphics graphics, Camera gameCamera){
         update(graphics.parent.millis());
         imageZoneSimpleData  = singleSpriteZones[leftTrackGraphicController.getActualNumber()];
         //Logger.debug("Sprite: " +leftTrackGraphicController.getActualNumber() + " with zone: " + imageZoneSimpleData );

@@ -5,9 +5,20 @@ import io.itch.mgdsstudio.battlecity.game.gameobjects.PlayerTank;
 import io.itch.mgdsstudio.engine.libs.imagezones.ImageZoneSimpleData;
 
 interface GraphicData {
+
+    ImageZoneSimpleData ENEMY_SIMPLE_BODY = new ImageZoneSimpleData(0,347-40, 80,347+40);
+    ImageZoneSimpleData ENEMY_FAST_BODY = new ImageZoneSimpleData(162,347-40, 162+80,347+40);
+    ImageZoneSimpleData ENEMY_EASY_ARMORED_BODY = new ImageZoneSimpleData(413-40,0, 413+40,80);
+    ImageZoneSimpleData ENEMY_GOOD_ARMORED_BODY = new ImageZoneSimpleData(529-40,0, 529+40,80);
+
+    ImageZoneSimpleData ENEMY_BASIC_TURRET = new ImageZoneSimpleData(77,347-40, 75+38*2,347+40);
+    ImageZoneSimpleData ENEMY_LONG_CANNON_TURRET = new ImageZoneSimpleData(77,587-40, 75+38*2,587+40);
+    ImageZoneSimpleData ENEMY_DOUBLE_CANNON_TURRET = new ImageZoneSimpleData(77,507+40, 75+38*2,507-40);
+    ImageZoneSimpleData ENEMY_ROCKET_LAUNCHER_TURRET = new ImageZoneSimpleData(77,426-40, 75+38*2,426+40);
+
     ImageZoneSimpleData PLAYER_BASIC_BODY = new ImageZoneSimpleData(0,685-685, 80,685+80-685);
     ImageZoneSimpleData PLAYER_BASIC_TURRET = new ImageZoneSimpleData(77,0, 75+38*2,80);
-    ImageZoneSimpleData PLAYER_LONG_CANNON_TURRET = PLAYER_BASIC_TURRET;
+    ImageZoneSimpleData PLAYER_LONG_CANNON_TURRET = new ImageZoneSimpleData(77,224-40, 75+38*2,224+40);
     ImageZoneSimpleData PLAYER_DOUBLE_CANNON_TURRET = new ImageZoneSimpleData(77,58, 75+38*2,58+80);
     ImageZoneSimpleData PLAYER_ROCKET_LAUNCHER_TURRET = new ImageZoneSimpleData(77,117, 75+38*2,117+80);
 
@@ -39,7 +50,19 @@ interface GraphicData {
         }
     }
 
-    static ImageZoneSimpleData getGraphicForPlayerCannon(int turretType) {
+    static ImageZoneSimpleData getGraphicForEnemyTurret(int turretType) {
+        if (turretType == PlayerTank.TurretTypes.SIMPLE_TURRET) return ENEMY_BASIC_TURRET;
+        else if (turretType == PlayerTank.TurretTypes.LONG_CANNON_TURRET) return ENEMY_LONG_CANNON_TURRET;
+        else if (turretType == PlayerTank.TurretTypes.DOUBLE_CANNONS_TURRET) return ENEMY_DOUBLE_CANNON_TURRET;
+        else if (turretType == PlayerTank.TurretTypes.ROCKET_LAUNCHER_TURRET) return ENEMY_ROCKET_LAUNCHER_TURRET;
+        else {
+            Logger.error("No data for this turret");
+            return PLAYER_BASIC_TURRET;
+        }
+    }
+
+
+    /*static ImageZoneSimpleData getGraphicForPlayerCannon(int turretType) {
         if (turretType == PlayerTank.TurretTypes.SIMPLE_TURRET) return PLAYER_BASIC_CANNON;
         else if (turretType == PlayerTank.TurretTypes.LONG_CANNON_TURRET) return PLAYER_LONG_CANNON;
         else if (turretType == PlayerTank.TurretTypes.DOUBLE_CANNONS_TURRET) return PLAYER_DOUBLE_CANNON;
@@ -48,5 +71,5 @@ interface GraphicData {
             Logger.error("No data for this turret");
             return PLAYER_BASIC_TURRET;
         }
-    }
+    }*/
 }

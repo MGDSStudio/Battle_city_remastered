@@ -18,7 +18,7 @@ Ice 10:200,182,0,32,32#
 Forest 11:280,250,0,32,32,0,0#
 //IEngine engine, PhysicGameWorld physicWorld, Coordinate pos, int angle, int width, int height, int thirdDim
 Camp 13:250,185,0,32,32,32#
-PlayerTank 14:300,340,180,1#
+PlayerTank 14:100,540,180,1#
 Mine 15:180,460,0#
 Mine 16:70,400,0#
 Mine 18:130,420,0#
@@ -33,30 +33,6 @@ Collectable 26:660,490,22,0,5200#
 //int maxTanksOnScreen, int spawnTime, int tanks0, int tanks1, int tanks2, int tanks3, int tanks4, int tanks5, int controlBy, int aiModelForTanks0, int aiModelForTanks1, int aiModelForTanks2, int aiModelForTanks3, int aiModelForTanks4, int aiModelForTanks5, int additionalData1, int additionalData2, ArrayList <Coordinate> placesForEnemiesSpawn) {
 // public EnemiesSpawnController(IEngine engine, int maxTanksOnScreen, int spawnTime, int tanks0, int tanks1, int tanks2, int tanks3, int tanks4, int tanks5, int additionalData1, int additionalData2, ArrayList <Coordinate> spawnPositions) {
 Collectable -9999:225,375,1,0,234#
-BrickWall 17:525,375,0,50,50,5#4;
-BrickWall 17:625,375,0,50,50,6#6;
-BrickWall 22:525,425,0,50,50,3#5;
-BrickWall 23:525,525,0,50,50,4#3;
-BrickWall 24:675,225,0,50,50,0#1;
-BrickWall 25:475,225,0,50,50,0#1;
-SpriteInGame 26:300,500,0,50,50,0#7;
-SpriteInGame 27:300,450,0,50,50,0#7;
-SpriteInGame 28:300,400,0,50,50,0#7;
-//SpriteInGame(IEngine engine, Coordinate pos, int angle, int width, int height, int layer, int spritesheetNumber, int left, int up, int right, int down)
-SpriteInGame 7:625,225,0,50,50,0#7;
-SpriteInGame 8:575,225,0,50,50,0#7;
-SpriteInGame 12:575,275,0,50,50,0#7;
-SpriteInGame 17:625,275,0,50,50,0#7;
-SpriteInGame 22:625,175,0,50,50,0#7;
-//SpriteInGame 23:575,175,0,50,50,0#7;
-SpriteInGame 7:575,175,0,50,50,2#9;
-SpriteInGame 8:625,175,0,50,50,2#9;
-SpriteInGame 12:575,275,0,50,50,2#9;
-SpriteInGame 17:625,275,0,50,50,2#9;
-SpriteInGame 7:575,225,0,50,50,3#9;
-SpriteInGame 8:525,125,0,50,50,3#9;
-SpriteInGame 12:525,175,0,50,50,3#9;
-SpriteInGame 17:475,175,0,50,50,3#9;
 SpriteAnimationInGame 22:475,125,0,50,50,0#11;
 BrickWall 7:675,125,0,50,50,0#7;
 SpriteAnimationInGame 7:575,25,0,50,50,0#11;

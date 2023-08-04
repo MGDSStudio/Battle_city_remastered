@@ -1,5 +1,7 @@
 package io.itch.mgdsstudio.engine.graphic.tankgraphic;
 
+import io.itch.mgdsstudio.battlecity.game.Logger;
+import io.itch.mgdsstudio.battlecity.game.camera.Camera;
 import io.itch.mgdsstudio.battlecity.game.camera.GameCamera;
 import io.itch.mgdsstudio.battlecity.game.gameobjects.Tank;
 import io.itch.mgdsstudio.battlecity.mainpackage.GlobalConstants;
@@ -44,9 +46,10 @@ abstract class GraphicPart implements GraphicData{
         children.add(graphicPart);
     }
 
-    void draw(PGraphics graphics, GameCamera gameCamera){
+    void draw(PGraphics graphics, Camera gameCamera){
         //graphics.image(image.getImage(), 0,0,width, height, imageZoneSimpleData.leftX, imageZoneSimpleData.upperY, imageZoneSimpleData.rightX, imageZoneSimpleData.lowerY);
         graphics.image(image.getImage(), offset.x,offset.y,width, height, imageZoneSimpleData.leftX, imageZoneSimpleData.upperY, imageZoneSimpleData.rightX, imageZoneSimpleData.lowerY);
+
     }
 
 

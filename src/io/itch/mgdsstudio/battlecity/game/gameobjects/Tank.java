@@ -36,10 +36,6 @@ public abstract class Tank extends SolidObject {
     protected TankGraphic tankGraphic;
     protected int turretType, engineUpgrade;
 
-
-
-
-
     //, Coordinate pos, int angle, int life, int width, int height, int bodyForm, BodyType bodyType, int additionalDim) {
     protected Tank(IEngine engine, PhysicWorld physicWorld, Coordinate pos, int angle, int turretAbsoluteAngle, int life, int role, int width, int height){
         super(engine, physicWorld, pos, angle, life, width, height, BodyForms.TANK, BodyType.DYNAMIC, ENTITY_NORMAL_DIM);
@@ -48,7 +44,6 @@ public abstract class Tank extends SolidObject {
         this.maxLife = life;
         tankController = new TankController(this);
         tankGraphic = new TankGraphic(this, engine);
-
     }
 
     public float getForwardMaxVelocityInWorldUnits(){

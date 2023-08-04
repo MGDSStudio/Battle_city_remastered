@@ -26,14 +26,14 @@ public abstract class GamePartWithGameWorldAbstractController extends GamePart{
     protected long lastFrameTime;
     protected Net netController;
     protected DrawingGraphicPlaces drawingGraphicPlaces;
-    public GamePartWithGameWorldAbstractController(IEngine engine, MainController mainController, int dif, int level, int playerNumberInMultiplayerMode, int playersConnected) {
+    public GamePartWithGameWorldAbstractController(IEngine engine, MainController mainController, int dif, int level, int playerNumberInMultiplayerMode, int playersConnected, boolean isEditor) {
         super(engine, mainController);
         this.level = level;
         deltaTime = engine.getEngine().millis();
         difficulty = dif;
         PlayerProgressControllerSingleton.init(engine, PlayerProgressControllerSingleton.SINGLE_MISSIONS);
         initHud(playerNumberInMultiplayerMode);
-        gameRound = new GameRound(this, level, difficulty, playersConnected, playerNumberInMultiplayerMode);
+        gameRound = new GameRound(this, level, difficulty, playersConnected, playerNumberInMultiplayerMode, isEditor);
     }
 
     protected abstract void initHud(int playerNumberInMultiplayerMode);

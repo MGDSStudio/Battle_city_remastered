@@ -12,8 +12,6 @@ public class MultiplatformLauncher {
     //private int playerNumberInMultiplayerMode;
 
     public MultiplatformLauncher(IEngine engine, int playerNumberInMultiplayerMode) {
-        //this.engine = engine;
-        //this.playerNumberInMultiplayerMode = playerNumberInMultiplayerMode;
         GlobalVariables.init(engine);
         InGameGraphicData.init(engine);
         InEditorGraphicData.init(engine);

@@ -21,6 +21,8 @@ import java.util.Comparator;
 
 public class GameRound {
 
+    private final static float GRAPHIC_SCALE_FOR_GAME = 0.85f;
+    private final static float GRAPHIC_SCALE_FOR_EDITOR = 1.5f;
     private ArrayList <Entity> gameObjects;
     private final ArrayList <Entity> objectToBeDeleted  = new ArrayList<>();
     private PGraphics graphics;
@@ -28,7 +30,7 @@ public class GameRound {
     private GamePartWithGameWorldAbstractController  gameController;
     private PhysicWorld physicWorld;
     private ArrayList <Controller> controllers;
-    //private EnemiesSpawnController spawnController;
+
     private boolean singleplayer;
     private int playersConnected, playerNumberInMultiplayerMode;
 
@@ -39,7 +41,7 @@ public class GameRound {
 
     private PlayerProgressControllerSingleton playerProgressControllerSingleton;
 
-    public GameRound(GamePartWithGameWorldAbstractController  gamePartController, int number, int difficulty, int playersConnected, int playerNumberInMUltiplayerMOde) {
+    public GameRound(GamePartWithGameWorldAbstractController  gamePartController, int number, int difficulty, int playersConnected, int playerNumberInMUltiplayerMOde, boolean editorMode) {
 
         if (gamePartController instanceof GameController ) editor = false;
         else editor = true;
@@ -50,7 +52,7 @@ public class GameRound {
         this.playersConnected = playersConnected;
         if (playersConnected<=1) singleplayer = true;
         this.playerNumberInMultiplayerMode = playerNumberInMUltiplayerMOde;
-        loadGraphic();
+        loadGraphic(editorMode);
         loadLevel(number, playersConnected, playerNumberInMUltiplayerMOde, playerProgressControllerSingleton);
         camera = gamePartController.createCamera(this);
 
@@ -80,13 +82,15 @@ public class GameRound {
         Logger.debug("This world has " + bodiesHaveNoEntities + " bodies that have no entities");
     }
 
-    private void loadGraphic(){
+    private void loadGraphic(boolean editorMode){
         if (gameController == null) Logger.error("Game controller is null");
         if (gameController.getEngine() == null)  Logger.error("Engine is null");
         if (gameController.getEngine().getEngine() == null)  Logger.error("PApplet is null");
         Logger.debug("Resolution: " + InGameGraphicData.RESOLUTION_X + "x" + InGameGraphicData.RESOLUTION_Y);
-        int graphicWidth = gameController.getGraphicWidth();
-        int graphicHeight = gameController.getGraphicHeight();
+        float graphicScale = GRAPHIC_SCALE_FOR_GAME;
+        if (editorMode) graphicScale = GRAPHIC_SCALE_FOR_EDITOR;
+        int graphicWidth = (int) (gameController.getGraphicWidth()*graphicScale);
+        int graphicHeight = (int) (gameController.getGraphicHeight()*graphicScale);
         graphics = gameController.getEngine().getEngine().createGraphics(graphicWidth, graphicHeight, InGameGraphicData.renderer);
         graphics.beginDraw();
         graphics.rectMode(PConstants.CENTER);

@@ -12,6 +12,7 @@ public class InEditorGraphicData {
     public static float fullGraphicWidth, fullGraphicHeight;
     public static int RESOLUTION_X;
     public static int RESOLUTION_Y;
+
     public static float lowerHeight;
     public static float upperHeight;
     public final static float SINGLE_TEXT_LINE_RELATIVE_WIDTH = 0.1f;
@@ -49,12 +50,12 @@ public class InEditorGraphicData {
     }
 
     private static void calculateResolution(PApplet engine, float upperPanelHeight, float lowerPanelHeight){
-        RESOLUTION_X = 512;
+        RESOLUTION_X = 32;
         //RESOLUTION_X = 256+128;
         float restHeight = engine.height-(upperPanelHeight+lowerPanelHeight);
         float relationship = restHeight/(float)engine.width;
         RESOLUTION_Y = (int) (relationship*RESOLUTION_X);
-        fullGraphicWidth = engine.width-leftBoardLineWidth-rightBoardLineWidth;
+        fullGraphicWidth = (engine.width-leftBoardLineWidth-rightBoardLineWidth);
         fullGraphicHeight = fullGraphicWidth*relationship;
     }
 }

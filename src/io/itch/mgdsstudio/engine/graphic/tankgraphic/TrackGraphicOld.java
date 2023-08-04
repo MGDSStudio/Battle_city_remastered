@@ -1,5 +1,6 @@
 package io.itch.mgdsstudio.engine.graphic.tankgraphic;
 
+import io.itch.mgdsstudio.battlecity.game.camera.Camera;
 import io.itch.mgdsstudio.battlecity.game.camera.GameCamera;
 import io.itch.mgdsstudio.battlecity.game.gameobjects.Tank;
 import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
@@ -24,7 +25,7 @@ public class TrackGraphicOld extends GraphicPart{
     }
 
     @Override
-    void draw(PGraphics graphics, GameCamera gameCamera){
+    void draw(PGraphics graphics, Camera gameCamera){
         update();
         super.draw(graphics, gameCamera);
     }

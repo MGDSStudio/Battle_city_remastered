@@ -39,7 +39,7 @@ public class EditorController extends GamePartWithGameWorldAbstractController im
     private boolean firstUpdated;
 
     public EditorController(IEngine engine, MainController mainController, int level, int dif, int playersConnected, int playerNumber, int playerNumberInMultiplayerMode) {
-        super(engine, mainController, dif, level, playerNumberInMultiplayerMode,playersConnected);
+        super(engine, mainController, dif, level, playerNumberInMultiplayerMode,playersConnected, true);
         selectedElements = new ArrayList<>();
         changesController = new ChangesController(this);
         EditorPreferencesSingleton editorPreferencesSingleton = EditorPreferencesSingleton.getInstance(engine);

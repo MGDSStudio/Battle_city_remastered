@@ -4,6 +4,7 @@ import io.itch.mgdsstudio.battlecity.game.GameController;
 import io.itch.mgdsstudio.battlecity.game.GameRound;
 import io.itch.mgdsstudio.battlecity.game.Logger;
 import io.itch.mgdsstudio.battlecity.game.PhysicWorld;
+import io.itch.mgdsstudio.battlecity.game.camera.Camera;
 import io.itch.mgdsstudio.battlecity.game.camera.GameCamera;
 import io.itch.mgdsstudio.battlecity.game.dataloading.EntityData;
 import io.itch.mgdsstudio.battlecity.game.dataloading.Keys;
@@ -223,7 +224,7 @@ public class PlayerTank extends Tank{
         else return !KILLED;
     }
 
-    public void draw(PGraphics graphics, GameCamera gameCamera) {
+    public void draw(PGraphics graphics, Camera gameCamera) {
         //It must be in Tank class
         // tankGraphic.update(graphics);
         tankGraphic.draw(graphics, gameCamera);

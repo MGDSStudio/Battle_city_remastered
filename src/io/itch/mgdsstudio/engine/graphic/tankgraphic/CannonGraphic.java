@@ -1,5 +1,6 @@
 package io.itch.mgdsstudio.engine.graphic.tankgraphic;
 
+import io.itch.mgdsstudio.battlecity.game.camera.Camera;
 import io.itch.mgdsstudio.battlecity.game.camera.GameCamera;
 import io.itch.mgdsstudio.battlecity.game.gameobjects.Tank;
 import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
@@ -16,20 +17,16 @@ class CannonGraphic extends GraphicPart{
     }
 
     @Override
-    void draw(PGraphics graphics, GameCamera gameCamera){
-        //graphics.translate(offset.x, offset.y);
+    void draw(PGraphics graphics, Camera gameCamera){
         graphics.pushMatrix();
-        //graphics.rotate(( START_ANGLE));
         super.draw(graphics, gameCamera);
-
         graphics.popMatrix();
     }
 
     public void update(PGraphics graphics) {
 
+        
     }
-
-
 }
 
 
