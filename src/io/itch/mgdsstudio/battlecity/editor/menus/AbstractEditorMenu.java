@@ -54,7 +54,7 @@ public abstract class AbstractEditorMenu {
     public static AbstractEditorMenu createMenuForType(MenuType actualMenuType, EditorController editorController, LowerPanelInEditor lowerPanel) {
         if (actualMenuType == MenuType.MAIN) return new Main(editorController, lowerPanel);
         else if (actualMenuType == MenuType.FILE) return new FileMenu(editorController, lowerPanel);
-        else if (actualMenuType == MenuType.EDIT) return new Edit(editorController, lowerPanel);
+        else if (actualMenuType == MenuType.EDIT) return new EditMenu(editorController, lowerPanel);
         else if (actualMenuType == MenuType.PREFERENCES) return new Preferences(editorController, lowerPanel);
         else if (actualMenuType == MenuType.PLAYER) return new AddPlayer(editorController, lowerPanel);
         else if (actualMenuType == MenuType.COLLECTABLE) return new AddCollectable(editorController, lowerPanel);

@@ -3,7 +3,7 @@ package io.itch.mgdsstudio.battlecity.editor.menus;
 import com.mgdsstudio.engine.nesgui.DigitKeyboard;
 import com.mgdsstudio.engine.nesgui.GuiElement;
 import com.mgdsstudio.engine.nesgui.TextLabel;
-import io.itch.mgdsstudio.battlecity.editor.Cross;
+import io.itch.mgdsstudio.battlecity.editor.Cursor;
 import io.itch.mgdsstudio.battlecity.editor.EditorAction;
 import io.itch.mgdsstudio.battlecity.editor.EditorCommandPrefix;
 import io.itch.mgdsstudio.battlecity.editor.EditorListenersManagerSingleton;
@@ -14,7 +14,6 @@ import io.itch.mgdsstudio.battlecity.game.gameobjects.*;
 import io.itch.mgdsstudio.battlecity.game.hud.LowerPanelInEditor;
 import io.itch.mgdsstudio.engine.graphic.AnimationInGame;
 import io.itch.mgdsstudio.engine.libs.Coordinate;
-import sun.rmi.runtime.Log;
 
 import java.util.ArrayList;
 
@@ -45,20 +44,20 @@ public class AddGraphic extends AbstractEditorMenu{
     @Override
     protected void initGui(){
         if (actualStatement == Statements.SELECT_TYPE) {
-            editorController.getCross().setStatement(Cross.Statement.INVISIBLE_AS_CELL_CENTER);
+            editorController.getCursor().setStatement(Cursor.Statement.INVISIBLE_AS_CELL_CENTER);
             initButtonNames();
             String [] names = new String[]{sprite, animation, back};
             createSubmenuWithDefaultAlignedButtons(names);
             editorController.setTextInConcole("SELECT TYPE OF THE GRAPHIC YOU WANT TO ADD");
         }
         else if (actualStatement == Statements.SELECT_TILESET){
-            editorController.getCross().setStatement(Cross.Statement.INVISIBLE_AS_CELL_CENTER);
+            editorController.getCursor().setStatement(Cursor.Statement.INVISIBLE_AS_CELL_CENTER);
             createMenuWithGraphicButtons(4,3, 0);
             editorController.setTextInConcole("SELECT SPRITE FOR THE GRAPHIC");
         }
         else if (actualStatement == Statements.SELECT_SIZE){
             guiElements.clear();
-            editorController.getCross().setStatement(Cross.Statement.INVISIBLE_AS_CELL_CENTER);
+            editorController.getCursor().setStatement(Cursor.Statement.INVISIBLE_AS_CELL_CENTER);
             editorController.setTextInConcole("SELECT SIZE OF THE OBJECT");
             createSubmenuWithDigitKeyboard(true, "TEXT FIELD");
             GuiElement gui = getGuiByName(KEYBOARD_GUI_NAME);
@@ -79,13 +78,13 @@ public class AddGraphic extends AbstractEditorMenu{
             else editorController.setTextInConcole("SHIFT THE BATTLEFIELD VIA SWIPES TO SELECT RIGHT POSITION FOR THE OBJECT. PRESS ADD BUTTON TO PLACE THE OBJECT ON THE BATTLEFIELD. THE OBJECT SIZE WILL BE " + value + " WORLD UNITS");
             Logger.debug("Graphic object will have size: " + value);
             spriteDataStruct.setSize(value);
-            editorController.getCross().setStatement(Cross.Statement.INVISIBLE_AS_CELL_CENTER);
+            editorController.getCursor().setStatement(Cursor.Statement.INVISIBLE_AS_CELL_CENTER);
             String [] names = new String[] {ground,onGround,aboveGround,inAir,back};
             createSubmenuWithDefaultAlignedButtons(names);
             editorController.setTextInConcole("SELECT FORM OF THE WALL ELEMENT");
         }
         else if (actualStatement == Statements.PLACE_ON_MAP){
-            editorController.getCross().setStatement(Cross.Statement.CELL_CENTER);
+            editorController.getCursor().setStatement(Cursor.Statement.CELL_CENTER);
             String [] names = new String[] {add, back, cancel};
             createSubmenuWithDefaultAlignedButtons(names);
         }
@@ -159,7 +158,7 @@ public class AddGraphic extends AbstractEditorMenu{
         }
         else if (actualStatement == Statements.PLACE_ON_MAP){
             if (element.getName().equals(add)){
-                Coordinate pos = editorController.getCross().getPos();
+                Coordinate pos = editorController.getCursor().getPos();
                 spriteDataStruct.setPosX((int)pos.x);
                 spriteDataStruct.setPosY((int)pos.y);
                 createGraphic();

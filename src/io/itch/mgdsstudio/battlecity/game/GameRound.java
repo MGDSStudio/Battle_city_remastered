@@ -194,7 +194,7 @@ public class GameRound {
         return difficulty;
     }
 
-	public void campKilled(boolean side) {
+	public void campKilled(int side) {
 		System.out.println("Level ended");
 	}
 

@@ -1,6 +1,7 @@
 package io.itch.mgdsstudio.engine.libs;
 
 import processing.core.PApplet;
+import processing.core.PVector;
 
 public class Geometrie {
     public final static boolean CW = true;
@@ -95,4 +96,44 @@ public class Geometrie {
         return false;
     }
 
+    public static boolean isIntersectionBetweenAllignedRects(float majorRectCenterX, float majorRectCenterY, float smallRectCenterX, float smallRectCenterY, float majorWidth, float majorHeight, float smallRectWidth, float smallRectHeight){
+        float ax = majorRectCenterX-majorWidth/2f;
+        float ay = majorRectCenterY-majorHeight/2f;
+        float ax1 = majorRectCenterX+majorWidth/2f;
+        float ay1 = majorRectCenterY+majorHeight/2f;
+
+        float bx = smallRectCenterX-smallRectWidth/2f;
+        float by = smallRectCenterY-smallRectHeight/2f;
+        float bx1 = smallRectCenterX+smallRectWidth/2f;
+        float by1 = smallRectCenterY+smallRectHeight/2f;
+        return(
+                (
+                        (
+                                ( ax>=bx && ax<=bx1 )||( ax1>=bx && ax1<=bx1  )
+                        ) && (
+                                ( ay>=by && ay<=by1 )||( ay1>=by && ay1<=by1 )
+                        )
+                )||(
+                        (
+                                ( bx>=ax && bx<=ax1 )||( bx1>=ax && bx1<=ax1  )
+                        ) && (
+                                ( by>=ay && by<=ay1 )||( by1>=ay && by1<=ay1 )
+                        )
+                )
+        )||(
+                (
+                        (
+                                ( ax>=bx && ax<=bx1 )||( ax1>=bx && ax1<=bx1  )
+                        ) && (
+                                ( by>=ay && by<=ay1 )||( by1>=ay && by1<=ay1 )
+                        )
+                )||(
+                        (
+                                ( bx>=ax && bx<=ax1 )||( bx1>=ax && bx1<=ax1  )
+                        ) && (
+                                ( ay>=by && ay<=by1 )||( ay1>=by && ay1<=by1 )
+                        )
+                )
+        );
+    }
 }

@@ -1,25 +1,19 @@
 package io.itch.mgdsstudio.battlecity.editor.menus;
 
-import com.mgdsstudio.engine.nesgui.ButtonWithFrameSelection;
-import com.mgdsstudio.engine.nesgui.DigitKeyboard;
 import com.mgdsstudio.engine.nesgui.GuiElement;
 
-import com.mgdsstudio.engine.nesgui.TextLabel;
 import io.itch.mgdsstudio.battlecity.editor.*;
+import io.itch.mgdsstudio.battlecity.editor.Cursor;
 import io.itch.mgdsstudio.battlecity.game.EditorController;
 import io.itch.mgdsstudio.battlecity.game.Logger;
 import io.itch.mgdsstudio.battlecity.game.dataloading.EntityData;
-import io.itch.mgdsstudio.battlecity.game.dataloading.GraphicData;
 import io.itch.mgdsstudio.battlecity.game.gameobjects.Collectable;
 import io.itch.mgdsstudio.battlecity.game.gameobjects.Entity;
 import io.itch.mgdsstudio.battlecity.game.gameobjects.controllers.ObjectActivatingController;
 import io.itch.mgdsstudio.battlecity.game.hud.LowerPanelInEditor;
 import io.itch.mgdsstudio.engine.libs.Coordinate;
 
-import javax.swing.plaf.nimbus.State;
-import java.awt.*;
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class AddCollectable extends AbstractEditorMenu {
 
@@ -75,7 +69,7 @@ public class AddCollectable extends AbstractEditorMenu {
     @Override
     protected void initGui(){
         if (actualStatement == START_STATEMENT) {
-            editorController.getCross().setStatement(Cross.Statement.INVISIBLE_AS_CELL_CENTER);
+            editorController.getCursor().setStatement(Cursor.Statement.INVISIBLE_AS_CELL_CENTER);
             initButtonNames();
             String [] names = new String[10];
             for (int i = 0; i < names.length; i++){
@@ -85,7 +79,7 @@ public class AddCollectable extends AbstractEditorMenu {
             editorController.setTextInConcole("SELECT TYPE OF THE COLLECTABLE OBJECT TO BE ADDED ON THE BATTLEFIELD");
         }
         else if (actualStatement == Statements.SELECT_DELAY){
-            editorController.getCross().setStatement(Cross.Statement.INVISIBLE_AS_CELL_CENTER);
+            editorController.getCursor().setStatement(Cursor.Statement.INVISIBLE_AS_CELL_CENTER);
             guiElements.clear();
             createSubmenuWithDigitKeyboard(true, DATA_FIELD);
             editorController.setTextInConcole("ENTER THE DELAY FOR START TIMER. THE OBJECT WILL APPEAR ON THE BATTLE FIELD AFTER THE TIMER CALLS BACK");
@@ -93,14 +87,14 @@ public class AddCollectable extends AbstractEditorMenu {
         else if (actualStatement == Statements.PLACE_ON_MAP){
             int value = getDigitValueFromKeyboard();
             objectData.addValue(value);
-            editorController.getCross().setStatement(Cross.Statement.CELL_CENTER);
+            editorController.getCursor().setStatement(Cursor.Statement.CELL_CENTER);
             String [] names = new String[] {add, back};
             createSubmenuWithDefaultAlignedButtons(names);
             editorController.setTextInConcole("SHIFT THE BATTLEFIED VIA SWIPES TO SELECT RIGHT POSITION FOR THE OBJECT. PRESS ADD BUTTON TO PLACE THE OBJECT ON THE BATTLEFIELD");
         }
         else if (actualStatement == Statements.SELECT_VALUE){
 
-            editorController.getCross().setStatement(Cross.Statement.CELL_CENTER);
+            editorController.getCursor().setStatement(Cursor.Statement.CELL_CENTER);
             String [] names = new String[] {money1, money2, money3, money5, money10, money15, money20, money25, money30,money40, money50, back};
             createSubmenuWithColumnAlignedButtons(names,3);
             editorController.setTextInConcole("SELECT VALUE - HOW MUCH COSTS THIS COLLECTABLE?");
@@ -224,7 +218,7 @@ public class AddCollectable extends AbstractEditorMenu {
             Logger.debug("Apply action");
         }
         else if (element.getName().equals(add)){
-             Coordinate pos = editorController.getCross().getPos();
+             Coordinate pos = editorController.getCursor().getPos();
              objectData.addValueToStart((int)pos.y);
              objectData.addValueToStart((int)pos.x);
              Collectable object = Collectable.create(editorController.getEngine(), editorController.getGameRound().getPhysicWorld(), objectData.createEntityData());

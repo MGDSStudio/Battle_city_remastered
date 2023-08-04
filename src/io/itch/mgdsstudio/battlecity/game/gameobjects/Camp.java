@@ -3,6 +3,7 @@ package io.itch.mgdsstudio.battlecity.game.gameobjects;
 import io.itch.mgdsstudio.battlecity.game.GameRound;
 import io.itch.mgdsstudio.battlecity.game.Logger;
 import io.itch.mgdsstudio.battlecity.game.PhysicWorld;
+import io.itch.mgdsstudio.battlecity.game.dataloading.DataStringCreationMaster;
 import io.itch.mgdsstudio.battlecity.game.dataloading.EntityData;
 import io.itch.mgdsstudio.battlecity.game.gameobjects.controllers.LevelEndConditionController;
 import io.itch.mgdsstudio.battlecity.mainpackage.GlobalConstants;
@@ -11,10 +12,13 @@ import io.itch.mgdsstudio.engine.graphic.*;
 import io.itch.mgdsstudio.engine.libs.Coordinate;
 import io.itch.mgdsstudio.engine.libs.imagezones.ImageZoneSimpleData;
 
+import java.util.ArrayList;
+
 public class Camp extends Wall{
     //
-
-    private boolean side;
+    public  final static int PLAYERS_CAMP = 0;
+    public  final static int ENEMY_CAMP = 1;
+    private int side;
     private boolean destroyed;
     private GraphicElementInGame destroyedImage;
 
@@ -22,8 +26,9 @@ public class Camp extends Wall{
     //protected Wall(IEngine engine, PhysicGameWorld physicGameWorld, Coordinate pos, int angle, int width, int height, int thirdDim) {
     //
 
-    public Camp(IEngine engine, PhysicWorld physicWorld, Coordinate pos, int angle, int width, int height){
-        super(engine, physicWorld, pos, angle, width, height, BodyForms.RECT);
+    public Camp(IEngine engine, PhysicWorld physicWorld, Coordinate pos, int angle, int width, int side){
+        super(engine, physicWorld, pos, angle, width, -1, BodyForms.RECT);
+        this.side = side;
         loadGraphicDefaultData(engine);
     }
 
@@ -35,11 +40,7 @@ public class Camp extends Wall{
         return wall;
     }
 
-    public String getDataString(){
-        int posX = (int) pos.x;
-        Logger.correct("To implement");
-        return null;
-    }
+
 
     @Override
     public void update(GameRound gameRound, long deltaTime) {
@@ -69,11 +70,27 @@ public class Camp extends Wall{
 
     private void loadDestroyedImageGraphic(IEngine engine) {
         final ImageZoneSimpleData data = new ImageZoneSimpleData(896+64,0, 896+64+64,64);
-        //GraphicManager manager = GraphicManager.getManager(engine.getEngine());
         Image graphicImage = graphicElementInGame.getImage();
         destroyedImage = new ImageInGame(graphicImage, width, height, data);
     }
 
+    public int getSide() {
+        return side;
+    }
 
-
+    public String getDataString(){
+        int posX = (int) pos.x;
+        int posY = (int) pos.y;
+        ArrayList<Integer> dataList = new ArrayList<>();
+        dataList.add(posX);
+        dataList.add(posY);
+        dataList.add((int)angle);
+        dataList.add(width);
+        dataList.add(height);
+        dataList.add(side);
+        ArrayList<Integer> graphicList = new ArrayList<>();
+        DataStringCreationMaster dataStringCreationMaster = new DataStringCreationMaster(getId(), dataList, graphicList, this.getClass().getSimpleName());
+        String dataString = dataStringCreationMaster.getDataString();
+        return dataString;
+    }
 }

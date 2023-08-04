@@ -1,5 +1,6 @@
 package io.itch.mgdsstudio.battlecity.game;
 
+import io.itch.mgdsstudio.battlecity.editor.Cursor;
 import io.itch.mgdsstudio.battlecity.editor.changessaving.ChangesController;
 import io.itch.mgdsstudio.battlecity.editor.data.EditorPreferences;
 import io.itch.mgdsstudio.battlecity.editor.data.EditorPreferencesSingleton;
@@ -27,7 +28,7 @@ public class EditorController extends GamePartWithGameWorldAbstractController im
 
     private ArrayList <EditorAction> actions;
     private WorldZoneScrollingController worldZoneScrollingController;
-    private Cross cross;
+    private Cursor cursor;
     private Grid grid;
     private AbstractEditorMenu menu;
     private MenuType actualMenuType, nextMenuType;
@@ -86,11 +87,11 @@ public class EditorController extends GamePartWithGameWorldAbstractController im
     private void createOnMapZoneGraphic() {
 
         grid = new Grid(this);
-        cross = new Cross(this);
+        cursor = new Cursor(this);
         boolean visible = EditorPreferencesSingleton.getInstance().getBooleanValue(EditorPreferences.GRID_VISIBILITY.name());
         if (!visible) grid.setVisible(false);
 
-        gameRound.addEntityToEnd(cross);
+        gameRound.addEntityToEnd(cursor);
         gameRound.addEntityToEnd(grid);
     }
 
@@ -212,8 +213,8 @@ public class EditorController extends GamePartWithGameWorldAbstractController im
         Logger.debug("transfer to menu: " + to.name());
     }
 
-    public Cross getCross() {
-        return cross;
+    public Cursor getCursor() {
+        return cursor;
     }
 
     public Grid getGrid() {

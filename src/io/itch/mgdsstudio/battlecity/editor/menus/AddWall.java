@@ -40,7 +40,7 @@ public class AddWall extends AbstractEditorMenu {
     @Override
     protected void initGui(){
         if (actualStatement == START_STATEMENT) {
-            editorController.getCross().setStatement(Cross.Statement.INVISIBLE_AS_CELL_CENTER);
+            editorController.getCursor().setStatement(Cursor.Statement.INVISIBLE_AS_CELL_CENTER);
             initButtonNames();
             String [] names = new String[]{crushable, armored, immortal, back};
             createSubmenuWithDefaultAlignedButtons(names);
@@ -49,12 +49,12 @@ public class AddWall extends AbstractEditorMenu {
         else if (actualStatement == Statements.PLACE_ON_MAP){
             int value = getDigitValueFromKeyboard();
             int form = objectData.form;
-            if (form == SolidObject.BodyForms.CIRCLE)  editorController.getCross().setStatement(Cross.Statement.CELL_CENTER);
-            else if (form == SolidObject.BodyForms.RECT)  editorController.getCross().setStatement(Cross.Statement.CELL_CENTER);
-            else if (form == SolidObject.BodyForms.NE_TRIANGLE)  editorController.getCross().setStatement(Cross.Statement.TRIANGLE_RIGHT_UP);
-            else if (form == SolidObject.BodyForms.NW_TRIANGLE)  editorController.getCross().setStatement(Cross.Statement.TRIANGLE_LEFT_UP);
-            else if (form == SolidObject.BodyForms.SE_TRIANGLE)  editorController.getCross().setStatement(Cross.Statement.TRIANGLE_RIGHT_DOWN);
-            else if (form == SolidObject.BodyForms.SW_TRIANGLE)  editorController.getCross().setStatement(Cross.Statement.TRIANGLE_LEFT_DOWN);
+            if (form == SolidObject.BodyForms.CIRCLE)  editorController.getCursor().setStatement(Cursor.Statement.CELL_CENTER);
+            else if (form == SolidObject.BodyForms.RECT)  editorController.getCursor().setStatement(Cursor.Statement.CELL_CENTER);
+            else if (form == SolidObject.BodyForms.NE_TRIANGLE)  editorController.getCursor().setStatement(Cursor.Statement.TRIANGLE_RIGHT_UP);
+            else if (form == SolidObject.BodyForms.NW_TRIANGLE)  editorController.getCursor().setStatement(Cursor.Statement.TRIANGLE_LEFT_UP);
+            else if (form == SolidObject.BodyForms.SE_TRIANGLE)  editorController.getCursor().setStatement(Cursor.Statement.TRIANGLE_RIGHT_DOWN);
+            else if (form == SolidObject.BodyForms.SW_TRIANGLE)  editorController.getCursor().setStatement(Cursor.Statement.TRIANGLE_LEFT_DOWN);
             if (value<1){
                 value = 1;
 
@@ -67,20 +67,20 @@ public class AddWall extends AbstractEditorMenu {
             createSubmenuWithDefaultAlignedButtons(names);
         }
         else if (actualStatement == Statements.SELECT_FORM){
-            editorController.getCross().setStatement(Cross.Statement.INVISIBLE_AS_CELL_CENTER);
+            editorController.getCursor().setStatement(Cursor.Statement.INVISIBLE_AS_CELL_CENTER);
             String [] names = new String[] {square,circle,triangle,back};
             createSubmenuWithDefaultAlignedButtons(names);
             editorController.setTextInConcole("SELECT FORM OF THE WALL ELEMENT");
         }
         else if (actualStatement == Statements.SELECT_TRIANGLE_FORM){
-            editorController.getCross().setStatement(Cross.Statement.INVISIBLE_AS_CELL_CENTER);
+            editorController.getCursor().setStatement(Cursor.Statement.INVISIBLE_AS_CELL_CENTER);
             String [] names = new String []{ SE, SW, NW, NE, back };
             editorController.setTextInConcole("SELECT ORIENTATION OF THE TRIANGLE");
             createSubmenuWithDefaultAlignedButtons(names);
         }
         else if (actualStatement == Statements.SELECT_SIZE){
             guiElements.clear();
-            editorController.getCross().setStatement(Cross.Statement.INVISIBLE_AS_CELL_CENTER);
+            editorController.getCursor().setStatement(Cursor.Statement.INVISIBLE_AS_CELL_CENTER);
             editorController.setTextInConcole("SELECT SIZE OF THE OBJECT");
             createSubmenuWithDigitKeyboard(true, "TEXT FIELD");
             GuiElement gui = getGuiByName(KEYBOARD_GUI_NAME);
@@ -94,7 +94,7 @@ public class AddWall extends AbstractEditorMenu {
             }
         }
         else if (actualStatement == Statements.SELECT_TILESET){
-            editorController.getCross().setStatement(Cross.Statement.INVISIBLE_AS_CELL_CENTER);
+            editorController.getCursor().setStatement(Cursor.Statement.INVISIBLE_AS_CELL_CENTER);
             createMenuWithGraphicButtons(4,3, 0);
             editorController.setTextInConcole("SELECT SPRITE FOR THE GRAPHIC");
         }
@@ -183,26 +183,26 @@ public class AddWall extends AbstractEditorMenu {
           int form = 0;
           if (element.getName().equals(NE)) {
               form = SolidObject.BodyForms.NE_TRIANGLE;
-              editorController.getCross().setStatement(Cross.Statement.TRIANGLE_RIGHT_UP);
+              editorController.getCursor().setStatement(Cursor.Statement.TRIANGLE_RIGHT_UP);
           }
           else if (element.getName().equals(NW)) {
               form = SolidObject.BodyForms.NW_TRIANGLE;
-              editorController.getCross().setStatement(Cross.Statement.TRIANGLE_LEFT_UP);
+              editorController.getCursor().setStatement(Cursor.Statement.TRIANGLE_LEFT_UP);
           }
           else if (element.getName().equals(SE)) {
               form = SolidObject.BodyForms.SE_TRIANGLE;
-              editorController.getCross().setStatement(Cross.Statement.TRIANGLE_RIGHT_DOWN);
+              editorController.getCursor().setStatement(Cursor.Statement.TRIANGLE_RIGHT_DOWN);
           }
           else if (element.getName().equals(SW)) {
               form = SolidObject.BodyForms.SW_TRIANGLE;
-              editorController.getCross().setStatement(Cross.Statement.TRIANGLE_LEFT_DOWN);
+              editorController.getCursor().setStatement(Cursor.Statement.TRIANGLE_LEFT_DOWN);
           }
           objectData.setForm(form);
           nextStatement = Statements.SELECT_SIZE;
        }
        else if (actualStatement == Statements.PLACE_ON_MAP){
             if (element.getName().equals(add)){
-               Coordinate pos = editorController.getCross().getPos();
+               Coordinate pos = editorController.getCursor().getPos();
                objectData.setPosX((int)pos.x);
                objectData.setPosY((int)pos.y);
                createWall();

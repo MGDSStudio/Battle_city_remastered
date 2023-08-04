@@ -16,7 +16,7 @@ import processing.core.PGraphics;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class Cross extends Entity implements EditorActionsListener{
+public class Cursor extends Entity implements EditorActionsListener{
     public final static int POINT_SIZE = 2;
     private ArrayList <EditorAction> actions = new ArrayList<>();
     private boolean visible = true;
@@ -48,7 +48,7 @@ public class Cross extends Entity implements EditorActionsListener{
     private GameRound gameRound;
     private final ArrayList<ISelectable> mutObjects = new ArrayList<>();
 
-    public Cross(EditorController editorController) {
+    public Cursor(EditorController editorController) {
         super(editorController.getEngine(), new Coordinate(0,0), 0, IMMORTAL_LIFE, getSize(editorController), getSize(editorController));
         EditorListenersManagerSingleton singleton = EditorListenersManagerSingleton.getInstance();
         singleton.addAsListener(this);

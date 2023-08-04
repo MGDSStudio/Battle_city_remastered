@@ -15,9 +15,9 @@ BrickWall 7:366,134,0,50,50,0#2x1;
 ArmoredWall 8:350,282,0,50,50,0#8;
 Water 9:200,250,0,32,32,0,0#
 Ice 10:200,182,0,32,32#
-Forest 11:280,250,0,32,32,0,0#
+Forest 11:280,250,0,32,32#9;
 //IEngine engine, PhysicGameWorld physicWorld, Coordinate pos, int angle, int width, int height, int thirdDim
-Camp 13:250,185,0,32,32,32#
+Camp 13:250,185,0,32,32,0#
 PlayerTank 14:100,540,180,1#
 Mine 15:180,460,0#
 Mine 16:70,400,0#

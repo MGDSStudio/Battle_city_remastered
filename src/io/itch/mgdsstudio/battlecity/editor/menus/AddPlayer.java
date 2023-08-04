@@ -2,7 +2,7 @@ package io.itch.mgdsstudio.battlecity.editor.menus;
 
 import com.mgdsstudio.engine.nesgui.ButtonWithFrameSelection;
 import com.mgdsstudio.engine.nesgui.GuiElement;
-import io.itch.mgdsstudio.battlecity.editor.Cross;
+import io.itch.mgdsstudio.battlecity.editor.Cursor;
 import io.itch.mgdsstudio.battlecity.game.EditorController;
 import io.itch.mgdsstudio.battlecity.game.gameobjects.Entity;
 import io.itch.mgdsstudio.battlecity.game.gameobjects.PlayerTank;
@@ -29,7 +29,7 @@ public class AddPlayer extends AbstractEditorMenu {
 
     public AddPlayer(EditorController editorController, LowerPanelInEditor lowerPanelInEditor) {
         super(editorController, lowerPanelInEditor, NO_END);
-        editorController.getCross().setStatement(Cross.Statement.INVISIBLE_AS_CELL_CENTER);
+        editorController.getCursor().setStatement(Cursor.Statement.INVISIBLE_AS_CELL_CENTER);
     }
 
     @Override
@@ -140,7 +140,7 @@ public class AddPlayer extends AbstractEditorMenu {
             guiElements.add(add);
             GuiElement backButton = new ButtonWithFrameSelection(editorController.getEngine(), zones[1].x, zones[1].y, zones[1].width, zones[1].height, back, editorController.getEngine().getEngine().g, true);
             guiElements.add(backButton);
-            editorController.getCross().setStatement(Cross.Statement.CELL_CENTER);
+            editorController.getCursor().setStatement(Cursor.Statement.CELL_CENTER);
         }
         else if (actualStatement == Statements.ARE_YOU_SURE_YOU_WANT_TO_DELETE){
             consoleText = "DO YOU REALLY WANT TO DELETE ALL THE PLAYERS FROM THE MAP?";
@@ -150,7 +150,7 @@ public class AddPlayer extends AbstractEditorMenu {
             guiElements.add(add);
             GuiElement backButton = new ButtonWithFrameSelection(editorController.getEngine(), zones[1].x, zones[1].y, zones[1].width, zones[1].height, back, editorController.getEngine().getEngine().g, true);
             guiElements.add(backButton);
-            editorController.getCross().setStatement(Cross.Statement.CELL_CENTER);
+            editorController.getCursor().setStatement(Cursor.Statement.CELL_CENTER);
         }
         else if (actualStatement == START_STATEMENT){
             initGui();

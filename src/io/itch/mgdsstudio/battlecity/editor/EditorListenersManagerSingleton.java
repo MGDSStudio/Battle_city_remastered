@@ -25,6 +25,7 @@ public class EditorListenersManagerSingleton {
         if (!localListeners.contains(localListener)){
             localListeners.add(localListener);
         }
+
     }
 
     public void removeListener(EditorActionsListener globalListener){

@@ -1,20 +1,27 @@
 package io.itch.mgdsstudio.battlecity.editor.menus;
 
-import com.mgdsstudio.engine.nesgui.ButtonWithFrameSelection;
+import com.mgdsstudio.engine.nesgui.DigitKeyboard;
 import com.mgdsstudio.engine.nesgui.GuiElement;
-import io.itch.mgdsstudio.battlecity.editor.Cross;
+import com.mgdsstudio.engine.nesgui.TextLabel;
+import io.itch.mgdsstudio.battlecity.editor.Cursor;
+import io.itch.mgdsstudio.battlecity.editor.EditorAction;
+import io.itch.mgdsstudio.battlecity.editor.EditorCommandPrefix;
+import io.itch.mgdsstudio.battlecity.editor.EditorListenersManagerSingleton;
 import io.itch.mgdsstudio.battlecity.game.EditorController;
+import io.itch.mgdsstudio.battlecity.game.Logger;
+import io.itch.mgdsstudio.battlecity.game.dataloading.EntityData;
 import io.itch.mgdsstudio.battlecity.game.gameobjects.Entity;
-import io.itch.mgdsstudio.battlecity.game.gameobjects.PlayerTank;
+import io.itch.mgdsstudio.battlecity.game.gameobjects.Forest;
 import io.itch.mgdsstudio.battlecity.game.hud.LowerPanelInEditor;
+import io.itch.mgdsstudio.engine.libs.Coordinate;
 
-import java.awt.*;
 import java.util.ArrayList;
 
 //To complete
 public class AddForest extends AbstractEditorMenu{
 
     private String add;
+    private ObjectDataStruct dataStruct;
 
     private interface Statements{        
         int SELECT_TILESET = START_STATEMENT;
@@ -22,17 +29,21 @@ public class AddForest extends AbstractEditorMenu{
         int PLACE_ON_MAP = 31;
     }
 
-    Override
+    public AddForest(EditorController editorController, LowerPanelInEditor lowerPanelInEditor) {
+        super(editorController, lowerPanelInEditor, NO_END);
+    }
+
+    @Override
     protected void initGui(){
          if (actualStatement == Statements.SELECT_TILESET){
-            editorController.getCross().setStatement(Cross.Statement.INVISIBLE_AS_CELL_CENTER);
+            editorController.getCursor().setStatement(Cursor.Statement.INVISIBLE_AS_CELL_CENTER);
             createMenuWithGraphicButtons(4,3, 0);
-            editorController.setTextInConcole("SELECT SPRITE FOR THE GRAPHIC");
+            editorController.setTextInConcole("SELECT SPRITE FOR THE FOREST");
         }
         else if (actualStatement == Statements.SELECT_SIZE){
             guiElements.clear();
-            editorController.getCross().setStatement(Cross.Statement.INVISIBLE_AS_CELL_CENTER);
-            editorController.setTextInConcole("SELECT SIZE OF THE OBJECT");
+            editorController.getCursor().setStatement(Cursor.Statement.INVISIBLE_AS_CELL_CENTER);
+            editorController.setTextInConcole("SELECT SIZE OF THE FOREST");
             createSubmenuWithDigitKeyboard(true, "TEXT FIELD");
             GuiElement gui = getGuiByName(KEYBOARD_GUI_NAME);
             if (gui != null){
@@ -46,7 +57,7 @@ public class AddForest extends AbstractEditorMenu{
         }
         
         else if (actualStatement == Statements.PLACE_ON_MAP){
-            editorController.getCross().setStatement(Cross.Statement.CELL_CENTER);
+            editorController.getCursor().setStatement(Cursor.Statement.CELL_CENTER);
             String [] names = new String[] {add, back, cancel};
             createSubmenuWithDefaultAlignedButtons(names);
         }
@@ -88,17 +99,17 @@ public class AddForest extends AbstractEditorMenu{
         
         else if (actualStatement == Statements.PLACE_ON_MAP){
             if (element.getName().equals(add)){
-                Coordinate pos = editorController.getCross().getPos();
-                spriteDataStruct.setPosX((int)pos.x);
-                spriteDataStruct.setPosY((int)pos.y);
+                Coordinate pos = editorController.getCursor().getPos();
+                dataStruct.setPosX((int)pos.x);
+                dataStruct.setPosY((int)pos.y);
                 createGraphic();
             }
         }
         else if (actualStatement == Statements.SELECT_TILESET){
             if (!element.getName().equals(prev) && !element.getName().equals(next)){
                 int tilesetNumber = getSelectedTilesetButton(element);
-                spriteDataStruct = new SpriteDataStruct(Forest.class.getSimpleName());
-                spriteDataStruct.setImageZoneKeyCode(tilesetNumber);
+                dataStruct = new ObjectDataStruct(Forest.class.getSimpleName());
+                dataStruct.setImageZoneKeyCode(tilesetNumber);
                 nextStatement = Statements.SELECT_SIZE;
                 addInfoAboutLastUsedTilesets(tilesetNumber);
             }
@@ -112,8 +123,8 @@ public class AddForest extends AbstractEditorMenu{
     
     private void createGraphic() {
         Forest object;
-        object = Forest.create(editorController.getEngine(), editorController.getGameRound().getPhysicWorld(), spriteDataStruct.createEntityData());
-        editorController.getGameRound().addEntityAtEnd(object);
+        object = Forest.create(editorController.getEngine(), editorController.getGameRound().getPhysicWorld(), dataStruct.createEntityData());
+        editorController.getGameRound().addEntityToEnd(object);
         Logger.correct("This forest must be added on right layer");
         Logger.debug("Created object: " + object.getDataString());
         EditorListenersManagerSingleton singleton = EditorListenersManagerSingleton.getInstance();
@@ -137,7 +148,7 @@ public class AddForest extends AbstractEditorMenu{
         nextStatement = START_STATEMENT;
     }
 
-    class ObjectDataStruct {
+    private class ObjectDataStruct {
         private ArrayList<Integer> values ;
         private ArrayList <Integer> graphicValues;
         private int id;
@@ -152,13 +163,12 @@ public class AddForest extends AbstractEditorMenu{
             this.name = name;
         }
         public EntityData createEntityData(){
-            int [] values = new int[6];
+            int [] values = new int[5];
             values[0] = posX;
             values[1] = posY;
             values[2] = angle;  //always 0
             values[3] = size;
             values[4] = size;
-         
             int [] graphicValues = new int[1];
             graphicValues[0] = imageZoneKeyCode;
             EntityData entityData = new EntityData(values, graphicValues, id);
@@ -187,9 +197,6 @@ public class AddForest extends AbstractEditorMenu{
             this.imageZoneKeyCode = imageZoneKeyCode;
         }
 
-        public void addValueToStart(int x) {
-            values.add(0,x);
-        }
     }
     
 }
