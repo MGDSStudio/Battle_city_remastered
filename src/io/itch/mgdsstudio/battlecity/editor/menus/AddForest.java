@@ -20,9 +20,9 @@ public class AddForest extends AbstractEditorMenu{
     // private String select
 
     private interface Statements{
-        int PLACE_PLAYER = 11;
-        int ARE_YOU_SURE_YOU_WANT_TO_DELETE = 111;
-        int DELETE_PLAYER = 21;
+        int SELECT_TILESET = 11;
+        int SELECT_SIZE = 21;
+        int PLACE_ON_MAP = 31;
 
 
     }
