@@ -11,13 +11,13 @@ import io.itch.mgdsstudio.battlecity.game.hud.LowerPanelInEditor;
 import java.awt.*;
 import java.util.ArrayList;
 
-//To complete
-public class AddForest extends AbstractEditorMenu{
+
+//To complete - doesn't remove from file
+public class AddPlayer extends AbstractEditorMenu {
 
     private String placePlayer, removePlayers;  //MAIN MENU
     private String addPlayer, yesIWant;
 
-    // private String select
 
     private interface Statements{
         int PLACE_PLAYER = 11;
@@ -27,7 +27,7 @@ public class AddForest extends AbstractEditorMenu{
 
     }
 
-    public AddForest(EditorController editorController, LowerPanelInEditor lowerPanelInEditor) {
+    public AddPlayer(EditorController editorController, LowerPanelInEditor lowerPanelInEditor) {
         super(editorController, lowerPanelInEditor, NO_END);
         editorController.getCross().setStatement(Cross.Statement.INVISIBLE_AS_CELL_CENTER);
     }
@@ -53,7 +53,7 @@ public class AddForest extends AbstractEditorMenu{
     }
 
     private String getNameForPos(int i) {
-        String name;
+          String name;
         switch(i) {
             case (0): name =  placePlayer; break;
             case (1): name = removePlayers; break;
@@ -106,7 +106,6 @@ public class AddForest extends AbstractEditorMenu{
         }
         else if (element.getName().equals(addPlayer)){
             addPlayer();
-
         }
         else if (element.getName().equals(yesIWant)){
             removePlayer();
@@ -115,8 +114,8 @@ public class AddForest extends AbstractEditorMenu{
     }
 
     private void addPlayer(){
-        ArrayList<Entity> gameObjects = editorController.getGameRound().getEntities();
-
+        ArrayList <Entity> gameObjects = editorController.getGameRound().getEntities();
+        
     }
 
     private void removePlayer(){
@@ -128,7 +127,7 @@ public class AddForest extends AbstractEditorMenu{
         }
     }
 
-
+    
     @Override
     protected void initDataForStatement(int actualStatement) {
         guiElements.clear();
@@ -174,4 +173,5 @@ public class AddForest extends AbstractEditorMenu{
             nextStatement = START_STATEMENT;
         }
     }
+
 }

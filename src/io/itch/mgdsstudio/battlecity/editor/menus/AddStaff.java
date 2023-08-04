@@ -3,9 +3,7 @@ package io.itch.mgdsstudio.battlecity.editor.menus;
 import com.mgdsstudio.engine.nesgui.ButtonWithFrameSelection;
 import com.mgdsstudio.engine.nesgui.GuiElement;
 import io.itch.mgdsstudio.battlecity.editor.Cross;
-import io.itch.mgdsstudio.battlecity.editor.ISelectable;
 import io.itch.mgdsstudio.battlecity.game.EditorController;
-import io.itch.mgdsstudio.battlecity.game.Logger;
 import io.itch.mgdsstudio.battlecity.game.gameobjects.Entity;
 import io.itch.mgdsstudio.battlecity.game.gameobjects.PlayerTank;
 import io.itch.mgdsstudio.battlecity.game.hud.LowerPanelInEditor;
@@ -13,8 +11,9 @@ import io.itch.mgdsstudio.battlecity.game.hud.LowerPanelInEditor;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class Player extends AbstractEditorMenu {
 
+//To complete
+public class AddStaff extends AbstractEditorMenu{
     private String placePlayer, removePlayers;  //MAIN MENU
     private String addPlayer, yesIWant;
 
@@ -28,7 +27,7 @@ public class Player extends AbstractEditorMenu {
 
     }
 
-    public Player(EditorController editorController, LowerPanelInEditor lowerPanelInEditor) {
+    public AddStaff(EditorController editorController, LowerPanelInEditor lowerPanelInEditor) {
         super(editorController, lowerPanelInEditor, NO_END);
         editorController.getCross().setStatement(Cross.Statement.INVISIBLE_AS_CELL_CENTER);
     }
@@ -54,7 +53,7 @@ public class Player extends AbstractEditorMenu {
     }
 
     private String getNameForPos(int i) {
-          String name;
+        String name;
         switch(i) {
             case (0): name =  placePlayer; break;
             case (1): name = removePlayers; break;
@@ -107,7 +106,7 @@ public class Player extends AbstractEditorMenu {
         }
         else if (element.getName().equals(addPlayer)){
             addPlayer();
-            
+
         }
         else if (element.getName().equals(yesIWant)){
             removePlayer();
@@ -116,8 +115,8 @@ public class Player extends AbstractEditorMenu {
     }
 
     private void addPlayer(){
-        ArrayList <Entity> gameObjects = editorController.getGameRound().getEntities();
-        
+        ArrayList<Entity> gameObjects = editorController.getGameRound().getEntities();
+
     }
 
     private void removePlayer(){
@@ -129,7 +128,7 @@ public class Player extends AbstractEditorMenu {
         }
     }
 
-    
+
     @Override
     protected void initDataForStatement(int actualStatement) {
         guiElements.clear();
@@ -174,7 +173,5 @@ public class Player extends AbstractEditorMenu {
         else {
             nextStatement = START_STATEMENT;
         }
-
     }
-
 }
