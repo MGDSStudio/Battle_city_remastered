@@ -101,7 +101,7 @@ public abstract class AbstractEditorMenu {
         }
         else {
             for (GuiElement element: guiElements){
-                element.update(editorController.getEngine().getEngine().mouseX, editorController.getEngine().getEngine().mouseY);
+                element.update(editorController.getEngine().getProcessing().mouseX, editorController.getEngine().getProcessing().mouseY);
                 if (element.getActualStatement() == GuiElement.RELEASED){
                     Logger.debug("Button " + element.getName() + " was released");
                     guiReleased(element);
@@ -137,7 +137,7 @@ public abstract class AbstractEditorMenu {
 
     public void draw() {
         for (GuiElement guiElement : guiElements){
-            guiElement.draw(editorController.getEngine().getEngine().g);
+            guiElement.draw(editorController.getEngine().getProcessing().g);
         }
     }
 
@@ -159,7 +159,7 @@ public abstract class AbstractEditorMenu {
         int buttons = names.length;
         Rectangle [] zones = getCoordinatesForDefaultButtonsAlignment(buttons);
         for (int i = 0; i < buttons; i++){
-            GuiElement gui = new ButtonWithFrameSelection(editorController.getEngine(), zones[i].x, zones[i].y, zones[i].width, zones[i].height, names[i], editorController.getEngine().getEngine().g, true);
+            GuiElement gui = new ButtonWithFrameSelection(editorController.getEngine(), zones[i].x, zones[i].y, zones[i].width, zones[i].height, names[i], editorController.getEngine().getProcessing().g, true);
             guiElements.add(gui);
         }
     }
@@ -220,7 +220,7 @@ public abstract class AbstractEditorMenu {
         int keyboardWidth = (int) (labelWidth);
         //public DigitKeyboard(IEngine engine, int centerX, int centerY, int width, int height, String name, PGraphics graphics) {
 
-        DigitKeyboard keyboard = new DigitKeyboard(editorController.getEngine(), keyboardX, keyboardY, keyboardWidth, (int) keyboardHeight, KEYBOARD_GUI_NAME, editorController.getEngine().getEngine().g);
+        DigitKeyboard keyboard = new DigitKeyboard(editorController.getEngine(), keyboardX, keyboardY, keyboardWidth, (int) keyboardHeight, KEYBOARD_GUI_NAME, editorController.getEngine().getProcessing().g);
         keyboard.setEmbeddedGui(textLabel);
         guiElements.add(textLabel);
         guiElements.add(keyboard);
@@ -230,16 +230,16 @@ public abstract class AbstractEditorMenu {
         int buttonHeight = labelHeight;
         int firstButtonPosY = (int) (keyboardY+keyboardHeight/2+gapY+labelHeight/2);
         if (withApply){
-            ButtonWithFrameSelection apply = new ButtonWithFrameSelection(editorController.getEngine(), upperButtonX, firstButtonPosY, buttonWidth, buttonHeight, this.apply, editorController.getEngine().getEngine().g, true);
+            ButtonWithFrameSelection apply = new ButtonWithFrameSelection(editorController.getEngine(), upperButtonX, firstButtonPosY, buttonWidth, buttonHeight, this.apply, editorController.getEngine().getProcessing().g, true);
             guiElements.add(apply);
             int lowerButtonY = (int) (firstButtonPosY+gapY+buttonHeight);
-            ButtonWithFrameSelection back = new ButtonWithFrameSelection(editorController.getEngine(), upperButtonX, lowerButtonY, buttonWidth, buttonHeight, this.back, editorController.getEngine().getEngine().g, true);
+            ButtonWithFrameSelection back = new ButtonWithFrameSelection(editorController.getEngine(), upperButtonX, lowerButtonY, buttonWidth, buttonHeight, this.back, editorController.getEngine().getProcessing().g, true);
             guiElements.add(back);
 
         }
         else {
             int backButtonY = (int) (keyboardY+keyboardHeight/2+gapY+labelHeight/2);
-            ButtonWithFrameSelection back = new ButtonWithFrameSelection(editorController.getEngine(), upperButtonX, backButtonY, buttonWidth, buttonHeight, this.back, editorController.getEngine().getEngine().g, true);
+            ButtonWithFrameSelection back = new ButtonWithFrameSelection(editorController.getEngine(), upperButtonX, backButtonY, buttonWidth, buttonHeight, this.back, editorController.getEngine().getProcessing().g, true);
             guiElements.add(back);
         }
     }
@@ -250,7 +250,7 @@ public abstract class AbstractEditorMenu {
         Rectangle [] zones = getCoordinatesForSquareButtonsAndColumnAlignment(buttonsCount , alongX);
         //Logger.debug("We have " + zones.length + " zones but all count: " + buttonsCount);
         for (int i = 0; i < buttonsCount; i++){
-            GuiElement gui = new ButtonWithFrameSelection(editorController.getEngine(), zones[i].x, zones[i].y, zones[i].width, zones[i].height, names[i], editorController.getEngine().getEngine().g, true);
+            GuiElement gui = new ButtonWithFrameSelection(editorController.getEngine(), zones[i].x, zones[i].y, zones[i].width, zones[i].height, names[i], editorController.getEngine().getProcessing().g, true);
           //  Logger.debug("Button name is: " + names[i] + " and height: " + zones[i].height);
 
             guiElements.add(gui);
@@ -313,9 +313,9 @@ public abstract class AbstractEditorMenu {
         //Logger.debug("Button height must be: " + guiHeight);
         //Logger.debug("Full width x height: " + fullWidth + "x" + fullHeight + " gap: " +  singleGapY + "; gui width: "  + guiWidth);
         //Buttons are squares
-        Logger.debug("Try to generate zones at " + editorController.getEngine().getEngine().millis() + " along x " + alongX + " along y " + alongY);
+        Logger.debug("Try to generate zones at " + editorController.getEngine().getProcessing().millis() + " along x " + alongX + " along y " + alongY);
         Rectangle [] positions = calculatePositionsForParams(guiWidth, guiHeight, alongX, alongY, left, upper, singleGapX, singleGapY);
-        Logger.debug("End to generate zones at " + editorController.getEngine().getEngine().millis());
+        Logger.debug("End to generate zones at " + editorController.getEngine().getProcessing().millis());
         return positions;
     }
 
@@ -414,14 +414,14 @@ public abstract class AbstractEditorMenu {
                     ImageZoneSimpleData simpleData = data.get(count).getData();
                     String name = data.get(count).getName();
                     Rectangle place = coordinates[count];
-                    Image image = GraphicManagerSingleton.getManager(editorController.getEngine().getEngine()).getImage(data.get(i).getPath());
+                    Image image = GraphicManagerSingleton.getManager(editorController.getEngine().getProcessing()).getImage(data.get(i).getPath());
                     GuiElement button = null;
                     if (data.get(count) instanceof AnimationZoneFullData){
                         AnimationZoneFullData animationZoneFullData = (AnimationZoneFullData) data.get(count);
-                        button = new ButtonInFrameWithAnimation(editorController.getEngine(), place.x - place.width / 2, (int) (place.y - place.getHeight() / 2f), place.width, place.height, name, animationZoneFullData, 0, editorController.getEngine().getEngine().g, image);
+                        button = new ButtonInFrameWithAnimation(editorController.getEngine(), place.x - place.width / 2, (int) (place.y - place.getHeight() / 2f), place.width, place.height, name, animationZoneFullData, 0, editorController.getEngine().getProcessing().g, image);
 
                     }
-                    else button = new ButtonInFrameWithImage(editorController.getEngine(), place.x - place.width / 2, (int) (place.y - place.getHeight() / 2f), place.width, place.height, name, simpleData, 0, editorController.getEngine().getEngine().g, image);
+                    else button = new ButtonInFrameWithImage(editorController.getEngine(), place.x - place.width / 2, (int) (place.y - place.getHeight() / 2f), place.width, place.height, name, simpleData, 0, editorController.getEngine().getProcessing().g, image);
                     guiElements.add(button);
 
                     count++;
@@ -437,9 +437,9 @@ public abstract class AbstractEditorMenu {
         Rectangle prevButtonZone = zones[0];
         Rectangle backButtonZone = zones[1];
         Rectangle nextButtonZone = zones[2];
-        GuiElement prevButton = new ButtonWithFrameSelection(editorController.getEngine(), prevButtonZone.x, (int) (prevButtonZone.y), prevButtonZone.width, prevButtonZone.height, prev, editorController.getEngine().getEngine().g, true, 1.75f );
-        GuiElement backButton = new ButtonWithFrameSelection(editorController.getEngine(), backButtonZone.x, (int) (backButtonZone.y), prevButtonZone.width, prevButtonZone.height, back, editorController.getEngine().getEngine().g, true, 1.75f  );
-        GuiElement nextButton = new ButtonWithFrameSelection(editorController.getEngine(), nextButtonZone.x, (int) (nextButtonZone.y), prevButtonZone.width, prevButtonZone.height, next, editorController.getEngine().getEngine().g, true, 1.75f  );
+        GuiElement prevButton = new ButtonWithFrameSelection(editorController.getEngine(), prevButtonZone.x, (int) (prevButtonZone.y), prevButtonZone.width, prevButtonZone.height, prev, editorController.getEngine().getProcessing().g, true, 1.75f );
+        GuiElement backButton = new ButtonWithFrameSelection(editorController.getEngine(), backButtonZone.x, (int) (backButtonZone.y), prevButtonZone.width, prevButtonZone.height, back, editorController.getEngine().getProcessing().g, true, 1.75f  );
+        GuiElement nextButton = new ButtonWithFrameSelection(editorController.getEngine(), nextButtonZone.x, (int) (nextButtonZone.y), prevButtonZone.width, prevButtonZone.height, next, editorController.getEngine().getProcessing().g, true, 1.75f  );
         guiElements.add(prevButton);
         guiElements.add(nextButton);
         guiElements.add(backButton);

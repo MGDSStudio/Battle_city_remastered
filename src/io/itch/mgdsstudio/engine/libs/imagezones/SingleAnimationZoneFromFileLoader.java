@@ -19,7 +19,7 @@ public class SingleAnimationZoneFromFileLoader extends ImageZoneLoader{
 
     public SingleAnimationZoneFromFileLoader(IEngine engine, int [] graphicData){
         final String path = engine.getPathToObjectInUserFolder(FILE_NAME_FOR_GRAPHIC_ZONES_FILE);
-        JSONArray jsonArray = engine.getEngine().loadJSONArray(path);
+        JSONArray jsonArray = engine.getProcessing().loadJSONArray(path);
         String nameToBeFind = ""+graphicData[0];
         if (jsonArray!=null){
             Logger.debug("JSON file contains " + jsonArray.size() + " pos");

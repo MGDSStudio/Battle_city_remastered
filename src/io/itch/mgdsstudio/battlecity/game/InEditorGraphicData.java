@@ -26,17 +26,17 @@ public class InEditorGraphicData {
     public static int graphicCenterX, graphicCenterY;
 
     private InEditorGraphicData(IEngine eng){
-        singleTextLineHeight = SINGLE_TEXT_LINE_RELATIVE_WIDTH*eng.getEngine().width;
+        singleTextLineHeight = SINGLE_TEXT_LINE_RELATIVE_WIDTH*eng.getProcessing().width;
         leftBoardLineWidth = singleTextLineHeight;
         rightBoardLineWidth = singleTextLineHeight *0.5f;
-        lowerHeight = eng.getEngine().height*0.35f;
+        lowerHeight = eng.getProcessing().height*0.35f;
         upperHeight = leftBoardLineWidth;
-        theoreticalWidthOfFramesWithNoZomming= (int) (0.8f*(eng.getEngine().width * GuiElement.NES_SCREEN_X_RESOLUTION)/eng.getEngine().width);
+        theoreticalWidthOfFramesWithNoZomming= (int) (0.8f*(eng.getProcessing().width * GuiElement.NES_SCREEN_X_RESOLUTION)/eng.getProcessing().width);
     }
 
 
     public static void init(IEngine eng){
-        PApplet engine = eng.getEngine();
+        PApplet engine = eng.getProcessing();
         InEditorGraphicData instanceForInit = new InEditorGraphicData(eng);
         calculateResolution(engine, upperHeight, lowerHeight);
         graphicScaleX = engine.width/(float)RESOLUTION_X;

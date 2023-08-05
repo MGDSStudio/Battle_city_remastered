@@ -6,9 +6,7 @@ import io.itch.mgdsstudio.battlecity.game.EditorController;
 import io.itch.mgdsstudio.battlecity.game.hud.LowerPanelInEditor;
 
 public class FileMenu extends AbstractEditorMenu {
-
     private String save, clear, exit;
-
 
    private interface Statements{
          int REALLY_WANT_TO_SAVE = 11;
@@ -32,18 +30,11 @@ public class FileMenu extends AbstractEditorMenu {
             }
             createSubmenuWithDefaultAlignedButtons(names);
         }
-        /*else if (actualStatement == Statements.REALLY_WANT_TO_SAVE){
-            String [] names = new String[2];
-            names[0] = save;
-            names[1] = back;
-            createSubmenuWithDefaultAlignedButtons(names);
-        }*/
         else if (actualStatement == Statements.SAVED){
             String [] names = new String[1];
             names[0] = back;
             createSubmenuWithDefaultAlignedButtons(names);
             saveData();
-
         }
     }
 
@@ -115,7 +106,6 @@ public class FileMenu extends AbstractEditorMenu {
         else if (element.getName().equals(save)) {
             nextStatement = Statements.SAVED;
         }
-        //else if (element.getName().equals())
     }
 
     @Override

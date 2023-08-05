@@ -194,7 +194,7 @@ public class EnemyTank extends Tank implements ISerializeable {
 
     @Override
     protected void blockForTime(int timeToBlock) {
-        getTankController().blockForTime(timeToBlock, engine.getEngine().millis());
+        getTankController().blockForTime(timeToBlock, engine.getProcessing().millis());
     }
 
 

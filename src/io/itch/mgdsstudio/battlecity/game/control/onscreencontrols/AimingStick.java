@@ -75,14 +75,14 @@ public class AimingStick extends Stick{
     protected void writeDataToListeners(){
         if (getListeners().size()>0) {
             if (prevTouchedStatementForRingZone != touchedStatementForRingZone){
-                GLobalSerialAction action = new GLobalSerialAction(ActionPrefixes.AIMING_STICK_TURRET_ROTATION, touchedStatementForRingZone, panel.getControlableObjectId(), engine.getEngine().millis(), getCommandNumber());
+                GLobalSerialAction action = new GLobalSerialAction(ActionPrefixes.AIMING_STICK_TURRET_ROTATION, touchedStatementForRingZone, panel.getControlableObjectId(), engine.getProcessing().millis(), getCommandNumber());
                 //SerialAction action = new SerialAction(DataPrefixes.AIMING_STICK_TURRET_ROTATION, touchedStatementForRingZone, panel.getControlableObjectId(), engine.getEngine().millis());
                 for (GlobalListener globalListener : getListeners()){
                     globalListener.appendCommand(action);
                 }
             }
             if (prevTouchedStatementForCenterZone != touchedStatementForCenterZone) {
-                GLobalSerialAction action = new GLobalSerialAction(ActionPrefixes.AIMING_STICK_SHOOTING, touchedStatementForCenterZone, panel.getControlableObjectId(), engine.getEngine().millis(), getCommandNumber());
+                GLobalSerialAction action = new GLobalSerialAction(ActionPrefixes.AIMING_STICK_SHOOTING, touchedStatementForCenterZone, panel.getControlableObjectId(), engine.getProcessing().millis(), getCommandNumber());
                 for (GlobalListener globalListener : getListeners()) {
                     globalListener.appendCommand(action);
                 }

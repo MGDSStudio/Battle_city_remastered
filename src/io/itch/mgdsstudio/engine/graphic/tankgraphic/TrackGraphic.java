@@ -2,7 +2,6 @@ package io.itch.mgdsstudio.engine.graphic.tankgraphic;
 
 import io.itch.mgdsstudio.battlecity.game.Logger;
 import io.itch.mgdsstudio.battlecity.game.camera.Camera;
-import io.itch.mgdsstudio.battlecity.game.camera.GameCamera;
 import io.itch.mgdsstudio.battlecity.game.gameobjects.Tank;
 import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
 import io.itch.mgdsstudio.engine.graphic.*;
@@ -53,8 +52,8 @@ class TrackGraphic extends GraphicPart{
         else imageZoneSimpleData = PLAYER_BASIC_RIGHT_TRACK;
         maxForward = tank.getForwardMaxVelocityInWorldUnits();
         maxBackward = tank.getBackwardMaxVelocityInWorldUnits();
-        leftTrackGraphicController = new SimpleSpriteAnimationController(3, 1, engine.getEngine().millis());
-        rightTrackGraphicController = new SimpleSpriteAnimationController(3, 1, engine.getEngine().millis());
+        leftTrackGraphicController = new SimpleSpriteAnimationController(3, 1, engine.getProcessing().millis());
+        rightTrackGraphicController = new SimpleSpriteAnimationController(3, 1, engine.getProcessing().millis());
         singleSpriteZones = new ImageZoneSimpleData[3];
         singleSpriteZones[0] = PLAYER_LEFT_TRACK_0;
         singleSpriteZones[1] = PLAYER_LEFT_TRACK_1;

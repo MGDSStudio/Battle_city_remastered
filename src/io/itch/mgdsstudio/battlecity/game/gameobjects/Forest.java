@@ -1,32 +1,29 @@
 package io.itch.mgdsstudio.battlecity.game.gameobjects;
 
 import io.itch.mgdsstudio.battlecity.game.PhysicWorld;
+import io.itch.mgdsstudio.battlecity.game.camera.Camera;
 import io.itch.mgdsstudio.battlecity.game.dataloading.DataStringCreationMaster;
 import io.itch.mgdsstudio.battlecity.game.dataloading.EntityData;
+import io.itch.mgdsstudio.battlecity.game.gameobjects.controllers.EntitySelectionController;
+import io.itch.mgdsstudio.battlecity.game.gameobjects.controllers.ISelectable;
 import io.itch.mgdsstudio.battlecity.mainpackage.GlobalConstants;
 import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
 import io.itch.mgdsstudio.engine.libs.Coordinate;
 import io.itch.mgdsstudio.engine.libs.imagezones.ImageZoneSimpleData;
 import io.itch.mgdsstudio.engine.libs.imagezones.SingleImageZoneFromFileLoader;
+import processing.core.PGraphics;
 
 import java.util.ArrayList;
 
-public class Forest extends GraphicObject{
+public class Forest extends GraphicObject implements ISelectable {
 
-
+    private final EntitySelectionController entitySelectionController;
     public Forest(IEngine engine, Coordinate pos, int angle, int width, int height){
         super(engine, pos, angle, width, height, -1, GraphicLayers.OVER_SKY_LEVEL);
-        //loadGraphicDefaultData(engine);
+        entitySelectionController = new EntitySelectionController();
     }
 
     public static Forest create(IEngine engine, PhysicWorld physicWorld, EntityData entityData) {
-        /*int [] values = entityData.getValues();
-        Coordinate pos = new Coordinate(values[0], values[1]);
-        Forest wall = new Forest(engine, pos, values[2], values[3], values[4], values[5]);
-        wall.setId(entityData.getId());
-        return wall;
-
-         */
         int [] values = entityData.getValues();
         Coordinate pos = new Coordinate(values[0], values[1]);
         int[] graphicData = entityData.getGraphicData();
@@ -39,11 +36,6 @@ public class Forest extends GraphicObject{
         return sprite;
     }
 
-    /*public void loadGraphicDefaultData(IEngine engine){
-        final String path = engine.getPathToObjectInAssets(GlobalConstants.NAME_FOR_TANK_GRAPHIC_FILE);
-        final ImageZoneSimpleData data = new ImageZoneSimpleData(896,64, 960, 128);
-        loadImage(engine, path, width, height, data);
-    }*/
 
     private void loadGraphicDefaultData(IEngine engine, int [] graphicData){
         this.graphicData = graphicData;
@@ -73,4 +65,28 @@ public class Forest extends GraphicObject{
         String dataString = dataStringCreationMaster.getDataString();
         return dataString;
     }
+
+    @Override
+    public boolean isSelected() {
+        return entitySelectionController.isSelected();
+    }
+
+    @Override
+    public void setSelected(boolean selected) {
+        if (selected) entitySelectionController.setSelected(engine.getProcessing().millis());
+        else entitySelectionController.clearSelection();
+    }
+    @Override
+    public String getInEditorName() {
+        return "FOREST AT " + (int)pos.x + "x" + (int)pos.y;
+    }
+
+    @Override
+    public void draw(PGraphics graphics, Camera gameCamera) {
+        if (entitySelectionController.isSelected()) {
+            drawWithAlpha(graphics, gameCamera, entitySelectionController.getAlpha(engine.getProcessing().millis()));
+        }
+        else super.draw(graphics, gameCamera);
+    }
+
 }

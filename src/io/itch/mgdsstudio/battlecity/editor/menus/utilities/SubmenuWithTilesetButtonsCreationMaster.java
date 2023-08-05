@@ -30,7 +30,7 @@ public class SubmenuWithTilesetButtonsCreationMaster {
     public ArrayList <String> getAvaliableTilesets(){
         ArrayList <String> avaliableTilesets = new ArrayList<>();
         String pathToImageZoneFile = SingleImageZoneFromFileLoader.FILE_NAME_FOR_GRAPHIC_ZONES_FILE;
-        JSONArray jsonArray = engine.getEngine().loadJSONArray(path);
+        JSONArray jsonArray = engine.getProcessing().loadJSONArray(path);
         if (jsonArray!=null){
             Logger.debug("JSON file contains " + jsonArray.size() + " pos");
             for (int i = 0; i < jsonArray.size(); i++){
@@ -43,7 +43,7 @@ public class SubmenuWithTilesetButtonsCreationMaster {
     }
 
     public ArrayList <ImageZoneFullData> sortObjectsInAccordingToLastUsed(ArrayList <ImageZoneFullData> unsortedData){
-        lastAppliedAsStrings = engine.getEngine().loadStrings(path);
+        lastAppliedAsStrings = engine.getProcessing().loadStrings(path);
         int [] lastAppliedAsInt = new int[lastAppliedAsStrings.length];
         for (int i = 0; i < lastAppliedAsInt.length; i++) {
             if (lastAppliedAsStrings[i].length()>0) lastAppliedAsInt[i] = Integer.parseInt(lastAppliedAsStrings[i]);
@@ -193,7 +193,7 @@ public class SubmenuWithTilesetButtonsCreationMaster {
 
     private ArrayList <String> getExisting(){
         ArrayList <String> existing = new ArrayList<>();
-        String [] content = engine.getEngine().loadStrings(path);
+        String [] content = engine.getProcessing().loadStrings(path);
         for (int i = 0; i < content.length; i++) existing.add(content[i]);
         /*
         try {

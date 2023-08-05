@@ -54,7 +54,7 @@ public abstract class ObjectActivatingController {
 
     protected void notifyObject(){
         entity.activate();
-        Logger.debug("Object " + entity.getClass().getSimpleName() + " must be activated at " + engine.getEngine().frameCount + " frame ");
+        Logger.debug("Object " + entity.getClass().getSimpleName() + " must be activated at " + engine.getProcessing().frameCount + " frame ");
     }
 
     public ArrayList <Integer> getDataList() {

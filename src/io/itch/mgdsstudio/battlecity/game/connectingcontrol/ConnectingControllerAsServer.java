@@ -41,7 +41,7 @@ class ConnectingControllerAsServer extends ConnectingController implements Globa
             //
             final IntList values = new IntList();
             values.append(1);
-            startGameAction  = new GLobalSerialAction(ActionPrefixes.START_GAME, values, id, engine.getEngine().millis(), -1);
+            startGameAction  = new GLobalSerialAction(ActionPrefixes.START_GAME, values, id, engine.getProcessing().millis(), -1);
             this.netController = netController;
             //startGameAction = new SerialAction();
         }

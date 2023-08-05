@@ -19,7 +19,7 @@ class PlayerClient extends Net{
     private void init(IEngine engine, String ip, int port, int playerNumber){
         playerNumberInMultiplayerMode = playerNumber;
         try {
-            client = new Client(engine.getEngine(), ip, port);
+            client = new Client(engine.getProcessing(), ip, port);
             Logger.debug("This user with the number "+ playerNumber+ " added as a client. It is active: " + client.active());
         }
         catch (Exception e){

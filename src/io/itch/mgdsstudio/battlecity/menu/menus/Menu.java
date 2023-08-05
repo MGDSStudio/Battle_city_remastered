@@ -34,7 +34,7 @@ public abstract class Menu  {
         this.engine = engine;
         this.graphics = graphics;
         loadBackgroundImage();
-        widthScale = (float)engine.getEngine().width/ backgroundImage.getImage().width;
+        widthScale = (float)engine.getProcessing().width/ backgroundImage.getImage().width;
         Logger.debug("Graphic relative scale is: " + widthScale);
         guiElements = new ArrayList<>();
         //placeGui(daraEncryptor);
@@ -75,8 +75,8 @@ public abstract class Menu  {
     }
 
     private void loadBackgroundImage(){
-        backgroundImage = new Image(engine.getEngine(),(getPathToMainImage(engine, this)));
-        maskImage = new Image(engine.getEngine(),(getPathToMaskImage(engine, this)));
+        backgroundImage = new Image(engine.getProcessing(),(getPathToMainImage(engine, this)));
+        maskImage = new Image(engine.getProcessing(),(getPathToMaskImage(engine, this)));
         float relationship = GlobalVariables.sidesRelationshipHeightToWidth;
         Logger.debug("Sizes relationship for this display: " + relationship);
         int visibleImagePartHeight;
@@ -97,7 +97,7 @@ public abstract class Menu  {
             firstFrameEnded = true;
         }
         for (int i = 0; i < guiElements.size(); i++){
-            guiElements.get(i).update(engine.getEngine().mouseX, engine.getEngine().mouseY);
+            guiElements.get(i).update(engine.getProcessing().mouseX, engine.getProcessing().mouseY);
         }
     }
 
@@ -115,7 +115,7 @@ public abstract class Menu  {
 
     protected GuiElement createTextButtonFromZone(int r, int g, int b, String name){
         if (daraEncryptor == null){
-            daraEncryptor = new MenuGuiDataEncryptor(engine.getEngine(), maskImage.getImage());
+            daraEncryptor = new MenuGuiDataEncryptor(engine.getProcessing(), maskImage.getImage());
         }
         RectGuiZone campaignButtonZone =  daraEncryptor.getZone(r,g,b);
         int x = campaignButtonZone.getCenterX();
@@ -129,7 +129,7 @@ public abstract class Menu  {
 
     protected GuiElement createTextLabelFromZone(int r, int g, int b, String name){
         if (daraEncryptor == null){
-            daraEncryptor = new MenuGuiDataEncryptor(engine.getEngine(), maskImage.getImage());
+            daraEncryptor = new MenuGuiDataEncryptor(engine.getProcessing(), maskImage.getImage());
         }
         RectGuiZone campaignButtonZone =  daraEncryptor.getZone(r,g,b);
         int x = campaignButtonZone.getCenterX();
@@ -143,7 +143,7 @@ public abstract class Menu  {
 
     protected GuiElement createButtonInFrameFromZone(int r, int g, int b, String name){
         if (daraEncryptor == null){
-            daraEncryptor = new MenuGuiDataEncryptor(engine.getEngine(), maskImage.getImage());
+            daraEncryptor = new MenuGuiDataEncryptor(engine.getProcessing(), maskImage.getImage());
         }
         RectGuiZone campaignButtonZone =  daraEncryptor.getZone(r,g,b);
         int x = campaignButtonZone.getCenterX();

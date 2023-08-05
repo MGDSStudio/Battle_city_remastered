@@ -1,8 +1,6 @@
 package io.itch.mgdsstudio.engine.graphic.tankgraphic;
 
-import io.itch.mgdsstudio.battlecity.game.Logger;
 import io.itch.mgdsstudio.battlecity.game.camera.Camera;
-import io.itch.mgdsstudio.battlecity.game.camera.GameCamera;
 import io.itch.mgdsstudio.battlecity.game.gameobjects.Tank;
 import io.itch.mgdsstudio.battlecity.mainpackage.GlobalConstants;
 import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
@@ -28,7 +26,7 @@ abstract class GraphicPart implements GraphicData{
         this.parent = parent;
         this.tank = tank;
         this.relativeGraphicScale = relativeGraphicScale;
-        GraphicManagerSingleton graphicManagerSingleton = GraphicManagerSingleton.getManager(engine.getEngine());
+        GraphicManagerSingleton graphicManagerSingleton = GraphicManagerSingleton.getManager(engine.getProcessing());
         image = graphicManagerSingleton.getImage(engine.getPathToObjectInAssets(GlobalConstants.NAME_FOR_TANK_GRAPHIC_FILE));
         this.width = (int) (tank.getWidth()*relativeGraphicScale);
         this.height = (int) (tank.getHeight()*relativeGraphicScale);

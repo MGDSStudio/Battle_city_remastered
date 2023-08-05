@@ -33,7 +33,7 @@ public class Water extends SolidObject {
         int direction = 1;
         int actual = 0;
         int repeateability = AnimationInGame.PLAY_ALWAYS;
-        Image image = GraphicManagerSingleton.getManager(engine.getEngine()).getImage(engine.getPathToObjectInAssets(GlobalConstants.NAME_FOR_TANK_GRAPHIC_FILE));
+        Image image = GraphicManagerSingleton.getManager(engine.getProcessing()).getImage(engine.getPathToObjectInAssets(GlobalConstants.NAME_FOR_TANK_GRAPHIC_FILE));
         graphicElementInGame = new AnimationInGame(image, width, height, imageZoneSimpleData, alongX, alongY, first, last, imagesPerSecond, direction, actual, repeateability, -1);
     }
 

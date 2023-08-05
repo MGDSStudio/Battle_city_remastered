@@ -22,7 +22,7 @@ public abstract class Panel {
     protected Panel(IEngine engine, Hud inGameHud, int height, Image image, int controlableObjectId) {
         this.engine = engine;
         this.height = height;
-        this.width = engine.getEngine().width;
+        this.width = engine.getProcessing().width;
         this.image = image;
         this.inGameHud = inGameHud;
         this.controlableObjectId = controlableObjectId;

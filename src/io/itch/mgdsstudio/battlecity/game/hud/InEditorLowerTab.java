@@ -21,7 +21,7 @@ public class InEditorLowerTab extends InEditorFrame{
         upper = (int) (inEditorGameWorldFrame.getLeftUpperCorner().y+inEditorGameWorldFrame.getHeight()+yFreeZone);
         this.width = inEditorGameWorldFrame.getWidth();
 
-        float lowerPoint = engine.getEngine().height-yFreeZone;
+        float lowerPoint = engine.getProcessing().height-yFreeZone;
         this.height = (int) (lowerPoint-upper);
         PVector leftUpper = new PVector(left, upper);
         //this.yFreeZone = yFreeZone;

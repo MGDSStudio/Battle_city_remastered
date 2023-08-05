@@ -85,13 +85,13 @@ public class GameRound {
     private void loadGraphic(boolean editorMode){
         if (gameController == null) Logger.error("Game controller is null");
         if (gameController.getEngine() == null)  Logger.error("Engine is null");
-        if (gameController.getEngine().getEngine() == null)  Logger.error("PApplet is null");
+        if (gameController.getEngine().getProcessing() == null)  Logger.error("PApplet is null");
         Logger.debug("Resolution: " + InGameGraphicData.RESOLUTION_X + "x" + InGameGraphicData.RESOLUTION_Y);
         float graphicScale = GRAPHIC_SCALE_FOR_GAME;
         if (editorMode) graphicScale = GRAPHIC_SCALE_FOR_EDITOR;
         int graphicWidth = (int) (gameController.getGraphicWidth()*graphicScale);
         int graphicHeight = (int) (gameController.getGraphicHeight()*graphicScale);
-        graphics = gameController.getEngine().getEngine().createGraphics(graphicWidth, graphicHeight, InGameGraphicData.renderer);
+        graphics = gameController.getEngine().getProcessing().createGraphics(graphicWidth, graphicHeight, InGameGraphicData.renderer);
         graphics.beginDraw();
         graphics.rectMode(PConstants.CENTER);
         graphics.imageMode(PConstants.CENTER);
@@ -115,7 +115,7 @@ public class GameRound {
 
     public void update(long deltaTime){
         camera.update();
-        if (startTime <0) startTime = gameController.getEngine().getEngine().millis();
+        if (startTime <0) startTime = gameController.getEngine().getProcessing().millis();
         physicWorld.update(deltaTime);
         for (int i = (gameObjects.size())-1; i >= 0; i--) gameObjects.get(i).update(this, deltaTime);
         for (int i = (controllers.size()-1); i >= 0; i--) controllers.get(i).update(this, deltaTime);
@@ -128,7 +128,7 @@ public class GameRound {
                 for (int j = (gameObjects.size()-1); j >= 0; j--){
                     if (gameObjects.get(j).equals(objectToBeDeleted.get(i))){
                         gameObjects.get(j).dispose(this);
-                        Logger.debug("Object " + objectToBeDeleted.get(i).getId() + " of type: " + objectToBeDeleted.get(i).getClass() + " was deleted at " + getEngine().getEngine().millis());
+                        Logger.debug("Object " + objectToBeDeleted.get(i).getId() + " of type: " + objectToBeDeleted.get(i).getClass() + " was deleted at " + getEngine().getProcessing().millis());
                         gameObjects.remove(j);
                         objectToBeDeleted.remove(i);
                         break;
@@ -139,7 +139,7 @@ public class GameRound {
     }
 
     public long getTimeFromLevelBegan(){
-        return gameController.getEngine().getEngine().millis()-startTime;
+        return gameController.getEngine().getProcessing().millis()-startTime;
     }
 
     public void draw(){

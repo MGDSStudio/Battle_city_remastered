@@ -23,11 +23,11 @@ public abstract class GlobalVariables {
     private final static Random randomGenerator = new Random();
 
     public static void init(IEngine engine){
-        initOsConstants(engine.getEngine());
+        initOsConstants(engine.getProcessing());
         initRenderer(engine);
-        sidesRelationshipHeightToWidth = (float)engine.getEngine().height/(float)engine.getEngine().width;
-        screenCenterX = engine.getEngine().width/2;
-        screenCenterY = engine.getEngine().height/2;
+        sidesRelationshipHeightToWidth = (float)engine.getProcessing().height/(float)engine.getProcessing().width;
+        screenCenterX = engine.getProcessing().width/2;
+        screenCenterY = engine.getProcessing().height/2;
     }
 
     public static void init(PApplet engine){
@@ -39,7 +39,7 @@ public abstract class GlobalVariables {
     }
 
     private static void initRenderer(IEngine engine) {
-        String rendererString = engine.getEngine().sketchRenderer();
+        String rendererString = engine.getProcessing().sketchRenderer();
         if (rendererString.contains("open")) renderer = GlobalConstants.OPENGL_RENDERER;
         else renderer = GlobalConstants.JAVA_RENDERER;
         if (rendererString.contains("3D") || rendererString.contains("3d")) twoDim = false;

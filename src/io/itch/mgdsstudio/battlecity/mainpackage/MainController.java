@@ -1,7 +1,6 @@
 package io.itch.mgdsstudio.battlecity.mainpackage;
 
 import io.itch.mgdsstudio.battlecity.game.*;
-import io.itch.mgdsstudio.battlecity.game.dataloading.PlayerProgressControllerSingleton;
 import io.itch.mgdsstudio.battlecity.game.gameobjects.controllers.LevelEndConditionController;
 import io.itch.mgdsstudio.battlecity.menu.MenuController;
 import io.itch.mgdsstudio.battlecity.menu.MenuDataStruct;
@@ -25,8 +24,8 @@ public class MainController implements GameStatements{
     public MainController(IEngine engine, int playerNumberInMultiplayerMode) {
         this.engine = engine;
         this.playerNumberInMultiplayerMode = playerNumberInMultiplayerMode;
-        engine.getEngine().imageMode(PConstants.CENTER);
-        engine.getEngine().rectMode(PApplet.CENTER);
+        engine.getProcessing().imageMode(PConstants.CENTER);
+        engine.getProcessing().rectMode(PApplet.CENTER);
         globalStatement = MENU;
         levelOrMenuNumber = 1;
         init();

@@ -33,7 +33,7 @@ public class Grid extends Entity{
         this.editorController = editorController;
         leftUpperFrameCorner = new Coordinate(editorController.getHud().getGraphicLeftPixel(), editorController.getHud().getGraphicUpperPixel());
         rightLowerFrameCorner = new Coordinate(editorController.getHud().getGraphicRightPixel(), editorController.getHud().getGraphicLowerPixel());
-        linesThickness = (int) (2f*((float) this.editorController.getEngine().getEngine().width)/((float)(500f)));
+        linesThickness = (int) (2f*((float) this.editorController.getEngine().getProcessing().width)/((float)(500f)));
         initGridStartParameters();
         initGridData();
     }

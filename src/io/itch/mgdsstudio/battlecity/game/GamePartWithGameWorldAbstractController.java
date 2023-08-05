@@ -1,7 +1,6 @@
 package io.itch.mgdsstudio.battlecity.game;
 
 import io.itch.mgdsstudio.battlecity.game.camera.Camera;
-import io.itch.mgdsstudio.battlecity.game.camera.GameCamera;
 import io.itch.mgdsstudio.battlecity.game.control.GameProcessController;
 import io.itch.mgdsstudio.battlecity.game.dataloading.PlayerProgressControllerSingleton;
 import io.itch.mgdsstudio.battlecity.game.hud.Hud;
@@ -29,7 +28,7 @@ public abstract class GamePartWithGameWorldAbstractController extends GamePart{
     public GamePartWithGameWorldAbstractController(IEngine engine, MainController mainController, int dif, int level, int playerNumberInMultiplayerMode, int playersConnected, boolean isEditor) {
         super(engine, mainController);
         this.level = level;
-        deltaTime = engine.getEngine().millis();
+        deltaTime = engine.getProcessing().millis();
         difficulty = dif;
         PlayerProgressControllerSingleton.init(engine, PlayerProgressControllerSingleton.SINGLE_MISSIONS);
         initHud(playerNumberInMultiplayerMode);
@@ -47,7 +46,7 @@ public abstract class GamePartWithGameWorldAbstractController extends GamePart{
     }
 
     protected void initDeltaTime(){
-        lastFrameTime = engine.getEngine().millis();
+        lastFrameTime = engine.getProcessing().millis();
     }
 
     protected void updateConnecting() {
@@ -80,7 +79,7 @@ public abstract class GamePartWithGameWorldAbstractController extends GamePart{
     public abstract void backToMenu(MenuDataStruct dataStruct);
 
     protected void initStartData() {
-        gameProcessController.setLevelStartTimeForUsers(gameRound.getPlayer().getId(), engine.getEngine().millis());
+        gameProcessController.setLevelStartTimeForUsers(gameRound.getPlayer().getId(), engine.getProcessing().millis());
         startDataInit = true;
 
     }

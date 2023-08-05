@@ -92,7 +92,7 @@ public class LevelLoadingMaster extends ExternalDataController {
 
     protected boolean loadingFileDataInProcessingMode(String path){
         try {
-            String [] dataArray = engine.getEngine().loadStrings(path);
+            String [] dataArray = engine.getProcessing().loadStrings(path);
             for (int i = 0; i < dataArray.length; i++){
                 data.add(dataArray[i]);
             }

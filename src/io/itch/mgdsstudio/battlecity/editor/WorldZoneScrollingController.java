@@ -1,7 +1,5 @@
 package io.itch.mgdsstudio.battlecity.editor;
 
-import io.itch.mgdsstudio.battlecity.game.EditorController;
-import io.itch.mgdsstudio.battlecity.game.Logger;
 import io.itch.mgdsstudio.battlecity.game.hud.InEditorGameWorldFrame;
 import io.itch.mgdsstudio.battlecity.mainpackage.GlobalConstants;
 import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
@@ -26,17 +24,17 @@ public class WorldZoneScrollingController {
 
     public void update(int millis){
         if (!firstInit){
-            prevX = engine.getEngine().mouseX;
-            prevY = engine.getEngine().mouseY;
+            prevX = engine.getProcessing().mouseX;
+            prevY = engine.getProcessing().mouseY;
             firstInit = true;
         }
         else {
             deltaTime = (int)(millis - prevFrameTime);
             prevFrameTime = millis;
-            if (engine.getEngine().mousePressed) {
+            if (engine.getProcessing().mousePressed) {
                 if (isMouseOnZone()) {
-                    int deltaX = engine.getEngine().mouseX - prevX;
-                    int deltaY = engine.getEngine().mouseY - prevY;
+                    int deltaX = engine.getProcessing().mouseX - prevX;
+                    int deltaY = engine.getProcessing().mouseY - prevY;
                     movementVector.x = deltaX;
                     movementVector.y = deltaY;
                     if (mustBeMovementMade()) {
@@ -49,25 +47,25 @@ public class WorldZoneScrollingController {
                     }
                 }
             }
-            prevX = engine.getEngine().mouseX;
-            prevY = engine.getEngine().mouseY;
+            prevX = engine.getProcessing().mouseX;
+            prevY = engine.getProcessing().mouseY;
         }
     }
 
     private boolean isMouseOnZone() {
-        if (engine.getEngine().mouseX> rectangle.x){
-            if (engine.getEngine().mouseX<(rectangle.x+rectangle.width)){
+        if (engine.getProcessing().mouseX> rectangle.x){
+            if (engine.getProcessing().mouseX<(rectangle.x+rectangle.width)){
                 if (GlobalConstants.Y_AXIS_DOWN) {
-                    if (engine.getEngine().mouseY > rectangle.y) {
+                    if (engine.getProcessing().mouseY > rectangle.y) {
                         //Logger.debug("Rect Y: " + rectangle.y );
-                        if (engine.getEngine().mouseY < (rectangle.y + rectangle.height)) {
+                        if (engine.getProcessing().mouseY < (rectangle.y + rectangle.height)) {
                             return true;
                         }
                     }
                 }
                 else {
-                    if (engine.getEngine().mouseY < rectangle.y) {
-                        if (engine.getEngine().mouseY > (rectangle.y - rectangle.height)) {
+                    if (engine.getProcessing().mouseY < rectangle.y) {
+                        if (engine.getProcessing().mouseY > (rectangle.y - rectangle.height)) {
                             return true;
                         }
                     }

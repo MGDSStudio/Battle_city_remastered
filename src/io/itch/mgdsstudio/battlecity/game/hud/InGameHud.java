@@ -37,13 +37,13 @@ public class InGameHud extends Hud{
 
     private void initFont() {
         fontSize = (int) (upperHeight/4f);
-        font = engine.getEngine().loadFont(engine.getPathToObjectInAssets(GlobalConstants.SECONDARY_FONT));
+        font = engine.getProcessing().loadFont(engine.getPathToObjectInAssets(GlobalConstants.SECONDARY_FONT));
         graphics.textFont = font;
     }
 
     private void initGraphic() {
-        graphics = engine.getEngine().createGraphics(engine.getEngine().width, engine.getEngine().height, engine.getEngine().sketchRenderer());
-        image = new Image(engine.getEngine(), engine.getPathToObjectInAssets(HudConstants.RELATIVE_PATH));
+        graphics = engine.getProcessing().createGraphics(engine.getProcessing().width, engine.getProcessing().height, engine.getProcessing().sketchRenderer());
+        image = new Image(engine.getProcessing(), engine.getPathToObjectInAssets(HudConstants.RELATIVE_PATH));
         graphics.rectMode(PConstants.CENTER);
     }
 
@@ -71,8 +71,8 @@ public class InGameHud extends Hud{
 
 
     private void appendMainGraphic(PGraphics graphics) {
-        float restHeightForScreen = (engine.getEngine().height-upperHeight-lowerHeight);
-        float restRelationshipForScreen = restHeightForScreen/engine.getEngine().width;
+        float restHeightForScreen = (engine.getProcessing().height-upperHeight-lowerHeight);
+        float restRelationshipForScreen = restHeightForScreen/engine.getProcessing().width;
         graphicUpperPixel = 0;
         graphicLowerPixel = graphics.height;
         graphicLeftPixel = 0;

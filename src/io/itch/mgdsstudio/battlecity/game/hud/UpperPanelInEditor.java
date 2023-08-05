@@ -1,21 +1,17 @@
 package io.itch.mgdsstudio.battlecity.game.hud;
 
 import com.mgdsstudio.engine.nesgui.FrameWithMoveableText;
-import com.mgdsstudio.engine.nesgui.GuiElement;
 import io.itch.mgdsstudio.battlecity.datatransfer.data.ActionPrefixes;
 import io.itch.mgdsstudio.battlecity.datatransfer.data.GLobalSerialAction;
 import io.itch.mgdsstudio.battlecity.datatransfer.listeners.GlobalListener;
 import io.itch.mgdsstudio.battlecity.game.Logger;
-import io.itch.mgdsstudio.battlecity.game.control.onscreencontrols.RectButton;
 import io.itch.mgdsstudio.battlecity.game.gameobjects.Entity;
 import io.itch.mgdsstudio.battlecity.game.gameobjects.PlayerTank;
-import io.itch.mgdsstudio.battlecity.game.gameobjects.WorldBoard;
 import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
 import io.itch.mgdsstudio.battlecity.menu.MenuDataStruct;
 import io.itch.mgdsstudio.engine.graphic.Image;
 import io.itch.mgdsstudio.engine.libs.Coordinate;
 import processing.core.PGraphics;
-import sun.rmi.runtime.Log;
 
 import java.awt.*;
 
@@ -31,7 +27,7 @@ public class UpperPanelInEditor extends Panel implements GlobalListener {
     }
 
     public void update(PlayerTank playerTank) {
-        console.update(engine.getEngine().mouseX, engine.getEngine().mouseY);
+        console.update(engine.getProcessing().mouseX, engine.getProcessing().mouseY);
     }
 
     private void updateLevelEnding() {
@@ -45,11 +41,11 @@ public class UpperPanelInEditor extends Panel implements GlobalListener {
         float gapBetweenPanels = lowerPanelInEditor.leftUpper.y-(worldZone.y+worldZone.height);
         float consoleHeight = gapBetweenPanels/2;
 
-        float gapToRightSide = engine.getEngine().width-(worldZone.x+worldZone.width);
-        float width = engine.getEngine().width-2*gapToRightSide;
+        float gapToRightSide = engine.getProcessing().width-(worldZone.x+worldZone.width);
+        float width = engine.getProcessing().width-2*gapToRightSide;
         Logger.debug("Upper height: " + height);
         //public FrameWithMoveableText(IEngine engine, int centerX, int centerY, int width, int height, String name, PGraphics graphics, String text) {
-        console = new FrameWithMoveableText(engine, (int) center.x, (int) worldZone.y/2, (int) width, (int) consoleHeight, "Console", engine.getEngine().g, "WELCOME TO THE EDITOR");
+        console = new FrameWithMoveableText(engine, (int) center.x, (int) worldZone.y/2, (int) width, (int) consoleHeight, "Console", engine.getProcessing().g, "WELCOME TO THE EDITOR");
 
     }
 

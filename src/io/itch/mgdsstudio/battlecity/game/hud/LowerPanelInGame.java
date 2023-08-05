@@ -19,22 +19,22 @@ public class LowerPanelInGame extends Panel{
 
     @Override
     protected void init() {
-        leftUpper = new Coordinate(0,engine.getEngine().height-height);
+        leftUpper = new Coordinate(0,engine.getProcessing().height-height);
         center = new Coordinate(leftUpper.x+width/2, leftUpper.y+height/2);
         initSticks();
     }
 
     private void initSticks() {
-        int additionalX = engine.getEngine().width/20;
+        int additionalX = engine.getProcessing().width/20;
 
-        int diameter = height-engine.getEngine().width/40;
-        if ((2*additionalX+diameter)*2>engine.getEngine().width){
+        int diameter = height-engine.getProcessing().width/40;
+        if ((2*additionalX+diameter)*2>engine.getProcessing().width){
             diameter = ((2*additionalX+diameter)*2);
         }
         Coordinate posLeft = new Coordinate(leftUpper.x+height/2 + additionalX, leftUpper.y+height/2);
         movementStick = new MovementStick(this, engine, posLeft, diameter, 0);
 
-        Coordinate posRight = new Coordinate(engine.getEngine().width-posLeft.x, leftUpper.y+height/2);
+        Coordinate posRight = new Coordinate(engine.getProcessing().width-posLeft.x, leftUpper.y+height/2);
         aimingStick = new AimingStick(this, engine, posRight, diameter, 0);
     }
 

@@ -67,7 +67,7 @@ public class AndroidLauncher extends PApplet implements ContactListener, IEngine
     }
 
     @Override
-    public PApplet getEngine() {
+    public PApplet getProcessing() {
         return this;
     }
 

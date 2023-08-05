@@ -33,7 +33,7 @@ public class MinesOnFieldGenerator {
 		//ArrayList <Vec2> pos = new ArrayList<>();
 		while(generated <= count)
 		{
-			int randomCellNumber = (int)gr.getEngine().getEngine().random(alongX*alongY);
+			int randomCellNumber = (int)gr.getEngine().getProcessing().random(alongX*alongY);
 			positions.add(freeCells.get(randomCellNumber).clone());
 			generated++;
 			freeCells.remove(freeCells.get(randomCellNumber));

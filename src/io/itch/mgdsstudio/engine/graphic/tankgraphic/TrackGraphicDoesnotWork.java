@@ -1,7 +1,6 @@
 package io.itch.mgdsstudio.engine.graphic.tankgraphic;
 
 import io.itch.mgdsstudio.battlecity.game.camera.Camera;
-import io.itch.mgdsstudio.battlecity.game.camera.GameCamera;
 import io.itch.mgdsstudio.battlecity.game.gameobjects.Tank;
 import io.itch.mgdsstudio.battlecity.game.gameobjects.TankController;
 import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
@@ -44,8 +43,8 @@ class TrackGraphicDoesnotWork extends GraphicPart{
         //Image image = GraphicManager.getManager(engine.getEngine()).getImage(engine.getPathToObjectInAssets(GlobalConstants.NAME_FOR_TANK_GRAPHIC_FILE));
        // leftTrack = new AnimationInGame(image, width, height, PLAYER_LEFT_TRACK_FULL, 1,3,0,2,10, 1, 0, AnimationInGame.PLAY_ALWAYS,0);
         //rightTrack = new AnimationInGame(image, width, height, PLAYER_LEFT_TRACK_FULL, 1,3,0,2,10, 1, 0, AnimationInGame.PLAY_ALWAYS,0);
-        leftTrackGraphicController = new SimpleSpriteAnimationController(3, 1, engine.getEngine().millis());
-        rightTrackGraphicController = new SimpleSpriteAnimationController(3, 1, engine.getEngine().millis());
+        leftTrackGraphicController = new SimpleSpriteAnimationController(3, 1, engine.getProcessing().millis());
+        rightTrackGraphicController = new SimpleSpriteAnimationController(3, 1, engine.getProcessing().millis());
         singleSpriteZones = new ImageZoneSimpleData[3];
         //ImageZoneSimpleData PLAYER_LEFT_TRACK_FULL = new ImageZoneSimpleData(0,685-685+81, 80,685+80-685+81+80*2);
         singleSpriteZones[0] = PLAYER_LEFT_TRACK_0;

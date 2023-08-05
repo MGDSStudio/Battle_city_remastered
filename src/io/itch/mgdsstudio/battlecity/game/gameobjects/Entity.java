@@ -3,7 +3,6 @@ package io.itch.mgdsstudio.battlecity.game.gameobjects;
 import io.itch.mgdsstudio.battlecity.datatransfer.data.GLobalSerialAction;
 import io.itch.mgdsstudio.battlecity.game.Logger;
 import io.itch.mgdsstudio.battlecity.game.camera.Camera;
-import io.itch.mgdsstudio.battlecity.game.camera.GameCamera;
 import io.itch.mgdsstudio.battlecity.game.GameRound;
 import io.itch.mgdsstudio.battlecity.mainpackage.GlobalVariables;
 import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
@@ -49,7 +48,7 @@ public abstract class Entity extends GameElement{
 
 
     protected void createDebugGraphic(IEngine engine) {
-        debugGraphic = new DebugRect(this, engine.getEngine());
+        debugGraphic = new DebugRect(this, engine.getProcessing());
     }
 
     public void update(GameRound gameRound, long deltaTime) {
@@ -63,22 +62,22 @@ public abstract class Entity extends GameElement{
         if (GlobalVariables.debug) {
             if (graphicElementInGame == null) debugGraphic.draw(graphics, gameCamera);
             else {
-                //if (this.getClass() == Bullet.class) Logger.debugLog("Bullet is ddrawn");
                 graphicElementInGame.drawWithTransformations(graphics, gameCamera, this);
             }
         }
-        //graphicElementInGame.draw(graphics, gameCamera, pos.x, pos.y);
     }
 
-    /*
-    public void collideWithBullet(GameRound gameRound, Bullet bullet){
-        if (life != IMMORTAL_LIFE){
-
-
+    protected void drawWithAlpha(PGraphics graphics, Camera gameCamera, int alpha ) {
+        if (GlobalVariables.debug) {
+            if (graphicElementInGame == null) debugGraphic.draw(graphics, gameCamera);
+            else {
+                graphics.pushStyle();
+                graphics.tint(255,255,255, alpha);
+                graphicElementInGame.drawWithTransformations(graphics, gameCamera, this);
+                graphics.popStyle();
+            }
         }
-    }*/
-
-
+    }
 
     public Coordinate getPos() {
         return pos;

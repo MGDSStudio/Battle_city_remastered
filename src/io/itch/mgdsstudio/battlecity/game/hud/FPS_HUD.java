@@ -51,11 +51,11 @@ public class FPS_HUD {
         if (GlobalVariables.debug) {
             graphics.pushStyle();
             //graphics.textFont
-            graphics.fill(engine.getEngine().color(0,255,9));
-            graphics.textSize(engine.getEngine().height / 75);
-            if (engine.getEngine().frameCount%10 == 0) memory = (Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory())/1048576;
-            if (engine.getEngine().frameCount%updatingFreq==0) {
-                fps = "FPS: " + (byte) engine.getEngine().frameRate;
+            graphics.fill(engine.getProcessing().color(0,255,9));
+            graphics.textSize(engine.getProcessing().height / 75);
+            if (engine.getProcessing().frameCount%10 == 0) memory = (Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory())/1048576;
+            if (engine.getProcessing().frameCount%updatingFreq==0) {
+                fps = "FPS: " + (byte) engine.getProcessing().frameRate;
                 fps+=fpsSuffix;
                 fps+='\n';
                 fps+="RAM: "+memory;

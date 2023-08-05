@@ -142,7 +142,7 @@ public abstract class DataFromMgdsTextParametersListReader {
     }
 
     protected void loadArray(IEngine engine, String path) {
-        data = engine.getEngine().loadStrings(path);
+        data = engine.getProcessing().loadStrings(path);
         if (data == null){
             Logger.error("Can not load configuration data. File: " + path + " doesn't exist!");
         }
@@ -154,7 +154,7 @@ public abstract class DataFromMgdsTextParametersListReader {
     public void saveOnDisk(){
         String path = filePath;
         Logger.debug("Try to save data on disk at " + path);
-        engine.getEngine().saveStrings(path, data);
+        engine.getProcessing().saveStrings(path, data);
         Logger.debug("Data saved on disk ");
     }
 

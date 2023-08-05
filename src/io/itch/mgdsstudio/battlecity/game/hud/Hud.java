@@ -36,7 +36,7 @@ public abstract class Hud {
         drawPanels();
         if (GlobalVariables.debug) fps_hud.showFrameRateWithRenderer(graphics);
         graphics.endDraw();
-        engine.getEngine().image(graphics,engine.getEngine().width/2,engine.getEngine().height/2);
+        engine.getProcessing().image(graphics,engine.getProcessing().width/2,engine.getProcessing().height/2);
     }
 
 

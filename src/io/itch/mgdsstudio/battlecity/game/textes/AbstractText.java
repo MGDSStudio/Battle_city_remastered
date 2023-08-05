@@ -1,15 +1,12 @@
 package io.itch.mgdsstudio.battlecity.game.textes;
 
-import io.itch.mgdsstudio.battlecity.game.camera.GameCamera;
 import io.itch.mgdsstudio.battlecity.game.gameobjects.Entity;
 import io.itch.mgdsstudio.battlecity.mainpackage.GlobalConstants;
 import io.itch.mgdsstudio.battlecity.mainpackage.GlobalVariables;
 import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
 import io.itch.mgdsstudio.engine.libs.Coordinate;
 import io.itch.mgdsstudio.engine.libs.Timer;
-import processing.core.PApplet;
 import processing.core.PFont;
-import processing.core.PGraphics;
 
 public abstract class AbstractText extends Entity {
 
@@ -35,8 +32,8 @@ public abstract class AbstractText extends Entity {
 
     protected void createFont() {
         if (!fontUploaded) {
-            if (GlobalVariables.getOs() == GlobalConstants.ANDROID) font = engine.getEngine().loadFont(engine.getPathToObjectInAssets((GlobalConstants.SECONDARY_FONT)));
-            else font = engine.getEngine().loadFont(engine.getPathToObjectInAssets((GlobalConstants.SECONDARY_FONT)));
+            if (GlobalVariables.getOs() == GlobalConstants.ANDROID) font = engine.getProcessing().loadFont(engine.getPathToObjectInAssets((GlobalConstants.SECONDARY_FONT)));
+            else font = engine.getProcessing().loadFont(engine.getPathToObjectInAssets((GlobalConstants.SECONDARY_FONT)));
             fontUploaded = true;
             System.out.println("Font created new from panel font");
         }

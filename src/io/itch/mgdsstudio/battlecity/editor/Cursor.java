@@ -7,6 +7,7 @@ import io.itch.mgdsstudio.battlecity.game.Logger;
 import io.itch.mgdsstudio.battlecity.game.camera.Camera;
 
 import io.itch.mgdsstudio.battlecity.game.gameobjects.Entity;
+import io.itch.mgdsstudio.battlecity.game.gameobjects.controllers.ISelectable;
 import io.itch.mgdsstudio.engine.libs.imagezones.ImageZoneSimpleData;
 import io.itch.mgdsstudio.engine.libs.Coordinate;
 import org.jbox2d.common.Vec2;
@@ -55,7 +56,7 @@ public class Cursor extends Entity implements EditorActionsListener{
         this.editorController = editorController;
         this.gameRound = editorController.getGameRound();
         theoreticalCoordinate = new Vec2(0,0);
-        linesThickness = (int) (6f*((float) this.editorController.getEngine().getEngine().width)/((float)(500f)));
+        linesThickness = (int) (6f*((float) this.editorController.getEngine().getProcessing().width)/((float)(500f)));
         mapZoneCenterX = this.editorController.getHud().getGraphicLeftPixel()+ this.editorController.getGraphicWidth()/2;
         mapZoneCenterY = this.editorController.getHud().getGraphicUpperPixel()+ this.editorController.getGraphicHeight()/2;
         initGridStartParameters();
@@ -82,7 +83,7 @@ public class Cursor extends Entity implements EditorActionsListener{
     }
 
     private static int getSize(EditorController editorController){
-        return editorController.getEngine().getEngine().width/15;
+        return editorController.getEngine().getProcessing().width/15;
     }
 
     private void update(Camera editorCamera){

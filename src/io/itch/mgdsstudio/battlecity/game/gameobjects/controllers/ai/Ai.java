@@ -36,9 +36,9 @@ public abstract class Ai {
     protected final void levelStartWaitingUpdate(GameRound gameRound){
         if (!startUpdatingCompleted){
             if (levelStartTime<0){
-                levelStartTime = gameRound.getEngine().getEngine().millis();
+                levelStartTime = gameRound.getEngine().getProcessing().millis();
             }
-            else if (gameRound.getEngine().getEngine().millis()>(LEVEL_NORMAL_START_TIME_BEFORE_FIRST_AI_UPDATING+levelStartTime)){
+            else if (gameRound.getEngine().getProcessing().millis()>(LEVEL_NORMAL_START_TIME_BEFORE_FIRST_AI_UPDATING+levelStartTime)){
                 startUpdatingCompleted = true;
             }
         }

@@ -113,7 +113,7 @@ public class TankController {
     }
 
     void update(GameRound gameRound, long deltaTime){
-        tankBlockController.update(gameRound.getEngine().getEngine().millis());
+        tankBlockController.update(gameRound.getEngine().getProcessing().millis());
         engineController.update((int) deltaTime);
         if (tankBlockController.isFree()) {
             for (int i = (actions.size() - 1); i >= 0; i--) {
@@ -404,7 +404,7 @@ public class TankController {
         }
 
         private void makeShot(IEngine engine){
-            timer = new Timer(getTimeToReload(), engine.getEngine());
+            timer = new Timer(getTimeToReload(), engine.getProcessing());
         }
 
         private int getTimeToReload() {

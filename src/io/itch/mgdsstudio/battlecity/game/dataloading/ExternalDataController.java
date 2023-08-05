@@ -15,4 +15,8 @@ public abstract class ExternalDataController {
         return engine.getPathToObjectInAssets(levelName);
 
     }
+
+    public static String getLevelFileName(int number){
+        return LEVEL_PREFIX+number+LEVEL_EXTENSION;
+    }
 }

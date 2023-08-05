@@ -2,6 +2,7 @@ package io.itch.mgdsstudio.battlecity.editor.data;
 
 import io.itch.mgdsstudio.battlecity.editor.UnsavedDataLabel;
 import io.itch.mgdsstudio.battlecity.game.Logger;
+import io.itch.mgdsstudio.engine.libs.StringLibrary;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -32,7 +33,13 @@ public class UnsavedDataList {
     }
 
     public boolean save(){
-        PrintWriter output = null;
+        boolean saved =  StringLibrary.save(data, path);
+
+        if (saved){
+            label.setActive(false);
+        }
+        return saved;
+        /*PrintWriter output = null;
         boolean saved;
         try {
             output = new PrintWriter((new FileWriter(path, true)));
@@ -55,6 +62,6 @@ public class UnsavedDataList {
         if (saved){
             label.setActive(false);
         }
-        return saved;
+        return saved;*/
     }
 }

@@ -74,7 +74,7 @@ public class ShotDustEffect extends GraphicObject{
         private int endSize;
 
         TintController(IEngine engine){
-            timer = new Timer(MAX_ANIMATION_TIME, engine.getEngine());
+            timer = new Timer(MAX_ANIMATION_TIME, engine.getProcessing());
             startSize = width;
             endSize = (int) (DIM_SCALING_COEF*startSize);
         }

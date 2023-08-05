@@ -61,7 +61,7 @@ public abstract class Tank extends SolidObject {
 
 
     protected void createDebugGraphic(IEngine engine) {
-        debugGraphic = new TankDebugGraphic(this, engine.getEngine());
+        debugGraphic = new TankDebugGraphic(this, engine.getProcessing());
     }
 
     @Override

@@ -19,12 +19,12 @@ public class InGameGraphicData {
     public static int graphicCenterX, graphicCenterY;
 
     private InGameGraphicData(IEngine eng){
-        lowerHeight = eng.getEngine().width*0.4f;
-        upperHeight = eng.getEngine().width*0.25f;
+        lowerHeight = eng.getProcessing().width*0.4f;
+        upperHeight = eng.getProcessing().width*0.25f;
     }
 
     public static void init(IEngine eng){
-        PApplet engine = eng.getEngine();
+        PApplet engine = eng.getProcessing();
         InGameGraphicData instanceForInit = new InGameGraphicData(eng);
         calculateResolution(engine, upperHeight, lowerHeight);
         graphicScaleX = engine.width/(float)RESOLUTION_X;

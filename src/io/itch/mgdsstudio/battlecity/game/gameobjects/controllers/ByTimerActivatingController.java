@@ -27,11 +27,11 @@ public class ByTimerActivatingController extends ObjectActivatingController {
 
     public void update (GameRound gr){
         if (!firstLoopEnded){
-            endTime = engine.getEngine().millis() + activatingTime;
+            endTime = engine.getProcessing().millis() + activatingTime;
             firstLoopEnded = true;    
         }
         else if (!activated){
-              if (engine.getEngine().millis()>=endTime){
+              if (engine.getProcessing().millis()>=endTime){
                 notifyObject();
                 activated = true;
               }

@@ -1,8 +1,11 @@
 package io.itch.mgdsstudio.battlecity.game.gameobjects;
 
 import io.itch.mgdsstudio.battlecity.game.PhysicWorld;
+import io.itch.mgdsstudio.battlecity.game.camera.Camera;
 import io.itch.mgdsstudio.battlecity.game.dataloading.DataStringCreationMaster;
 import io.itch.mgdsstudio.battlecity.game.dataloading.EntityData;
+import io.itch.mgdsstudio.battlecity.game.gameobjects.controllers.EntitySelectionController;
+import io.itch.mgdsstudio.battlecity.game.gameobjects.controllers.ISelectable;
 import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
 import io.itch.mgdsstudio.engine.graphic.AnimationInGame;
 import io.itch.mgdsstudio.engine.graphic.GraphicManagerSingleton;
@@ -10,18 +13,19 @@ import io.itch.mgdsstudio.engine.graphic.Image;
 import io.itch.mgdsstudio.engine.libs.Coordinate;
 import io.itch.mgdsstudio.engine.libs.imagezones.ImageZoneSimpleData;
 import io.itch.mgdsstudio.engine.libs.imagezones.SingleAnimationZoneFromFileLoader;
-import io.itch.mgdsstudio.engine.libs.imagezones.SingleImageZoneFromFileLoader;
+import processing.core.PGraphics;
 
 import java.util.ArrayList;
 
-public class SpriteAnimationInGame extends GraphicObject{
-
+public class SpriteAnimationInGame extends GraphicObject implements ISelectable {
+    private final EntitySelectionController entitySelectionController;
     public SpriteAnimationInGame(IEngine engine, Coordinate pos, int angle, int width, int height, int layer, int spritesheetNumber, int left, int up, int right, int down){
         super(engine, pos, angle, width, height, -1, layer);
-        //loadGraphicDefaultData(engine, spritesheetNumber, left, up,  right, down);
+        entitySelectionController = new EntitySelectionController();
     }
     public SpriteAnimationInGame(IEngine engine, Coordinate pos, int angle, int width, int height, int layer){
         super(engine, pos, angle, width, height, -1, layer);
+        entitySelectionController = new EntitySelectionController();
     }
 
     public static SpriteAnimationInGame create(IEngine engine, PhysicWorld physicWorld, EntityData entityData) {
@@ -46,7 +50,7 @@ public class SpriteAnimationInGame extends GraphicObject{
         int spritesPerSec = loader.getSpritesPerSecond();
         int playingType  = loader.getPlayingType();
         final String pathToTileset = loader.getPath();
-        GraphicManagerSingleton graphicManagerSingleton = GraphicManagerSingleton.getManager(engine.getEngine());
+        GraphicManagerSingleton graphicManagerSingleton = GraphicManagerSingleton.getManager(engine.getProcessing());
         Image image = graphicManagerSingleton.getImage(pathToTileset);
         int direction = loader.getDirection();
         int first = 0;
@@ -91,5 +95,29 @@ public class SpriteAnimationInGame extends GraphicObject{
         DataStringCreationMaster dataStringCreationMaster = new DataStringCreationMaster(getId(), dataList, graphicList, this.getClass().getSimpleName());
         String dataString = dataStringCreationMaster.getDataString();
         return dataString;
+    }
+
+    @Override
+    public boolean isSelected() {
+        return entitySelectionController.isSelected();
+    }
+
+    @Override
+    public void setSelected(boolean selected) {
+        if (selected) entitySelectionController.setSelected(engine.getProcessing().millis());
+        else entitySelectionController.clearSelection();
+    }
+
+    @Override
+    public String getInEditorName() {
+        return "ANIMATION AT " + (int)pos.x + "x" + (int)pos.y;
+    }
+
+    @Override
+    public void draw(PGraphics graphics, Camera gameCamera) {
+        if (entitySelectionController.isSelected()) {
+            drawWithAlpha(graphics, gameCamera, entitySelectionController.getAlpha(engine.getProcessing().millis()));
+        }
+        else super.draw(graphics, gameCamera);
     }
 }

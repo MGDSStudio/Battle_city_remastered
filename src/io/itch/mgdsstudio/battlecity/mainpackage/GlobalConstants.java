@@ -34,4 +34,7 @@ public interface GlobalConstants {
 
     boolean Y_AXIS_DOWN = true;
     int ERROR_CODE = -9999;
+    int FPS_IN_GAME = 60;
+    int FPS_IN_EDITOR = 30;
+
 }

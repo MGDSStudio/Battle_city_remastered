@@ -52,7 +52,7 @@ class EnemiesSpawnServerController extends EnemiesSpawnController{
         aiModelList[EnemyTank.Types.FAST_TANK] = aiModelForTanks1;
         aiModelList[EnemyTank.Types.EASY_ARMORED_TANK] = aiModelForTanks2;
         aiModelList[EnemyTank.Types.GOOD_ARMORED_TANK] = aiModelForTanks3;
-        nextSpawnTimer = new Timer(spawnTime, engine.getEngine());
+        nextSpawnTimer = new Timer(spawnTime, engine.getProcessing());
     }
 
 
@@ -62,7 +62,7 @@ class EnemiesSpawnServerController extends EnemiesSpawnController{
     public void update(GameRound gameRound, long deltaTime){
         if (!ended) {
             if (!firstUpdated){
-                if (timer == null) timer = new Timer(startDelay, gameRound.getEngine().getEngine());
+                if (timer == null) timer = new Timer(startDelay, gameRound.getEngine().getProcessing());
                 if (timer.isTime()) {
                     firstUpdating(gameRound, deltaTime);
                 }
@@ -70,10 +70,10 @@ class EnemiesSpawnServerController extends EnemiesSpawnController{
             else {
                 if (gameRound.getEntitiesCount(EnemyTank.class)<maxTanksOnScreen) {
                     spawnPlaceSelector.update(gameRound);
-                    if (gameRound.getEngine().getEngine().frameCount % 5 == 0) {
+                    if (gameRound.getEngine().getProcessing().frameCount % 5 == 0) {
                         Coordinate spawnPos = spawnPlaceSelector.getPlaceForSpawn(gameRound);
                         if (spawnPos != null) {
-                            int type = getNextTankType(gameRound.getEngine().getEngine());
+                            int type = getNextTankType(gameRound.getEngine().getProcessing());
                             Logger.debug("Next tank will be spawned at " + spawnPos.toString());
                             generateNextTank(gameRound, spawnPos, type);
                             spawnPlaceSelector.stopSpawning();
@@ -98,7 +98,7 @@ class EnemiesSpawnServerController extends EnemiesSpawnController{
         {
             Coordinate spawnPos = getNextSpawnPosForStartGenerating(gameRound);
             if (spawnPos != null) {
-                int type = getNextTankType(gameRound.getEngine().getEngine());
+                int type = getNextTankType(gameRound.getEngine().getProcessing());
                 generateNextTank(gameRound, spawnPos, type);
                 if (getTanksToBeCreatedCount() <= 0) ended = true;
                 spawnedAtStart++;
@@ -202,7 +202,7 @@ class EnemiesSpawnServerController extends EnemiesSpawnController{
                 distances.add((int)dist);
             }
         }
-        if (distances.size()==0) return (int) gameRound.getEngine().getEngine().random(360);
+        if (distances.size()==0) return (int) gameRound.getEngine().getProcessing().random(360);
         else {
             int nearestDist = 999999;
             int nearestNumber = -1;
@@ -249,7 +249,7 @@ class EnemiesSpawnServerController extends EnemiesSpawnController{
         if (mutFreeSpawnZones.size() == 0) return null;
         else if (mutFreeSpawnZones.size() == 1) return mutFreeSpawnZones.get(0);
         else {
-            int randomPlace = (int) gameRound.getEngine().getEngine().random(0,mutFreeSpawnZones.size());
+            int randomPlace = (int) gameRound.getEngine().getProcessing().random(0,mutFreeSpawnZones.size());
             return mutFreeSpawnZones.get(randomPlace);
         }
     }
@@ -279,7 +279,7 @@ class EnemiesSpawnServerController extends EnemiesSpawnController{
                 }
             }
             if (maxReadyPlaces > 0) {
-                int randomPos = (int)(gameRound.getEngine().getEngine().random(maxReadyPlaces));
+                int randomPos = (int)(gameRound.getEngine().getProcessing().random(maxReadyPlaces));
                 Logger.debug("Place: " + randomPos + " was selected. Wa had only " + maxReadyPlaces + " places for enemy generation");
                 return controllers.get(randomPos).getPos();
             }

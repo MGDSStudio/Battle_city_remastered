@@ -37,7 +37,7 @@ class FreeZoneForSpawnController {
                 //}
             }
             else {
-                activate(gameRound.getEngine().getEngine());
+                activate(gameRound.getEngine().getProcessing());
             }
         }
         else {

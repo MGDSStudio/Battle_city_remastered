@@ -51,7 +51,7 @@ public class PlayerProgressControllerSingleton extends DataFromMgdsTextParameter
     public void saveOnDisk(){
         String path = filePath;
         Logger.debug("Try to save data on disk at " + path);
-        engine.getEngine().saveStrings(path, data);
+        engine.getProcessing().saveStrings(path, data);
         Logger.debug("Data saved on disk ");
     }
 

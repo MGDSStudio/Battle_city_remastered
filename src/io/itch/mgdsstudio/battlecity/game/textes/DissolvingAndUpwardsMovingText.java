@@ -3,7 +3,6 @@ package io.itch.mgdsstudio.battlecity.game.textes;
 import io.itch.mgdsstudio.battlecity.game.GameRound;
 import io.itch.mgdsstudio.battlecity.game.Logger;
 import io.itch.mgdsstudio.battlecity.game.camera.Camera;
-import io.itch.mgdsstudio.battlecity.game.camera.GameCamera;
 import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
 import io.itch.mgdsstudio.engine.libs.Coordinate;
 import io.itch.mgdsstudio.engine.libs.Timer;
@@ -96,7 +95,7 @@ public class DissolvingAndUpwardsMovingText extends AbstractText{
 
     private void init(int timeToShow, int stagesNumber) {
         timeToNextAlphaChanging = timeToShow/stagesNumber;
-        timer = new Timer(timeToNextAlphaChanging, engine.getEngine());
+        timer = new Timer(timeToNextAlphaChanging, engine.getProcessing());
         alphaChangingStep = 255/stagesNumber;
     }
 
@@ -162,7 +161,7 @@ public class DissolvingAndUpwardsMovingText extends AbstractText{
             graphics.pushStyle();
             if (font == null) createFont();
             graphics.textFont(font, fontHeight);
-            graphics.fill(engine.getEngine().color(255), actualAlpha);
+            graphics.fill(engine.getProcessing().color(255), actualAlpha);
             graphics.textAlign(PApplet.CENTER, PApplet.BOTTOM);
             graphics.text(text, pos.x,pos.y);
             graphics.popStyle();

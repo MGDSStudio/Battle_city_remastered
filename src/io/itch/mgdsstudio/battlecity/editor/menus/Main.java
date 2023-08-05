@@ -46,7 +46,7 @@ public class Main extends AbstractEditorMenu {
         int guiCount = 12;
         Rectangle [] zones = getCoordinatesForSquareButtonsAndColumnAlignment(guiCount, 4);
         for (int i = 0; i < guiCount; i++){
-            GuiElement gui = new ButtonInFrameWithImage(editorController.getEngine(), zones[i].x-zones[i].width/2, zones[i].y-zones[i].height/2, zones[i].width, zones[i].height, getNameForPos(i), getImageZoneForPos(i),0,editorController.getEngine().getEngine().g);
+            GuiElement gui = new ButtonInFrameWithImage(editorController.getEngine(), zones[i].x-zones[i].width/2, zones[i].y-zones[i].height/2, zones[i].width, zones[i].height, getNameForPos(i), getImageZoneForPos(i),0,editorController.getEngine().getProcessing().g);
             guiElements.add(gui);
         }
     }

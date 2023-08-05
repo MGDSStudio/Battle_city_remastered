@@ -137,7 +137,7 @@ public class Collectable extends SolidObject implements IActivateable {
 
     private void setType(int type) {
         if (type == Types.RANDOM){
-            int i = (int) engine.getEngine().random(Types.RANDOM);
+            int i = (int) engine.getProcessing().random(Types.RANDOM);
             if (i == Types.RANDOM){
                 i--;
             }
@@ -198,7 +198,7 @@ public class Collectable extends SolidObject implements IActivateable {
         }
         Logger.debug("Collectable created with graphic: " + data);
         loadImage(engine, path, width, height, data);
-        haloController = new HaloController(engine.getEngine(), GraphicManagerSingleton.getManager(engine.getEngine()).getImage(path), this);
+        haloController = new HaloController(engine.getProcessing(), GraphicManagerSingleton.getManager(engine.getProcessing()).getImage(path), this);
     }
     protected void setBodyData() {
         if (GameRound.getDifficulty() == GlobalConstants.EASY_DIFFICULTY){

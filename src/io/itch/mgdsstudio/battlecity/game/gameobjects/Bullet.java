@@ -56,7 +56,7 @@ public class Bullet extends SolidObject {
 
     @Override
     protected void createDebugGraphic(IEngine engine) {
-        debugGraphic = new DebugCircle(this, engine.getEngine());
+        debugGraphic = new DebugCircle(this, engine.getProcessing());
     }
     
     private void applyVelocity(){

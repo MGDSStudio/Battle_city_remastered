@@ -11,9 +11,11 @@ import io.itch.mgdsstudio.battlecity.game.camera.EditorCamera;
 import io.itch.mgdsstudio.battlecity.game.control.GameProcessController;
 import io.itch.mgdsstudio.battlecity.game.dataloading.ExternalDataController;
 import io.itch.mgdsstudio.battlecity.game.gameobjects.Grid;
+import io.itch.mgdsstudio.battlecity.game.gameobjects.controllers.ISelectable;
 import io.itch.mgdsstudio.battlecity.game.hud.Hud;
 import io.itch.mgdsstudio.battlecity.game.hud.InEditorHud;
 import io.itch.mgdsstudio.battlecity.game.hud.LowerPanelInEditor;
+import io.itch.mgdsstudio.battlecity.mainpackage.GlobalConstants;
 import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
 import io.itch.mgdsstudio.battlecity.mainpackage.MainController;
 import io.itch.mgdsstudio.battlecity.menu.MenuDataStruct;
@@ -110,14 +112,14 @@ public class EditorController extends GamePartWithGameWorldAbstractController im
         if (nextMenuType!= actualMenuType){
             createMenu();
         }
-        worldZoneScrollingController.update( engine.getEngine().millis());
+        worldZoneScrollingController.update( engine.getProcessing().millis());
         updateActions();
-        deltaTime = engine.getEngine().millis() - lastFrameTime;
+        deltaTime = engine.getProcessing().millis() - lastFrameTime;
         gameRound.update(deltaTime);
         gameProcessController.update(deltaTime);
         gameRound.draw();
-        lastFrameTime = engine.getEngine().millis();
-        engine.getEngine().image(gameRound.getGraphics(), drawingGraphicPlaces.centerX, drawingGraphicPlaces.centerY,
+        lastFrameTime = engine.getProcessing().millis();
+        engine.getProcessing().image(gameRound.getGraphics(), drawingGraphicPlaces.centerX, drawingGraphicPlaces.centerY,
             drawingGraphicPlaces.getWidth(), drawingGraphicPlaces.getHeight(),
             hud.getGraphicLeftPixel(), hud.getGraphicUpperPixel(), hud.getGraphicRightPixel(), hud.getGraphicLowerPixel());
         if (startDataInit) unsavedDataLabel.draw();
@@ -134,7 +136,12 @@ public class EditorController extends GamePartWithGameWorldAbstractController im
                 }
                 else if (actions.get(i).getPrefix().equals(EditorCommandPrefix.OBJECT_CREATED)){
                     unsavedDataList.addNewObjectString(actions.get(i).getStringParameters());
-
+                }
+                else if (actions.get(i).getPrefix().equals(EditorCommandPrefix.WORLD_SCROLLING_STARTED)){
+                    engine.getProcessing().frameRate(GlobalConstants.FPS_IN_GAME);
+                }
+                else if (actions.get(i).getPrefix().equals(EditorCommandPrefix.WORLD_SCROLLING_ENDED)){
+                    engine.getProcessing().frameRate(GlobalConstants.FPS_IN_EDITOR);
                 }
                 lastActionController.saveActionForRestoring(actions.get(i));
                 actions.remove(i);

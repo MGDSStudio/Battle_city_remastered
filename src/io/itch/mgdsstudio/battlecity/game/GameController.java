@@ -62,12 +62,12 @@ public class GameController extends GamePartWithGameWorldAbstractController {
     public void update(){
         if (connectingController.isGameCanBeStarted()) {
             if (!startDataInit) initStartData();
-            deltaTime = engine.getEngine().millis() - lastFrameTime;
+            deltaTime = engine.getProcessing().millis() - lastFrameTime;
             gameRound.update(deltaTime);
             gameProcessController.update(deltaTime);
             gameRound.draw();
-            lastFrameTime = engine.getEngine().millis();
-            engine.getEngine().image(gameRound.getGraphics(), drawingGraphicPlaces.centerX, drawingGraphicPlaces.centerY,
+            lastFrameTime = engine.getProcessing().millis();
+            engine.getProcessing().image(gameRound.getGraphics(), drawingGraphicPlaces.centerX, drawingGraphicPlaces.centerY,
                     drawingGraphicPlaces.getWidth(), drawingGraphicPlaces.getHeight(),
                     hud.getGraphicLeftPixel(), hud.getGraphicUpperPixel(), hud.getGraphicRightPixel(), hud.getGraphicLowerPixel());
             hud.update(gameRound);

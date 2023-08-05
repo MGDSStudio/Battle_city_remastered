@@ -1,7 +1,6 @@
 package io.itch.mgdsstudio.battlecity.menu;
 
 import io.itch.mgdsstudio.battlecity.game.GamePart;
-import io.itch.mgdsstudio.battlecity.game.GameRound;
 import io.itch.mgdsstudio.battlecity.mainpackage.GlobalVariables;
 import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
 import io.itch.mgdsstudio.battlecity.mainpackage.MainController;
@@ -33,7 +32,7 @@ public class MenuController extends GamePart {
         if (graphicHeight < 0){
 
         }
-        graphics = engine.getEngine().createGraphics(engine.getEngine().width, engine.getEngine().height, GlobalVariables.getRenererAsString());
+        graphics = engine.getProcessing().createGraphics(engine.getProcessing().width, engine.getProcessing().height, GlobalVariables.getRenererAsString());
         graphics.noSmooth();
         changeMenu(nextMenuType);
     }
@@ -57,10 +56,10 @@ public class MenuController extends GamePart {
         graphics.beginDraw();
         menu.draw(graphics);
         graphics.endDraw();
-        engine.getEngine().pushMatrix();
-        engine.getEngine().translate(engine.getEngine().width/2,engine.getEngine().height/2);
-        engine.getEngine().image(graphics,0,0,engine.getEngine().width, engine.getEngine().height);
-        engine.getEngine().popMatrix();
+        engine.getProcessing().pushMatrix();
+        engine.getProcessing().translate(engine.getProcessing().width/2,engine.getProcessing().height/2);
+        engine.getProcessing().image(graphics,0,0,engine.getProcessing().width, engine.getProcessing().height);
+        engine.getProcessing().popMatrix();
     }
 
     public void transferToGame(MenuDataStruct menuDataStruct) {

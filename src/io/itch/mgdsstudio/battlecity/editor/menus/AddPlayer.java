@@ -39,7 +39,7 @@ public class AddPlayer extends AbstractEditorMenu {
         int buttons = 3;
         Rectangle[] zones = getCoordinatesForDefaultButtonsAlignment(buttons);
         for (int i = 0; i < buttons; i++){
-            GuiElement gui = new ButtonWithFrameSelection(editorController.getEngine(), zones[i].x, zones[i].y, zones[i].width, zones[i].height, getNameForPos(i), editorController.getEngine().getEngine().g, true);
+            GuiElement gui = new ButtonWithFrameSelection(editorController.getEngine(), zones[i].x, zones[i].y, zones[i].width, zones[i].height, getNameForPos(i), editorController.getEngine().getProcessing().g, true);
             guiElements.add(gui);
         }
     }
@@ -136,9 +136,9 @@ public class AddPlayer extends AbstractEditorMenu {
             consoleText = "PLACE THE BUTTON ADD TO ADD A PLAYER. IF YOU HAVE MORE THAN ONE PLAYERS - THEY WILL BE PLAYABLE ONLY IN MULTIPLAYER MODE";
             int buttons = 2;
             Rectangle[] zones = getCoordinatesForDefaultButtonsAlignment(buttons);
-            GuiElement add = new ButtonWithFrameSelection(editorController.getEngine(), zones[0].x, zones[0].y, zones[0].width, zones[0].height, addPlayer, editorController.getEngine().getEngine().g, true);
+            GuiElement add = new ButtonWithFrameSelection(editorController.getEngine(), zones[0].x, zones[0].y, zones[0].width, zones[0].height, addPlayer, editorController.getEngine().getProcessing().g, true);
             guiElements.add(add);
-            GuiElement backButton = new ButtonWithFrameSelection(editorController.getEngine(), zones[1].x, zones[1].y, zones[1].width, zones[1].height, back, editorController.getEngine().getEngine().g, true);
+            GuiElement backButton = new ButtonWithFrameSelection(editorController.getEngine(), zones[1].x, zones[1].y, zones[1].width, zones[1].height, back, editorController.getEngine().getProcessing().g, true);
             guiElements.add(backButton);
             editorController.getCursor().setStatement(Cursor.Statement.CELL_CENTER);
         }
@@ -146,9 +146,9 @@ public class AddPlayer extends AbstractEditorMenu {
             consoleText = "DO YOU REALLY WANT TO DELETE ALL THE PLAYERS FROM THE MAP?";
             int buttons = 2;
             Rectangle[] zones = getCoordinatesForDefaultButtonsAlignment(buttons);
-            GuiElement add = new ButtonWithFrameSelection(editorController.getEngine(), zones[0].x, zones[0].y, zones[0].width, zones[0].height, yesIWant, editorController.getEngine().getEngine().g, true);
+            GuiElement add = new ButtonWithFrameSelection(editorController.getEngine(), zones[0].x, zones[0].y, zones[0].width, zones[0].height, yesIWant, editorController.getEngine().getProcessing().g, true);
             guiElements.add(add);
-            GuiElement backButton = new ButtonWithFrameSelection(editorController.getEngine(), zones[1].x, zones[1].y, zones[1].width, zones[1].height, back, editorController.getEngine().getEngine().g, true);
+            GuiElement backButton = new ButtonWithFrameSelection(editorController.getEngine(), zones[1].x, zones[1].y, zones[1].width, zones[1].height, back, editorController.getEngine().getProcessing().g, true);
             guiElements.add(backButton);
             editorController.getCursor().setStatement(Cursor.Statement.CELL_CENTER);
         }

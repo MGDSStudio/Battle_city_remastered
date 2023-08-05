@@ -32,7 +32,7 @@ class AiControllerModel1 extends Ai {
     protected void updatingAction(GameRound gameRound, long deltaTime) {
         if (nextActionTimer == null){
             setMovementWithRotationToRandomDir(gameRound);
-            nextActionTimer = new Timer(timeToNextMovementAction, gameRound.getEngine().getEngine());
+            nextActionTimer = new Timer(timeToNextMovementAction, gameRound.getEngine().getProcessing());
         }
         else if (nextActionTimer.isTime()){
             setMovementWithRotationToRandomDir(gameRound);
@@ -42,7 +42,7 @@ class AiControllerModel1 extends Ai {
     }
 
     private void setMovementWithRotationToRandomDir(GameRound gameRound) {
-        int value = PApplet.floor(gameRound.getEngine().getEngine().random(2));
+        int value = PApplet.floor(gameRound.getEngine().getProcessing().random(2));
         GLobalSerialAction GLobalSerialAction = new GLobalSerialAction(ActionPrefixes.MOVEMENT_STICK_RUN_AND_ROTATION, value, enemyTank.getId(), gameRound.getTimeFromLevelBegan(), getCommandNumber());
         for (GlobalListener globalListener : globalListeners){
             globalListener.appendCommand(GLobalSerialAction);

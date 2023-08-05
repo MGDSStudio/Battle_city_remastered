@@ -41,14 +41,14 @@ public class LevelEndConditionController extends Controller{
         this.winCondition = winCondition;
         this.loseCondition = loseCondition;
         if (winCondition >= WinConditions.HOLD_ALIVE_FOR_TIME_IN_SEC){
-            timerToHold = new Timer(winCondition*1000, gameRound.getEngine().getEngine());
+            timerToHold = new Timer(winCondition*1000, gameRound.getEngine().getProcessing());
         }
         else if (winCondition == WinConditions.KILL_ALL_ENEMIES){
             entities = new ArrayList<>();
             Logger.debug("Player will win when all the enemies will be killed!");
             //gameRound.getE
         }
-        startTimer = new Timer(START_NOT_ACTIVE_TIME, gameRound.getEngine().getEngine());
+        startTimer = new Timer(START_NOT_ACTIVE_TIME, gameRound.getEngine().getProcessing());
     }
 
     public static LevelEndConditionController create(GameRound gameRound, EntityData entityData){

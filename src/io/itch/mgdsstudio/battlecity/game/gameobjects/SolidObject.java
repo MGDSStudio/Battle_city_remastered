@@ -219,7 +219,7 @@ public abstract class SolidObject extends Entity{
     }
 
     protected final void loadImage(IEngine engine, String path, int graphicWidth, int graphicHeight, ImageZoneSimpleData data){
-        GraphicManagerSingleton manager = GraphicManagerSingleton.getManager(engine.getEngine());
+        GraphicManagerSingleton manager = GraphicManagerSingleton.getManager(engine.getProcessing());
         Image graphicImage = manager.getImage(path);
         if (this.getClass() == Bullet.class){
             Logger.debug("Get image: " + graphicImage.getPath());
@@ -228,7 +228,7 @@ public abstract class SolidObject extends Entity{
     }
 
     protected final void loadAnimation(IEngine engine, String path, int graphicWidth, int graphicHeight, ImageZoneSimpleData data){
-        GraphicManagerSingleton manager = GraphicManagerSingleton.getManager(engine.getEngine());
+        GraphicManagerSingleton manager = GraphicManagerSingleton.getManager(engine.getProcessing());
         Image graphicImage = manager.getImage(path);
         if (this.getClass() == Bullet.class){
             Logger.debug("Get image: " + graphicImage.getPath());

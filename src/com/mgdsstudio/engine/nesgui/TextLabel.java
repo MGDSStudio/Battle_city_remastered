@@ -1,7 +1,6 @@
 package com.mgdsstudio.engine.nesgui;
 
 import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
-import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PGraphics;
 
@@ -14,7 +13,7 @@ public class TextLabel extends GuiElement {
     }
 
     public TextLabel(IEngine engine, int centerX, int centerY, int width, int height, String name) {
-        super(engine, centerX, centerY, width, height, name, engine.getEngine().g);
+        super(engine, centerX, centerY, width, height, name, engine.getProcessing().g);
         resetStatement();
     }
 

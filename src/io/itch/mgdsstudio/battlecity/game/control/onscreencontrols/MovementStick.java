@@ -61,13 +61,13 @@ public class MovementStick extends Stick{
     protected void writeDataToListeners(){
         if (getListeners().size()>0) {
             if (prevTouchedStatementForRingZone != touchedStatementForRingZone){
-                GLobalSerialAction action = new GLobalSerialAction(ActionPrefixes.MOVEMENT_STICK_RUN_AND_ROTATION, touchedStatementForRingZone, panel.getControlableObjectId(), engine.getEngine().millis(), getCommandNumber());
+                GLobalSerialAction action = new GLobalSerialAction(ActionPrefixes.MOVEMENT_STICK_RUN_AND_ROTATION, touchedStatementForRingZone, panel.getControlableObjectId(), engine.getProcessing().millis(), getCommandNumber());
                 for (GlobalListener globalListener : getListeners()){
                     globalListener.appendCommand(action);
                 }
             }
             if (prevTouchedStatementForCenterZone != touchedStatementForCenterZone) {
-                GLobalSerialAction action = new GLobalSerialAction(ActionPrefixes.MOVEMENT_STICK_BODY_ROTATION, touchedStatementForCenterZone, panel.getControlableObjectId(), engine.getEngine().millis(), getCommandNumber());
+                GLobalSerialAction action = new GLobalSerialAction(ActionPrefixes.MOVEMENT_STICK_BODY_ROTATION, touchedStatementForCenterZone, panel.getControlableObjectId(), engine.getProcessing().millis(), getCommandNumber());
                 for (GlobalListener globalListener : getListeners()) {
                     globalListener.appendCommand(action);
                 }

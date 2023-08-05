@@ -89,7 +89,7 @@ public class X64Launcher extends PApplet implements ContactListener , IEngine {
     }
 
     @Override
-    public PApplet getEngine() {
+    public PApplet getProcessing() {
         return this;
     }
 

@@ -2,9 +2,13 @@ package io.itch.mgdsstudio.battlecity.game.gameobjects;
 
 import io.itch.mgdsstudio.battlecity.game.Logger;
 import io.itch.mgdsstudio.battlecity.game.PhysicWorld;
+import io.itch.mgdsstudio.battlecity.game.camera.Camera;
 import io.itch.mgdsstudio.battlecity.game.camera.GameCamera;
 import io.itch.mgdsstudio.battlecity.game.GameRound;
+import io.itch.mgdsstudio.battlecity.game.dataloading.DataStringCreationMaster;
 import io.itch.mgdsstudio.battlecity.game.dataloading.EntityData;
+import io.itch.mgdsstudio.battlecity.game.gameobjects.controllers.EntitySelectionController;
+import io.itch.mgdsstudio.battlecity.game.gameobjects.controllers.ISelectable;
 import io.itch.mgdsstudio.battlecity.game.graphic.IAnimations;
 import io.itch.mgdsstudio.battlecity.game.textes.AbstractText;
 import io.itch.mgdsstudio.battlecity.game.textes.DissolvingAndUpwardsMovingText;
@@ -25,30 +29,17 @@ import processing.core.PVector;
 
 import java.util.ArrayList;
 
-public class Mine extends SolidObject {
+public class Mine extends SolidObject implements ISelectable {
     private final static ImageZoneSimpleData REST_AFTER_EXPLOSION_ZONE_DATA = new ImageZoneSimpleData(768,64, 768+64,64+64);
     public final static boolean PLAYER = true;
     private ArrayList <Entity> tanks = new ArrayList<>();
     private boolean owner;
     private Vec2 inWorldPos;
     private boolean exploded;
-
-
     private ColorChangingController colorController;
-
     private final static int NORMAL_DIAMETER = 15;
 
-/*
-    protected Mine(IEngine engine, Coordinate pos, int owner) {
-        super(engine, physicGameWorld, pos, angle, 1, width, height, BodyForms.RECT, BodyType.STATIC, -1);
-        super(engine, pos, 0, NORMAL_WIDTH, NORMAL_WIDTH, 0, GraphicLayers.ON_GROUND_LAYER);
-        this.owner = getOwnerForInt(owner);
-        //this.owner = !PLAYER;
-        if (this.owner == PLAYER || GlobalVariables.debug) {
-            loadGraphicDefaultData(engine);
-        }
-    }*/
-
+    private final EntitySelectionController entitySelectionController;
     protected Mine (IEngine engine, PhysicWorld physicWorld, Coordinate pos, int ownerAsInt) {
         super(engine, physicWorld, pos, 0, IMMORTAL_LIFE, NORMAL_DIAMETER, NORMAL_DIAMETER, BodyForms.CIRCLE, BodyType.STATIC, -1);
 
@@ -59,8 +50,8 @@ public class Mine extends SolidObject {
         }
         graphicLayer = GraphicObject.GraphicLayers.ON_GROUND_LAYER;
         body.setUserData(BodyData.MINE);
+        entitySelectionController = new EntitySelectionController();
     }
-
 
     @Override
     protected void setBodyData() {
@@ -76,12 +67,19 @@ public class Mine extends SolidObject {
 
     private static boolean getOwnerForInt(int owner) {
         if (owner == 0) {
-            //Logger.debugLog("Mine owner is player");
             return PLAYER;
         }
         else {
-            //Logger.debugLog("Mine owner is enemy");
             return !PLAYER;
+        }
+    }
+
+    private int getOwnerForBool(boolean owner) {
+        if (owner == false) {
+            return 1;
+        }
+        else {
+            return 0;
         }
     }
 
@@ -163,7 +161,7 @@ public class Mine extends SolidObject {
             //GraphicManager.getManager()
             int x = (int)pos.x;
             int y = (int)pos.y;
-            int angle = (int) engine.getEngine().random(360);
+            int angle = (int) engine.getProcessing().random(360);
             //public SpriteInGame(IEngine engine, Coordinate pos, int angle, int width, int height, int thirdDim, int layer, int spritesheetNumber, int left, int up, int right, int down){
             SpriteInGame rest = new SpriteInGame(engine, new Coordinate(x,y), angle, Entity.ENTITY_NORMAL_DIM, Entity.ENTITY_NORMAL_DIM, GraphicObject.GraphicLayers.GROUND_LAYER, 0, REST_AFTER_EXPLOSION_ZONE_DATA.leftX, REST_AFTER_EXPLOSION_ZONE_DATA.upperY, REST_AFTER_EXPLOSION_ZONE_DATA.rightX, REST_AFTER_EXPLOSION_ZONE_DATA.lowerY) ;
             gameRound.addEntityOnGround(rest);
@@ -180,14 +178,45 @@ public class Mine extends SolidObject {
         else gameRound.getEntitiesForType(PlayerTank.class, tanks);
     }
 
-    public void draw(PGraphics graphics, GameCamera gameCamera) {
+    @Override
+    public void draw(PGraphics graphics, Camera gameCamera) {
         if (!exploded) {
-            super.draw(graphics, gameCamera);
+            if (entitySelectionController.isSelected()) {
+                drawWithAlpha(graphics, gameCamera, entitySelectionController.getAlpha(engine.getProcessing().millis()));
+            }
+            else super.draw(graphics, gameCamera);
             if (owner == PLAYER) {
 
             }
         }
-        //graphicElementInGame.draw(graphics, gameCamera, pos.x, pos.y);
+    }
+
+    @Override
+    public boolean isSelected() {
+        return entitySelectionController.isSelected();
+    }
+
+    @Override
+    public void setSelected(boolean selected) {
+        if (selected) entitySelectionController.setSelected(engine.getProcessing().millis());
+        else entitySelectionController.clearSelection();
+    }
+    @Override
+    public String getInEditorName() {
+        return "MINE AT " + (int)pos.x + "x" + (int)pos.y;
+    }
+
+    public String getDataString(){
+        int posX = (int) pos.x;
+        int posY = (int) pos.y;
+        ArrayList<Integer> dataList = new ArrayList<>();
+        dataList.add(posX);
+        dataList.add(posY);
+        dataList.add(getOwnerForBool(owner));
+        ArrayList<Integer> graphicList = new ArrayList<>();
+        DataStringCreationMaster dataStringCreationMaster = new DataStringCreationMaster(getId(), dataList, graphicList, this.getClass().getSimpleName());
+        String dataString = dataStringCreationMaster.getDataString();
+        return dataString;
     }
 
     private class ColorChangingController{
@@ -205,7 +234,7 @@ public class Mine extends SolidObject {
         }
 
         protected final void loadSecondaryImage(IEngine engine, String path, int graphicWidth, int graphicHeight, ImageZoneSimpleData data){
-            GraphicManagerSingleton manager = GraphicManagerSingleton.getManager(engine.getEngine());
+            GraphicManagerSingleton manager = GraphicManagerSingleton.getManager(engine.getProcessing());
             Image graphicImage = manager.getImage(path);
             secondaryGraphicObject = new ImageInGame(graphicImage, graphicWidth, graphicHeight, data);
         }
@@ -226,7 +255,7 @@ public class Mine extends SolidObject {
                 }
             }
             else {
-                timer = new Timer(MAX_TIME, gameRound.getEngine().getEngine());
+                timer = new Timer(MAX_TIME, gameRound.getEngine().getProcessing());
                 firstLoopEnded = true;
             }
         }

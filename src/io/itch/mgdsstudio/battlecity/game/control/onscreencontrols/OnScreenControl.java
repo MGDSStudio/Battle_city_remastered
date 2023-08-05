@@ -55,7 +55,7 @@ public abstract class OnScreenControl {
 
     private void init(IEngine engine) {
         String path = engine.getPathToObjectInAssets(HudConstants.RELATIVE_PATH);
-        if (image == null) image = GraphicManagerSingleton.getManager(engine.getEngine()).getImage(path);
+        if (image == null) image = GraphicManagerSingleton.getManager(engine.getProcessing()).getImage(path);
     }
 
 

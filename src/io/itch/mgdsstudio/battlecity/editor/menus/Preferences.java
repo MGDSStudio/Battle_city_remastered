@@ -43,7 +43,7 @@ public class Preferences extends AbstractEditorMenu {
         for (int i = 0; i < buttons; i++){
             GuiElement gui ;
             if (i == 0) {
-                gui = new CheckBox(editorController.getEngine(), zones[i].x, zones[i].y, zones[i].width, zones[i].height, getNameForPos(i), editorController.getEngine().getEngine().g, true);
+                gui = new CheckBox(editorController.getEngine(), zones[i].x, zones[i].y, zones[i].width, zones[i].height, getNameForPos(i), editorController.getEngine().getProcessing().g, true);
                 EditorPreferencesSingleton preferencesSingleton = EditorPreferencesSingleton.getInstance();
                 boolean gridVisible = preferencesSingleton.getBooleanValue(EditorPreferences.GRID_VISIBILITY.name());
                 CheckBox checkBox = (CheckBox) gui;
@@ -58,7 +58,7 @@ public class Preferences extends AbstractEditorMenu {
                     editorController.setTextInConcole("GRID IS NOT VISIBLE NOT");
                 }
             }
-            else gui = new ButtonWithFrameSelection(editorController.getEngine(), zones[i].x, zones[i].y, zones[i].width, zones[i].height, getNameForPos(i), editorController.getEngine().getEngine().g, true);
+            else gui = new ButtonWithFrameSelection(editorController.getEngine(), zones[i].x, zones[i].y, zones[i].width, zones[i].height, getNameForPos(i), editorController.getEngine().getProcessing().g, true);
             guiElements.add(gui);
         }
     }

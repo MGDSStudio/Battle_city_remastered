@@ -15,7 +15,7 @@ public class AllImageZonesFromFileLoader extends ImageZoneLoader{
     public AllImageZonesFromFileLoader(IEngine engine){
         imageZonesWithFulLData = new ArrayList<>();
         final String path = engine.getPathToObjectInUserFolder(FILE_NAME_FOR_GRAPHIC_ZONES_FILE);
-        JSONArray jsonArray = engine.getEngine().loadJSONArray(path);
+        JSONArray jsonArray = engine.getProcessing().loadJSONArray(path);
         if (jsonArray!=null){
             Logger.debug("JSON file contains " + jsonArray.size() + " pos");
             for (int i = 0; i < jsonArray.size(); i++){

@@ -58,7 +58,7 @@ public class VfxsPool implements IAnimations {
 
     public static AnimationInGame createAnimation(int type, IEngine engine, int width, int height){
         AnimationInGame animationInGame;
-        GraphicManagerSingleton graphicManagerSingleton = GraphicManagerSingleton.getManager(engine.getEngine());
+        GraphicManagerSingleton graphicManagerSingleton = GraphicManagerSingleton.getManager(engine.getProcessing());
         final String path = engine.getPathToObjectInAssets(GlobalConstants.NAME_FOR_TANK_GRAPHIC_FILE);
         final Image image = graphicManagerSingleton.getImage(path);
         int graphicStep = 32;

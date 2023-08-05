@@ -38,7 +38,7 @@ public abstract class Stick extends OnScreenControl{
     }
     
     private void initDims(IEngine engine){
-        deadZoneRadius = engine.getEngine().width/100;
+        deadZoneRadius = engine.getProcessing().width/100;
         rotateZoneRadius = (int)(width *0.65f/2f);
     }
     
@@ -57,7 +57,7 @@ public abstract class Stick extends OnScreenControl{
         for (Coordinate touch : touchScreenPos){
             if (PApplet.dist(touch.x, touch.y, pos.x, pos.y)<(width /2)){
                 if (PApplet.dist(touch.x, touch.y, pos.x, pos.y)>rotateZoneRadius){
-                    if (engine.getEngine().mousePressed) {
+                    if (engine.getProcessing().mousePressed) {
                         updateRingZoneTouchStatement(GameMechanics.getAngleToPointInDegrees(pos.x, pos.y, touch.x, touch.y));
                         return;
                     }
@@ -78,7 +78,7 @@ public abstract class Stick extends OnScreenControl{
         for (Coordinate touch : touchScreenPos){
             if (PApplet.dist(touch.x, touch.y, pos.x, pos.y)<rotateZoneRadius){
                 if (PApplet.dist(touch.x, touch.y, pos.x, pos.y)>deadZoneRadius){
-                    if (engine.getEngine().mousePressed || GlobalVariables.getOs() == GlobalConstants.ANDROID) {
+                    if (engine.getProcessing().mousePressed || GlobalVariables.getOs() == GlobalConstants.ANDROID) {
                         updateCenterZoneTouchStatement(GameMechanics.getAngleToPointInDegrees(pos.x, pos.y, touch.x, touch.y));
                         return;
                     }

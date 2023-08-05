@@ -19,7 +19,7 @@ class MainPlayerServer extends Net {
     }
 
     private void init(IEngine engine, int port, int playerNumber){
-        server = new Server(engine.getEngine(), port);
+        server = new Server(engine.getProcessing(), port);
         playerNumberInMultiplayerMode = playerNumber;
         Logger.net("This user with the number " + playerNumber + " added as a server");
     }

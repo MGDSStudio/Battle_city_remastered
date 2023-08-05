@@ -52,7 +52,7 @@ public class PhysicWorld {	//implements Runnable
     //private static AABB mutAABB = new AABB();
 
     public PhysicWorld(GameRound gameRound) {
-        controller = new Box2DProcessing(gameRound.getEngine().getEngine(), worldScale);
+        controller = new Box2DProcessing(gameRound.getEngine().getProcessing(), worldScale);
         controller.createWorld();
         controller.setGravity(0, 0);
         controller.listenForCollisions();

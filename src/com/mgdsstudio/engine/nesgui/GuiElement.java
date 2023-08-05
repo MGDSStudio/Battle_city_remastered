@@ -78,10 +78,10 @@ public abstract class GuiElement {
     GuiElement(IEngine engine, int centerX, int centerY, int width, int height, String name, PGraphics graphics){
         initOsConstants();
         if (engine != null) {
-            this.engine = engine.getEngine();
+            this.engine = engine.getProcessing();
             engineInterface = engine;
         }
-        font = engine.getEngine().loadFont(engine.getPathToObjectInAssets("Font1.vlw"));
+        font = engine.getProcessing().loadFont(engine.getPathToObjectInAssets("Font1.vlw"));
 
         //GraphicManage r.getManager(engine).getFont();
 

@@ -9,7 +9,7 @@ public class SimpleImage extends GuiElement {
 
     public SimpleImage(IEngine engine, int centerX, int centerY, int width, int height, String name, PGraphics graphics, String path) {
         super(engine, centerX, centerY, width, height, name, graphics);
-        image = new Image(engine.getEngine(), path);
+        image = new Image(engine.getProcessing(), path);
     }
 
     @Override

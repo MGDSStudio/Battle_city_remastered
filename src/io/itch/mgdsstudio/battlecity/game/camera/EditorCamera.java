@@ -1,6 +1,5 @@
 package io.itch.mgdsstudio.battlecity.game.camera;
 
-import com.mgdsstudio.engine.nesgui.Frame;
 import io.itch.mgdsstudio.battlecity.editor.EditorListenersManagerSingleton;
 import io.itch.mgdsstudio.battlecity.game.Logger;
 import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
@@ -35,7 +34,7 @@ public class EditorCamera extends Camera implements EditorActionsListener {
         this.pos = pos;
         this.engine = engine;
         actions = new ArrayList<>();
-        cameraMovementController = new CameraMovementController(engine.getEngine());
+        cameraMovementController = new CameraMovementController(engine.getProcessing());
     }
 
     @Override

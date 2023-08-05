@@ -2,15 +2,11 @@ package io.itch.mgdsstudio.battlecity.game.hud;
 
 import com.mgdsstudio.engine.nesgui.EightPartsFrameImage;
 import io.itch.mgdsstudio.battlecity.game.InEditorGraphicData;
-import io.itch.mgdsstudio.battlecity.game.control.onscreencontrols.AimingStick;
-import io.itch.mgdsstudio.battlecity.game.control.onscreencontrols.MovementStick;
 import io.itch.mgdsstudio.battlecity.game.gameobjects.PlayerTank;
 import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
 import io.itch.mgdsstudio.engine.graphic.Image;
 import io.itch.mgdsstudio.engine.libs.Coordinate;
 import processing.core.PGraphics;
-
-import java.awt.*;
 
 public class LowerPanelInEditor extends Panel{
 
@@ -25,7 +21,7 @@ public class LowerPanelInEditor extends Panel{
 
     @Override
     protected void init() {
-        leftUpper = new Coordinate(0,engine.getEngine().height-height);
+        leftUpper = new Coordinate(0,engine.getProcessing().height-height);
         center = new Coordinate(leftUpper.x+width/2, leftUpper.y+height/2);
         lowerTab = new InEditorLowerTab(engine, inEditorGameWorldFrame, (int) InEditorGraphicData.rightBoardLineWidth);
 

@@ -1,7 +1,6 @@
 package io.itch.mgdsstudio.battlecity.editor.data;
 
 import io.itch.mgdsstudio.battlecity.game.Logger;
-import io.itch.mgdsstudio.battlecity.game.dataloading.Keys;
 import io.itch.mgdsstudio.battlecity.mainpackage.IEngine;
 import io.itch.mgdsstudio.engine.libs.DataFromMgdsTextParametersListReader;
 
@@ -73,7 +72,7 @@ public class EditorPreferencesSingleton extends DataFromMgdsTextParametersListRe
         for (int i = 0; i < data.length; i++){
             System.out.println(i + ": " + data[i]);
         }
-        engine.getEngine().saveStrings(path, data);
+        engine.getProcessing().saveStrings(path, data);
         Logger.debug("Data saved on disk ");
     }
 }
