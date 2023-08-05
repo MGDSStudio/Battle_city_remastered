@@ -7,6 +7,7 @@ import io.itch.mgdsstudio.battlecity.game.hud.LowerPanelInEditor;
 
 public class FileMenu extends AbstractEditorMenu {
     private String save, clear, exit;
+    private String yesClear;
 
    private interface Statements{
          int REALLY_WANT_TO_SAVE = 11;
@@ -35,11 +36,59 @@ public class FileMenu extends AbstractEditorMenu {
             names[0] = back;
             createSubmenuWithDefaultAlignedButtons(names);
             saveData();
+            editorController.setTextForConsole("SUCCESSFULLY SAVED");
+        }
+        else if (actualStatement == Statements.REALLY_WANT_TO_CLEAR){
+            String [] names = new String[]{yesClear, back, cancel};
+            createSubmenuWithDigitKeyboard(names);
+editorController.setTextForConsole(" DO YOU REALLY WANT TO CLEAR THE LEVEL?")
+
+        }
+        else if (actualStatement == Statements.CLEARING){
+             String [] names = new String []{back};
+             createSubmenuWithDefaultAlignedButtons(names);
+             editorController.setTextForConsole("LEVEL WAS SUCCESSFULLY CLEARED");
+             clearLevelData();
         }
     }
 
-    private void saveData() {
 
+    private void clearLevelData(){
+        CONTINUE
+        ArrayList <Entity> gameObjects = editorController.getGameRound().getEntities();
+        for (int i = (gameObjects.size()-1); i >= 0; i--){
+              Entity e = gameObjects.get(i);
+        if (e instanceof PlayerTank ){
+
+        }
+        else gameObjects.remove(i);
+        if (gameObjects.size() == 0) editor.setTextForConsole("YOUR LEVEL DOESN'T CONTAIN PLAYER TANKS. YOUR SHOULD ADD AT LEAST ONE TO HAVE THE ABILITY TO PLAY THIS LEVEL");
+        else if (gameObjects.size()==1){
+
+
+        }
+        else {
+            while(gameObjects.size()>1){
+                gameObjects.remove(1);
+            }
+        }
+        
+    }   
+
+    private void clearAvtualWorld(){
+
+    }
+
+    private void clearFileData(){
+
+
+    }
+
+    private void clearUnsavedData(){
+
+    }
+
+    private void saveData() {
         boolean success =  editorController.getUnsavedDataList().save();
 
         if (success) {
@@ -105,6 +154,12 @@ public class FileMenu extends AbstractEditorMenu {
         }
         else if (element.getName().equals(save)) {
             nextStatement = Statements.SAVED;
+        }
+        else if (element.getName().equals(yesClear)){
+            nextStatement = Statements.CLEARING;
+        }
+        else if (element.getName().equals(clear)){
+            nextDtatement = Statements.REALLY_WANT_TO_CLEAR;
         }
     }
 
