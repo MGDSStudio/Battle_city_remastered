@@ -107,7 +107,7 @@ public class EditorController extends GamePartWithGameWorldAbstractController im
             initStartData();
             int size = (int) ((hud.getGraphicRightPixel()-hud.getGraphicLeftPixel())/12f);
             unsavedDataLabel = new UnsavedDataLabel(engine, new Coordinate(drawingGraphicPlaces.centerX-drawingGraphicPlaces.getWidth()/2+size*0.9f, drawingGraphicPlaces.centerY-drawingGraphicPlaces.getHeight()/2+size*0.9f) , size);
-            unsavedDataList = new UnsavedDataList(engine.getPathToObjectInUserFolder(ExternalDataController.LEVEL_PREFIX)+level+ExternalDataController.LEVEL_EXTENSION, unsavedDataLabel);
+            unsavedDataList = new UnsavedDataList(engine.getPathToObjectInUserFolder(ExternalDataController.LEVEL_PREFIX)+ levelNumber +ExternalDataController.LEVEL_EXTENSION, unsavedDataLabel);
         }
         if (nextMenuType!= actualMenuType){
             createMenu();
@@ -189,14 +189,14 @@ public class EditorController extends GamePartWithGameWorldAbstractController im
         actions.add(action);
     }
 
-    public void setTextInConcole(String text) {
+    public void setConsoleText(String text) {
         InEditorHud editorHud = (InEditorHud)hud;
         editorHud.setTextForConsole(text);
     }
 
     public void exitFromEditor(boolean testLevel) {
         MenuDataStruct dataStruct = new MenuDataStruct();
-        dataStruct.setNextLevel(level);
+        dataStruct.setNextLevel(levelNumber);
         if (!testLevel)  dataStruct.setNextMenu(io.itch.mgdsstudio.battlecity.menu.MenuType.EDITOR_PRELOADING_WINDOW);
         else dataStruct.setNextMenu(io.itch.mgdsstudio.battlecity.menu.MenuType.SINGLE_MISSION_LOADING);
         mainController.backToMenu(dataStruct, true);

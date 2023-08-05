@@ -44,7 +44,7 @@ public class AddWall extends AbstractEditorMenu {
             initButtonNames();
             String [] names = new String[]{crushable, armored, immortal, back};
             createSubmenuWithDefaultAlignedButtons(names);
-            editorController.setTextInConcole("SELECT TYPE OF THE WALL ELEMENT");
+            editorController.setConsoleText("SELECT TYPE OF THE WALL ELEMENT");
         }
         else if (actualStatement == Statements.PLACE_ON_MAP){
             int value = getDigitValueFromKeyboard();
@@ -59,7 +59,7 @@ public class AddWall extends AbstractEditorMenu {
                 value = 1;
 
             }
-            else editorController.setTextInConcole("SHIFT THE BATTLEFIELD VIA SWIPES TO SELECT RIGHT POSITION FOR THE OBJECT. PRESS ADD BUTTON TO PLACE THE OBJECT ON THE BATTLEFIELD. THE OBJECT SIZE WILL BE " + value + " WORLD UNITS");
+            else editorController.setConsoleText("SHIFT THE BATTLEFIELD VIA SWIPES TO SELECT RIGHT POSITION FOR THE OBJECT. PRESS ADD BUTTON TO PLACE THE OBJECT ON THE BATTLEFIELD. THE OBJECT SIZE WILL BE " + value + " WORLD UNITS");
 
             objectData.setSize(value); //width
             //editorController.getCross().setStatement(Cross.Statement.CELL_CENTER);
@@ -70,18 +70,18 @@ public class AddWall extends AbstractEditorMenu {
             editorController.getCursor().setStatement(Cursor.Statement.INVISIBLE_AS_CELL_CENTER);
             String [] names = new String[] {square,circle,triangle,back};
             createSubmenuWithDefaultAlignedButtons(names);
-            editorController.setTextInConcole("SELECT FORM OF THE WALL ELEMENT");
+            editorController.setConsoleText("SELECT FORM OF THE WALL ELEMENT");
         }
         else if (actualStatement == Statements.SELECT_TRIANGLE_FORM){
             editorController.getCursor().setStatement(Cursor.Statement.INVISIBLE_AS_CELL_CENTER);
             String [] names = new String []{ SE, SW, NW, NE, back };
-            editorController.setTextInConcole("SELECT ORIENTATION OF THE TRIANGLE");
+            editorController.setConsoleText("SELECT ORIENTATION OF THE TRIANGLE");
             createSubmenuWithDefaultAlignedButtons(names);
         }
         else if (actualStatement == Statements.SELECT_SIZE){
             guiElements.clear();
             editorController.getCursor().setStatement(Cursor.Statement.INVISIBLE_AS_CELL_CENTER);
-            editorController.setTextInConcole("SELECT SIZE OF THE OBJECT");
+            editorController.setConsoleText("SELECT SIZE OF THE OBJECT");
             createSubmenuWithDigitKeyboard(true, "TEXT FIELD");
             GuiElement gui = getGuiByName(KEYBOARD_GUI_NAME);
             if (gui != null){
@@ -96,7 +96,7 @@ public class AddWall extends AbstractEditorMenu {
         else if (actualStatement == Statements.SELECT_TILESET){
             editorController.getCursor().setStatement(Cursor.Statement.INVISIBLE_AS_CELL_CENTER);
             createMenuWithGraphicButtons(4,3, 0);
-            editorController.setTextInConcole("SELECT SPRITE FOR THE GRAPHIC");
+            editorController.setConsoleText("SELECT SPRITE FOR THE GRAPHIC");
         }
     }
 
@@ -150,7 +150,7 @@ public class AddWall extends AbstractEditorMenu {
 
     @Override
     protected void setConsoleTextForFirstButtonPressing(GuiElement element) {
-        editorController.setTextInConcole(getTextForConsoleByPressedGui(element));
+        editorController.setConsoleText(getTextForConsoleByPressedGui(element));
     }
 
     @Override

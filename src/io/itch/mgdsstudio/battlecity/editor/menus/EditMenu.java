@@ -107,7 +107,7 @@ public class EditMenu extends AbstractEditorMenu implements EditorActionsListene
     //transfer in parent
     @Override
     protected void setConsoleTextForFirstButtonPressing(GuiElement element) {
-        editorController.setTextInConcole(getTextForConsoleByPressedGui(element));
+        editorController.setConsoleText(getTextForConsoleByPressedGui(element));
     }
 
     @Override
@@ -154,7 +154,7 @@ public class EditMenu extends AbstractEditorMenu implements EditorActionsListene
                Logger.error("Can not remove from map " + editorController.getSelectedObjects().get(i).getDataString() + e);
            }
        }
-       editorController.setTextInConcole(deleted  + " WERE DELETED FROM MAP FROM " + count);
+       editorController.setConsoleText(deleted  + " WERE DELETED FROM MAP FROM " + count);
     }
 
     private void removeObjectFromDataFile(ISelectable iSelectable) {
@@ -179,18 +179,18 @@ public class EditMenu extends AbstractEditorMenu implements EditorActionsListene
        ArrayList <ISelectable> selected = getObjectsUnderCursor(editorController.getCursor());
        int count = selected.size();
        if (count > 0){
-           editorController.setTextInConcole(count + " OBJECTS WERE SELECTED");
+           editorController.setConsoleText(count + " OBJECTS WERE SELECTED");
            for (ISelectable s : selected){
                s.setSelected(true);
            }
            editorController.getSelectedObjects().addAll(selected);
        }
-       else editorController.setTextInConcole("NOTHING WAS SELECTED");
+       else editorController.setConsoleText("NOTHING WAS SELECTED");
     }
 
     protected void clearSelection(){
         ArrayList <ISelectable> selected  = editorController.getSelectedObjects();
-        editorController.setTextInConcole(selected.size() + " OBJECTS WERE REMOVED FROM SELECTION");
+        editorController.setConsoleText(selected.size() + " OBJECTS WERE REMOVED FROM SELECTION");
         for (int i = (selected.size()-1); i >= 0;i --){
             ISelectable part = selected.get(i);
             if (part == null) Logger.error("This can not be. ");

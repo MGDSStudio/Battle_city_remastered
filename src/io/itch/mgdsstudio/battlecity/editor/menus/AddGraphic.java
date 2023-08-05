@@ -48,17 +48,17 @@ public class AddGraphic extends AbstractEditorMenu{
             initButtonNames();
             String [] names = new String[]{sprite, animation, back};
             createSubmenuWithDefaultAlignedButtons(names);
-            editorController.setTextInConcole("SELECT TYPE OF THE GRAPHIC YOU WANT TO ADD");
+            editorController.setConsoleText("SELECT TYPE OF THE GRAPHIC YOU WANT TO ADD");
         }
         else if (actualStatement == Statements.SELECT_TILESET){
             editorController.getCursor().setStatement(Cursor.Statement.INVISIBLE_AS_CELL_CENTER);
             createMenuWithGraphicButtons(4,3, 0);
-            editorController.setTextInConcole("SELECT SPRITE FOR THE GRAPHIC");
+            editorController.setConsoleText("SELECT SPRITE FOR THE GRAPHIC");
         }
         else if (actualStatement == Statements.SELECT_SIZE){
             guiElements.clear();
             editorController.getCursor().setStatement(Cursor.Statement.INVISIBLE_AS_CELL_CENTER);
-            editorController.setTextInConcole("SELECT SIZE OF THE OBJECT");
+            editorController.setConsoleText("SELECT SIZE OF THE OBJECT");
             createSubmenuWithDigitKeyboard(true, "TEXT FIELD");
             GuiElement gui = getGuiByName(KEYBOARD_GUI_NAME);
             if (gui != null){
@@ -75,13 +75,13 @@ public class AddGraphic extends AbstractEditorMenu{
             if (value<1){
                 value = 1;
             }
-            else editorController.setTextInConcole("SHIFT THE BATTLEFIELD VIA SWIPES TO SELECT RIGHT POSITION FOR THE OBJECT. PRESS ADD BUTTON TO PLACE THE OBJECT ON THE BATTLEFIELD. THE OBJECT SIZE WILL BE " + value + " WORLD UNITS");
+            else editorController.setConsoleText("SHIFT THE BATTLEFIELD VIA SWIPES TO SELECT RIGHT POSITION FOR THE OBJECT. PRESS ADD BUTTON TO PLACE THE OBJECT ON THE BATTLEFIELD. THE OBJECT SIZE WILL BE " + value + " WORLD UNITS");
             Logger.debug("Graphic object will have size: " + value);
             spriteDataStruct.setSize(value);
             editorController.getCursor().setStatement(Cursor.Statement.INVISIBLE_AS_CELL_CENTER);
             String [] names = new String[] {ground,onGround,aboveGround,inAir,back};
             createSubmenuWithDefaultAlignedButtons(names);
-            editorController.setTextInConcole("SELECT FORM OF THE WALL ELEMENT");
+            editorController.setConsoleText("SELECT FORM OF THE WALL ELEMENT");
         }
         else if (actualStatement == Statements.PLACE_ON_MAP){
             editorController.getCursor().setStatement(Cursor.Statement.CELL_CENTER);
@@ -136,7 +136,7 @@ public class AddGraphic extends AbstractEditorMenu{
 
     @Override
     protected void setConsoleTextForFirstButtonPressing(GuiElement element) {
-        editorController.setTextInConcole(getTextForConsoleByPressedGui(element));
+        editorController.setConsoleText(getTextForConsoleByPressedGui(element));
     }
 
     @Override

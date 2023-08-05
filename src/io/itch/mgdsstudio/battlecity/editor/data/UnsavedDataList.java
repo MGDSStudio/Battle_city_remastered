@@ -39,29 +39,10 @@ public class UnsavedDataList {
             label.setActive(false);
         }
         return saved;
-        /*PrintWriter output = null;
-        boolean saved;
-        try {
-            output = new PrintWriter((new FileWriter(path, true)));
-            for (String dataString : data){
-                output.println(dataString);
-            }
-            output.flush();
-            output.close();
-            output = null;
-            Logger.debug("Data successfully saved");
-            saved = true;
-        }
-        catch (IOException e){
-            System.out.println("System is busy. Can not save");
-            saved = false;
-        }
-        finally {
-            if (output != null ) output.close();
-        }
-        if (saved){
-            label.setActive(false);
-        }
-        return saved;*/
+    }
+
+    public void clear() {
+        data.clear();
+        label.setActive(false);
     }
 }

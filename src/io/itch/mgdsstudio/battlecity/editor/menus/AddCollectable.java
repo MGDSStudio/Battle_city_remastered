@@ -76,13 +76,13 @@ public class AddCollectable extends AbstractEditorMenu {
                 names[i] = getNameForPos(i);
             }
             createSubmenuWithColumnAlignedButtons(names,2);
-            editorController.setTextInConcole("SELECT TYPE OF THE COLLECTABLE OBJECT TO BE ADDED ON THE BATTLEFIELD");
+            editorController.setConsoleText("SELECT TYPE OF THE COLLECTABLE OBJECT TO BE ADDED ON THE BATTLEFIELD");
         }
         else if (actualStatement == Statements.SELECT_DELAY){
             editorController.getCursor().setStatement(Cursor.Statement.INVISIBLE_AS_CELL_CENTER);
             guiElements.clear();
             createSubmenuWithDigitKeyboard(true, DATA_FIELD);
-            editorController.setTextInConcole("ENTER THE DELAY FOR START TIMER. THE OBJECT WILL APPEAR ON THE BATTLE FIELD AFTER THE TIMER CALLS BACK");
+            editorController.setConsoleText("ENTER THE DELAY FOR START TIMER. THE OBJECT WILL APPEAR ON THE BATTLE FIELD AFTER THE TIMER CALLS BACK");
         }
         else if (actualStatement == Statements.PLACE_ON_MAP){
             int value = getDigitValueFromKeyboard();
@@ -90,14 +90,14 @@ public class AddCollectable extends AbstractEditorMenu {
             editorController.getCursor().setStatement(Cursor.Statement.CELL_CENTER);
             String [] names = new String[] {add, back};
             createSubmenuWithDefaultAlignedButtons(names);
-            editorController.setTextInConcole("SHIFT THE BATTLEFIED VIA SWIPES TO SELECT RIGHT POSITION FOR THE OBJECT. PRESS ADD BUTTON TO PLACE THE OBJECT ON THE BATTLEFIELD");
+            editorController.setConsoleText("SHIFT THE BATTLEFIED VIA SWIPES TO SELECT RIGHT POSITION FOR THE OBJECT. PRESS ADD BUTTON TO PLACE THE OBJECT ON THE BATTLEFIELD");
         }
         else if (actualStatement == Statements.SELECT_VALUE){
 
             editorController.getCursor().setStatement(Cursor.Statement.CELL_CENTER);
             String [] names = new String[] {money1, money2, money3, money5, money10, money15, money20, money25, money30,money40, money50, back};
             createSubmenuWithColumnAlignedButtons(names,3);
-            editorController.setTextInConcole("SELECT VALUE - HOW MUCH COSTS THIS COLLECTABLE?");
+            editorController.setConsoleText("SELECT VALUE - HOW MUCH COSTS THIS COLLECTABLE?");
         }
     }
 
@@ -189,7 +189,7 @@ public class AddCollectable extends AbstractEditorMenu {
 
     @Override
     protected void setConsoleTextForFirstButtonPressing(GuiElement element) {
-        editorController.setTextInConcole(getTextForConsoleByPressedGui(element));
+        editorController.setConsoleText(getTextForConsoleByPressedGui(element));
     }
 
     @Override

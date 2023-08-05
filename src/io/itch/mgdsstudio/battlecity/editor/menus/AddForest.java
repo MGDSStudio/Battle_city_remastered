@@ -38,12 +38,12 @@ public class AddForest extends AbstractEditorMenu{
          if (actualStatement == Statements.SELECT_TILESET){
             editorController.getCursor().setStatement(Cursor.Statement.INVISIBLE_AS_CELL_CENTER);
             createMenuWithGraphicButtons(4,3, 0);
-            editorController.setTextInConcole("SELECT SPRITE FOR THE FOREST");
+            editorController.setConsoleText("SELECT SPRITE FOR THE FOREST");
         }
         else if (actualStatement == Statements.SELECT_SIZE){
             guiElements.clear();
             editorController.getCursor().setStatement(Cursor.Statement.INVISIBLE_AS_CELL_CENTER);
-            editorController.setTextInConcole("SELECT SIZE OF THE FOREST");
+            editorController.setConsoleText("SELECT SIZE OF THE FOREST");
             createSubmenuWithDigitKeyboard(true, "TEXT FIELD");
             GuiElement gui = getGuiByName(KEYBOARD_GUI_NAME);
             if (gui != null){
@@ -85,7 +85,7 @@ public class AddForest extends AbstractEditorMenu{
 
     @Override
     protected void setConsoleTextForFirstButtonPressing(GuiElement element) {
-        editorController.setTextInConcole(getTextForConsoleByPressedGui(element));
+        editorController.setConsoleText(getTextForConsoleByPressedGui(element));
     }
 
     @Override

@@ -154,7 +154,7 @@ else if (element.getName() == MainButtonsNames.FOREST.name()){
 
     @Override
     protected void setConsoleTextForFirstButtonPressing(GuiElement element) {
-        editorController.setTextInConcole(getTextForConsoleByPressedGui(element));
+        editorController.setConsoleText(getTextForConsoleByPressedGui(element));
     }
 
 
@@ -222,7 +222,7 @@ else if (element.getName() == MainButtonsNames.FOREST.name()){
     }
 
     private void tellAboutUnsavedData() {
-       editorController.setTextInConcole("You have unsaved data that will be lost after transfer in the menu. If you need to save the data - select EDIT button and choose punct - SAVE. If you need to leave the editor without saving - press back button again" );
+       editorController.setConsoleText("You have unsaved data that will be lost after transfer in the menu. If you need to save the data - select EDIT button and choose punct - SAVE. If you need to leave the editor without saving - press back button again" );
        userKnowsAboutUnsavedData = true;
     }
 }

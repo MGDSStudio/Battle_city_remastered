@@ -50,12 +50,12 @@ public class Preferences extends AbstractEditorMenu {
                 if (gridVisible){
                     editorController.getGrid().setVisible(true);
                     checkBox.setChecked(true);
-                    editorController.setTextInConcole("GRID IS VISIBLE NOW");
+                    editorController.setConsoleText("GRID IS VISIBLE NOW");
                 }
                 else {
                     editorController.getGrid().setVisible(false);
                     checkBox.setChecked(false);
-                    editorController.setTextInConcole("GRID IS NOT VISIBLE NOT");
+                    editorController.setConsoleText("GRID IS NOT VISIBLE NOT");
                 }
             }
             else gui = new ButtonWithFrameSelection(editorController.getEngine(), zones[i].x, zones[i].y, zones[i].width, zones[i].height, getNameForPos(i), editorController.getEngine().getProcessing().g, true);
@@ -110,7 +110,7 @@ public class Preferences extends AbstractEditorMenu {
     //transfer in parent
     @Override
     protected void setConsoleTextForFirstButtonPressing(GuiElement element) {
-        editorController.setTextInConcole(getTextForConsoleByPressedGui(element));
+        editorController.setConsoleText(getTextForConsoleByPressedGui(element));
     }
 
     @Override
@@ -210,7 +210,7 @@ public class Preferences extends AbstractEditorMenu {
         else if (actualStatement == START_STATEMENT){
             initGui();
         }
-        editorController.setTextInConcole(consoleText);
+        editorController.setConsoleText(consoleText);
 
     }
 

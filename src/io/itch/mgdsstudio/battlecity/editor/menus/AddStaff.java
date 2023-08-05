@@ -42,7 +42,7 @@ public class AddStaff extends AbstractEditorMenu{
             initButtonNames();
             String [] names = new String[]{forPlayer, forEnemy, back};
             createSubmenuWithDefaultAlignedButtons(names);
-            editorController.setTextInConcole("SELECT TYPE OF THE GRAPHIC YOU WANT TO ADD");
+            editorController.setConsoleText("SELECT TYPE OF THE GRAPHIC YOU WANT TO ADD");
         }
         else if (actualStatement == Statements.PLACE_ON_MAP){
             editorController.getCursor().setStatement(Cursor.Statement.CELL_CENTER);
@@ -81,7 +81,7 @@ public class AddStaff extends AbstractEditorMenu{
 
     @Override
     protected void setConsoleTextForFirstButtonPressing(GuiElement element) {
-        editorController.setTextInConcole(getTextForConsoleByPressedGui(element));
+        editorController.setConsoleText(getTextForConsoleByPressedGui(element));
     }
 
     @Override

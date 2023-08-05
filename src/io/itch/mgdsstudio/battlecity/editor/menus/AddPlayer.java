@@ -90,7 +90,7 @@ public class AddPlayer extends AbstractEditorMenu {
     //transfer in parent
     @Override
     protected void setConsoleTextForFirstButtonPressing(GuiElement element) {
-        editorController.setTextInConcole(getTextForConsoleByPressedGui(element));
+        editorController.setConsoleText(getTextForConsoleByPressedGui(element));
     }
 
     @Override
@@ -155,7 +155,7 @@ public class AddPlayer extends AbstractEditorMenu {
         else if (actualStatement == START_STATEMENT){
             initGui();
         }
-        editorController.setTextInConcole(consoleText);
+        editorController.setConsoleText(consoleText);
 
     }
 

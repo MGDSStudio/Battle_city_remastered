@@ -18,7 +18,7 @@ public abstract class GamePartWithGameWorldAbstractController extends GamePart{
     protected GameRound gameRound;
     protected Hud hud;
     protected boolean singleplayer = true;
-    protected int level;
+    protected int levelNumber;
     protected long deltaTime;
     protected boolean startDataInit = false;
     protected GameProcessController gameProcessController;
@@ -27,7 +27,7 @@ public abstract class GamePartWithGameWorldAbstractController extends GamePart{
     protected DrawingGraphicPlaces drawingGraphicPlaces;
     public GamePartWithGameWorldAbstractController(IEngine engine, MainController mainController, int dif, int level, int playerNumberInMultiplayerMode, int playersConnected, boolean isEditor) {
         super(engine, mainController);
-        this.level = level;
+        this.levelNumber = level;
         deltaTime = engine.getProcessing().millis();
         difficulty = dif;
         PlayerProgressControllerSingleton.init(engine, PlayerProgressControllerSingleton.SINGLE_MISSIONS);
@@ -89,6 +89,10 @@ public abstract class GamePartWithGameWorldAbstractController extends GamePart{
     public abstract int getGraphicHeight();
 
     public abstract Camera createCamera(GameRound gameRound);
+
+    public int getLevelNumber() {
+        return levelNumber;
+    }
 
     protected class DrawingGraphicPlaces{
         float centerX, centerY, width, height;

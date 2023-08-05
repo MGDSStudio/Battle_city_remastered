@@ -10,6 +10,6 @@ public enum EditorCommandPrefix {
 
     GRID_SHIFTING_CHANGED,
 
-    OBJECT_CREATED;
+    OBJECT_CREATED, LEVEL_CLEARED;
 
 }
