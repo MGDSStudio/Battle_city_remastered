@@ -114,8 +114,12 @@ public class AddPlayer extends AbstractEditorMenu {
     }
 
     private void addPlayer(){
-        ArrayList <Entity> gameObjects = editorController.getGameRound().getEntities();
-        
+        //ArrayList <Entity> gameObjects = editorController.getGameRound().getEntities();
+        int x = editorController.getCrosshair().getRealPos().x#;
+        int y = 
+        Player player = Player.createPlayer();
+        gameRound.addEntityToEnd(player);
+
     }
 
     private void removePlayer(){
