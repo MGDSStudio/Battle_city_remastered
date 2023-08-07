@@ -20,7 +20,8 @@ public class AddPlayer extends AbstractEditorMenu {
 
 
     private interface Statements{
-        int PLACE_PLAYER = 11;
+        int SELECT_ANGLE = 10;
+        int PLACE_PLAYER = 12;
         int ARE_YOU_SURE_YOU_WANT_TO_DELETE = 111;
         int DELETE_PLAYER = 21;
 
@@ -34,6 +35,9 @@ public class AddPlayer extends AbstractEditorMenu {
 
     @Override
     protected void initGui(){
+        if (actualStatement == START_STATEMENT){
+
+        }
         if (guiElements.size() > 0) guiElements.clear();
         initButtonNames();
         int buttons = 3;
@@ -42,6 +46,11 @@ public class AddPlayer extends AbstractEditorMenu {
             GuiElement gui = new ButtonWithFrameSelection(editorController.getEngine(), zones[i].x, zones[i].y, zones[i].width, zones[i].height, getNameForPos(i), editorController.getEngine().getProcessing().g, true);
             guiElements.add(gui);
         }
+    }
+else if (actualStatement == Statements.SELECT_ANGLE){
+    //submenu with angle selector
+}
+
     }
 
     private void initButtonNames(){
@@ -115,11 +124,16 @@ public class AddPlayer extends AbstractEditorMenu {
 
     private void addPlayer(){
         //ArrayList <Entity> gameObjects = editorController.getGameRound().getEntities();
-        int x = editorController.getCrosshair().getRealPos().x#;
-        int y = 
+        int x = editorController.getCrosshair().getRealPos().x;
+        int y = editorController.getCrosshair().getRealPos().y;
+        int role = getRole();
         Player player = Player.createPlayer();
         gameRound.addEntityToEnd(player);
 
+    }
+
+    private int getNextPlayerRole(){
+        
     }
 
     private void removePlayer(){
