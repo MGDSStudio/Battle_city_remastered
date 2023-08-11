@@ -44,7 +44,7 @@ public class MainController implements GameStatements{
         else {
             MenuDataStruct menuDataStruct = new MenuDataStruct();
             menuDataStruct.setNextLevel(1);
-            menuDataStruct.setNextMenu(MenuType.EDITOR_PRELOADING_WINDOW);
+            menuDataStruct.setNextMenu(MenuType.MAIN);
             gamePart = new MenuController(engine, this, menuDataStruct);
         }
         mustBeReloaded = false;

@@ -21,8 +21,6 @@ public class GameController extends GamePartWithGameWorldAbstractController {
     public GameController(IEngine engine, MainController mainController, int level, int dif, int playersConnected, int playerNumber, int playerNumberInMultiplayerMode) {
         super(engine, mainController, dif, level, playerNumberInMultiplayerMode, playersConnected, false);
         drawingGraphicPlaces = new DrawingGraphicPlaces(InGameGraphicData.graphicCenterX, InGameGraphicData.graphicCenterY, InGameGraphicData.fullGraphicWidth, InGameGraphicData.fullGraphicHeight);
-        //hud = new Hud(this, engine, playerNumberInMultiplayerMode, singleplayer);
-
 
         hud.appendGameRoundData(gameRound);
         if (playersConnected >1) {

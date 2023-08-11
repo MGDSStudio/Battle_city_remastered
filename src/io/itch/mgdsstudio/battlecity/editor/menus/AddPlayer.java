@@ -4,8 +4,10 @@ import com.mgdsstudio.engine.nesgui.ButtonWithFrameSelection;
 import com.mgdsstudio.engine.nesgui.GuiElement;
 import io.itch.mgdsstudio.battlecity.editor.Cursor;
 import io.itch.mgdsstudio.battlecity.game.EditorController;
+import io.itch.mgdsstudio.battlecity.game.dataloading.EntityData;
 import io.itch.mgdsstudio.battlecity.game.gameobjects.Entity;
 import io.itch.mgdsstudio.battlecity.game.gameobjects.PlayerTank;
+import io.itch.mgdsstudio.battlecity.game.gameobjects.Tank;
 import io.itch.mgdsstudio.battlecity.game.hud.LowerPanelInEditor;
 
 import java.awt.*;
@@ -35,22 +37,19 @@ public class AddPlayer extends AbstractEditorMenu {
 
     @Override
     protected void initGui(){
-        if (actualStatement == START_STATEMENT){
+        if (actualStatement == START_STATEMENT) {
+            if (guiElements.size() > 0) guiElements.clear();
+            initButtonNames();
+            int buttons = 3;
+            Rectangle[] zones = getCoordinatesForDefaultButtonsAlignment(buttons);
+            for (int i = 0; i < buttons; i++) {
+                GuiElement gui = new ButtonWithFrameSelection(editorController.getEngine(), zones[i].x, zones[i].y, zones[i].width, zones[i].height, getNameForPos(i), editorController.getEngine().getProcessing().g, true);
+                guiElements.add(gui);
+            }
+        }
+        else if (actualStatement == Statements.SELECT_ANGLE) {
 
         }
-        if (guiElements.size() > 0) guiElements.clear();
-        initButtonNames();
-        int buttons = 3;
-        Rectangle[] zones = getCoordinatesForDefaultButtonsAlignment(buttons);
-        for (int i = 0; i < buttons; i++){
-            GuiElement gui = new ButtonWithFrameSelection(editorController.getEngine(), zones[i].x, zones[i].y, zones[i].width, zones[i].height, getNameForPos(i), editorController.getEngine().getProcessing().g, true);
-            guiElements.add(gui);
-        }
-    }
-else if (actualStatement == Statements.SELECT_ANGLE){
-    //submenu with angle selector
-}
-
     }
 
     private void initButtonNames(){
@@ -124,16 +123,20 @@ else if (actualStatement == Statements.SELECT_ANGLE){
 
     private void addPlayer(){
         //ArrayList <Entity> gameObjects = editorController.getGameRound().getEntities();
-        int x = editorController.getCrosshair().getRealPos().x;
-        int y = editorController.getCrosshair().getRealPos().y;
-        int role = getRole();
-        Player player = Player.createPlayer();
-        gameRound.addEntityToEnd(player);
-
+        int x = (int) editorController.getCursor().getActualCrossPos().x;
+        int y = (int) editorController.getCursor().getActualCrossPos().y;
+        int role = Tank.PLAYER;
+        int [] values = new int[3];
+        values[0] = x;
+        values[1] = y;
+        values[2] = role;
+        EntityData data = new EntityData(values, new int[]{}, Entity.NO_ID);
+        PlayerTank player = PlayerTank.create(editorController.getEngine(), editorController.getGameRound().getPhysicWorld(), data);
+        editorController.getGameRound().addEntityToEnd(player);
     }
 
     private int getNextPlayerRole(){
-        
+        return Tank.PLAYER;
     }
 
     private void removePlayer(){

@@ -63,9 +63,6 @@ public class EditorController extends GamePartWithGameWorldAbstractController im
         createOnMapZoneGraphic();
         nextMenuType = MenuType.MAIN;
         createMenu();
-
-
-
         lastActionController = new LastActionController(10);
 
     }
